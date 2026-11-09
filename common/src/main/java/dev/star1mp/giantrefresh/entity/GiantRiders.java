@@ -14,6 +14,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.zombie.Drowned;
 import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.monster.spider.Spider;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -122,6 +127,10 @@ public final class GiantRiders {
     /** Server, every 10 ticks: melee riders jump down when their target is close to the Giant. */
     public static void tickRiders(GiantEntity giant, ServerLevel level) {
         for (Entity passenger : new ArrayList<>(giant.getPassengers())) {
+            if (passenger instanceof Spider spider && spider.isAlive()) {
+                tickSpiderRider(giant, spider);
+                continue;
+            }
             if (!(passenger instanceof Zombie zombie) || !zombie.isAlive()) {
                 continue;
             }
@@ -148,6 +157,28 @@ public final class GiantRiders {
             zombie.resetFallDistance();
             zombie.playSound(net.minecraft.sounds.SoundEvents.ZOMBIE_AMBIENT, 1.0F, 1.2F);
         }
+    }
+
+    /** A spider sitting on the head leaps down onto a target that comes close, floating down on its silk. */
+    private static void tickSpiderRider(GiantEntity giant, Spider spider) {
+        LivingEntity target = spider.getTarget();
+        if (target == null || !target.isAlive()) {
+            return;
+        }
+        double dx = target.getX() - giant.getX();
+        double dz = target.getZ() - giant.getZ();
+        double horizontal = Math.sqrt(dx * dx + dz * dz);
+        if (horizontal > 14.0 || target.getY() > giant.getY() + 6.0) {
+            return;
+        }
+        double speed = Mth.clamp((horizontal - 1.5) / 11.0, 0.15, 0.9);
+        double nx = horizontal > 0.01 ? dx / horizontal : 1.0;
+        double nz = horizontal > 0.01 ? dz / horizontal : 0.0;
+        spider.stopRiding();
+        spider.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, false, false));
+        spider.setDeltaMovement(nx * speed, 0.45, nz * speed);
+        spider.resetFallDistance();
+        spider.playSound(SoundEvents.SPIDER_AMBIENT, 1.0F, 1.3F);
     }
 
     public static void makePersistent(GiantEntity giant) {

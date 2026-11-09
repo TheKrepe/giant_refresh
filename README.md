@@ -6,11 +6,14 @@ Giant Refresh turns the forgotten, unused Giant into a real inhabitant of the wo
 huge and dangerous mob that still looks like something Mojang could have added.
 
 ## The Giant
-- ~12 blocks tall, 400 HP, slow and heavy. Every step thumps, kicks up dirt and lightly shakes the camera.
+- 12 blocks tall, 200 HP, slow and heavy. Every step thumps, kicks up dirt and lightly shakes the camera.
+- Looks and moves like the vanilla Giant should have: the zombie model ×6 with the zombie's own arms-out
+  walk, a 2× detailed skin (rotting trousers, mossy shins), and a few big, readable poses for its attacks,
+  its roar, sleeping (sitting) and waking up. It falls over sideways when it dies, like any other mob.
 - **Three telegraphed attacks** (each has a clear wind-up so you can dodge):
-  - *Slam* — raises both fists overhead, trembles, then crashes them down in front of it.
-  - *Stomp* — lifts a leg for a long moment, then sends a shockwave through the ground.
-  - *Scoop* — a low sweep that flings small creatures and players into the air.
+  - *Slam* — raises both fists high overhead, trembles, then crashes them down in front of it.
+  - *Stomp* — lifts a leg high in front for a long moment, then sends a shockwave through the ground.
+  - *Scoop* — a wide underarm sweep that flings small creatures and players into the air.
 - Breaks leaves, flowers, tall grass, fences, wooden doors and trapdoors in its way (respects `mobGriefing`).
 - Crushes plants and trampled crops underfoot, can squash small animals, leaves coarse-dirt footprints.
 
@@ -18,14 +21,24 @@ huge and dangerous mob that still looks like something Mojang could have added.
 Many Giants wear a **harness hat** — the Happy Ghast harness in one of the 16 vanilla colours, with the
 same goggles (up when empty, pulled down when ridden). The hat is a mobile fortress for 2–3 hostile riders:
 zombies (jump down to fight nearby enemies), skeletons (shoot from above), husks (do not burn by day),
-drowned with tridents and witches. Kill the riders first — the fight gets much easier.
+drowned with tridents and witches, in several crew combinations (the rare war party is the nastiest).
+Kill the riders first — the fight gets much easier.
+
+**Spiders** climb a Giant like a wall: at night (or when hunting) they run up to it, crawl up its body
+and settle on its head — hat or no hat — then leap down on silk at anyone who comes close.
 
 ## In the world
 - **Footprint trails** generate in plains, forests, meadows, savannas and taigas. Prints get fresher and
   closer together along the trail; rare *camps* end with a **sleeping Giant** next to its lair.
+  Some trails start at a **trampled settlement**: broken huts with knocked-down walls, scattered debris
+  and a deep footprint right through the middle.
 - Sleeping Giants wake up when you sprint nearby, come too close or attack them — sneak past!
 - Rare natural spawns in the same biomes (at night; daytime Giants are found napping), sometimes with a small zombie horde.
-- Zombies gather around Giants, skeletons stay close for cover, iron golems fight them, villagers flee.
+- Zombies gather around Giants, skeletons stay close for cover.
+- Iron golems see a Giant as the biggest threat around: they spot it from far away and drop other targets for it.
+- Villages: a Giant wanders into villages, breaks what blocks its way and attacks golems and villagers.
+  Villagers panic and run home to hide, exactly as if the bell had been rung.
+- A Giant stamping down right next to a creeper often sets it off — and the blast hurts the Giant too.
 - A vanilla `minecraft:giant` (e.g. from `/summon`) is automatically replaced with the new Giant.
 
 ## Loot
@@ -37,7 +50,7 @@ drowned with tridents and witches. Kill the riders first — the fight gets much
 
 ## Config
 `config/giant_refresh.json` — Giant stats, block breaking, footprints, spawn rates, hat/rider chances,
-mob behaviour, screen shake and Potion of Growth strength.
+mob behaviour (spiders, creepers, golems, villagers), trampled settlements, screen shake and Potion of Growth strength.
 
 ## Building
 Each loader is its own Gradle build sharing `common/`:

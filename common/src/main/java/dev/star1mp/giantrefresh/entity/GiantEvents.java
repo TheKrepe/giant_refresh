@@ -2,7 +2,11 @@ package dev.star1mp.giantrefresh.entity;
 
 import dev.star1mp.giantrefresh.GiantRefresh;
 import dev.star1mp.giantrefresh.config.GRConfig;
+import dev.star1mp.giantrefresh.entity.ai.ClimbGiantGoal;
 import dev.star1mp.giantrefresh.entity.ai.FollowGiantGoal;
+import dev.star1mp.giantrefresh.entity.ai.HuntGiantTargetGoal;
+import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.monster.spider.Spider;
 import dev.star1mp.giantrefresh.mixin.MobAccessor;
 import dev.star1mp.giantrefresh.registry.GRContent;
 import java.util.ArrayList;
@@ -37,6 +41,12 @@ public final class GiantEvents {
         if (cfg.replaceVanillaGiant && entity.getType() == EntityTypes.GIANT) {
             VANILLA_GIANTS.add(entity);
             return;
+        }
+        if (entity instanceof Spider spider) {
+            ((MobAccessor) spider).giantrefresh$goalSelector().addGoal(2, new ClimbGiantGoal(spider));
+        }
+        if (entity instanceof IronGolem golem && cfg.golemsHuntGiants) {
+            ((MobAccessor) golem).giantrefresh$targetSelector().addGoal(2, new HuntGiantTargetGoal(golem));
         }
         if (cfg.zombiesFollowGiants && entity instanceof Mob mob && !(entity instanceof GiantEntity)) {
             if (mob instanceof Zombie zombie) {

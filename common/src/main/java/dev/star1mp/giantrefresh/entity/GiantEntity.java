@@ -35,6 +35,9 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.spider.Spider;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.zombie.Zombie;
@@ -273,7 +276,13 @@ public class GiantEntity extends Monster {
 
     @Override
     protected boolean canAddPassenger(Entity passenger) {
-        return hasHat() && passenger instanceof Mob && getPassengers().size() < MAX_RIDERS;
+        // the hat carries a crew; spiders climb up and cling to a bare head as well
+        return (hasHat() || passenger instanceof Spider) && passenger instanceof Mob && getPassengers().size() < MAX_RIDERS;
+    }
+
+    /** Whether a climbing spider can still find a place on the head. */
+    public boolean hasRoomForClimber() {
+        return getPassengers().size() < MAX_RIDERS;
     }
 
     @Override
@@ -404,6 +413,9 @@ public class GiantEntity extends Monster {
         }
         if (tickCount % 10 == 0) {
             GiantRiders.tickRiders(this, server);
+        }
+        if (tickCount % 40 == 0 && GRConfig.get().villagersHideFromGiants) {
+            sendVillagersHome(server);
         }
     }
 
@@ -614,6 +626,30 @@ public class GiantEntity extends Monster {
         }
     }
 
+    /** A huge foot slamming down right next to a creeper makes it go off - often hurting the Giant itself. */
+    private void startleCreepers(ServerLevel level, Vec3 foot) {
+        if (!GRConfig.get().creepersStartledByGiants) {
+            return;
+        }
+        AABB box = new AABB(foot.x - 3.5, getY() - 1.0, foot.z - 3.5, foot.x + 3.5, getY() + 3.0, foot.z + 3.5);
+        for (Creeper creeper : level.getEntitiesOfClass(Creeper.class, box, c -> c.isAlive() && !c.isIgnited())) {
+            if (random.nextFloat() < 0.6F) {
+                creeper.ignite();
+            }
+        }
+    }
+
+    /** Villagers near an awake Giant behave as if the bell had rung: they run home and hide. */
+    private void sendVillagersHome(ServerLevel level) {
+        if (isGiantSleeping()) {
+            return;
+        }
+        long now = level.getGameTime();
+        for (Villager villager : level.getEntitiesOfClass(Villager.class, getBoundingBox().inflate(32.0, 12.0, 32.0), Entity::isAlive)) {
+            villager.getBrain().setMemory(MemoryModuleType.HEARD_BELL_TIME, now);
+        }
+    }
+
     private void onFootfall(ServerLevel level, boolean rightFoot) {
         Vec3 foot = footPosition(rightFoot);
         BlockState ground = level.getBlockState(BlockPos.containing(foot.x, getY() - 0.3, foot.z));
@@ -623,6 +659,7 @@ public class GiantEntity extends Monster {
         }
         level.broadcastEntityEvent(this, rightFoot ? EVENT_STEP_RIGHT : EVENT_STEP_LEFT);
         crushPlants(level, foot, 1);
+        startleCreepers(level, foot);
         squashSmallCreatures(level, foot);
         if (random.nextDouble() < GRConfig.get().footprintChance) {
             leaveFootprint(level, foot, false);

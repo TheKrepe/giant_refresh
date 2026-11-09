@@ -50,6 +50,8 @@ public final class GRConfig {
     public int giantExclusionRadius = 160;
     /** Generate footprint trails and sleeping-Giant camps in the world. */
     public boolean worldgenTrails = true;
+    /** Chance (0..1) that a trail starts at a small settlement the Giant has trampled. */
+    public double trailRuinChance = 0.3;
 
     // --- Hat & riders ---
     public double hatChance = 0.6;
@@ -60,6 +62,14 @@ public final class GRConfig {
     public boolean replaceVanillaGiant = true;
     public boolean zombiesFollowGiants = true;
     public boolean villagersFleeGiants = true;
+    /** Villagers near an awake Giant hide in their houses, as if the bell had been rung. */
+    public boolean villagersHideFromGiants = true;
+    /** Spiders climb up the Giant's body and ride on its head, pouncing from above. */
+    public boolean spidersClimbGiants = true;
+    /** A Giant stepping right next to a creeper startles it into exploding. */
+    public boolean creepersStartledByGiants = true;
+    /** Iron golems treat Giants as their most important target and spot them from far away. */
+    public boolean golemsHuntGiants = true;
 
     // --- Client ---
     public boolean screenShake = true;
@@ -121,6 +131,7 @@ public final class GRConfig {
         hatChance = clamp(hatChance, 0, 1);
         ridersChance = clamp(ridersChance, 0, 1);
         hordeChance = clamp(hordeChance, 0, 1);
+        trailRuinChance = clamp(trailRuinChance, 0, 1);
         screenShakeStrength = clamp(screenShakeStrength, 0, 3);
         growthScaleBonus = clamp(growthScaleBonus, 0.1, 4);
         growthSpeedPenalty = clamp(growthSpeedPenalty, 0, 0.9);

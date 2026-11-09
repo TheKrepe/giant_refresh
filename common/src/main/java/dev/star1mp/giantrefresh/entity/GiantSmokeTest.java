@@ -27,6 +27,10 @@ public final class GiantSmokeTest {
     private static int stageX;
     private static int stageZ;
     private static Zombie grower;
+    private static GiantEntity climbTarget;
+    private static net.minecraft.world.entity.monster.spider.Spider climber;
+    private static net.minecraft.world.entity.animal.golem.IronGolem golem;
+    private static boolean golemSawGiant;
 
     private GiantSmokeTest() {}
 
@@ -63,10 +67,27 @@ public final class GiantSmokeTest {
             if (grower != null) {
                 grower.addEffect(new MobEffectInstance(GRContent.growthHolder(), 200));
             }
+            // a hatless, frozen Giant for a spider to climb, and an iron golem that must pick a Giant as its target
+            BlockPos cpos = pos.offset(0, 0, 34);
+            climbTarget = buildGiant(level, cpos.getX(), level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, cpos.getX(), cpos.getZ()), cpos.getZ(), -1, false);
+            if (climbTarget != null) {
+                climbTarget.setNoAi(true);
+                climber = EntityTypes.SPIDER.spawn(level, cpos.offset(6, 0, 0), EntitySpawnReason.COMMAND);
+                if (climber != null) {
+                    climber.setPersistenceRequired();
+                    dev.star1mp.giantrefresh.entity.ai.ClimbGiantGoal goal = new dev.star1mp.giantrefresh.entity.ai.ClimbGiantGoal(climber);
+                    ((dev.star1mp.giantrefresh.mixin.MobAccessor) climber).giantrefresh$goalSelector().addGoal(1, goal);
+                    goal.forceClimb(climbTarget);
+                }
+            }
+            golem = EntityTypes.IRON_GOLEM.spawn(level, pos.offset(-20, 0, -10), EntitySpawnReason.COMMAND);
             GiantEntity sleeper = GRContent.GIANT.get().spawn(level, pos.offset(-12, 0, 0), EntitySpawnReason.SPAWN_ITEM_USE);
             if (sleeper != null) {
                 sleeper.setGiantSleeping(true);
             }
+        }
+        if (golem != null && golem.getTarget() instanceof GiantEntity) {
+            golemSawGiant = true;
         }
         if (ticks == 220 && grower != null) {
             GiantRefresh.LOGGER.info("[SMOKETEST] zombie scale under Growth = {}", grower.getAttributeValue(Attributes.SCALE));
@@ -83,6 +104,10 @@ public final class GiantSmokeTest {
                             String.format("%.2f", p.getY() - g.getY()), String.format("%.2f", p.getX() - g.getX()), String.format("%.2f", p.getZ() - g.getZ()));
                 }
             }
+            boolean spiderOnHead = climber != null && climber.getVehicle() == climbTarget;
+            GiantRefresh.LOGGER.info("[SMOKETEST] spider climbed onto the Giant: {} (spider at dy={})", spiderOnHead,
+                    climber != null && climbTarget != null ? String.format("%.2f", climber.getY() - climbTarget.getY()) : "-");
+            GiantRefresh.LOGGER.info("[SMOKETEST] iron golem targeted a Giant: {}", golemSawGiant);
             double scale = grower != null && grower.isAlive() ? grower.getAttributeValue(Attributes.SCALE) : -1;
             boolean pass = giants >= 4 && vanilla == 0;
             GiantRefresh.LOGGER.info("[SMOKETEST] giants={} vanillaGiants={} riders={} zombieScaleAfterEffect={} -> {}",
@@ -146,6 +171,8 @@ public final class GiantSmokeTest {
                     }
                 }
             }
+            // a trampled settlement at the side of the stage (shot 8)
+            dev.star1mp.giantrefresh.worldgen.GiantTrailFeature.placeTestRuins(level, level.getRandom(), px + 19, pz + 44);
             GiantRefresh.LOGGER.info("[CLIENTTEST] scene staged around {} {}", px, pz);
         }
         if (clientTicks >= 21 && !player.getAbilities().flying) {
@@ -199,6 +226,7 @@ public final class GiantSmokeTest {
             case 3 -> { x += 13; y = 165; z += 12; yaw = 0; pitch = 14; }
             case 4, 5, 6 -> { y = 166; z += 60 + (shot - 4) * 30 - 17; yaw = 0; pitch = 10; }
             case 7 -> { y = 166; z += 17 + 18; yaw = 180; pitch = 6; }
+            case 8 -> { x += 19 - 10; y = 167; z += 47; yaw = -90; pitch = 36; }
             default -> {}
         }
         player.teleportTo(level, x, y, z, java.util.Set.of(), yaw, pitch, false);
