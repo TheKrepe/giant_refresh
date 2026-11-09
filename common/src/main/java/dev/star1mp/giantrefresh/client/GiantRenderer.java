@@ -90,8 +90,8 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
     @Override
     protected void setupRotations(GiantRenderState state, PoseStack poseStack, float bodyRot, float scale) {
         if (state.deathTime > 0.0F) {
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - bodyRot));
-            poseStack.mulPose(Axis.XP.rotationDegrees(-GiantPose.deathFallDegrees(state.deathTime)));
+            poseStack.rotateDegrees(Axis.YP, 180.0F - bodyRot);
+            poseStack.rotateDegrees(Axis.XP, -GiantPose.deathFallDegrees(state.deathTime));
             return;
         }
         super.setupRotations(state, poseStack, bodyRot, scale);
