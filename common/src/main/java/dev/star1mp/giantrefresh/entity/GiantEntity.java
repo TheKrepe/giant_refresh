@@ -66,6 +66,8 @@ import org.joml.Vector3f;
 public class GiantEntity extends Monster {
     // ------------------------------------------------------------------ synced data
     private static final EntityDataAccessor<Byte> DATA_ATTACK = SynchedEntityData.defineId(GiantEntity.class, EntityDataSerializers.BYTE);
+    /** Entity id of the creature held in the Giant's fist, or -1. */
+    private static final EntityDataAccessor<Integer> DATA_HELD = SynchedEntityData.defineId(GiantEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SLEEPING = SynchedEntityData.defineId(GiantEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> DATA_HAT = SynchedEntityData.defineId(GiantEntity.class, EntityDataSerializers.BYTE);
 
@@ -83,6 +85,15 @@ public class GiantEntity extends Monster {
     public static final int ATTACK_PUNCH = 1;
     public static final int ATTACK_STOMP = 2;
     public static final int ATTACK_SCOOP = 3;
+    public static final int ATTACK_GRAB_LOW = GiantPose.GRAB_LOW;
+    public static final int ATTACK_GRAB = GiantPose.GRAB;
+    public static final int ATTACK_GRAB_HIGH = GiantPose.GRAB_HIGH;
+    /** How far (blocks) from the fist a creature can be caught. */
+    private static final double GRAB_RANGE = 3.5;
+
+    public static boolean isGrab(int attack) {
+        return attack == ATTACK_GRAB_LOW || attack == ATTACK_GRAB || attack == ATTACK_GRAB_HIGH;
+    }
 
     /** Tick at which the blow lands (wind-up length). */
     public static int impactTick(int attack) {
@@ -90,6 +101,7 @@ public class GiantEntity extends Monster {
             case ATTACK_PUNCH -> 20;
             case ATTACK_STOMP -> 26;
             case ATTACK_SCOOP -> 15;
+            case ATTACK_GRAB_LOW, ATTACK_GRAB, ATTACK_GRAB_HIGH -> GiantPose.GRAB_CATCH;
             default -> 0;
         };
     }
@@ -100,6 +112,7 @@ public class GiantEntity extends Monster {
             case ATTACK_PUNCH -> 34;
             case ATTACK_STOMP -> 40;
             case ATTACK_SCOOP -> 28;
+            case ATTACK_GRAB_LOW, ATTACK_GRAB, ATTACK_GRAB_HIGH -> GiantPose.GRAB_LENGTH;
             default -> 0;
         };
     }
@@ -174,6 +187,7 @@ public class GiantEntity extends Monster {
         builder.define(DATA_ATTACK, (byte) 0);
         builder.define(DATA_SLEEPING, false);
         builder.define(DATA_HAT, (byte) -1);
+        builder.define(DATA_HELD, -1);
     }
 
     @Override
@@ -276,8 +290,34 @@ public class GiantEntity extends Monster {
 
     @Override
     protected boolean canAddPassenger(Entity passenger) {
+        if (level().isClientSide() || isHeld(passenger)) {
+            return true; // the server decides; a grabbed creature always fits in the fist
+        }
         // the hat carries a crew; spiders climb up and cling to a bare head as well
         return (hasHat() || passenger instanceof Spider) && passenger instanceof Mob && getPassengers().size() < MAX_RIDERS;
+    }
+
+    public boolean isHeld(Entity entity) {
+        return entity != null && entity.getId() == entityData.get(DATA_HELD);
+    }
+
+    /** Whether the hat carries a crew (the goggles come down); a creature in the fist does not count. */
+    public boolean hasCrew() {
+        for (Entity passenger : getPassengers()) {
+            if (!isHeld(passenger)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        // let go where they are: a thrown or dropped creature falls from the hand, a spider leaps from the head
+        if (isHeld(passenger) || passenger instanceof Spider) {
+            return passenger.position();
+        }
+        return super.getDismountLocationForPassenger(passenger);
     }
 
     /** Whether a climbing spider can still find a place on the head. */
@@ -292,8 +332,21 @@ public class GiantEntity extends Monster {
 
     @Override
     protected void positionRider(Entity passenger, Entity.MoveFunction moveFunction) {
-        int index = getPassengers().indexOf(passenger);
-        Vec3 pos = riderPosition(Math.max(0, index), 1.0F);
+        if (isHeld(passenger)) {
+            Vec3 hand = handPosition(1.0F);
+            moveFunction.accept(passenger, hand.x, hand.y - passenger.getBbHeight() / 2.0, hand.z);
+            return;
+        }
+        int index = 0;
+        for (Entity p : getPassengers()) {
+            if (p == passenger) {
+                break;
+            }
+            if (!isHeld(p)) {
+                index++;
+            }
+        }
+        Vec3 pos = riderPosition(index, 1.0F);
         // like vanilla: the rider's own seat offset, so a sitting rider rests on the hat instead of hovering
         Vec3 seat = passenger.getVehicleAttachmentPoint(this);
         moveFunction.accept(passenger, pos.x - seat.x, pos.y - seat.y, pos.z - seat.z);
@@ -305,6 +358,15 @@ public class GiantEntity extends Monster {
         fillPose(riderPose, partialTick);
         riderPose.compute();
         Vector3f off = riderPose.headPointOffset(Mth.rotLerp(partialTick, yBodyRotO, yBodyRot), slot[0], GiantPose.HAT_TOP, slot[1]);
+        return new Vec3(Mth.lerp(partialTick, xo, getX()) + off.x, Mth.lerp(partialTick, yo, getY()) + off.y,
+                Mth.lerp(partialTick, zo, getZ()) + off.z);
+    }
+
+    /** World position of the right fist (follows the animation). */
+    public Vec3 handPosition(float partialTick) {
+        fillPose(riderPose, partialTick);
+        riderPose.compute();
+        Vector3f off = riderPose.rightHandOffset(Mth.rotLerp(partialTick, yBodyRotO, yBodyRot), GiantPose.HAND_X, GiantPose.HAND_Y, 0.0F);
         return new Vec3(Mth.lerp(partialTick, xo, getX()) + off.x, Mth.lerp(partialTick, yo, getY()) + off.y,
                 Mth.lerp(partialTick, zo, getZ()) + off.z);
     }
@@ -494,10 +556,15 @@ public class GiantEntity extends Monster {
                 case ATTACK_PUNCH -> impactPunch(level);
                 case ATTACK_STOMP -> impactStomp(level);
                 case ATTACK_SCOOP -> impactScoop(level);
+                case ATTACK_GRAB_LOW, ATTACK_GRAB, ATTACK_GRAB_HIGH -> tryGrab(level);
                 default -> {}
             }
         }
+        if (isGrab(attack) && attackTicks == GiantPose.GRAB_THROW) {
+            throwHeld(level);
+        }
         if (attackTicks >= attackLength(attack)) {
+            releaseHeld(Vec3.ZERO);
             entityData.set(DATA_ATTACK, (byte) ATTACK_NONE);
             attackTicks = 0;
             attackCooldown = 18 + random.nextInt(22);
@@ -528,6 +595,77 @@ public class GiantEntity extends Monster {
         }
         // Undead friends and other monsters are spared unless they are the actual target.
         return !(e instanceof Enemy) || e == getTarget();
+    }
+
+    /** The fist closes: whatever is close enough to it is caught and squeezed. */
+    private void tryGrab(ServerLevel level) {
+        Vec3 hand = handPosition(1.0F);
+        LivingEntity target = getTarget();
+        LivingEntity caught = null;
+        if (target != null && canGrab(target) && target.getBoundingBox().getCenter().distanceTo(hand) <= GRAB_RANGE) {
+            caught = target;
+        } else {
+            AABB box = new AABB(hand, hand).inflate(GRAB_RANGE);
+            for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, box, e -> e instanceof Player && canGrab(e))) {
+                if (e.getBoundingBox().getCenter().distanceTo(hand) <= GRAB_RANGE) {
+                    caught = e;
+                    break;
+                }
+            }
+        }
+        level.playSound(null, hand.x, hand.y, hand.z, GRContent.GIANT_SWING.get(), getSoundSource(), 2.0F, 1.2F);
+        if (caught == null) {
+            return;
+        }
+        entityData.set(DATA_HELD, caught.getId());
+        if (!caught.startRiding(this, true, true)) {
+            entityData.set(DATA_HELD, -1);
+            return;
+        }
+        caught.hurtServer(level, damageSources().mobAttack(this), (float) GRConfig.get().giantGrabDamage);
+        level.playSound(null, hand.x, hand.y, hand.z, GRContent.GIANT_PUNCH.get(), getSoundSource(), 1.5F, 1.4F);
+    }
+
+    private boolean canGrab(LivingEntity e) {
+        return canHit(e) && !e.isPassenger() && !e.isVehicle() && e.getBbHeight() < 3.2F && e.getBbWidth() < 2.0F;
+    }
+
+    public LivingEntity getHeld() {
+        int id = entityData.get(DATA_HELD);
+        if (id < 0) {
+            return null;
+        }
+        Entity e = level().getEntity(id);
+        return e instanceof LivingEntity living && e.getVehicle() == this ? living : null;
+    }
+
+    /** Hurl the held creature down at the ground in front. */
+    private void throwHeld(ServerLevel level) {
+        LivingEntity held = getHeld();
+        if (held == null) {
+            entityData.set(DATA_HELD, -1);
+            return;
+        }
+        double strength = GRConfig.get().giantThrowStrength;
+        Vec3 fwd = forward();
+        releaseHeld(new Vec3(fwd.x * 0.9 * strength, -1.1 * strength, fwd.z * 0.9 * strength));
+        level.playSound(null, held.getX(), held.getY(), held.getZ(), GRContent.GIANT_SWING.get(), getSoundSource(), 2.5F, 0.6F);
+    }
+
+    /** Opens the fist; the held creature keeps its place and gets {@code motion}. */
+    public void releaseHeld(Vec3 motion) {
+        LivingEntity held = getHeld();
+        entityData.set(DATA_HELD, -1);
+        if (held == null) {
+            return;
+        }
+        Vec3 at = held.position();
+        held.stopRiding();
+        held.setPos(at);
+        held.resetFallDistance();
+        held.setDeltaMovement(motion);
+        held.hurtMarked = true;
+        held.needsSync = true;
     }
 
     private void impactPunch(ServerLevel level) {
@@ -768,6 +906,14 @@ public class GiantEntity extends Monster {
     @Override
     public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
         Entity attacker = source.getEntity();
+        if (attacker != null && isHeld(attacker)) {
+            // fighting back from inside the fist: sometimes the Giant flinches and lets go
+            boolean hurt = super.hurtServer(level, source, amount);
+            if (hurt && random.nextFloat() < 0.3F) {
+                releaseHeld(Vec3.ZERO);
+            }
+            return hurt;
+        }
         if (attacker != null && (attacker.getVehicle() == this || attacker instanceof GiantEntity)) {
             return false;
         }

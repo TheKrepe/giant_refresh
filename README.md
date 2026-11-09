@@ -14,6 +14,10 @@ huge and dangerous mob that still looks like something Mojang could have added.
   - *Slam* — raises both fists high overhead, trembles, then crashes them down in front of it.
   - *Stomp* — lifts a leg high in front for a long moment, then sends a shockwave through the ground.
   - *Scoop* — a wide underarm sweep that flings small creatures and players into the air.
+  - *Grab* — reaches out (down in front, forward-up, or straight up), closes its fist on you, lifts you
+    high over its head and hurls you at the ground. Building a pillar no longer keeps you safe: anything
+    up to ~15 blocks above the ground within reach gets plucked off. Sneaking does not get you out —
+    hitting the Giant from inside its fist sometimes makes it let go.
 - Breaks leaves, flowers, tall grass, fences, wooden doors and trapdoors in its way (respects `mobGriefing`).
 - Crushes plants and trampled crops underfoot, can squash small animals, leaves coarse-dirt footprints.
 

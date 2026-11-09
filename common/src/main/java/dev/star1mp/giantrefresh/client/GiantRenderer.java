@@ -29,7 +29,7 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
         }
         state.pose.compute();
         state.hatColor = giant.getHatColor();
-        state.ridden = giant.isVehicle();
+        state.ridden = giant.hasCrew();
     }
 
     /** CI render test only: freeze a showcase pose given as "pose:kind:time" in the custom name. */
@@ -51,6 +51,10 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
             }
             case "stomp" -> {
                 p.attack = GiantPose.STOMP;
+                p.attackTime = t;
+            }
+            case "grab" -> {
+                p.attack = GiantPose.GRAB;
                 p.attackTime = t;
             }
             case "scoop" -> {

@@ -31,6 +31,11 @@ public final class GiantSmokeTest {
     private static net.minecraft.world.entity.monster.spider.Spider climber;
     private static net.minecraft.world.entity.animal.golem.IronGolem golem;
     private static boolean golemSawGiant;
+    private static GiantEntity grabber;
+    private static net.minecraft.world.entity.animal.pig.Pig perched;
+    private static boolean pigGrabbed;
+    private static boolean pigThrown;
+    private static double pigMaxY = -999;
 
     private GiantSmokeTest() {}
 
@@ -80,10 +85,36 @@ public final class GiantSmokeTest {
                     goal.forceClimb(climbTarget);
                 }
             }
+            // a pig on a 10-block pillar: the Giant has to pluck it off and throw it down
+            BlockPos gpos = pos.offset(32, 0, -18);
+            int gy = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, gpos.getX(), gpos.getZ());
+            for (int i = 0; i < 10; i++) {
+                level.setBlock(new BlockPos(gpos.getX() + 3, gy + i, gpos.getZ()), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 2);
+            }
+            perched = EntityTypes.PIG.spawn(level, new BlockPos(gpos.getX() + 3, gy + 10, gpos.getZ()), EntitySpawnReason.COMMAND);
+            grabber = buildGiant(level, gpos.getX() - 3, gy, gpos.getZ(), -1, false);
+            if (perched != null && grabber != null) {
+                perched.setNoAi(true);
+                perched.setPersistenceRequired();
+                grabber.setTarget(perched);
+            }
             golem = EntityTypes.IRON_GOLEM.spawn(level, pos.offset(-20, 0, -10), EntitySpawnReason.COMMAND);
             GiantEntity sleeper = GRContent.GIANT.get().spawn(level, pos.offset(-12, 0, 0), EntitySpawnReason.SPAWN_ITEM_USE);
             if (sleeper != null) {
                 sleeper.setGiantSleeping(true);
+            }
+        }
+        if (perched != null && grabber != null) {
+            if (grabber.getTarget() != perched && !pigGrabbed && perched.isAlive()) {
+                grabber.setTarget(perched);
+            }
+            if (perched.getVehicle() == grabber) {
+                pigGrabbed = true;
+                pigMaxY = Math.max(pigMaxY, perched.getY() - grabber.getY());
+            } else if (pigGrabbed && !pigThrown) {
+                pigThrown = true;
+                GiantRefresh.LOGGER.info("[SMOKETEST] pig thrown from dy={} with motion {}", String.format("%.2f", perched.getY() - grabber.getY()), perched.getDeltaMovement());
+                grabber.setTarget(null);
             }
         }
         if (golem != null && golem.getTarget() instanceof GiantEntity) {
@@ -108,6 +139,9 @@ public final class GiantSmokeTest {
             GiantRefresh.LOGGER.info("[SMOKETEST] spider climbed onto the Giant: {} (spider at dy={})", spiderOnHead,
                     climber != null && climbTarget != null ? String.format("%.2f", climber.getY() - climbTarget.getY()) : "-");
             GiantRefresh.LOGGER.info("[SMOKETEST] iron golem targeted a Giant: {}", golemSawGiant);
+            GiantRefresh.LOGGER.info("[SMOKETEST] pillar pig grabbed={} thrown={} highestHold={} pigAlive={} pigY={}", pigGrabbed, pigThrown,
+                    String.format("%.2f", pigMaxY), perched != null && perched.isAlive(),
+                    perched != null && grabber != null ? String.format("%.2f", perched.getY() - grabber.getY()) : "-");
             double scale = grower != null && grower.isAlive() ? grower.getAttributeValue(Attributes.SCALE) : -1;
             boolean pass = giants >= 4 && vanilla == 0;
             GiantRefresh.LOGGER.info("[SMOKETEST] giants={} vanillaGiants={} riders={} zombieScaleAfterEffect={} -> {}",
@@ -157,7 +191,7 @@ public final class GiantSmokeTest {
             String[][] rows = {
                     {"pose:walk:3", "pose:punch:18", "pose:punch:23"},
                     {"pose:stomp:21", "pose:scoop:15", "pose:roar:14"},
-                    {"pose:aggro:1", "pose:wake:30", "pose:death:14"},
+                    {"pose:grab:16", "pose:grab:31", "pose:death:14"},
             };
             for (int r = 0; r < rows.length; r++) {
                 for (int i = 0; i < 3; i++) {

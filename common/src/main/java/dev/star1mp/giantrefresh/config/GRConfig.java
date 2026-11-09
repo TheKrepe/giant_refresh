@@ -25,6 +25,12 @@ public final class GRConfig {
     public double giantMaxHealth = 200.0;
     public double giantPunchDamage = 15.0;
     public double giantStompDamage = 9.0;
+    /** Grab-and-throw: the Giant snatches targets it cannot hit otherwise (e.g. on a pillar) and hurls them down. */
+    public boolean giantGrabEnabled = true;
+    /** Damage when the fist closes; the fall after the throw does the rest. */
+    public double giantGrabDamage = 6.0;
+    /** Multiplier for how hard grabbed creatures are thrown down. */
+    public double giantThrowStrength = 1.0;
     public double giantMovementSpeed = 0.2;
     public double giantFollowRange = 64.0;
 
@@ -120,6 +126,8 @@ public final class GRConfig {
         giantMaxHealth = clamp(giantMaxHealth, 20, 4096);
         giantPunchDamage = clamp(giantPunchDamage, 0, 200);
         giantStompDamage = clamp(giantStompDamage, 0, 200);
+        giantGrabDamage = clamp(giantGrabDamage, 0, 200);
+        giantThrowStrength = clamp(giantThrowStrength, 0, 4);
         giantMovementSpeed = clamp(giantMovementSpeed, 0.05, 1.0);
         giantFollowRange = clamp(giantFollowRange, 8, 128);
         footprintChance = clamp(footprintChance, 0, 1);

@@ -35,6 +35,17 @@ public final class GiantPose {
     public static final int PUNCH = 1;
     public static final int STOMP = 2;
     public static final int SCOOP = 3;
+    /** Grab-and-throw, reaching down in front, forward-up, or straight up (for targets on pillars). */
+    public static final int GRAB_LOW = 4;
+    public static final int GRAB = 5;
+    public static final int GRAB_HIGH = 6;
+    /** Grab attack timeline (ticks). */
+    public static final int GRAB_CATCH = 16;
+    public static final int GRAB_THROW = 36;
+    public static final int GRAB_LENGTH = 52;
+    /** Point of the right fist (arm space, unscaled pixels) where a grabbed creature is held. */
+    public static final float HAND_X = -1.0F;
+    public static final float HAND_Y = 11.0F;
 
     public static final int ROAR_LENGTH = 40;
     public static final int WAKE_LENGTH = 50;
@@ -177,8 +188,51 @@ public final class GiantPose {
                 leftLeg.rx = track(t, leftLeg.rx, 0, B, 12, 0.3F, 16, 0.2F, 28, B);
                 headRx = track(t, headRx, 0, B, 12, 0.2F, 18, -0.3F, 28, B);
             }
+            case GRAB_LOW, GRAB, GRAB_HIGH -> applyGrab(t);
             default -> {}
         }
+    }
+
+    /**
+     * Reach out with the right hand (low / forward-up / straight up), close it on the target,
+     * lift it high over the head and hurl it down at the ground.
+     */
+    private void applyGrab(float t) {
+        float reachArm;
+        float reachBody;
+        float reachHead;
+        float reachRz;
+        switch (attack) {
+            case GRAB_LOW -> {
+                reachArm = -0.85F;
+                reachBody = 0.72F;
+                reachHead = 0.35F;
+                reachRz = -0.1F;
+            }
+            case GRAB_HIGH -> {
+                reachArm = -2.75F;
+                reachBody = -0.1F;
+                reachHead = -0.55F;
+                reachRz = 0.15F;
+            }
+            default -> {
+                reachArm = -2.3F;
+                reachBody = 0.05F;
+                reachHead = -0.35F;
+                reachRz = 0.1F;
+            }
+        }
+        float shake = (t > 20 && t < 32) ? Mth.sin(t * 2.3F) * 0.04F : 0.0F;
+        rightArm.rx = track(t, rightArm.rx, 0, B, 14, reachArm, 18, reachArm, 30, -3.0F, 33, -3.1F, 39, -0.8F, 44, -0.8F, 52, B) + shake;
+        rightArm.ry = track(t, rightArm.ry, 0, B, 14, 0.0F, 44, 0.0F, 52, B);
+        rightArm.rz = track(t, rightArm.rz, 0, B, 14, reachRz, 18, reachRz, 30, 0.12F, 39, 0.1F, 52, B);
+        leftArm.rx = track(t, leftArm.rx, 0, B, 14, -0.9F, 30, -0.5F, 39, -1.1F, 52, B);
+        leftArm.rz = track(t, leftArm.rz, 0, B, 14, -0.35F, 30, -0.3F, 39, -0.2F, 52, B);
+        bodyRx = track(t, bodyRx, 0, B, 14, reachBody, 18, reachBody, 30, -0.15F, 33, -0.18F, 39, 0.35F, 44, 0.3F, 52, B);
+        bodyRy = track(t, bodyRy, 0, B, 14, -0.15F, 30, 0.1F, 39, -0.25F, 52, B);
+        headRx = track(t, headRx, 0, B, 14, reachHead, 18, reachHead, 30, -0.45F, 39, 0.3F, 52, B);
+        rightLeg.rx = track(t, rightLeg.rx, 0, B, 14, attack == GRAB_LOW ? -0.35F : 0.0F, 30, 0.1F, 39, -0.3F, 52, B);
+        leftLeg.rx = track(t, leftLeg.rx, 0, B, 14, attack == GRAB_LOW ? 0.3F : 0.0F, 30, -0.1F, 39, 0.25F, 52, B);
     }
 
     // ------------------------------------------------------------------ roar / wake
@@ -250,16 +304,28 @@ public final class GiantPose {
      * (unscaled pixels), for the given body yaw. Mirrors exactly what the renderer does.
      */
     public Vector3f headPointOffset(float bodyYawDegrees, float x, float y, float z) {
-        Matrix4f m = new Matrix4f()
+        Matrix4f m = bodyMatrix(bodyYawDegrees)
+                .translate(0.0F, NECK_Y / 16.0F, 0.0F)
+                .rotateZYX(headRz, headRy, headRx);
+        return m.transformPosition(new Vector3f(x / 16.0F, y / 16.0F, z / 16.0F));
+    }
+
+    /** Like {@link #headPointOffset} for a point in the right arm's space (e.g. the fist). */
+    public Vector3f rightHandOffset(float bodyYawDegrees, float x, float y, float z) {
+        Matrix4f m = bodyMatrix(bodyYawDegrees)
+                .translate(-SHOULDER_X / 16.0F, SHOULDER_Y / 16.0F, 0.0F)
+                .rotateZYX(rightArm.rz, rightArm.ry, rightArm.rx);
+        return m.transformPosition(new Vector3f(x / 16.0F, y / 16.0F, z / 16.0F));
+    }
+
+    private Matrix4f bodyMatrix(float bodyYawDegrees) {
+        return new Matrix4f()
                 .rotateY((180.0F - bodyYawDegrees) * Mth.DEG_TO_RAD)
                 .scale(-1.0F, -1.0F, 1.0F)
                 .translate(0.0F, -1.501F, 0.0F)
                 .translate(0.0F, 24.016F * (1.0F - MODEL_SCALE) / 16.0F, 0.0F)
                 .scale(MODEL_SCALE)
                 .translate(0.0F, (HIP_Y + hipDrop) / 16.0F, 0.0F)
-                .rotateZYX(bodyRz, bodyRy, bodyRx)
-                .translate(0.0F, NECK_Y / 16.0F, 0.0F)
-                .rotateZYX(headRz, headRy, headRx);
-        return m.transformPosition(new Vector3f(x / 16.0F, y / 16.0F, z / 16.0F));
+                .rotateZYX(bodyRz, bodyRy, bodyRx);
     }
 }
