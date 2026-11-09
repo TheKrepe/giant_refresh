@@ -281,7 +281,9 @@ public record GiantTrailFeature(int minPrints, int maxPrints, float giantChance,
         }
         BlockState here = level.getBlockState(pos);
         BlockState below = level.getBlockState(pos.below());
-        if ((here.isAir() || here.is(GRContent.GIANT_CRUSHABLE)) && here.getFluidState().isEmpty() && below.isSolid()) {
+        // only on the ground or the hut floor, never on top of a wall stump
+        boolean floor = below.is(GRContent.FOOTPRINT_REPLACEABLE) || below.is(Blocks.GRAVEL) || below.is(Blocks.COARSE_DIRT);
+        if ((here.isAir() || here.is(GRContent.GIANT_CRUSHABLE)) && here.getFluidState().isEmpty() && floor) {
             level.setBlock(pos, state, 2);
         }
     }
