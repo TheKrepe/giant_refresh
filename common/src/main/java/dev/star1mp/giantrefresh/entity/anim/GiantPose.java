@@ -343,14 +343,15 @@ public final class GiantPose {
         bodyRx = Mth.lerp(w, bodyRx, 0.42F + slow * 0.03F);
         bodyRy = Mth.lerp(w, bodyRy, 0.0F);
         bodyRz = Mth.lerp(w, bodyRz, 0.0F);
-        rightArm.rx = Mth.lerp(w, rightArm.rx, -1.05F + slow * 0.02F);
-        leftArm.rx = Mth.lerp(w, leftArm.rx, -1.05F + slow * 0.02F);
-        rightArm.ry = Mth.lerp(w, rightArm.ry, -0.12F);
-        leftArm.ry = Mth.lerp(w, leftArm.ry, 0.12F);
-        rightArm.rz = Mth.lerp(w, rightArm.rz, 0.12F);
-        leftArm.rz = Mth.lerp(w, leftArm.rz, -0.12F);
-        rightArm.lower = Mth.lerp(w, rightArm.lower, -0.55F);
-        leftArm.lower = Mth.lerp(w, leftArm.lower, -0.55F);
+        // arms folded over the raised knees, forearms resting on top of them
+        rightArm.rx = Mth.lerp(w, rightArm.rx, -0.45F + slow * 0.02F);
+        leftArm.rx = Mth.lerp(w, leftArm.rx, -0.45F + slow * 0.02F);
+        rightArm.ry = Mth.lerp(w, rightArm.ry, 0.0F);
+        leftArm.ry = Mth.lerp(w, leftArm.ry, 0.0F);
+        rightArm.rz = Mth.lerp(w, rightArm.rz, -0.2F);
+        leftArm.rz = Mth.lerp(w, leftArm.rz, 0.2F);
+        rightArm.lower = Mth.lerp(w, rightArm.lower, -1.35F);
+        leftArm.lower = Mth.lerp(w, leftArm.lower, -1.35F);
         headRx = Mth.lerp(w, headRx, 0.55F + slow * 0.06F);
         headRy = Mth.lerp(w, headRy, 0.0F);
         headRz = Mth.lerp(w, headRz, 0.08F);

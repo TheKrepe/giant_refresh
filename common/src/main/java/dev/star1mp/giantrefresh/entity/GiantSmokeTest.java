@@ -136,9 +136,9 @@ public final class GiantSmokeTest {
                     GiantEntity g = buildGiant(level, px - 10 + i * 10, py, pz + 40 + r * 30, (r * 3 + i) % 16, false);
                     if (g != null) {
                         g.setNoAi(true);
-                        g.setYRot(150.0F);
-                        g.yBodyRot = 150.0F;
-                        g.yHeadRot = 150.0F;
+                        g.setYRot(125.0F);
+                        g.yBodyRot = 125.0F;
+                        g.yHeadRot = 125.0F;
                         g.setCustomName(net.minecraft.network.chat.Component.literal(rows[r][i]));
                     }
                 }
@@ -148,17 +148,6 @@ public final class GiantSmokeTest {
         if (clientTicks >= 21 && !player.getAbilities().flying) {
             player.getAbilities().flying = true;
             player.onUpdateAbilities();
-        }
-        if (clientTicks == 760) {
-            player.teleportTo(level, stageX + 5.5, 171.0, stageZ + 9.5, java.util.Set.of(), 32.0F, 4.0F, false);
-        }
-        if (clientTicks == 880) {
-            player.teleportTo(level, stageX + 13.5, 163.0, stageZ + 12.5, java.util.Set.of(), 0.0F, 12.0F, false);
-        }
-        for (int r = 0; r < 3; r++) {
-            if (clientTicks == 1000 + r * 120) {
-                player.teleportTo(level, stageX + 0.5, 167.0, stageZ + 40 + r * 30 - 21.5, java.util.Set.of(), 0.0F, 14.0F, false);
-            }
         }
         if (puncher != null && clientTicks > 40 && clientTicks % 50 == 0) {
             puncher.startAttack(clientTicks % 100 == 0 ? GiantEntity.ATTACK_PUNCH : GiantEntity.ATTACK_STOMP);
@@ -177,9 +166,39 @@ public final class GiantSmokeTest {
         g.setHatColor(hat);
         if (riders && hat >= 0) {
             GiantRiders.spawnRiders(g, level, level.getCurrentDifficultyAt(g.blockPosition()));
+            for (net.minecraft.world.entity.Entity p : g.getPassengers()) {
+                if (p instanceof net.minecraft.world.entity.Mob mob) {
+                    // keep the test crew alive in daylight
+                    mob.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.LEATHER_HELMET));
+                    mob.setPersistenceRequired();
+                }
+            }
         }
         g.setPersistenceRequired();
         level.addFreshEntityWithPassengers(g);
         return g;
+    }
+
+    /** Render test: camera position for screenshot {@code shot}; called on the server thread. */
+    public static void showcaseCamera(ServerLevel level, int shot) {
+        if (level.players().isEmpty()) {
+            return;
+        }
+        net.minecraft.server.level.ServerPlayer player = level.players().get(0);
+        double x = stageX + 0.5;
+        double z = stageZ + 0.5;
+        double y = 160.0;
+        float yaw = 0.0F;
+        float pitch = -24.0F;
+        switch (shot) {
+            case 1 -> { x += 5; y = 171; z += 9; yaw = 32; pitch = 4; }
+            case 2 -> { x += 13 + 17; y = 164; z += 22; yaw = 90; pitch = 8; }
+            case 3 -> { x += 13; y = 165; z += 12; yaw = 0; pitch = 14; }
+            case 4, 5, 6 -> { y = 166; z += 40 + (shot - 4) * 30 - 24; yaw = 0; pitch = 6; }
+            case 7 -> { y = 166; z += 17 + 18; yaw = 180; pitch = 6; }
+            default -> {}
+        }
+        player.teleportTo(level, x, y, z, java.util.Set.of(), yaw, pitch, false);
+        GiantRefresh.LOGGER.info("[CLIENTTEST] camera {} at {} {} {}", shot, x, y, z);
     }
 }

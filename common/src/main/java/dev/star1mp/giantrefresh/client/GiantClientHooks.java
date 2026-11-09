@@ -19,6 +19,7 @@ public final class GiantClientHooks {
     private static long worldStart;
     private static int shots;
     private static boolean stopped;
+    private static int cameraSet;
 
     private GiantClientHooks() {}
 
@@ -68,7 +69,14 @@ public final class GiantClientHooks {
             worldStart = now;
         }
         double seconds = (now - worldStart) / 1.0E9;
-        double[] at = {35.0, 41.0, 47.0, 53.0, 59.0, 65.0};
+        double[] at = {35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0};
+        if (cameraSet < at.length && seconds > at[cameraSet] - 3.0) {
+            final int shot = cameraSet++;
+            var server = mc.getSingleplayerServer();
+            if (server != null) {
+                server.execute(() -> dev.star1mp.giantrefresh.entity.GiantSmokeTest.showcaseCamera(server.overworld(), shot));
+            }
+        }
         if (shots < at.length && seconds > at[shots]) {
             for (net.minecraft.world.entity.Entity e : mc.level.entitiesForRendering()) {
                 if (e instanceof dev.star1mp.giantrefresh.entity.GiantEntity g) {
@@ -83,7 +91,7 @@ public final class GiantClientHooks {
             net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
                     msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name));
             shots++;
-        } else if (shots >= at.length && seconds > 70.0) {
+        } else if (shots >= at.length && seconds > 74.0) {
             dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] done, stopping client");
             stopped = true;
             mc.stop();
