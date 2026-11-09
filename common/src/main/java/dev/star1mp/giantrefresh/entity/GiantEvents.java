@@ -62,6 +62,7 @@ public final class GiantEvents {
             VANILLA_GIANTS.addAll(pending);
         }
         tickNaturalSpawning(level);
+        GiantSmokeTest.tick(level);
     }
 
     private static void convertVanillaGiant(ServerLevel level, Entity old) {

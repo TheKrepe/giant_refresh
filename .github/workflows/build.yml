@@ -42,15 +42,59 @@ jobs:
           find fabric/build/libs neoforge/build/libs -maxdepth 1 -name '*.jar' ! -name '*-sources.jar' -exec cp {} dist/ \; 2>/dev/null || true
           ls -la dist
 
-      - name: Upload mod jars
+      - name: Upload mod jars (Fabric + NeoForge)
         uses: actions/upload-artifact@v4
         with:
           name: giant_refresh-${{ github.run_number }}
           path: dist/*.jar
           if-no-files-found: warn
 
-      - name: Fail if a loader failed
-        if: steps.fabric.outcome != 'success' || steps.neoforge.outcome != 'success'
+      # ---------------------------------------------------------------- dedicated-server smoke tests
+      - name: Prepare server run dirs
         run: |
-          echo "Fabric: ${{ steps.fabric.outcome }}  NeoForge: ${{ steps.neoforge.outcome }}"
+          for d in fabric/run neoforge/run; do
+            mkdir -p $d
+            echo "eula=true" > $d/eula.txt
+            printf "level-seed=giantrefresh\nview-distance=5\nsimulation-distance=5\nspawn-protection=0\nonline-mode=false\nsync-chunk-writes=false\n" > $d/server.properties
+          done
+
+      - name: Smoke test Fabric server
+        id: fabric_smoke
+        if: steps.fabric.outcome == 'success'
+        continue-on-error: true
+        working-directory: fabric
+        env:
+          JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
+        run: |
+          timeout 1200 gradle runServer --no-daemon > server.log 2>&1 || true
+          grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -80 || true
+          grep -q "SMOKETEST.*PASS" server.log
+
+      - name: Smoke test NeoForge server
+        id: neoforge_smoke
+        if: steps.neoforge.outcome == 'success'
+        continue-on-error: true
+        working-directory: neoforge
+        env:
+          JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
+        run: |
+          timeout 1200 gradle runServer --no-daemon > server.log 2>&1 || true
+          grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -80 || true
+          grep -q "SMOKETEST.*PASS" server.log
+
+      - name: Upload server logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-logs-${{ github.run_number }}
+          path: |
+            fabric/server.log
+            neoforge/server.log
+          if-no-files-found: ignore
+
+      - name: Fail if a build or smoke test failed
+        if: steps.fabric.outcome != 'success' || steps.neoforge.outcome != 'success' || steps.fabric_smoke.outcome != 'success' || steps.neoforge_smoke.outcome != 'success'
+        run: |
+          echo "Fabric build: ${{ steps.fabric.outcome }}  NeoForge build: ${{ steps.neoforge.outcome }}"
+          echo "Fabric smoke: ${{ steps.fabric_smoke.outcome }}  NeoForge smoke: ${{ steps.neoforge_smoke.outcome }}"
           exit 1
