@@ -1,0 +1,130 @@
+Compiled from "RavagerRenderer.java"
+public class net.minecraft.client.renderer.entity.RavagerRenderer extends net.minecraft.client.renderer.entity.MobRenderer<net.minecraft.world.entity.monster.Ravager, net.minecraft.client.renderer.entity.state.RavagerRenderState, net.minecraft.client.model.monster.ravager.RavagerModel> {
+  private static final net.minecraft.resources.Identifier TEXTURE_LOCATION;
+
+  public net.minecraft.client.renderer.entity.RavagerRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: new           #1                  // class net/minecraft/client/model/monster/ravager/RavagerModel
+         5: dup
+         6: aload_1
+         7: getstatic     #3                  // Field net/minecraft/client/model/geom/ModelLayers.RAVAGER:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        10: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        13: invokespecial #15                 // Method net/minecraft/client/model/monster/ravager/RavagerModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        16: ldc           #19                 // float 1.1f
+        18: invokespecial #20                 // Method net/minecraft/client/renderer/entity/MobRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/EntityModel;F)V
+        21: return
+
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.RavagerRenderState);
+    Code:
+         0: getstatic     #25                 // Field TEXTURE_LOCATION:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  public net.minecraft.client.renderer.entity.state.RavagerRenderState createRenderState();
+    Code:
+         0: new           #31                 // class net/minecraft/client/renderer/entity/state/RavagerRenderState
+         3: dup
+         4: invokespecial #33                 // Method net/minecraft/client/renderer/entity/state/RavagerRenderState."<init>":()V
+         7: areturn
+
+  public void extractRenderState(net.minecraft.world.entity.monster.Ravager, net.minecraft.client.renderer.entity.state.RavagerRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: fload_3
+         4: invokespecial #36                 // Method net/minecraft/client/renderer/entity/MobRenderer.extractRenderState:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V
+         7: aload_2
+         8: aload_1
+         9: invokevirtual #40                 // Method net/minecraft/world/entity/monster/Ravager.getStunnedTick:()I
+        12: i2f
+        13: fconst_0
+        14: fcmpl
+        15: ifle          28
+        18: aload_1
+        19: invokevirtual #40                 // Method net/minecraft/world/entity/monster/Ravager.getStunnedTick:()I
+        22: i2f
+        23: fload_3
+        24: fsub
+        25: goto          29
+        28: fconst_0
+        29: putfield      #46                 // Field net/minecraft/client/renderer/entity/state/RavagerRenderState.stunnedTicksRemaining:F
+        32: aload_2
+        33: aload_1
+        34: invokevirtual #50                 // Method net/minecraft/world/entity/monster/Ravager.getAttackTick:()I
+        37: i2f
+        38: fconst_0
+        39: fcmpl
+        40: ifle          53
+        43: aload_1
+        44: invokevirtual #50                 // Method net/minecraft/world/entity/monster/Ravager.getAttackTick:()I
+        47: i2f
+        48: fload_3
+        49: fsub
+        50: goto          54
+        53: fconst_0
+        54: putfield      #53                 // Field net/minecraft/client/renderer/entity/state/RavagerRenderState.attackTicksRemaining:F
+        57: aload_1
+        58: invokevirtual #56                 // Method net/minecraft/world/entity/monster/Ravager.getRoarTick:()I
+        61: ifle          84
+        64: aload_2
+        65: bipush        20
+        67: aload_1
+        68: invokevirtual #56                 // Method net/minecraft/world/entity/monster/Ravager.getRoarTick:()I
+        71: isub
+        72: i2f
+        73: fload_3
+        74: fadd
+        75: ldc           #61                 // float 20.0f
+        77: fdiv
+        78: putfield      #62                 // Field net/minecraft/client/renderer/entity/state/RavagerRenderState.roarAnimation:F
+        81: goto          89
+        84: aload_2
+        85: fconst_0
+        86: putfield      #62                 // Field net/minecraft/client/renderer/entity/state/RavagerRenderState.roarAnimation:F
+        89: return
+
+  public void extractRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #41                 // class net/minecraft/world/entity/monster/Ravager
+         5: aload_2
+         6: checkcast     #31                 // class net/minecraft/client/renderer/entity/state/RavagerRenderState
+         9: fload_3
+        10: invokevirtual #65                 // Method extractRenderState:(Lnet/minecraft/world/entity/monster/Ravager;Lnet/minecraft/client/renderer/entity/state/RavagerRenderState;F)V
+        13: return
+
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.LivingEntityRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #31                 // class net/minecraft/client/renderer/entity/state/RavagerRenderState
+         5: invokevirtual #68                 // Method getTextureLocation:(Lnet/minecraft/client/renderer/entity/state/RavagerRenderState;)Lnet/minecraft/resources/Identifier;
+         8: areturn
+
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #41                 // class net/minecraft/world/entity/monster/Ravager
+         5: aload_2
+         6: checkcast     #31                 // class net/minecraft/client/renderer/entity/state/RavagerRenderState
+         9: fload_3
+        10: invokevirtual #65                 // Method extractRenderState:(Lnet/minecraft/world/entity/monster/Ravager;Lnet/minecraft/client/renderer/entity/state/RavagerRenderState;F)V
+        13: return
+
+  public net.minecraft.client.renderer.entity.state.EntityRenderState createRenderState();
+    Code:
+         0: aload_0
+         1: invokevirtual #72                 // Method createRenderState:()Lnet/minecraft/client/renderer/entity/state/RavagerRenderState;
+         4: areturn
+
+  static {};
+    Code:
+         0: ldc           #76                 // String textures/entity/illager/ravager.png
+         2: invokestatic  #78                 // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+         5: putstatic     #25                 // Field TEXTURE_LOCATION:Lnet/minecraft/resources/Identifier;
+         8: return
+}

@@ -1,0 +1,28 @@
+Compiled from "Witch.java"
+public class net.minecraft.world.entity.monster.Witch extends net.minecraft.world.entity.raid.Raider implements net.minecraft.world.entity.monster.RangedAttackMob {
+  private static final net.minecraft.resources.Identifier SPEED_MODIFIER_DRINKING_ID;
+  private static final net.minecraft.world.entity.ai.attributes.AttributeModifier SPEED_MODIFIER_DRINKING;
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> DATA_USING_ITEM;
+  private int usingTime;
+  private net.minecraft.world.entity.ai.goal.target.NearestHealableRaiderTargetGoal<net.minecraft.world.entity.raid.Raider> healRaidersGoal;
+  private net.minecraft.world.entity.ai.goal.target.NearestAttackableWitchTargetGoal<net.minecraft.world.entity.player.Player> attackPlayersGoal;
+  public net.minecraft.world.entity.monster.Witch(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.Witch>, net.minecraft.world.level.Level);
+  protected void registerGoals();
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+  public void setUsingItem(boolean);
+  public boolean isDrinkingPotion();
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  public void aiStep();
+  public net.minecraft.sounds.SoundEvent getCelebrateSound();
+  public void handleEntityEvent(byte);
+  protected float getDamageAfterMagicAbsorb(net.minecraft.world.damagesource.DamageSource, float);
+  public void performRangedAttack(net.minecraft.world.entity.LivingEntity, float);
+  public float rangedAttackUncertainty(net.minecraft.world.level.Level);
+  public void applyRaidBuffs(net.minecraft.server.level.ServerLevel, int, boolean);
+  public boolean canBeLeader();
+  private boolean lambda$registerGoals$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel);
+  static {};
+}

@@ -1,0 +1,41 @@
+Compiled from "Creeper.java"
+public class net.minecraft.world.entity.monster.Creeper extends net.minecraft.world.entity.monster.Monster {
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Integer> DATA_SWELL_DIR;
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> DATA_IS_POWERED;
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> DATA_IS_IGNITED;
+  private static final boolean DEFAULT_IGNITED;
+  private static final boolean DEFAULT_POWERED;
+  private static final short DEFAULT_MAX_SWELL;
+  private static final byte DEFAULT_EXPLOSION_RADIUS;
+  private int oldSwell;
+  private int swell;
+  private int maxSwell;
+  private int explosionRadius;
+  private boolean droppedSkulls;
+  public net.minecraft.world.entity.monster.Creeper(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.Creeper>, net.minecraft.world.level.Level);
+  protected void registerGoals();
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  public int getMaxFallDistance();
+  public boolean causeFallDamage(double, float, net.minecraft.world.damagesource.DamageSource);
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+  public void tick();
+  public void setTarget(net.minecraft.world.entity.LivingEntity);
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+  public boolean killedEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource);
+  public boolean doHurtTarget(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.Entity);
+  public boolean isPowered();
+  public float getSwelling(float);
+  public int getSwellDir();
+  public void setSwellDir(int);
+  public void thunderHit(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LightningBolt);
+  protected net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand);
+  private void explodeCreeper();
+  private void spawnLingeringCloud();
+  public boolean isIgnited();
+  public void ignite();
+  private void lambda$killedEntity$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+  static {};
+}

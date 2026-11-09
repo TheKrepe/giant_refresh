@@ -1,0 +1,9 @@
+Compiled from "ThrownSplashPotion.java"
+public class net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownSplashPotion extends net.minecraft.world.entity.projectile.throwableitemprojectile.AbstractThrownPotion {
+  public net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownSplashPotion(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownSplashPotion>, net.minecraft.world.level.Level);
+  public net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownSplashPotion(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownSplashPotion(net.minecraft.world.level.Level, double, double, double, net.minecraft.world.item.ItemStack);
+  protected net.minecraft.world.item.Item getDefaultItem();
+  public void onHitAsPotion(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack, net.minecraft.world.phys.HitResult);
+  private static int lambda$onHitAsPotion$0(double, float, int);
+}

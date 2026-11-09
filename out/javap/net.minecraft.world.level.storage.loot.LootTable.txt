@@ -1,0 +1,40 @@
+Compiled from "LootTable.java"
+public class net.minecraft.world.level.storage.loot.LootTable implements net.minecraft.world.level.storage.loot.Validatable {
+  private static final org.slf4j.Logger LOGGER;
+  public static final com.mojang.serialization.Codec<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> KEY_CODEC;
+  public static final net.minecraft.util.context.ContextKeySet DEFAULT_PARAM_SET;
+  public static final long RANDOMIZE_SEED;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.storage.loot.LootTable> DIRECT_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.LootTable>> CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.core.HolderSet<net.minecraft.world.level.storage.loot.LootTable>> LIST_CODEC;
+  public static final net.minecraft.world.level.storage.loot.LootTable EMPTY;
+  private final net.minecraft.util.context.ContextKeySet paramSet;
+  private final java.util.Optional<net.minecraft.resources.Identifier> randomSequence;
+  private final java.util.List<net.minecraft.world.level.storage.loot.LootPool> pools;
+  private final java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.functions.LootItemFunction>> modifier;
+  private net.minecraft.world.level.storage.loot.LootTable(net.minecraft.util.context.ContextKeySet, java.util.Optional<net.minecraft.resources.Identifier>, java.util.List<net.minecraft.world.level.storage.loot.LootPool>, java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.functions.LootItemFunction>>);
+  public static java.util.function.Consumer<net.minecraft.world.item.ItemStack> createStackSplitter(net.minecraft.server.level.ServerLevel, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItemsRaw(net.minecraft.world.level.storage.loot.LootParams, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItemsRaw(net.minecraft.world.level.storage.loot.LootContext, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItems(net.minecraft.world.level.storage.loot.LootParams, long, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItems(net.minecraft.world.level.storage.loot.LootParams, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItems(net.minecraft.world.level.storage.loot.LootContext, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootParams, net.minecraft.util.RandomSource);
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootParams, long);
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootParams);
+  private it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootContext);
+  public net.minecraft.util.context.ContextKeySet getParamSet();
+  public void validate(net.minecraft.world.level.storage.loot.ValidationContext);
+  public void fill(net.minecraft.world.Container, net.minecraft.world.level.storage.loot.LootParams, long);
+  private void shuffleAndSplitItems(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, int, net.minecraft.util.RandomSource);
+  private java.util.List<java.lang.Integer> getAvailableSlots(net.minecraft.world.Container, net.minecraft.util.RandomSource);
+  public static net.minecraft.world.level.storage.loot.LootTable$Builder lootTable();
+  private static void lambda$createStackSplitter$0(net.minecraft.server.level.ServerLevel, java.util.function.Consumer, net.minecraft.world.item.ItemStack);
+  private static com.mojang.serialization.Codec lambda$static$0();
+  private static com.mojang.datafixers.kinds.App lambda$static$1(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+  private static java.util.Optional lambda$static$5(net.minecraft.world.level.storage.loot.LootTable);
+  private static java.util.List lambda$static$4(net.minecraft.world.level.storage.loot.LootTable);
+  private static java.util.Optional lambda$static$3(net.minecraft.world.level.storage.loot.LootTable);
+  private static net.minecraft.util.context.ContextKeySet lambda$static$2(net.minecraft.world.level.storage.loot.LootTable);
+  static {};
+}

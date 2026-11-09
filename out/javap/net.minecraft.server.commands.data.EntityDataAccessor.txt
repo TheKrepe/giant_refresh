@@ -1,0 +1,17 @@
+Compiled from "EntityDataAccessor.java"
+public class net.minecraft.server.commands.data.EntityDataAccessor implements net.minecraft.server.commands.data.DataAccessor {
+  private static final org.slf4j.Logger LOGGER;
+  private static final com.mojang.brigadier.exceptions.SimpleCommandExceptionType ERROR_NO_PLAYERS;
+  public static final net.minecraft.server.commands.ArgProvider$Factory<net.minecraft.server.commands.data.DataAccessor> PROVIDER;
+  private final net.minecraft.world.entity.Entity entity;
+  public net.minecraft.server.commands.data.EntityDataAccessor(net.minecraft.world.entity.Entity);
+  public void setData(net.minecraft.nbt.CompoundTag) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  public net.minecraft.nbt.CompoundTag getData();
+  public net.minecraft.network.chat.Component getModifiedSuccess();
+  public net.minecraft.network.chat.Component getPrintSuccess(net.minecraft.nbt.Tag);
+  public net.minecraft.network.chat.Component getPrintSuccess(net.minecraft.commands.arguments.NbtPathArgument$NbtPath, double, int);
+  private static net.minecraft.server.commands.ArgProvider lambda$static$0(java.lang.String);
+  private static net.minecraft.server.commands.data.DataAccessor lambda$static$2(java.lang.String, com.mojang.brigadier.context.CommandContext) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  private static com.mojang.brigadier.builder.ArgumentBuilder lambda$static$1(java.lang.String);
+  static {};
+}

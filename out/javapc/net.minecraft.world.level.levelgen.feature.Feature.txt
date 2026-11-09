@@ -1,0 +1,94 @@
+Compiled from "Feature.java"
+public interface net.minecraft.world.level.levelgen.feature.Feature {
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.levelgen.feature.Feature> DIRECT_CODEC;
+
+  public static final com.mojang.serialization.Codec<net.minecraft.core.Holder<net.minecraft.world.level.levelgen.feature.Feature>> CODEC;
+
+  public static final com.mojang.serialization.Codec<net.minecraft.core.HolderSet<net.minecraft.world.level.levelgen.feature.Feature>> LIST_CODEC;
+
+  public abstract com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.levelgen.feature.Feature> codec();
+
+  public abstract boolean place(net.minecraft.world.level.WorldGenLevel, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.util.RandomSource, net.minecraft.core.BlockPos);
+
+  public default java.util.stream.Stream<net.minecraft.core.Holder<net.minecraft.world.level.levelgen.feature.Feature>> getSubFeatures();
+    Code:
+         0: invokestatic  #1                  // InterfaceMethod java/util/stream/Stream.empty:()Ljava/util/stream/Stream;
+         3: areturn
+
+  public default void setBlock(net.minecraft.world.level.LevelWriter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_1
+         1: aload_2
+         2: aload_3
+         3: invokeinterface #7,  3            // InterfaceMethod net/minecraft/world/level/LevelWriter.setBlockAndUpdate:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z
+         8: pop
+         9: return
+
+  public default void safeSetBlock(net.minecraft.world.level.WorldGenLevel, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState>);
+    Code:
+         0: aload         4
+         2: aload_1
+         3: aload_2
+         4: invokeinterface #13,  2           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+         9: invokeinterface #19,  2           // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+        14: ifeq          27
+        17: aload_1
+        18: aload_2
+        19: aload_3
+        20: iconst_2
+        21: invokeinterface #27,  4           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.setBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z
+        26: pop
+        27: return
+
+  public default void markAboveForPostProcessing(net.minecraft.world.level.WorldGenLevel, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_2
+         1: invokevirtual #31                 // Method net/minecraft/core/BlockPos.mutable:()Lnet/minecraft/core/BlockPos$MutableBlockPos;
+         4: astore_3
+         5: iconst_0
+         6: istore        4
+         8: iload         4
+        10: iconst_2
+        11: if_icmpge     53
+        14: aload_3
+        15: getstatic     #37                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+        18: invokevirtual #43                 // Method net/minecraft/core/BlockPos$MutableBlockPos.move:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+        21: pop
+        22: aload_1
+        23: aload_3
+        24: invokeinterface #13,  2           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        29: invokevirtual #49                 // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+        32: ifeq          36
+        35: return
+        36: aload_1
+        37: aload_3
+        38: invokeinterface #55,  2           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.getChunk:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/chunk/ChunkAccess;
+        43: aload_3
+        44: invokevirtual #59                 // Method net/minecraft/world/level/chunk/ChunkAccess.markPosForPostProcessing:(Lnet/minecraft/core/BlockPos;)V
+        47: iinc          4, 1
+        50: goto          8
+        53: return
+
+  private static com.mojang.serialization.MapCodec lambda$static$0(com.mojang.serialization.MapCodec);
+    Code:
+         0: aload_0
+         1: areturn
+
+  static {};
+    Code:
+         0: getstatic     #65                 // Field net/minecraft/core/registries/BuiltInRegistries.FEATURE_TYPE:Lnet/minecraft/core/Registry;
+         3: invokeinterface #71,  1           // InterfaceMethod net/minecraft/core/Registry.byNameCodec:()Lcom/mojang/serialization/Codec;
+         8: invokedynamic #77,  0             // InvokeDynamic #0:apply:()Ljava/util/function/Function;
+        13: invokedynamic #81,  0             // InvokeDynamic #1:apply:()Ljava/util/function/Function;
+        18: invokeinterface #82,  3           // InterfaceMethod com/mojang/serialization/Codec.dispatch:(Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;
+        23: putstatic     #88                 // Field DIRECT_CODEC:Lcom/mojang/serialization/Codec;
+        26: getstatic     #94                 // Field net/minecraft/core/registries/Registries.FEATURE:Lnet/minecraft/resources/ResourceKey;
+        29: getstatic     #88                 // Field DIRECT_CODEC:Lcom/mojang/serialization/Codec;
+        32: invokestatic  #100                // Method net/minecraft/core/registries/codec/RegistryCodecs.holder:(Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;
+        35: putstatic     #106                // Field CODEC:Lcom/mojang/serialization/Codec;
+        38: getstatic     #94                 // Field net/minecraft/core/registries/Registries.FEATURE:Lnet/minecraft/resources/ResourceKey;
+        41: getstatic     #88                 // Field DIRECT_CODEC:Lcom/mojang/serialization/Codec;
+        44: invokestatic  #109                // Method net/minecraft/core/registries/codec/RegistryCodecs.holderSet:(Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;
+        47: putstatic     #112                // Field LIST_CODEC:Lcom/mojang/serialization/Codec;
+        50: return
+}

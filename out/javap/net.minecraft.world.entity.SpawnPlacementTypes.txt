@@ -1,0 +1,11 @@
+Compiled from "SpawnPlacementTypes.java"
+public interface net.minecraft.world.entity.SpawnPlacementTypes {
+  public static final net.minecraft.world.entity.SpawnPlacementType NO_RESTRICTIONS;
+  public static final net.minecraft.world.entity.SpawnPlacementType IN_WATER;
+  public static final net.minecraft.world.entity.SpawnPlacementType IN_LAVA;
+  public static final net.minecraft.world.entity.SpawnPlacementType ON_GROUND;
+  private static boolean lambda$static$2(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntityType);
+  private static boolean lambda$static$1(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntityType);
+  private static boolean lambda$static$0(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntityType);
+  static {};
+}

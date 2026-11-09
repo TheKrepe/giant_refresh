@@ -1,0 +1,149 @@
+Compiled from "EntityRendererProvider.java"
+public class net.minecraft.client.renderer.entity.EntityRendererProvider$Context {
+  private final net.minecraft.client.renderer.entity.EntityRenderDispatcher entityRenderDispatcher;
+
+  private final net.minecraft.client.renderer.block.BlockModelResolver blockModelResolver;
+
+  private final net.minecraft.client.renderer.item.ItemModelResolver itemModelResolver;
+
+  private final net.minecraft.client.renderer.MapRenderer mapRenderer;
+
+  private final net.minecraft.server.packs.resources.ResourceManager resourceManager;
+
+  private final net.minecraft.client.model.geom.EntityModelSet modelSet;
+
+  private final net.minecraft.client.resources.model.EquipmentAssetManager equipmentAssets;
+
+  private final net.minecraft.client.gui.Font font;
+
+  private final net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer equipmentRenderer;
+
+  private final net.minecraft.client.resources.model.sprite.AtlasManager atlasManager;
+
+  private final net.minecraft.client.renderer.PlayerSkinRenderCache playerSkinRenderCache;
+
+  public net.minecraft.client.renderer.entity.EntityRendererProvider$Context(net.minecraft.client.renderer.entity.EntityRenderDispatcher, net.minecraft.client.renderer.block.BlockModelResolver, net.minecraft.client.renderer.item.ItemModelResolver, net.minecraft.client.renderer.MapRenderer, net.minecraft.server.packs.resources.ResourceManager, net.minecraft.client.model.geom.EntityModelSet, net.minecraft.client.resources.model.EquipmentAssetManager, net.minecraft.client.resources.model.sprite.AtlasManager, net.minecraft.client.gui.Font, net.minecraft.client.renderer.PlayerSkinRenderCache, net.minecraft.client.resources.palette.PalettedTextureManager);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field entityRenderDispatcher:Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field blockModelResolver:Lnet/minecraft/client/renderer/block/BlockModelResolver;
+        14: aload_0
+        15: aload_3
+        16: putfield      #17                 // Field itemModelResolver:Lnet/minecraft/client/renderer/item/ItemModelResolver;
+        19: aload_0
+        20: aload         4
+        22: putfield      #21                 // Field mapRenderer:Lnet/minecraft/client/renderer/MapRenderer;
+        25: aload_0
+        26: aload         5
+        28: putfield      #25                 // Field resourceManager:Lnet/minecraft/server/packs/resources/ResourceManager;
+        31: aload_0
+        32: aload         6
+        34: putfield      #29                 // Field modelSet:Lnet/minecraft/client/model/geom/EntityModelSet;
+        37: aload_0
+        38: aload         7
+        40: putfield      #33                 // Field equipmentAssets:Lnet/minecraft/client/resources/model/EquipmentAssetManager;
+        43: aload_0
+        44: aload         9
+        46: putfield      #37                 // Field font:Lnet/minecraft/client/gui/Font;
+        49: aload_0
+        50: aload         8
+        52: putfield      #41                 // Field atlasManager:Lnet/minecraft/client/resources/model/sprite/AtlasManager;
+        55: aload_0
+        56: aload         10
+        58: putfield      #45                 // Field playerSkinRenderCache:Lnet/minecraft/client/renderer/PlayerSkinRenderCache;
+        61: aload_0
+        62: new           #49                 // class net/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer
+        65: dup
+        66: aload         7
+        68: aload         11
+        70: invokespecial #51                 // Method net/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer."<init>":(Lnet/minecraft/client/resources/model/EquipmentAssetManager;Lnet/minecraft/client/resources/palette/PalettedTextureManager;)V
+        73: putfield      #54                 // Field equipmentRenderer:Lnet/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer;
+        76: return
+
+  public net.minecraft.client.renderer.entity.EntityRenderDispatcher getEntityRenderDispatcher();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field entityRenderDispatcher:Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;
+         4: areturn
+
+  public net.minecraft.client.renderer.block.BlockModelResolver getBlockModelResolver();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field blockModelResolver:Lnet/minecraft/client/renderer/block/BlockModelResolver;
+         4: areturn
+
+  public net.minecraft.client.renderer.item.ItemModelResolver getItemModelResolver();
+    Code:
+         0: aload_0
+         1: getfield      #17                 // Field itemModelResolver:Lnet/minecraft/client/renderer/item/ItemModelResolver;
+         4: areturn
+
+  public net.minecraft.client.renderer.MapRenderer getMapRenderer();
+    Code:
+         0: aload_0
+         1: getfield      #21                 // Field mapRenderer:Lnet/minecraft/client/renderer/MapRenderer;
+         4: areturn
+
+  public net.minecraft.server.packs.resources.ResourceManager getResourceManager();
+    Code:
+         0: aload_0
+         1: getfield      #25                 // Field resourceManager:Lnet/minecraft/server/packs/resources/ResourceManager;
+         4: areturn
+
+  public net.minecraft.client.model.geom.EntityModelSet getModelSet();
+    Code:
+         0: aload_0
+         1: getfield      #29                 // Field modelSet:Lnet/minecraft/client/model/geom/EntityModelSet;
+         4: areturn
+
+  public net.minecraft.client.resources.model.EquipmentAssetManager getEquipmentAssets();
+    Code:
+         0: aload_0
+         1: getfield      #33                 // Field equipmentAssets:Lnet/minecraft/client/resources/model/EquipmentAssetManager;
+         4: areturn
+
+  public net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer getEquipmentRenderer();
+    Code:
+         0: aload_0
+         1: getfield      #54                 // Field equipmentRenderer:Lnet/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer;
+         4: areturn
+
+  public net.minecraft.client.resources.model.sprite.SpriteGetter getSprites();
+    Code:
+         0: aload_0
+         1: getfield      #41                 // Field atlasManager:Lnet/minecraft/client/resources/model/sprite/AtlasManager;
+         4: areturn
+
+  public net.minecraft.client.renderer.texture.TextureAtlas getAtlas(net.minecraft.resources.Identifier);
+    Code:
+         0: aload_0
+         1: getfield      #41                 // Field atlasManager:Lnet/minecraft/client/resources/model/sprite/AtlasManager;
+         4: aload_1
+         5: invokevirtual #58                 // Method net/minecraft/client/resources/model/sprite/AtlasManager.getAtlasOrThrow:(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/texture/TextureAtlas;
+         8: areturn
+
+  public net.minecraft.client.model.geom.ModelPart bakeLayer(net.minecraft.client.model.geom.ModelLayerLocation);
+    Code:
+         0: aload_0
+         1: getfield      #29                 // Field modelSet:Lnet/minecraft/client/model/geom/EntityModelSet;
+         4: aload_1
+         5: invokevirtual #64                 // Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+         8: areturn
+
+  public net.minecraft.client.gui.Font getFont();
+    Code:
+         0: aload_0
+         1: getfield      #37                 // Field font:Lnet/minecraft/client/gui/Font;
+         4: areturn
+
+  public net.minecraft.client.renderer.PlayerSkinRenderCache getPlayerSkinRenderCache();
+    Code:
+         0: aload_0
+         1: getfield      #45                 // Field playerSkinRenderCache:Lnet/minecraft/client/renderer/PlayerSkinRenderCache;
+         4: areturn
+}

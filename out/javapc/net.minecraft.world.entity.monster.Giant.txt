@@ -1,0 +1,34 @@
+Compiled from "Giant.java"
+public class net.minecraft.world.entity.monster.Giant extends net.minecraft.world.entity.monster.Monster {
+  public net.minecraft.world.entity.monster.Giant(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.Giant>, net.minecraft.world.level.Level);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #1                  // Method net/minecraft/world/entity/monster/Monster."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+         6: return
+
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+    Code:
+         0: invokestatic  #7                  // Method net/minecraft/world/entity/monster/Monster.createMonsterAttributes:()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+         3: getstatic     #11                 // Field net/minecraft/world/entity/ai/attributes/Attributes.MAX_HEALTH:Lnet/minecraft/core/Holder;
+         6: ldc2_w        #17                 // double 100.0d
+         9: invokevirtual #19                 // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        12: getstatic     #25                 // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        15: ldc2_w        #28                 // double 0.5d
+        18: invokevirtual #19                 // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        21: getstatic     #30                 // Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;
+        24: ldc2_w        #33                 // double 50.0d
+        27: invokevirtual #19                 // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        30: getstatic     #35                 // Field net/minecraft/world/entity/ai/attributes/Attributes.CAMERA_DISTANCE:Lnet/minecraft/core/Holder;
+        33: ldc2_w        #38                 // double 16.0d
+        36: invokevirtual #19                 // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        39: areturn
+
+  public float getWalkTargetValue(net.minecraft.core.BlockPos, net.minecraft.world.level.LevelReader);
+    Code:
+         0: aload_2
+         1: aload_1
+         2: invokeinterface #40,  2           // InterfaceMethod net/minecraft/world/level/LevelReader.getPathfindingCostFromLightLevels:(Lnet/minecraft/core/BlockPos;)F
+         7: freturn
+}

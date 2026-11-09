@@ -1,0 +1,283 @@
+Compiled from "PartPose.java"
+public final class net.minecraft.client.model.geom.PartPose extends java.lang.Record {
+  private final float x;
+
+  private final float y;
+
+  private final float z;
+
+  private final float xRot;
+
+  private final float yRot;
+
+  private final float zRot;
+
+  private final float xScale;
+
+  private final float yScale;
+
+  private final float zScale;
+
+  public static final net.minecraft.client.model.geom.PartPose ZERO;
+
+  public net.minecraft.client.model.geom.PartPose(float, float, float, float, float, float, float, float, float);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: fload_1
+         6: putfield      #7                  // Field x:F
+         9: aload_0
+        10: fload_2
+        11: putfield      #13                 // Field y:F
+        14: aload_0
+        15: fload_3
+        16: putfield      #16                 // Field z:F
+        19: aload_0
+        20: fload         4
+        22: putfield      #19                 // Field xRot:F
+        25: aload_0
+        26: fload         5
+        28: putfield      #22                 // Field yRot:F
+        31: aload_0
+        32: fload         6
+        34: putfield      #25                 // Field zRot:F
+        37: aload_0
+        38: fload         7
+        40: putfield      #28                 // Field xScale:F
+        43: aload_0
+        44: fload         8
+        46: putfield      #31                 // Field yScale:F
+        49: aload_0
+        50: fload         9
+        52: putfield      #34                 // Field zScale:F
+        55: return
+
+  public static net.minecraft.client.model.geom.PartPose offset(float, float, float);
+    Code:
+         0: fload_0
+         1: fload_1
+         2: fload_2
+         3: fconst_0
+         4: fconst_0
+         5: fconst_0
+         6: invokestatic  #37                 // Method offsetAndRotation:(FFFFFF)Lnet/minecraft/client/model/geom/PartPose;
+         9: areturn
+
+  public static net.minecraft.client.model.geom.PartPose rotation(float, float, float);
+    Code:
+         0: fconst_0
+         1: fconst_0
+         2: fconst_0
+         3: fload_0
+         4: fload_1
+         5: fload_2
+         6: invokestatic  #37                 // Method offsetAndRotation:(FFFFFF)Lnet/minecraft/client/model/geom/PartPose;
+         9: areturn
+
+  public static net.minecraft.client.model.geom.PartPose offsetAndRotation(float, float, float, float, float, float);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/PartPose
+         3: dup
+         4: fload_0
+         5: fload_1
+         6: fload_2
+         7: fload_3
+         8: fload         4
+        10: fload         5
+        12: fconst_1
+        13: fconst_1
+        14: fconst_1
+        15: invokespecial #41                 // Method "<init>":(FFFFFFFFF)V
+        18: areturn
+
+  public net.minecraft.client.model.geom.PartPose translated(float, float, float);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/PartPose
+         3: dup
+         4: aload_0
+         5: getfield      #7                  // Field x:F
+         8: fload_1
+         9: fadd
+        10: aload_0
+        11: getfield      #13                 // Field y:F
+        14: fload_2
+        15: fadd
+        16: aload_0
+        17: getfield      #16                 // Field z:F
+        20: fload_3
+        21: fadd
+        22: aload_0
+        23: getfield      #19                 // Field xRot:F
+        26: aload_0
+        27: getfield      #22                 // Field yRot:F
+        30: aload_0
+        31: getfield      #25                 // Field zRot:F
+        34: aload_0
+        35: getfield      #28                 // Field xScale:F
+        38: aload_0
+        39: getfield      #31                 // Field yScale:F
+        42: aload_0
+        43: getfield      #34                 // Field zScale:F
+        46: invokespecial #41                 // Method "<init>":(FFFFFFFFF)V
+        49: areturn
+
+  public net.minecraft.client.model.geom.PartPose withScale(float);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/PartPose
+         3: dup
+         4: aload_0
+         5: getfield      #7                  // Field x:F
+         8: aload_0
+         9: getfield      #13                 // Field y:F
+        12: aload_0
+        13: getfield      #16                 // Field z:F
+        16: aload_0
+        17: getfield      #19                 // Field xRot:F
+        20: aload_0
+        21: getfield      #22                 // Field yRot:F
+        24: aload_0
+        25: getfield      #25                 // Field zRot:F
+        28: fload_1
+        29: fload_1
+        30: fload_1
+        31: invokespecial #41                 // Method "<init>":(FFFFFFFFF)V
+        34: areturn
+
+  public net.minecraft.client.model.geom.PartPose scaled(float);
+    Code:
+         0: fload_1
+         1: fconst_1
+         2: fcmpl
+         3: ifne          8
+         6: aload_0
+         7: areturn
+         8: aload_0
+         9: fload_1
+        10: fload_1
+        11: fload_1
+        12: invokevirtual #44                 // Method scaled:(FFF)Lnet/minecraft/client/model/geom/PartPose;
+        15: areturn
+
+  public net.minecraft.client.model.geom.PartPose scaled(float, float, float);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/PartPose
+         3: dup
+         4: aload_0
+         5: getfield      #7                  // Field x:F
+         8: fload_1
+         9: fmul
+        10: aload_0
+        11: getfield      #13                 // Field y:F
+        14: fload_2
+        15: fmul
+        16: aload_0
+        17: getfield      #16                 // Field z:F
+        20: fload_3
+        21: fmul
+        22: aload_0
+        23: getfield      #19                 // Field xRot:F
+        26: aload_0
+        27: getfield      #22                 // Field yRot:F
+        30: aload_0
+        31: getfield      #25                 // Field zRot:F
+        34: aload_0
+        35: getfield      #28                 // Field xScale:F
+        38: fload_1
+        39: fmul
+        40: aload_0
+        41: getfield      #31                 // Field yScale:F
+        44: fload_2
+        45: fmul
+        46: aload_0
+        47: getfield      #34                 // Field zScale:F
+        50: fload_3
+        51: fmul
+        52: invokespecial #41                 // Method "<init>":(FFFFFFFFF)V
+        55: areturn
+
+  public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #48,  0             // InvokeDynamic #0:toString:(Lnet/minecraft/client/model/geom/PartPose;)Ljava/lang/String;
+         6: areturn
+
+  public final int hashCode();
+    Code:
+         0: aload_0
+         1: invokedynamic #52,  0             // InvokeDynamic #0:hashCode:(Lnet/minecraft/client/model/geom/PartPose;)I
+         6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #56,  0             // InvokeDynamic #0:equals:(Lnet/minecraft/client/model/geom/PartPose;Ljava/lang/Object;)Z
+         7: ireturn
+
+  public float x();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field x:F
+         4: freturn
+
+  public float y();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field y:F
+         4: freturn
+
+  public float z();
+    Code:
+         0: aload_0
+         1: getfield      #16                 // Field z:F
+         4: freturn
+
+  public float xRot();
+    Code:
+         0: aload_0
+         1: getfield      #19                 // Field xRot:F
+         4: freturn
+
+  public float yRot();
+    Code:
+         0: aload_0
+         1: getfield      #22                 // Field yRot:F
+         4: freturn
+
+  public float zRot();
+    Code:
+         0: aload_0
+         1: getfield      #25                 // Field zRot:F
+         4: freturn
+
+  public float xScale();
+    Code:
+         0: aload_0
+         1: getfield      #28                 // Field xScale:F
+         4: freturn
+
+  public float yScale();
+    Code:
+         0: aload_0
+         1: getfield      #31                 // Field yScale:F
+         4: freturn
+
+  public float zScale();
+    Code:
+         0: aload_0
+         1: getfield      #34                 // Field zScale:F
+         4: freturn
+
+  static {};
+    Code:
+         0: fconst_0
+         1: fconst_0
+         2: fconst_0
+         3: fconst_0
+         4: fconst_0
+         5: fconst_0
+         6: invokestatic  #37                 // Method offsetAndRotation:(FFFFFF)Lnet/minecraft/client/model/geom/PartPose;
+         9: putstatic     #60                 // Field ZERO:Lnet/minecraft/client/model/geom/PartPose;
+        12: return
+}

@@ -1,0 +1,25 @@
+Compiled from "Arrow.java"
+public class net.minecraft.world.entity.projectile.arrow.Arrow extends net.minecraft.world.entity.projectile.arrow.AbstractArrow {
+  private static final int EXPOSED_POTION_DECAY_TIME;
+  private static final int NO_EFFECT_COLOR;
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Integer> ID_EFFECT_COLOR;
+  private static final byte EVENT_POTION_PUFF;
+  public net.minecraft.world.entity.projectile.arrow.Arrow(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.projectile.arrow.Arrow>, net.minecraft.world.level.Level);
+  public net.minecraft.world.entity.projectile.arrow.Arrow(net.minecraft.world.level.Level, double, double, double, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.entity.projectile.arrow.Arrow(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  private net.minecraft.world.item.alchemy.PotionContents getPotionContents();
+  private float getPotionDurationScale();
+  private void setPotionContents(net.minecraft.world.item.alchemy.PotionContents);
+  protected void setPickupItemStack(net.minecraft.world.item.ItemStack);
+  private void updateColor();
+  public void addEffect(net.minecraft.world.effect.MobEffectInstance);
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  public void tick();
+  private void makeParticle(int);
+  public int getColor();
+  protected void doPostHurtEffects(net.minecraft.world.entity.LivingEntity);
+  protected net.minecraft.world.item.ItemStack getDefaultPickupItem();
+  public void handleEntityEvent(byte);
+  private static void lambda$doPostHurtEffects$0(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.Entity, net.minecraft.world.effect.MobEffectInstance);
+  static {};
+}

@@ -1,0 +1,201 @@
+Compiled from "BlockBlobFeature.java"
+public final class net.minecraft.world.level.levelgen.feature.BlockBlobFeature extends java.lang.Record implements net.minecraft.world.level.levelgen.feature.Feature {
+  private final net.minecraft.world.level.block.state.BlockState state;
+
+  private final net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate canPlaceOn;
+
+  public static final com.mojang.serialization.MapCodec<net.minecraft.world.level.levelgen.feature.BlockBlobFeature> CODEC;
+
+  public net.minecraft.world.level.levelgen.feature.BlockBlobFeature(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field state:Lnet/minecraft/world/level/block/state/BlockState;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field canPlaceOn:Lnet/minecraft/world/level/levelgen/blockpredicates/BlockPredicate;
+        14: return
+
+  public com.mojang.serialization.MapCodec<net.minecraft.world.level.levelgen.feature.BlockBlobFeature> codec();
+    Code:
+         0: getstatic     #17                 // Field CODEC:Lcom/mojang/serialization/MapCodec;
+         3: areturn
+
+  public boolean place(net.minecraft.world.level.WorldGenLevel, net.minecraft.world.level.chunk.ChunkGenerator, net.minecraft.util.RandomSource, net.minecraft.core.BlockPos);
+    Code:
+         0: aload         4
+         2: invokevirtual #21                 // Method net/minecraft/core/BlockPos.getY:()I
+         5: aload_1
+         6: invokeinterface #27,  1           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.getMinY:()I
+        11: iconst_3
+        12: iadd
+        13: if_icmple     47
+        16: aload_0
+        17: getfield      #13                 // Field canPlaceOn:Lnet/minecraft/world/level/levelgen/blockpredicates/BlockPredicate;
+        20: aload_1
+        21: aload         4
+        23: invokevirtual #32                 // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+        26: invokeinterface #36,  3           // InterfaceMethod net/minecraft/world/level/levelgen/blockpredicates/BlockPredicate.test:(Ljava/lang/Object;Ljava/lang/Object;)Z
+        31: ifeq          37
+        34: goto          47
+        37: aload         4
+        39: invokevirtual #32                 // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+        42: astore        4
+        44: goto          0
+        47: aload         4
+        49: invokevirtual #21                 // Method net/minecraft/core/BlockPos.getY:()I
+        52: aload_1
+        53: invokeinterface #27,  1           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.getMinY:()I
+        58: iconst_3
+        59: iadd
+        60: if_icmpgt     65
+        63: iconst_0
+        64: ireturn
+        65: iconst_0
+        66: istore        5
+        68: iload         5
+        70: iconst_3
+        71: if_icmpge     247
+        74: aload_3
+        75: iconst_2
+        76: invokeinterface #42,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        81: istore        6
+        83: aload_3
+        84: iconst_2
+        85: invokeinterface #42,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        90: istore        7
+        92: aload_3
+        93: iconst_2
+        94: invokeinterface #42,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        99: istore        8
+       101: iload         6
+       103: iload         7
+       105: iadd
+       106: iload         8
+       108: iadd
+       109: i2f
+       110: ldc           #48                 // float 0.333f
+       112: fmul
+       113: ldc           #49                 // float 0.5f
+       115: fadd
+       116: fstore        9
+       118: aload         4
+       120: iload         6
+       122: ineg
+       123: iload         7
+       125: ineg
+       126: iload         8
+       128: ineg
+       129: invokevirtual #50                 // Method net/minecraft/core/BlockPos.offset:(III)Lnet/minecraft/core/BlockPos;
+       132: aload         4
+       134: iload         6
+       136: iload         7
+       138: iload         8
+       140: invokevirtual #50                 // Method net/minecraft/core/BlockPos.offset:(III)Lnet/minecraft/core/BlockPos;
+       143: invokestatic  #54                 // Method net/minecraft/core/BlockPos.betweenClosed:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)Ljava/lang/Iterable;
+       146: invokeinterface #58,  1           // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+       151: astore        10
+       153: aload         10
+       155: invokeinterface #64,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+       160: ifeq          208
+       163: aload         10
+       165: invokeinterface #70,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       170: checkcast     #22                 // class net/minecraft/core/BlockPos
+       173: astore        11
+       175: aload         11
+       177: aload         4
+       179: invokevirtual #74                 // Method net/minecraft/core/BlockPos.distSqr:(Lnet/minecraft/core/Vec3i;)D
+       182: fload         9
+       184: fload         9
+       186: fmul
+       187: f2d
+       188: dcmpg
+       189: ifgt          205
+       192: aload_1
+       193: aload         11
+       195: aload_0
+       196: getfield      #7                  // Field state:Lnet/minecraft/world/level/block/state/BlockState;
+       199: invokeinterface #78,  3           // InterfaceMethod net/minecraft/world/level/WorldGenLevel.setBlockAndUpdate:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z
+       204: pop
+       205: goto          153
+       208: aload         4
+       210: iconst_m1
+       211: aload_3
+       212: iconst_2
+       213: invokeinterface #42,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+       218: iadd
+       219: aload_3
+       220: iconst_2
+       221: invokeinterface #42,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+       226: ineg
+       227: iconst_m1
+       228: aload_3
+       229: iconst_2
+       230: invokeinterface #42,  2           // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+       235: iadd
+       236: invokevirtual #50                 // Method net/minecraft/core/BlockPos.offset:(III)Lnet/minecraft/core/BlockPos;
+       239: astore        4
+       241: iinc          5, 1
+       244: goto          68
+       247: iconst_1
+       248: ireturn
+
+  public final java.lang.String toString();
+    Code:
+         0: aload_0
+         1: invokedynamic #82,  0             // InvokeDynamic #0:toString:(Lnet/minecraft/world/level/levelgen/feature/BlockBlobFeature;)Ljava/lang/String;
+         6: areturn
+
+  public final int hashCode();
+    Code:
+         0: aload_0
+         1: invokedynamic #86,  0             // InvokeDynamic #0:hashCode:(Lnet/minecraft/world/level/levelgen/feature/BlockBlobFeature;)I
+         6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #90,  0             // InvokeDynamic #0:equals:(Lnet/minecraft/world/level/levelgen/feature/BlockBlobFeature;Ljava/lang/Object;)Z
+         7: ireturn
+
+  public net.minecraft.world.level.block.state.BlockState state();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field state:Lnet/minecraft/world/level/block/state/BlockState;
+         4: areturn
+
+  public net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate canPlaceOn();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field canPlaceOn:Lnet/minecraft/world/level/levelgen/blockpredicates/BlockPredicate;
+         4: areturn
+
+  private static com.mojang.datafixers.kinds.App lambda$static$0(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+    Code:
+         0: aload_0
+         1: getstatic     #94                 // Field net/minecraft/world/level/block/state/BlockState.CODEC:Lcom/mojang/serialization/Codec;
+         4: ldc           #99                 // String state
+         6: invokeinterface #100,  2          // InterfaceMethod com/mojang/serialization/Codec.fieldOf:(Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;
+        11: invokedynamic #106,  0            // InvokeDynamic #1:apply:()Ljava/util/function/Function;
+        16: invokevirtual #110                // Method com/mojang/serialization/MapCodec.forGetter:(Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/RecordCodecBuilder;
+        19: getstatic     #116                // Field net/minecraft/world/level/levelgen/blockpredicates/BlockPredicate.CODEC:Lcom/mojang/serialization/Codec;
+        22: ldc           #117                // String can_place_on
+        24: invokeinterface #100,  2          // InterfaceMethod com/mojang/serialization/Codec.fieldOf:(Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;
+        29: invokedynamic #119,  0            // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+        34: invokevirtual #110                // Method com/mojang/serialization/MapCodec.forGetter:(Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/RecordCodecBuilder;
+        37: invokevirtual #120                // Method com/mojang/serialization/codecs/RecordCodecBuilder$Instance.group:(Lcom/mojang/datafixers/kinds/App;Lcom/mojang/datafixers/kinds/App;)Lcom/mojang/datafixers/Products$P2;
+        40: aload_0
+        41: invokedynamic #126,  0            // InvokeDynamic #3:apply:()Ljava/util/function/BiFunction;
+        46: invokevirtual #129                // Method com/mojang/datafixers/Products$P2.apply:(Lcom/mojang/datafixers/kinds/Applicative;Ljava/util/function/BiFunction;)Lcom/mojang/datafixers/kinds/App;
+        49: areturn
+
+  static {};
+    Code:
+         0: invokedynamic #134,  0            // InvokeDynamic #4:apply:()Ljava/util/function/Function;
+         5: invokestatic  #135                // Method com/mojang/serialization/codecs/RecordCodecBuilder.mapCodec:(Ljava/util/function/Function;)Lcom/mojang/serialization/MapCodec;
+         8: putstatic     #17                 // Field CODEC:Lcom/mojang/serialization/MapCodec;
+        11: return
+}

@@ -1,0 +1,12 @@
+Compiled from "NearestVisibleLivingEntitySensor.java"
+public abstract class net.minecraft.world.entity.ai.sensing.NearestVisibleLivingEntitySensor extends net.minecraft.world.entity.ai.sensing.Sensor<net.minecraft.world.entity.LivingEntity> {
+  public net.minecraft.world.entity.ai.sensing.NearestVisibleLivingEntitySensor();
+  protected abstract boolean isMatchingEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  protected abstract net.minecraft.world.entity.ai.memory.MemoryModuleType<net.minecraft.world.entity.LivingEntity> getMemoryToSet();
+  public java.util.Set<net.minecraft.world.entity.ai.memory.MemoryModuleType<?>> requires();
+  protected void doTick(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity);
+  private java.util.Optional<net.minecraft.world.entity.LivingEntity> getNearestEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity);
+  protected java.util.Optional<net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities> getVisibleEntities(net.minecraft.world.entity.LivingEntity);
+  private java.util.Optional lambda$getNearestEntity$0(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.ai.memory.NearestVisibleLivingEntities);
+  private boolean lambda$getNearestEntity$1(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+}

@@ -1,0 +1,14 @@
+Compiled from "RavagerRenderState.java"
+public class net.minecraft.client.renderer.entity.state.RavagerRenderState extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState {
+  public float stunnedTicksRemaining;
+
+  public float attackTicksRemaining;
+
+  public float roarAnimation;
+
+  public net.minecraft.client.renderer.entity.state.RavagerRenderState();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/client/renderer/entity/state/LivingEntityRenderState."<init>":()V
+         4: return
+}

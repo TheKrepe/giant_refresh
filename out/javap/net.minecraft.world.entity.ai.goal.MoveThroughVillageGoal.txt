@@ -1,0 +1,22 @@
+Compiled from "MoveThroughVillageGoal.java"
+public class net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal extends net.minecraft.world.entity.ai.goal.Goal {
+  protected final net.minecraft.world.entity.PathfinderMob mob;
+  private final double speedModifier;
+  private net.minecraft.world.level.pathfinder.Path path;
+  private net.minecraft.core.BlockPos poiPos;
+  private final boolean onlyAtNight;
+  private final java.util.List<net.minecraft.core.BlockPos> visited;
+  private final int distanceToPoi;
+  private final java.util.function.BooleanSupplier canDealWithDoors;
+  public net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal(net.minecraft.world.entity.PathfinderMob, double, boolean, int, java.util.function.BooleanSupplier);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  private boolean hasNotVisited(net.minecraft.core.BlockPos);
+  private void updateVisited();
+  private static boolean lambda$canUse$3(net.minecraft.core.Holder);
+  private double lambda$canUse$0(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos);
+  private static java.lang.Double lambda$canUse$2(net.minecraft.core.BlockPos, net.minecraft.core.BlockPos);
+  private static boolean lambda$canUse$1(net.minecraft.core.Holder);
+}

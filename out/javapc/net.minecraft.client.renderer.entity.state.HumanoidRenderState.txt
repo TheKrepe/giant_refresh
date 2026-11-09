@@ -1,0 +1,78 @@
+Compiled from "HumanoidRenderState.java"
+public class net.minecraft.client.renderer.entity.state.HumanoidRenderState extends net.minecraft.client.renderer.entity.state.ArmedEntityRenderState {
+  public float swimAmount;
+
+  public float speedValue;
+
+  public float maxCrossbowChargeDuration;
+
+  public float ticksUsingItem;
+
+  public net.minecraft.world.InteractionHand useItemHand;
+
+  public boolean isCrouching;
+
+  public boolean isFallFlying;
+
+  public boolean isVisuallySwimming;
+
+  public boolean isPassenger;
+
+  public boolean isUsingItem;
+
+  public float elytraRotX;
+
+  public float elytraRotY;
+
+  public float elytraRotZ;
+
+  public net.minecraft.world.item.ItemStack headEquipment;
+
+  public net.minecraft.world.item.ItemStack chestEquipment;
+
+  public net.minecraft.world.item.ItemStack legsEquipment;
+
+  public net.minecraft.world.item.ItemStack feetEquipment;
+
+  public net.minecraft.client.renderer.entity.state.HumanoidRenderState();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/client/renderer/entity/state/ArmedEntityRenderState."<init>":()V
+         4: aload_0
+         5: fconst_1
+         6: putfield      #7                  // Field speedValue:F
+         9: aload_0
+        10: getstatic     #13                 // Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;
+        13: putfield      #19                 // Field useItemHand:Lnet/minecraft/world/InteractionHand;
+        16: aload_0
+        17: getstatic     #22                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        20: putfield      #28                 // Field headEquipment:Lnet/minecraft/world/item/ItemStack;
+        23: aload_0
+        24: getstatic     #22                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        27: putfield      #31                 // Field chestEquipment:Lnet/minecraft/world/item/ItemStack;
+        30: aload_0
+        31: getstatic     #22                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        34: putfield      #34                 // Field legsEquipment:Lnet/minecraft/world/item/ItemStack;
+        37: aload_0
+        38: getstatic     #22                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        41: putfield      #37                 // Field feetEquipment:Lnet/minecraft/world/item/ItemStack;
+        44: return
+
+  public float ticksUsingItem(net.minecraft.world.entity.HumanoidArm);
+    Code:
+         0: aload_0
+         1: getfield      #40                 // Field isUsingItem:Z
+         4: ifeq          27
+         7: aload_0
+         8: getfield      #19                 // Field useItemHand:Lnet/minecraft/world/InteractionHand;
+        11: aload_0
+        12: getfield      #44                 // Field mainArm:Lnet/minecraft/world/entity/HumanoidArm;
+        15: invokevirtual #48                 // Method net/minecraft/world/InteractionHand.asArm:(Lnet/minecraft/world/entity/HumanoidArm;)Lnet/minecraft/world/entity/HumanoidArm;
+        18: aload_1
+        19: if_acmpne     27
+        22: aload_0
+        23: getfield      #52                 // Field ticksUsingItem:F
+        26: freturn
+        27: fconst_0
+        28: freturn
+}

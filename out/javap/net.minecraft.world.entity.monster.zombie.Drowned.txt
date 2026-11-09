@@ -1,0 +1,43 @@
+Compiled from "Drowned.java"
+public class net.minecraft.world.entity.monster.zombie.Drowned extends net.minecraft.world.entity.monster.zombie.Zombie implements net.minecraft.world.entity.monster.RangedAttackMob {
+  public static final float NAUTILUS_SHELL_CHANCE;
+  private static final float ZOMBIE_NAUTILUS_JOCKEY_CHANCE;
+  private static final net.minecraft.world.entity.EntityDimensions BABY_DIMENSIONS;
+  private boolean searchingForLand;
+  private float rangedAttackUncertainty;
+  public net.minecraft.world.entity.monster.zombie.Drowned(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.zombie.Drowned>, net.minecraft.world.level.Level);
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
+  protected void addBehaviourGoals();
+  public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.world.entity.SpawnGroupData);
+  public static boolean checkDrownedSpawnRules(net.minecraft.world.entity.EntityType<net.minecraft.world.entity.monster.zombie.Drowned>, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+  private static boolean isDeepEnoughToSpawn(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos);
+  public net.minecraft.world.entity.EntityDimensions getDefaultDimensions(net.minecraft.world.entity.Pose);
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+  protected net.minecraft.sounds.SoundEvent getStepSound();
+  protected net.minecraft.sounds.SoundEvent getSwimSound();
+  protected boolean canSpawnInLiquids();
+  protected void populateDefaultEquipmentSlots(net.minecraft.util.RandomSource, net.minecraft.world.DifficultyInstance);
+  protected boolean canReplaceCurrentItem(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, net.minecraft.world.entity.EquipmentSlot);
+  protected boolean convertsInWater();
+  public boolean checkSpawnObstruction(net.minecraft.world.level.LevelReader);
+  public boolean okTarget(net.minecraft.world.entity.LivingEntity);
+  public boolean isPushedByFluid();
+  public boolean wantsToSwim();
+  protected void travelInWater(net.minecraft.world.phys.Vec3, double, boolean, double);
+  public void updateSwimming();
+  public boolean isVisuallySwimming();
+  protected boolean closeToNextPos();
+  public void performRangedAttack(net.minecraft.world.entity.LivingEntity, float);
+  public float rangedAttackUncertainty(net.minecraft.world.level.Level);
+  public void setRangedAttackUncertainty(float);
+  public net.minecraft.tags.TagKey<net.minecraft.world.item.Item> getPreferredWeaponType();
+  public void setSearchingForLand(boolean);
+  public boolean isSearchingForLand();
+  public void rideTick();
+  public boolean wantsToPickUp(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+  private boolean lambda$addBehaviourGoals$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel);
+  static {};
+}

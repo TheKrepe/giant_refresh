@@ -1,0 +1,111 @@
+Compiled from "EntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.EntityRenderState {
+  public static final int NO_OUTLINE;
+
+  public net.minecraft.world.entity.EntityType<?> entityType;
+
+  public double x;
+
+  public double y;
+
+  public double z;
+
+  public float ageInTicks;
+
+  public float boundingBoxWidth;
+
+  public float boundingBoxHeight;
+
+  public float eyeHeight;
+
+  public double distanceToCameraSq;
+
+  public boolean isInvisible;
+
+  public boolean isDiscrete;
+
+  public boolean displayFireAnimation;
+
+  public int lightCoords;
+
+  public int outlineColor;
+
+  public net.minecraft.world.phys.Vec3 passengerOffset;
+
+  public net.minecraft.network.chat.Component nameTag;
+
+  public net.minecraft.network.chat.Component scoreText;
+
+  public net.minecraft.world.phys.Vec3 nameTagAttachment;
+
+  public java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState> leashStates;
+
+  public float shadowRadius;
+
+  public final java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece> shadowPieces;
+
+  public net.minecraft.client.renderer.entity.state.EntityRenderState();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: ldc           #9                  // int 15728880
+         7: putfield      #10                 // Field lightCoords:I
+        10: aload_0
+        11: iconst_0
+        12: putfield      #16                 // Field outlineColor:I
+        15: aload_0
+        16: new           #19                 // class java/util/ArrayList
+        19: dup
+        20: invokespecial #21                 // Method java/util/ArrayList."<init>":()V
+        23: putfield      #22                 // Field shadowPieces:Ljava/util/List;
+        26: return
+
+  public boolean appearsGlowing();
+    Code:
+         0: aload_0
+         1: getfield      #16                 // Field outlineColor:I
+         4: ifeq          11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: ireturn
+
+  public void fillCrashReportCategory(net.minecraft.CrashReportCategory);
+    Code:
+         0: aload_1
+         1: ldc           #26                 // String EntityRenderState
+         3: aload_0
+         4: invokevirtual #28                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+         7: invokevirtual #32                 // Method java/lang/Class.getCanonicalName:()Ljava/lang/String;
+        10: invokevirtual #38                 // Method net/minecraft/CrashReportCategory.setDetail:(Ljava/lang/String;Ljava/lang/Object;)Lnet/minecraft/CrashReportCategory;
+        13: pop
+        14: aload_1
+        15: ldc           #44                 // String Entity\'s Exact location
+        17: getstatic     #46                 // Field java/util/Locale.ROOT:Ljava/util/Locale;
+        20: ldc           #52                 // String %.2f, %.2f, %.2f
+        22: iconst_3
+        23: anewarray     #2                  // class java/lang/Object
+        26: dup
+        27: iconst_0
+        28: aload_0
+        29: getfield      #54                 // Field x:D
+        32: invokestatic  #58                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+        35: aastore
+        36: dup
+        37: iconst_1
+        38: aload_0
+        39: getfield      #64                 // Field y:D
+        42: invokestatic  #58                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+        45: aastore
+        46: dup
+        47: iconst_2
+        48: aload_0
+        49: getfield      #67                 // Field z:D
+        52: invokestatic  #58                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+        55: aastore
+        56: invokestatic  #70                 // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+        59: invokevirtual #38                 // Method net/minecraft/CrashReportCategory.setDetail:(Ljava/lang/String;Ljava/lang/Object;)Lnet/minecraft/CrashReportCategory;
+        62: pop
+        63: return
+}

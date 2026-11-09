@@ -1,0 +1,15 @@
+Compiled from "Potion.java"
+public class net.minecraft.world.item.alchemy.Potion implements net.minecraft.world.flag.FeatureElement {
+  public static final com.mojang.serialization.Codec<net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion>> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion>> STREAM_CODEC;
+  private final java.lang.String name;
+  private final java.util.List<net.minecraft.world.effect.MobEffectInstance> effects;
+  private net.minecraft.world.flag.FeatureFlagSet requiredFeatures;
+  public net.minecraft.world.item.alchemy.Potion(java.lang.String, net.minecraft.world.effect.MobEffectInstance...);
+  public net.minecraft.world.item.alchemy.Potion requiredFeatures(net.minecraft.world.flag.FeatureFlag...);
+  public net.minecraft.world.flag.FeatureFlagSet requiredFeatures();
+  public java.util.List<net.minecraft.world.effect.MobEffectInstance> getEffects();
+  public java.lang.String name();
+  public boolean hasInstantEffects();
+  static {};
+}

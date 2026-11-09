@@ -1,0 +1,845 @@
+Compiled from "Drowned.java"
+public class net.minecraft.world.entity.monster.zombie.Drowned extends net.minecraft.world.entity.monster.zombie.Zombie implements net.minecraft.world.entity.monster.RangedAttackMob {
+  public static final float NAUTILUS_SHELL_CHANCE;
+
+  private static final float ZOMBIE_NAUTILUS_JOCKEY_CHANCE;
+
+  private static final net.minecraft.world.entity.EntityDimensions BABY_DIMENSIONS;
+
+  private boolean searchingForLand;
+
+  private float rangedAttackUncertainty;
+
+  public net.minecraft.world.entity.monster.zombie.Drowned(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.zombie.Drowned>, net.minecraft.world.level.Level);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #1                  // Method net/minecraft/world/entity/monster/zombie/Zombie."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+         6: aload_0
+         7: ldc           #7                  // float -1.0f
+         9: putfield      #8                  // Field rangedAttackUncertainty:F
+        12: aload_0
+        13: new           #14                 // class net/minecraft/world/entity/monster/zombie/Drowned$DrownedMoveControl
+        16: dup
+        17: aload_0
+        18: invokespecial #16                 // Method net/minecraft/world/entity/monster/zombie/Drowned$DrownedMoveControl."<init>":(Lnet/minecraft/world/entity/monster/zombie/Drowned;)V
+        21: putfield      #19                 // Field moveControl:Lnet/minecraft/world/entity/ai/control/MoveControl;
+        24: aload_0
+        25: getstatic     #23                 // Field net/minecraft/world/level/pathfinder/PathType.WATER:Lnet/minecraft/world/level/pathfinder/PathType;
+        28: fconst_0
+        29: invokevirtual #29                 // Method setPathfindingMalus:(Lnet/minecraft/world/level/pathfinder/PathType;F)V
+        32: return
+
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+    Code:
+         0: invokestatic  #33                 // Method net/minecraft/world/entity/monster/zombie/Zombie.createAttributes:()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+         3: getstatic     #37                 // Field net/minecraft/world/entity/ai/attributes/Attributes.STEP_HEIGHT:Lnet/minecraft/core/Holder;
+         6: dconst_1
+         7: invokevirtual #43                 // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        10: areturn
+
+  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
+    Code:
+         0: new           #49                 // class net/minecraft/world/entity/ai/navigation/AmphibiousPathNavigation
+         3: dup
+         4: aload_0
+         5: aload_1
+         6: invokespecial #51                 // Method net/minecraft/world/entity/ai/navigation/AmphibiousPathNavigation."<init>":(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/Level;)V
+         9: areturn
+
+  protected void addBehaviourGoals();
+    Code:
+         0: aload_0
+         1: getfield      #54                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+         4: iconst_1
+         5: new           #58                 // class net/minecraft/world/entity/monster/zombie/Drowned$DrownedGoToWaterGoal
+         8: dup
+         9: aload_0
+        10: dconst_1
+        11: invokespecial #60                 // Method net/minecraft/world/entity/monster/zombie/Drowned$DrownedGoToWaterGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;D)V
+        14: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        17: aload_0
+        18: getfield      #54                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        21: iconst_2
+        22: new           #69                 // class net/minecraft/world/entity/monster/zombie/Drowned$DrownedTridentAttackGoal
+        25: dup
+        26: aload_0
+        27: dconst_1
+        28: bipush        40
+        30: ldc           #73                 // float 10.0f
+        32: invokespecial #74                 // Method net/minecraft/world/entity/monster/zombie/Drowned$DrownedTridentAttackGoal."<init>":(Lnet/minecraft/world/entity/monster/RangedAttackMob;DIF)V
+        35: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        38: aload_0
+        39: getfield      #54                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        42: iconst_2
+        43: new           #77                 // class net/minecraft/world/entity/monster/zombie/Drowned$DrownedAttackGoal
+        46: dup
+        47: aload_0
+        48: dconst_1
+        49: iconst_0
+        50: invokespecial #79                 // Method net/minecraft/world/entity/monster/zombie/Drowned$DrownedAttackGoal."<init>":(Lnet/minecraft/world/entity/monster/zombie/Drowned;DZ)V
+        53: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        56: aload_0
+        57: getfield      #54                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        60: iconst_5
+        61: new           #82                 // class net/minecraft/world/entity/monster/zombie/Drowned$DrownedGoToBeachGoal
+        64: dup
+        65: aload_0
+        66: dconst_1
+        67: invokespecial #84                 // Method net/minecraft/world/entity/monster/zombie/Drowned$DrownedGoToBeachGoal."<init>":(Lnet/minecraft/world/entity/monster/zombie/Drowned;D)V
+        70: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        73: aload_0
+        74: getfield      #54                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        77: bipush        6
+        79: new           #87                 // class net/minecraft/world/entity/monster/zombie/Drowned$DrownedSwimUpGoal
+        82: dup
+        83: aload_0
+        84: dconst_1
+        85: aload_0
+        86: invokevirtual #89                 // Method level:()Lnet/minecraft/world/level/Level;
+        89: invokevirtual #93                 // Method net/minecraft/world/level/Level.getSeaLevel:()I
+        92: invokespecial #99                 // Method net/minecraft/world/entity/monster/zombie/Drowned$DrownedSwimUpGoal."<init>":(Lnet/minecraft/world/entity/monster/zombie/Drowned;DI)V
+        95: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        98: aload_0
+        99: getfield      #54                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       102: bipush        7
+       104: new           #102                // class net/minecraft/world/entity/ai/goal/RandomStrollGoal
+       107: dup
+       108: aload_0
+       109: dconst_1
+       110: invokespecial #104                // Method net/minecraft/world/entity/ai/goal/RandomStrollGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;D)V
+       113: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       116: aload_0
+       117: getfield      #105                // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       120: iconst_1
+       121: new           #108                // class net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal
+       124: dup
+       125: aload_0
+       126: iconst_1
+       127: anewarray     #110                // class java/lang/Class
+       130: dup
+       131: iconst_0
+       132: ldc           #9                  // class net/minecraft/world/entity/monster/zombie/Drowned
+       134: aastore
+       135: invokespecial #112                // Method net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;[Ljava/lang/Class;)V
+       138: iconst_1
+       139: anewarray     #110                // class java/lang/Class
+       142: dup
+       143: iconst_0
+       144: ldc           #115                // class net/minecraft/world/entity/monster/zombie/ZombifiedPiglin
+       146: aastore
+       147: invokevirtual #117                // Method net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal.setAlertOthers:([Ljava/lang/Class;)Lnet/minecraft/world/entity/ai/goal/target/HurtByTargetGoal;
+       150: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       153: aload_0
+       154: getfield      #105                // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       157: iconst_2
+       158: new           #121                // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       161: dup
+       162: aload_0
+       163: ldc           #123                // class net/minecraft/world/entity/player/Player
+       165: bipush        10
+       167: iconst_1
+       168: iconst_0
+       169: aload_0
+       170: invokedynamic #125,  0            // InvokeDynamic #0:test:(Lnet/minecraft/world/entity/monster/zombie/Drowned;)Lnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;
+       175: invokespecial #129                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;IZZLnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;)V
+       178: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       181: aload_0
+       182: getfield      #105                // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       185: iconst_3
+       186: new           #121                // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       189: dup
+       190: aload_0
+       191: ldc           #132                // class net/minecraft/world/entity/npc/villager/AbstractVillager
+       193: iconst_0
+       194: invokespecial #134                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;Z)V
+       197: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       200: aload_0
+       201: getfield      #105                // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       204: iconst_3
+       205: new           #121                // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       208: dup
+       209: aload_0
+       210: ldc           #137                // class net/minecraft/world/entity/animal/golem/IronGolem
+       212: iconst_1
+       213: invokespecial #134                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;Z)V
+       216: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       219: aload_0
+       220: getfield      #105                // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       223: iconst_3
+       224: new           #121                // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       227: dup
+       228: aload_0
+       229: ldc           #139                // class net/minecraft/world/entity/animal/axolotl/Axolotl
+       231: iconst_1
+       232: iconst_0
+       233: invokespecial #141                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;ZZ)V
+       236: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       239: aload_0
+       240: getfield      #105                // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       243: iconst_5
+       244: new           #121                // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       247: dup
+       248: aload_0
+       249: ldc           #144                // class net/minecraft/world/entity/animal/turtle/Turtle
+       251: bipush        10
+       253: iconst_1
+       254: iconst_0
+       255: getstatic     #146                // Field net/minecraft/world/entity/animal/turtle/Turtle.BABY_ON_LAND_SELECTOR:Lnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;
+       258: invokespecial #129                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;IZZLnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;)V
+       261: invokevirtual #63                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       264: return
+
+  public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.world.entity.SpawnGroupData);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: aload_3
+         4: aload         4
+         6: invokespecial #150                // Method net/minecraft/world/entity/monster/zombie/Zombie.finalizeSpawn:(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;
+         9: astore        4
+        11: aload_0
+        12: getstatic     #154                // Field net/minecraft/world/entity/EquipmentSlot.OFFHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+        15: invokevirtual #160                // Method getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;
+        18: invokevirtual #164                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+        21: ifeq          65
+        24: aload_1
+        25: invokeinterface #170,  1          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getRandom:()Lnet/minecraft/util/RandomSource;
+        30: invokeinterface #176,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+        35: ldc           #182                // float 0.03f
+        37: fcmpg
+        38: ifge          65
+        41: aload_0
+        42: getstatic     #154                // Field net/minecraft/world/entity/EquipmentSlot.OFFHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+        45: new           #165                // class net/minecraft/world/item/ItemStack
+        48: dup
+        49: getstatic     #183                // Field net/minecraft/world/item/Items.NAUTILUS_SHELL:Lnet/minecraft/world/item/Item;
+        52: invokespecial #189                // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+        55: invokevirtual #192                // Method setItemSlot:(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V
+        58: aload_0
+        59: getstatic     #154                // Field net/minecraft/world/entity/EquipmentSlot.OFFHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+        62: invokevirtual #196                // Method setGuaranteedDrop:(Lnet/minecraft/world/entity/EquipmentSlot;)V
+        65: aload_3
+        66: getstatic     #200                // Field net/minecraft/world/entity/EntitySpawnReason.NATURAL:Lnet/minecraft/world/entity/EntitySpawnReason;
+        69: if_acmpeq     79
+        72: aload_3
+        73: getstatic     #206                // Field net/minecraft/world/entity/EntitySpawnReason.STRUCTURE:Lnet/minecraft/world/entity/EntitySpawnReason;
+        76: if_acmpne     222
+        79: aload_0
+        80: invokevirtual #209                // Method getMainHandItem:()Lnet/minecraft/world/item/ItemStack;
+        83: getstatic     #213                // Field net/minecraft/world/item/Items.TRIDENT:Lnet/minecraft/world/item/Item;
+        86: invokevirtual #216                // Method net/minecraft/world/item/ItemStack.is:(Ljava/lang/Object;)Z
+        89: ifeq          222
+        92: aload_1
+        93: invokeinterface #170,  1          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getRandom:()Lnet/minecraft/util/RandomSource;
+        98: invokeinterface #176,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       103: ldc           #220                // float 0.5f
+       105: fcmpg
+       106: ifge          222
+       109: aload_0
+       110: invokevirtual #221                // Method isBaby:()Z
+       113: ifne          222
+       116: aload_1
+       117: aload_0
+       118: invokevirtual #224                // Method blockPosition:()Lnet/minecraft/core/BlockPos;
+       121: invokeinterface #228,  2          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getBiome:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;
+       126: getstatic     #232                // Field net/minecraft/tags/BiomeTags.MORE_FREQUENT_DROWNED_SPAWNS:Lnet/minecraft/tags/TagKey;
+       129: invokeinterface #238,  2          // InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/tags/TagKey;)Z
+       134: ifne          222
+       137: getstatic     #243                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_NAUTILUS:Lnet/minecraft/world/entity/EntityType;
+       140: aload_0
+       141: invokevirtual #89                 // Method level:()Lnet/minecraft/world/level/Level;
+       144: getstatic     #249                // Field net/minecraft/world/entity/EntitySpawnReason.JOCKEY:Lnet/minecraft/world/entity/EntitySpawnReason;
+       147: invokevirtual #252                // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+       150: checkcast     #258                // class net/minecraft/world/entity/animal/nautilus/ZombieNautilus
+       153: astore        5
+       155: aload         5
+       157: ifnull        222
+       160: aload_3
+       161: getstatic     #206                // Field net/minecraft/world/entity/EntitySpawnReason.STRUCTURE:Lnet/minecraft/world/entity/EntitySpawnReason;
+       164: if_acmpne     172
+       167: aload         5
+       169: invokevirtual #260                // Method net/minecraft/world/entity/animal/nautilus/ZombieNautilus.setPersistenceRequired:()V
+       172: aload         5
+       174: aload_0
+       175: invokevirtual #264                // Method getX:()D
+       178: aload_0
+       179: invokevirtual #268                // Method getY:()D
+       182: aload_0
+       183: invokevirtual #271                // Method getZ:()D
+       186: aload_0
+       187: invokevirtual #274                // Method getYRot:()F
+       190: fconst_0
+       191: invokevirtual #277                // Method net/minecraft/world/entity/animal/nautilus/ZombieNautilus.snapTo:(DDDFF)V
+       194: aload         5
+       196: aload_1
+       197: aload_2
+       198: aload_3
+       199: aconst_null
+       200: invokevirtual #281                // Method net/minecraft/world/entity/animal/nautilus/ZombieNautilus.finalizeSpawn:(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;
+       203: pop
+       204: aload_0
+       205: aload         5
+       207: iconst_0
+       208: iconst_0
+       209: invokevirtual #282                // Method startRiding:(Lnet/minecraft/world/entity/Entity;ZZ)Z
+       212: pop
+       213: aload_1
+       214: aload         5
+       216: invokeinterface #286,  2          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+       221: pop
+       222: aload         4
+       224: areturn
+
+  public static boolean checkDrownedSpawnRules(net.minecraft.world.entity.EntityType<net.minecraft.world.entity.monster.zombie.Drowned>, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+    Code:
+         0: aload_1
+         1: aload_3
+         2: invokevirtual #290                // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+         5: invokeinterface #295,  2          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getFluidState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;
+        10: getstatic     #299                // Field net/minecraft/tags/FluidTags.WATER:Lnet/minecraft/tags/TagKey;
+        13: invokevirtual #303                // Method net/minecraft/world/level/material/FluidState.is:(Lnet/minecraft/tags/TagKey;)Z
+        16: ifne          28
+        19: aload_2
+        20: invokestatic  #306                // Method net/minecraft/world/entity/EntitySpawnReason.isSpawner:(Lnet/minecraft/world/entity/EntitySpawnReason;)Z
+        23: ifne          28
+        26: iconst_0
+        27: ireturn
+        28: aload_1
+        29: aload_3
+        30: invokeinterface #228,  2          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getBiome:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;
+        35: astore        5
+        37: aload_1
+        38: invokeinterface #310,  1          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getDifficulty:()Lnet/minecraft/world/Difficulty;
+        43: getstatic     #314                // Field net/minecraft/world/Difficulty.PEACEFUL:Lnet/minecraft/world/Difficulty;
+        46: if_acmpeq     93
+        49: aload_2
+        50: invokestatic  #320                // Method net/minecraft/world/entity/EntitySpawnReason.ignoresLightRequirements:(Lnet/minecraft/world/entity/EntitySpawnReason;)Z
+        53: ifne          66
+        56: aload_1
+        57: aload_3
+        58: aload         4
+        60: invokestatic  #323                // Method isDarkEnoughToSpawn:(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)Z
+        63: ifeq          93
+        66: aload_2
+        67: invokestatic  #306                // Method net/minecraft/world/entity/EntitySpawnReason.isSpawner:(Lnet/minecraft/world/entity/EntitySpawnReason;)Z
+        70: ifne          89
+        73: aload_1
+        74: aload_3
+        75: invokeinterface #295,  2          // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getFluidState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;
+        80: getstatic     #299                // Field net/minecraft/tags/FluidTags.WATER:Lnet/minecraft/tags/TagKey;
+        83: invokevirtual #303                // Method net/minecraft/world/level/material/FluidState.is:(Lnet/minecraft/tags/TagKey;)Z
+        86: ifeq          93
+        89: iconst_1
+        90: goto          94
+        93: iconst_0
+        94: istore        6
+        96: iload         6
+        98: ifeq          117
+       101: aload_2
+       102: invokestatic  #306                // Method net/minecraft/world/entity/EntitySpawnReason.isSpawner:(Lnet/minecraft/world/entity/EntitySpawnReason;)Z
+       105: ifne          115
+       108: aload_2
+       109: getstatic     #327                // Field net/minecraft/world/entity/EntitySpawnReason.REINFORCEMENT:Lnet/minecraft/world/entity/EntitySpawnReason;
+       112: if_acmpne     117
+       115: iconst_1
+       116: ireturn
+       117: aload         5
+       119: getstatic     #232                // Field net/minecraft/tags/BiomeTags.MORE_FREQUENT_DROWNED_SPAWNS:Lnet/minecraft/tags/TagKey;
+       122: invokeinterface #238,  2          // InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/tags/TagKey;)Z
+       127: ifeq          153
+       130: aload         4
+       132: bipush        15
+       134: invokeinterface #330,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+       139: ifne          151
+       142: iload         6
+       144: ifeq          151
+       147: iconst_1
+       148: goto          152
+       151: iconst_0
+       152: ireturn
+       153: aload         4
+       155: bipush        40
+       157: invokeinterface #330,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+       162: ifne          182
+       165: aload_1
+       166: aload_3
+       167: invokestatic  #334                // Method isDeepEnoughToSpawn:(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z
+       170: ifeq          182
+       173: iload         6
+       175: ifeq          182
+       178: iconst_1
+       179: goto          183
+       182: iconst_0
+       183: ireturn
+
+  private static boolean isDeepEnoughToSpawn(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_1
+         1: invokevirtual #338                // Method net/minecraft/core/BlockPos.getY:()I
+         4: aload_0
+         5: invokeinterface #340,  1          // InterfaceMethod net/minecraft/world/level/LevelAccessor.getSeaLevel:()I
+        10: iconst_5
+        11: isub
+        12: if_icmpge     19
+        15: iconst_1
+        16: goto          20
+        19: iconst_0
+        20: ireturn
+
+  public net.minecraft.world.entity.EntityDimensions getDefaultDimensions(net.minecraft.world.entity.Pose);
+    Code:
+         0: aload_0
+         1: invokevirtual #221                // Method isBaby:()Z
+         4: ifeq          13
+         7: getstatic     #343                // Field BABY_DIMENSIONS:Lnet/minecraft/world/entity/EntityDimensions;
+        10: goto          18
+        13: aload_0
+        14: aload_1
+        15: invokespecial #347                // Method net/minecraft/world/entity/monster/zombie/Zombie.getDefaultDimensions:(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
+        18: areturn
+
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+    Code:
+         0: aload_0
+         1: invokevirtual #351                // Method isInWater:()Z
+         4: ifeq          11
+         7: getstatic     #354                // Field net/minecraft/sounds/SoundEvents.DROWNED_AMBIENT_WATER:Lnet/minecraft/sounds/SoundEvent;
+        10: areturn
+        11: getstatic     #360                // Field net/minecraft/sounds/SoundEvents.DROWNED_AMBIENT:Lnet/minecraft/sounds/SoundEvent;
+        14: areturn
+
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+    Code:
+         0: aload_0
+         1: invokevirtual #351                // Method isInWater:()Z
+         4: ifeq          11
+         7: getstatic     #363                // Field net/minecraft/sounds/SoundEvents.DROWNED_HURT_WATER:Lnet/minecraft/sounds/SoundEvent;
+        10: areturn
+        11: getstatic     #366                // Field net/minecraft/sounds/SoundEvents.DROWNED_HURT:Lnet/minecraft/sounds/SoundEvent;
+        14: areturn
+
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+    Code:
+         0: aload_0
+         1: invokevirtual #351                // Method isInWater:()Z
+         4: ifeq          11
+         7: getstatic     #369                // Field net/minecraft/sounds/SoundEvents.DROWNED_DEATH_WATER:Lnet/minecraft/sounds/SoundEvent;
+        10: areturn
+        11: getstatic     #372                // Field net/minecraft/sounds/SoundEvents.DROWNED_DEATH:Lnet/minecraft/sounds/SoundEvent;
+        14: areturn
+
+  protected net.minecraft.sounds.SoundEvent getStepSound();
+    Code:
+         0: getstatic     #375                // Field net/minecraft/sounds/SoundEvents.DROWNED_STEP:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected net.minecraft.sounds.SoundEvent getSwimSound();
+    Code:
+         0: getstatic     #378                // Field net/minecraft/sounds/SoundEvents.DROWNED_SWIM:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected boolean canSpawnInLiquids();
+    Code:
+         0: iconst_1
+         1: ireturn
+
+  protected void populateDefaultEquipmentSlots(net.minecraft.util.RandomSource, net.minecraft.world.DifficultyInstance);
+    Code:
+         0: aload_1
+         1: invokeinterface #176,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+         6: f2d
+         7: ldc2_w        #381                // double 0.9d
+        10: dcmpl
+        11: ifle          66
+        14: aload_1
+        15: bipush        16
+        17: invokeinterface #330,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        22: istore_3
+        23: iload_3
+        24: bipush        10
+        26: if_icmpge     49
+        29: aload_0
+        30: getstatic     #383                // Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+        33: new           #165                // class net/minecraft/world/item/ItemStack
+        36: dup
+        37: getstatic     #213                // Field net/minecraft/world/item/Items.TRIDENT:Lnet/minecraft/world/item/Item;
+        40: invokespecial #189                // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+        43: invokevirtual #192                // Method setItemSlot:(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V
+        46: goto          66
+        49: aload_0
+        50: getstatic     #383                // Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+        53: new           #165                // class net/minecraft/world/item/ItemStack
+        56: dup
+        57: getstatic     #386                // Field net/minecraft/world/item/Items.FISHING_ROD:Lnet/minecraft/world/item/Item;
+        60: invokespecial #189                // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+        63: invokevirtual #192                // Method setItemSlot:(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V
+        66: return
+
+  protected boolean canReplaceCurrentItem(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, net.minecraft.world.entity.EquipmentSlot);
+    Code:
+         0: aload_2
+         1: getstatic     #183                // Field net/minecraft/world/item/Items.NAUTILUS_SHELL:Lnet/minecraft/world/item/Item;
+         4: invokevirtual #216                // Method net/minecraft/world/item/ItemStack.is:(Ljava/lang/Object;)Z
+         7: ifeq          12
+        10: iconst_0
+        11: ireturn
+        12: aload_0
+        13: aload_1
+        14: aload_2
+        15: aload_3
+        16: invokespecial #389                // Method net/minecraft/world/entity/monster/zombie/Zombie.canReplaceCurrentItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;)Z
+        19: ireturn
+
+  protected boolean convertsInWater();
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  public boolean checkSpawnObstruction(net.minecraft.world.level.LevelReader);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: invokeinterface #393,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.isUnobstructed:(Lnet/minecraft/world/entity/Entity;)Z
+         7: ireturn
+
+  public boolean okTarget(net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: aload_1
+         1: ifnull        25
+         4: aload_0
+         5: invokevirtual #89                 // Method level:()Lnet/minecraft/world/level/Level;
+         8: invokevirtual #398                // Method net/minecraft/world/level/Level.isBrightOutside:()Z
+        11: ifeq          23
+        14: aload_1
+        15: invokevirtual #401                // Method net/minecraft/world/entity/LivingEntity.isInWater:()Z
+        18: ifne          23
+        21: iconst_0
+        22: ireturn
+        23: iconst_1
+        24: ireturn
+        25: iconst_0
+        26: ireturn
+
+  public boolean isPushedByFluid();
+    Code:
+         0: aload_0
+         1: invokevirtual #404                // Method isSwimming:()Z
+         4: ifne          11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: ireturn
+
+  public boolean wantsToSwim();
+    Code:
+         0: aload_0
+         1: getfield      #407                // Field searchingForLand:Z
+         4: ifeq          9
+         7: iconst_1
+         8: ireturn
+         9: aload_0
+        10: invokevirtual #411                // Method getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+        13: astore_1
+        14: aload_1
+        15: ifnull        27
+        18: aload_1
+        19: invokevirtual #401                // Method net/minecraft/world/entity/LivingEntity.isInWater:()Z
+        22: ifeq          27
+        25: iconst_1
+        26: ireturn
+        27: iconst_0
+        28: ireturn
+
+  protected void travelInWater(net.minecraft.world.phys.Vec3, double, boolean, double);
+    Code:
+         0: aload_0
+         1: invokevirtual #415                // Method isUnderWater:()Z
+         4: ifeq          50
+         7: aload_0
+         8: invokevirtual #418                // Method wantsToSwim:()Z
+        11: ifeq          50
+        14: aload_0
+        15: ldc_w         #421                // float 0.01f
+        18: aload_1
+        19: invokevirtual #422                // Method moveRelative:(FLnet/minecraft/world/phys/Vec3;)V
+        22: aload_0
+        23: getstatic     #426                // Field net/minecraft/world/entity/MoverType.SELF:Lnet/minecraft/world/entity/MoverType;
+        26: aload_0
+        27: invokevirtual #432                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        30: invokevirtual #436                // Method move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V
+        33: aload_0
+        34: aload_0
+        35: invokevirtual #432                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        38: ldc2_w        #381                // double 0.9d
+        41: invokevirtual #440                // Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;
+        44: invokevirtual #446                // Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V
+        47: goto          60
+        50: aload_0
+        51: aload_1
+        52: dload_2
+        53: iload         4
+        55: dload         5
+        57: invokespecial #450                // Method net/minecraft/world/entity/monster/zombie/Zombie.travelInWater:(Lnet/minecraft/world/phys/Vec3;DZD)V
+        60: return
+
+  public void updateSwimming();
+    Code:
+         0: aload_0
+         1: invokevirtual #89                 // Method level:()Lnet/minecraft/world/level/Level;
+         4: invokevirtual #454                // Method net/minecraft/world/level/Level.isClientSide:()Z
+         7: ifne          40
+        10: aload_0
+        11: aload_0
+        12: invokevirtual #457                // Method isEffectiveAi:()Z
+        15: ifeq          36
+        18: aload_0
+        19: invokevirtual #415                // Method isUnderWater:()Z
+        22: ifeq          36
+        25: aload_0
+        26: invokevirtual #418                // Method wantsToSwim:()Z
+        29: ifeq          36
+        32: iconst_1
+        33: goto          37
+        36: iconst_0
+        37: invokevirtual #460                // Method setSwimming:(Z)V
+        40: return
+
+  public boolean isVisuallySwimming();
+    Code:
+         0: aload_0
+         1: invokevirtual #404                // Method isSwimming:()Z
+         4: ifeq          18
+         7: aload_0
+         8: invokevirtual #464                // Method isPassenger:()Z
+        11: ifne          18
+        14: iconst_1
+        15: goto          19
+        18: iconst_0
+        19: ireturn
+
+  protected boolean closeToNextPos();
+    Code:
+         0: aload_0
+         1: invokevirtual #467                // Method getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+         4: invokevirtual #471                // Method net/minecraft/world/entity/ai/navigation/PathNavigation.getPath:()Lnet/minecraft/world/level/pathfinder/Path;
+         7: astore_1
+         8: aload_1
+         9: ifnull        51
+        12: aload_1
+        13: invokevirtual #477                // Method net/minecraft/world/level/pathfinder/Path.getTarget:()Lnet/minecraft/core/BlockPos;
+        16: astore_2
+        17: aload_2
+        18: ifnull        51
+        21: aload_0
+        22: aload_2
+        23: invokevirtual #481                // Method net/minecraft/core/BlockPos.getX:()I
+        26: i2d
+        27: aload_2
+        28: invokevirtual #338                // Method net/minecraft/core/BlockPos.getY:()I
+        31: i2d
+        32: aload_2
+        33: invokevirtual #483                // Method net/minecraft/core/BlockPos.getZ:()I
+        36: i2d
+        37: invokevirtual #485                // Method distanceToSqr:(DDD)D
+        40: dstore_3
+        41: dload_3
+        42: ldc2_w        #489                // double 4.0d
+        45: dcmpg
+        46: ifge          51
+        49: iconst_1
+        50: ireturn
+        51: iconst_0
+        52: ireturn
+
+  public void performRangedAttack(net.minecraft.world.entity.LivingEntity, float);
+    Code:
+         0: aload_0
+         1: invokevirtual #209                // Method getMainHandItem:()Lnet/minecraft/world/item/ItemStack;
+         4: astore_3
+         5: aload_3
+         6: getstatic     #213                // Field net/minecraft/world/item/Items.TRIDENT:Lnet/minecraft/world/item/Item;
+         9: invokevirtual #216                // Method net/minecraft/world/item/ItemStack.is:(Ljava/lang/Object;)Z
+        12: ifeq          19
+        15: aload_3
+        16: goto          29
+        19: new           #165                // class net/minecraft/world/item/ItemStack
+        22: dup
+        23: getstatic     #213                // Field net/minecraft/world/item/Items.TRIDENT:Lnet/minecraft/world/item/Item;
+        26: invokespecial #189                // Method net/minecraft/world/item/ItemStack."<init>":(Lnet/minecraft/world/level/ItemLike;)V
+        29: astore        4
+        31: new           #491                // class net/minecraft/world/entity/projectile/arrow/ThrownTrident
+        34: dup
+        35: aload_0
+        36: invokevirtual #89                 // Method level:()Lnet/minecraft/world/level/Level;
+        39: aload_0
+        40: aload         4
+        42: invokespecial #493                // Method net/minecraft/world/entity/projectile/arrow/ThrownTrident."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V
+        45: astore        5
+        47: aload_1
+        48: invokevirtual #496                // Method net/minecraft/world/entity/LivingEntity.getX:()D
+        51: aload_0
+        52: invokevirtual #264                // Method getX:()D
+        55: dsub
+        56: dstore        6
+        58: aload_1
+        59: ldc2_w        #497                // double 0.3333333333333333d
+        62: invokevirtual #499                // Method net/minecraft/world/entity/LivingEntity.getY:(D)D
+        65: aload         5
+        67: invokevirtual #502                // Method net/minecraft/world/entity/projectile/arrow/ThrownTrident.getY:()D
+        70: dsub
+        71: dstore        8
+        73: aload_1
+        74: invokevirtual #503                // Method net/minecraft/world/entity/LivingEntity.getZ:()D
+        77: aload_0
+        78: invokevirtual #271                // Method getZ:()D
+        81: dsub
+        82: dstore        10
+        84: dload         6
+        86: dload         6
+        88: dmul
+        89: dload         10
+        91: dload         10
+        93: dmul
+        94: dadd
+        95: invokestatic  #504                // Method java/lang/Math.sqrt:(D)D
+        98: dstore        12
+       100: aload_0
+       101: invokevirtual #89                 // Method level:()Lnet/minecraft/world/level/Level;
+       104: astore        15
+       106: aload         15
+       108: instanceof    #509                // class net/minecraft/server/level/ServerLevel
+       111: ifeq          153
+       114: aload         15
+       116: checkcast     #509                // class net/minecraft/server/level/ServerLevel
+       119: astore        14
+       121: aload         5
+       123: aload         14
+       125: aload         4
+       127: dload         6
+       129: dload         8
+       131: dload         12
+       133: ldc2_w        #511                // double 0.20000000298023224d
+       136: dmul
+       137: dadd
+       138: dload         10
+       140: ldc_w         #513                // float 1.6f
+       143: aload_0
+       144: aload         14
+       146: invokevirtual #514                // Method rangedAttackUncertainty:(Lnet/minecraft/world/level/Level;)F
+       149: invokestatic  #517                // Method net/minecraft/world/entity/projectile/Projectile.spawnProjectileUsingShoot:(Lnet/minecraft/world/entity/projectile/Projectile;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;DDDFF)Lnet/minecraft/world/entity/projectile/Projectile;
+       152: pop
+       153: aload_0
+       154: getstatic     #523                // Field net/minecraft/sounds/SoundEvents.DROWNED_SHOOT:Lnet/minecraft/sounds/SoundEvent;
+       157: fconst_1
+       158: fconst_1
+       159: aload_0
+       160: invokevirtual #526                // Method getRandom:()Lnet/minecraft/util/RandomSource;
+       163: invokeinterface #176,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       168: ldc_w         #527                // float 0.4f
+       171: fmul
+       172: ldc_w         #528                // float 0.8f
+       175: fadd
+       176: fdiv
+       177: invokevirtual #529                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V
+       180: return
+
+  public float rangedAttackUncertainty(net.minecraft.world.level.Level);
+    Code:
+         0: aload_0
+         1: getfield      #8                  // Field rangedAttackUncertainty:F
+         4: fconst_0
+         5: fcmpg
+         6: ifge          17
+         9: aload_0
+        10: aload_1
+        11: invokespecial #533                // InterfaceMethod net/minecraft/world/entity/monster/RangedAttackMob.rangedAttackUncertainty:(Lnet/minecraft/world/level/Level;)F
+        14: goto          21
+        17: aload_0
+        18: getfield      #8                  // Field rangedAttackUncertainty:F
+        21: freturn
+
+  public void setRangedAttackUncertainty(float);
+    Code:
+         0: aload_0
+         1: fload_1
+         2: putfield      #8                  // Field rangedAttackUncertainty:F
+         5: return
+
+  public net.minecraft.tags.TagKey<net.minecraft.world.item.Item> getPreferredWeaponType();
+    Code:
+         0: getstatic     #536                // Field net/minecraft/tags/ItemTags.DROWNED_PREFERRED_WEAPONS:Lnet/minecraft/tags/TagKey;
+         3: areturn
+
+  public void setSearchingForLand(boolean);
+    Code:
+         0: aload_0
+         1: iload_1
+         2: putfield      #407                // Field searchingForLand:Z
+         5: return
+
+  public boolean isSearchingForLand();
+    Code:
+         0: aload_0
+         1: getfield      #407                // Field searchingForLand:Z
+         4: ireturn
+
+  public void rideTick();
+    Code:
+         0: aload_0
+         1: invokespecial #541                // Method net/minecraft/world/entity/monster/zombie/Zombie.rideTick:()V
+         4: aload_0
+         5: invokevirtual #544                // Method getControlledVehicle:()Lnet/minecraft/world/entity/Entity;
+         8: astore_2
+         9: aload_2
+        10: instanceof    #548                // class net/minecraft/world/entity/PathfinderMob
+        13: ifeq          29
+        16: aload_2
+        17: checkcast     #548                // class net/minecraft/world/entity/PathfinderMob
+        20: astore_1
+        21: aload_0
+        22: aload_1
+        23: getfield      #550                // Field net/minecraft/world/entity/PathfinderMob.yBodyRot:F
+        26: putfield      #553                // Field yBodyRot:F
+        29: return
+
+  public boolean wantsToPickUp(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+    Code:
+         0: aload_2
+         1: getstatic     #554                // Field net/minecraft/tags/ItemTags.SPEARS:Lnet/minecraft/tags/TagKey;
+         4: invokevirtual #557                // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+         7: ifeq          12
+        10: iconst_0
+        11: ireturn
+        12: aload_0
+        13: aload_1
+        14: aload_2
+        15: invokespecial #558                // Method net/minecraft/world/entity/monster/zombie/Zombie.wantsToPickUp:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Z
+        18: ireturn
+
+  private boolean lambda$addBehaviourGoals$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #562                // Method okTarget:(Lnet/minecraft/world/entity/LivingEntity;)Z
+         5: ireturn
+
+  static {};
+    Code:
+         0: ldc_w         #566                // float 0.49f
+         3: ldc_w         #567                // float 0.98f
+         6: invokestatic  #568                // Method net/minecraft/world/entity/EntityDimensions.scalable:(FF)Lnet/minecraft/world/entity/EntityDimensions;
+         9: ldc_w         #574                // float 0.775f
+        12: invokevirtual #575                // Method net/minecraft/world/entity/EntityDimensions.withEyeHeight:(F)Lnet/minecraft/world/entity/EntityDimensions;
+        15: invokestatic  #579                // Method net/minecraft/world/entity/EntityAttachments.builder:()Lnet/minecraft/world/entity/EntityAttachments$Builder;
+        18: getstatic     #585                // Field net/minecraft/world/entity/EntityAttachment.VEHICLE:Lnet/minecraft/world/entity/EntityAttachment;
+        21: fconst_0
+        22: ldc_w         #591                // float 0.1875f
+        25: fconst_0
+        26: invokevirtual #592                // Method net/minecraft/world/entity/EntityAttachments$Builder.attach:(Lnet/minecraft/world/entity/EntityAttachment;FFF)Lnet/minecraft/world/entity/EntityAttachments$Builder;
+        29: invokevirtual #598                // Method net/minecraft/world/entity/EntityDimensions.withAttachments:(Lnet/minecraft/world/entity/EntityAttachments$Builder;)Lnet/minecraft/world/entity/EntityDimensions;
+        32: putstatic     #343                // Field BABY_DIMENSIONS:Lnet/minecraft/world/entity/EntityDimensions;
+        35: return
+}

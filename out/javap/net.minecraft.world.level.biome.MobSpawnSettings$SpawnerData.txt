@@ -1,0 +1,14 @@
+Compiled from "MobSpawnSettings.java"
+public final class net.minecraft.world.level.biome.MobSpawnSettings$SpawnerData extends java.lang.Record {
+  private final net.minecraft.world.entity.EntityType<?> type;
+  private final net.minecraft.util.valueproviders.IntProvider count;
+  public static final com.mojang.serialization.MapCodec<net.minecraft.world.level.biome.MobSpawnSettings$SpawnerData> CODEC;
+  public net.minecraft.world.level.biome.MobSpawnSettings$SpawnerData(net.minecraft.world.entity.EntityType<?>, net.minecraft.util.valueproviders.IntProvider);
+  public java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.entity.EntityType<?> type();
+  public net.minecraft.util.valueproviders.IntProvider count();
+  private static com.mojang.datafixers.kinds.App lambda$static$0(com.mojang.serialization.codecs.RecordCodecBuilder$Instance);
+  static {};
+}

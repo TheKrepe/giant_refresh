@@ -1,0 +1,32 @@
+Compiled from "GiantZombieModel.java"
+public class net.minecraft.client.model.monster.zombie.GiantZombieModel extends net.minecraft.client.model.HumanoidModel<net.minecraft.client.renderer.entity.state.ZombieRenderState> {
+  public net.minecraft.client.model.monster.zombie.GiantZombieModel(net.minecraft.client.model.geom.ModelPart);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #1                  // Method net/minecraft/client/model/HumanoidModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+         5: return
+
+  protected void setupAttackAnimation(net.minecraft.client.renderer.entity.state.ZombieRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #7                  // Method net/minecraft/client/model/HumanoidModel.setupAttackAnimation:(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V
+         5: aload_0
+         6: getfield      #11                 // Field leftArm:Lnet/minecraft/client/model/geom/ModelPart;
+         9: aload_0
+        10: getfield      #17                 // Field rightArm:Lnet/minecraft/client/model/geom/ModelPart;
+        13: aload_1
+        14: getfield      #20                 // Field net/minecraft/client/renderer/entity/state/ZombieRenderState.isAggressive:Z
+        17: aload_1
+        18: invokestatic  #26                 // Method net/minecraft/client/model/AnimationUtils.animateZombieArms:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;ZLnet/minecraft/client/renderer/entity/state/UndeadRenderState;)V
+        21: return
+
+  protected void setupAttackAnimation(net.minecraft.client.renderer.entity.state.HumanoidRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #21                 // class net/minecraft/client/renderer/entity/state/ZombieRenderState
+         5: invokevirtual #32                 // Method setupAttackAnimation:(Lnet/minecraft/client/renderer/entity/state/ZombieRenderState;)V
+         8: return
+}

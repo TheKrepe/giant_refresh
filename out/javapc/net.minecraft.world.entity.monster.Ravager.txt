@@ -1,0 +1,989 @@
+Compiled from "Ravager.java"
+public class net.minecraft.world.entity.monster.Ravager extends net.minecraft.world.entity.raid.Raider {
+  private static final java.util.function.Predicate<net.minecraft.world.entity.Entity> ROAR_TARGET_WITH_GRIEFING;
+
+  private static final java.util.function.Predicate<net.minecraft.world.entity.Entity> ROAR_TARGET_WITHOUT_GRIEFING;
+
+  private static final java.util.function.Predicate<net.minecraft.world.entity.LivingEntity> ROAR_TARGET_ON_CLIENT;
+
+  private static final double BASE_MOVEMENT_SPEED;
+
+  private static final double ATTACK_MOVEMENT_SPEED;
+
+  private static final int STUNNED_COLOR;
+
+  private static final float STUNNED_COLOR_BLUE;
+
+  private static final float STUNNED_COLOR_GREEN;
+
+  private static final float STUNNED_COLOR_RED;
+
+  public static final int ATTACK_DURATION;
+
+  public static final int STUN_DURATION;
+
+  private static final int DEFAULT_ATTACK_TICK;
+
+  private static final int DEFAULT_STUN_TICK;
+
+  private static final int DEFAULT_ROAR_TICK;
+
+  private int attackTick;
+
+  private int stunnedTick;
+
+  private int roarTick;
+
+  public net.minecraft.world.entity.monster.Ravager(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.Ravager>, net.minecraft.world.level.Level);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #5                  // Method net/minecraft/world/entity/raid/Raider."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+         6: aload_0
+         7: iconst_0
+         8: putfield      #11                 // Field attackTick:I
+        11: aload_0
+        12: iconst_0
+        13: putfield      #15                 // Field stunnedTick:I
+        16: aload_0
+        17: iconst_0
+        18: putfield      #18                 // Field roarTick:I
+        21: aload_0
+        22: bipush        20
+        24: putfield      #23                 // Field xpReward:I
+        27: aload_0
+        28: getstatic     #26                 // Field net/minecraft/world/level/pathfinder/PathType.LEAVES:Lnet/minecraft/world/level/pathfinder/PathType;
+        31: fconst_0
+        32: invokevirtual #32                 // Method setPathfindingMalus:(Lnet/minecraft/world/level/pathfinder/PathType;F)V
+        35: return
+
+  protected void registerGoals();
+    Code:
+         0: aload_0
+         1: invokespecial #36                 // Method net/minecraft/world/entity/raid/Raider.registerGoals:()V
+         4: aload_0
+         5: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+         8: iconst_0
+         9: new           #44                 // class net/minecraft/world/entity/ai/goal/FloatGoal
+        12: dup
+        13: aload_0
+        14: invokespecial #46                 // Method net/minecraft/world/entity/ai/goal/FloatGoal."<init>":(Lnet/minecraft/world/entity/Mob;)V
+        17: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        20: aload_0
+        21: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        24: iconst_4
+        25: new           #55                 // class net/minecraft/world/entity/ai/goal/MeleeAttackGoal
+        28: dup
+        29: aload_0
+        30: dconst_1
+        31: iconst_1
+        32: invokespecial #57                 // Method net/minecraft/world/entity/ai/goal/MeleeAttackGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;DZ)V
+        35: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        38: aload_0
+        39: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        42: iconst_5
+        43: new           #60                 // class net/minecraft/world/entity/ai/goal/WaterAvoidingRandomStrollGoal
+        46: dup
+        47: aload_0
+        48: ldc2_w        #62                 // double 0.4d
+        51: invokespecial #64                 // Method net/minecraft/world/entity/ai/goal/WaterAvoidingRandomStrollGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;D)V
+        54: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        57: aload_0
+        58: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        61: bipush        6
+        63: new           #67                 // class net/minecraft/world/entity/ai/goal/LookAtPlayerGoal
+        66: dup
+        67: aload_0
+        68: ldc           #69                 // class net/minecraft/world/entity/player/Player
+        70: ldc           #71                 // float 6.0f
+        72: invokespecial #72                 // Method net/minecraft/world/entity/ai/goal/LookAtPlayerGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;F)V
+        75: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        78: aload_0
+        79: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        82: bipush        10
+        84: new           #67                 // class net/minecraft/world/entity/ai/goal/LookAtPlayerGoal
+        87: dup
+        88: aload_0
+        89: ldc           #75                 // class net/minecraft/world/entity/Mob
+        91: ldc           #77                 // float 8.0f
+        93: invokespecial #72                 // Method net/minecraft/world/entity/ai/goal/LookAtPlayerGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;F)V
+        96: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        99: aload_0
+       100: getfield      #78                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       103: iconst_2
+       104: new           #81                 // class net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal
+       107: dup
+       108: aload_0
+       109: iconst_1
+       110: anewarray     #83                 // class java/lang/Class
+       113: dup
+       114: iconst_0
+       115: ldc           #6                  // class net/minecraft/world/entity/raid/Raider
+       117: aastore
+       118: invokespecial #85                 // Method net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;[Ljava/lang/Class;)V
+       121: iconst_0
+       122: anewarray     #83                 // class java/lang/Class
+       125: invokevirtual #88                 // Method net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal.setAlertOthers:([Ljava/lang/Class;)Lnet/minecraft/world/entity/ai/goal/target/HurtByTargetGoal;
+       128: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       131: aload_0
+       132: getfield      #78                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       135: iconst_3
+       136: new           #92                 // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       139: dup
+       140: aload_0
+       141: ldc           #69                 // class net/minecraft/world/entity/player/Player
+       143: iconst_1
+       144: invokespecial #94                 // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;Z)V
+       147: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       150: aload_0
+       151: getfield      #78                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       154: iconst_4
+       155: new           #92                 // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       158: dup
+       159: aload_0
+       160: ldc           #97                 // class net/minecraft/world/entity/npc/villager/AbstractVillager
+       162: iconst_1
+       163: invokedynamic #99,  0             // InvokeDynamic #0:test:()Lnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;
+       168: invokespecial #103                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;ZLnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;)V
+       171: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       174: aload_0
+       175: getfield      #78                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       178: iconst_4
+       179: new           #92                 // class net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal
+       182: dup
+       183: aload_0
+       184: ldc           #106                // class net/minecraft/world/entity/animal/golem/IronGolem
+       186: iconst_1
+       187: invokespecial #94                 // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;Z)V
+       190: invokevirtual #49                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       193: return
+
+  protected void updateControlFlags();
+    Code:
+         0: aload_0
+         1: invokevirtual #108                // Method getControllingPassenger:()Lnet/minecraft/world/entity/LivingEntity;
+         4: instanceof    #75                 // class net/minecraft/world/entity/Mob
+         7: ifeq          23
+        10: aload_0
+        11: invokevirtual #108                // Method getControllingPassenger:()Lnet/minecraft/world/entity/LivingEntity;
+        14: getstatic     #112                // Field net/minecraft/tags/EntityTypeTags.RAIDERS:Lnet/minecraft/tags/TagKey;
+        17: invokevirtual #118                // Method net/minecraft/world/entity/LivingEntity.is:(Lnet/minecraft/tags/TagKey;)Z
+        20: ifeq          27
+        23: iconst_1
+        24: goto          28
+        27: iconst_0
+        28: istore_1
+        29: aload_0
+        30: invokevirtual #124                // Method getVehicle:()Lnet/minecraft/world/entity/Entity;
+        33: instanceof    #128                // class net/minecraft/world/entity/vehicle/boat/AbstractBoat
+        36: ifne          43
+        39: iconst_1
+        40: goto          44
+        43: iconst_0
+        44: istore_2
+        45: aload_0
+        46: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        49: getstatic     #130                // Field net/minecraft/world/entity/ai/goal/Goal$Flag.MOVE:Lnet/minecraft/world/entity/ai/goal/Goal$Flag;
+        52: iload_1
+        53: invokevirtual #136                // Method net/minecraft/world/entity/ai/goal/GoalSelector.setControlFlag:(Lnet/minecraft/world/entity/ai/goal/Goal$Flag;Z)V
+        56: aload_0
+        57: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        60: getstatic     #140                // Field net/minecraft/world/entity/ai/goal/Goal$Flag.JUMP:Lnet/minecraft/world/entity/ai/goal/Goal$Flag;
+        63: iload_1
+        64: ifeq          75
+        67: iload_2
+        68: ifeq          75
+        71: iconst_1
+        72: goto          76
+        75: iconst_0
+        76: invokevirtual #136                // Method net/minecraft/world/entity/ai/goal/GoalSelector.setControlFlag:(Lnet/minecraft/world/entity/ai/goal/Goal$Flag;Z)V
+        79: aload_0
+        80: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        83: getstatic     #143                // Field net/minecraft/world/entity/ai/goal/Goal$Flag.LOOK:Lnet/minecraft/world/entity/ai/goal/Goal$Flag;
+        86: iload_1
+        87: invokevirtual #136                // Method net/minecraft/world/entity/ai/goal/GoalSelector.setControlFlag:(Lnet/minecraft/world/entity/ai/goal/Goal$Flag;Z)V
+        90: aload_0
+        91: getfield      #40                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        94: getstatic     #146                // Field net/minecraft/world/entity/ai/goal/Goal$Flag.TARGET:Lnet/minecraft/world/entity/ai/goal/Goal$Flag;
+        97: iload_1
+        98: invokevirtual #136                // Method net/minecraft/world/entity/ai/goal/GoalSelector.setControlFlag:(Lnet/minecraft/world/entity/ai/goal/Goal$Flag;Z)V
+       101: return
+
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+    Code:
+         0: invokestatic  #149                // Method net/minecraft/world/entity/monster/Monster.createMonsterAttributes:()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+         3: getstatic     #155                // Field net/minecraft/world/entity/ai/attributes/Attributes.MAX_HEALTH:Lnet/minecraft/core/Holder;
+         6: ldc2_w        #161                // double 100.0d
+         9: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        12: getstatic     #169                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        15: ldc2_w        #172                // double 0.3d
+        18: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        21: getstatic     #174                // Field net/minecraft/world/entity/ai/attributes/Attributes.KNOCKBACK_RESISTANCE:Lnet/minecraft/core/Holder;
+        24: ldc2_w        #177                // double 0.75d
+        27: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        30: getstatic     #179                // Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;
+        33: ldc2_w        #182                // double 12.0d
+        36: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        39: getstatic     #184                // Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_KNOCKBACK:Lnet/minecraft/core/Holder;
+        42: ldc2_w        #187                // double 1.5d
+        45: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        48: getstatic     #189                // Field net/minecraft/world/entity/ai/attributes/Attributes.FOLLOW_RANGE:Lnet/minecraft/core/Holder;
+        51: ldc2_w        #192                // double 32.0d
+        54: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        57: getstatic     #194                // Field net/minecraft/world/entity/ai/attributes/Attributes.STEP_HEIGHT:Lnet/minecraft/core/Holder;
+        60: dconst_1
+        61: invokevirtual #163                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        64: areturn
+
+  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #197                // Method net/minecraft/world/entity/raid/Raider.addAdditionalSaveData:(Lnet/minecraft/world/level/storage/ValueOutput;)V
+         5: aload_1
+         6: ldc           #201                // String AttackTick
+         8: aload_0
+         9: getfield      #11                 // Field attackTick:I
+        12: invokeinterface #203,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueOutput.putInt:(Ljava/lang/String;I)V
+        17: aload_1
+        18: ldc           #209                // String StunTick
+        20: aload_0
+        21: getfield      #15                 // Field stunnedTick:I
+        24: invokeinterface #203,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueOutput.putInt:(Ljava/lang/String;I)V
+        29: aload_1
+        30: ldc           #211                // String RoarTick
+        32: aload_0
+        33: getfield      #18                 // Field roarTick:I
+        36: invokeinterface #203,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueOutput.putInt:(Ljava/lang/String;I)V
+        41: return
+
+  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #213                // Method net/minecraft/world/entity/raid/Raider.readAdditionalSaveData:(Lnet/minecraft/world/level/storage/ValueInput;)V
+         5: aload_0
+         6: aload_1
+         7: ldc           #201                // String AttackTick
+         9: iconst_0
+        10: invokeinterface #217,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueInput.getIntOr:(Ljava/lang/String;I)I
+        15: putfield      #11                 // Field attackTick:I
+        18: aload_0
+        19: aload_1
+        20: ldc           #209                // String StunTick
+        22: iconst_0
+        23: invokeinterface #217,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueInput.getIntOr:(Ljava/lang/String;I)I
+        28: putfield      #15                 // Field stunnedTick:I
+        31: aload_0
+        32: aload_1
+        33: ldc           #211                // String RoarTick
+        35: iconst_0
+        36: invokeinterface #217,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueInput.getIntOr:(Ljava/lang/String;I)I
+        41: putfield      #18                 // Field roarTick:I
+        44: return
+
+  public net.minecraft.sounds.SoundEvent getCelebrateSound();
+    Code:
+         0: getstatic     #223                // Field net/minecraft/sounds/SoundEvents.RAVAGER_CELEBRATE:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  public int getMaxHeadYRot();
+    Code:
+         0: bipush        45
+         2: ireturn
+
+  public void aiStep();
+    Code:
+         0: aload_0
+         1: invokespecial #229                // Method net/minecraft/world/entity/raid/Raider.aiStep:()V
+         4: aload_0
+         5: invokevirtual #232                // Method isAlive:()Z
+         8: ifne          12
+        11: return
+        12: aload_0
+        13: invokevirtual #236                // Method isImmobile:()Z
+        16: ifeq          33
+        19: aload_0
+        20: getstatic     #169                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        23: invokevirtual #239                // Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;
+        26: dconst_0
+        27: invokevirtual #243                // Method net/minecraft/world/entity/ai/attributes/AttributeInstance.setBaseValue:(D)V
+        30: goto          79
+        33: aload_0
+        34: invokevirtual #249                // Method getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+        37: ifnull        46
+        40: ldc2_w        #252                // double 0.35d
+        43: goto          49
+        46: ldc2_w        #172                // double 0.3d
+        49: dstore_1
+        50: aload_0
+        51: getstatic     #169                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        54: invokevirtual #239                // Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;
+        57: invokevirtual #254                // Method net/minecraft/world/entity/ai/attributes/AttributeInstance.getBaseValue:()D
+        60: dstore_3
+        61: aload_0
+        62: getstatic     #169                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        65: invokevirtual #239                // Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;
+        68: ldc2_w        #258                // double 0.1d
+        71: dload_3
+        72: dload_1
+        73: invokestatic  #260                // Method net/minecraft/util/Mth.lerp:(DDD)D
+        76: invokevirtual #243                // Method net/minecraft/world/entity/ai/attributes/AttributeInstance.setBaseValue:(D)V
+        79: aload_0
+        80: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+        83: astore_2
+        84: aload_2
+        85: instanceof    #270                // class net/minecraft/server/level/ServerLevel
+        88: ifeq          271
+        91: aload_2
+        92: checkcast     #270                // class net/minecraft/server/level/ServerLevel
+        95: astore_1
+        96: aload_0
+        97: getfield      #272                // Field horizontalCollision:Z
+       100: ifeq          271
+       103: aload_1
+       104: invokevirtual #276                // Method net/minecraft/server/level/ServerLevel.getGameRules:()Lnet/minecraft/world/level/gamerules/GameRules;
+       107: getstatic     #280                // Field net/minecraft/world/level/gamerules/GameRules.MOB_GRIEFING:Lnet/minecraft/world/level/gamerules/GameRule;
+       110: invokevirtual #286                // Method net/minecraft/world/level/gamerules/GameRules.get:(Lnet/minecraft/world/level/gamerules/GameRule;)Ljava/lang/Object;
+       113: checkcast     #290                // class java/lang/Boolean
+       116: invokevirtual #292                // Method java/lang/Boolean.booleanValue:()Z
+       119: ifeq          271
+       122: iconst_0
+       123: istore_2
+       124: aload_0
+       125: invokevirtual #295                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+       128: ldc2_w        #299                // double 0.2d
+       131: invokevirtual #301                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+       134: astore_3
+       135: aload_3
+       136: getfield      #307                // Field net/minecraft/world/phys/AABB.minX:D
+       139: invokestatic  #311                // Method net/minecraft/util/Mth.floor:(D)I
+       142: aload_3
+       143: getfield      #315                // Field net/minecraft/world/phys/AABB.minY:D
+       146: invokestatic  #311                // Method net/minecraft/util/Mth.floor:(D)I
+       149: aload_3
+       150: getfield      #318                // Field net/minecraft/world/phys/AABB.minZ:D
+       153: invokestatic  #311                // Method net/minecraft/util/Mth.floor:(D)I
+       156: aload_3
+       157: getfield      #321                // Field net/minecraft/world/phys/AABB.maxX:D
+       160: invokestatic  #311                // Method net/minecraft/util/Mth.floor:(D)I
+       163: aload_3
+       164: getfield      #324                // Field net/minecraft/world/phys/AABB.maxY:D
+       167: invokestatic  #311                // Method net/minecraft/util/Mth.floor:(D)I
+       170: aload_3
+       171: getfield      #327                // Field net/minecraft/world/phys/AABB.maxZ:D
+       174: invokestatic  #311                // Method net/minecraft/util/Mth.floor:(D)I
+       177: invokestatic  #330                // Method net/minecraft/core/BlockPos.betweenClosed:(IIIIII)Ljava/lang/Iterable;
+       180: invokeinterface #336,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+       185: astore        4
+       187: aload         4
+       189: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       194: ifeq          256
+       197: aload         4
+       199: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       204: checkcast     #331                // class net/minecraft/core/BlockPos
+       207: astore        5
+       209: aload_1
+       210: aload         5
+       212: invokevirtual #351                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       215: astore        6
+       217: aload         6
+       219: invokevirtual #355                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+       222: astore        7
+       224: aload         7
+       226: instanceof    #361                // class net/minecraft/world/level/block/LeavesBlock
+       229: ifeq          253
+       232: aload_1
+       233: aload         5
+       235: iconst_1
+       236: aload_0
+       237: invokevirtual #363                // Method net/minecraft/server/level/ServerLevel.destroyBlock:(Lnet/minecraft/core/BlockPos;ZLnet/minecraft/world/entity/Entity;)Z
+       240: ifne          247
+       243: iload_2
+       244: ifeq          251
+       247: iconst_1
+       248: goto          252
+       251: iconst_0
+       252: istore_2
+       253: goto          187
+       256: iload_2
+       257: ifne          271
+       260: aload_0
+       261: invokevirtual #367                // Method onGround:()Z
+       264: ifeq          271
+       267: aload_0
+       268: invokevirtual #370                // Method jumpFromGround:()V
+       271: aload_0
+       272: getfield      #18                 // Field roarTick:I
+       275: ifle          301
+       278: aload_0
+       279: dup
+       280: getfield      #18                 // Field roarTick:I
+       283: iconst_1
+       284: isub
+       285: putfield      #18                 // Field roarTick:I
+       288: aload_0
+       289: getfield      #18                 // Field roarTick:I
+       292: bipush        10
+       294: if_icmpne     301
+       297: aload_0
+       298: invokevirtual #373                // Method roar:()V
+       301: aload_0
+       302: getfield      #11                 // Field attackTick:I
+       305: ifle          318
+       308: aload_0
+       309: dup
+       310: getfield      #11                 // Field attackTick:I
+       313: iconst_1
+       314: isub
+       315: putfield      #11                 // Field attackTick:I
+       318: aload_0
+       319: getfield      #15                 // Field stunnedTick:I
+       322: ifle          361
+       325: aload_0
+       326: dup
+       327: getfield      #15                 // Field stunnedTick:I
+       330: iconst_1
+       331: isub
+       332: putfield      #15                 // Field stunnedTick:I
+       335: aload_0
+       336: invokevirtual #376                // Method stunEffect:()V
+       339: aload_0
+       340: getfield      #15                 // Field stunnedTick:I
+       343: ifne          361
+       346: aload_0
+       347: getstatic     #379                // Field net/minecraft/sounds/SoundEvents.RAVAGER_ROAR:Lnet/minecraft/sounds/SoundEvent;
+       350: fconst_1
+       351: fconst_1
+       352: invokevirtual #382                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V
+       355: aload_0
+       356: bipush        20
+       358: putfield      #18                 // Field roarTick:I
+       361: return
+
+  private void stunEffect();
+    Code:
+         0: aload_0
+         1: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+         4: bipush        6
+         6: invokeinterface #390,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        11: ifne          143
+        14: aload_0
+        15: invokevirtual #396                // Method getX:()D
+        18: aload_0
+        19: invokevirtual #399                // Method getBbWidth:()F
+        22: f2d
+        23: aload_0
+        24: getfield      #403                // Field yBodyRot:F
+        27: ldc_w         #407                // float 0.017453292f
+        30: fmul
+        31: f2d
+        32: invokestatic  #408                // Method java/lang/Math.sin:(D)D
+        35: dmul
+        36: dsub
+        37: aload_0
+        38: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+        41: invokeinterface #414,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+        46: ldc2_w        #417                // double 0.6d
+        49: dmul
+        50: ldc2_w        #172                // double 0.3d
+        53: dsub
+        54: dadd
+        55: dstore_1
+        56: aload_0
+        57: invokevirtual #419                // Method getY:()D
+        60: aload_0
+        61: invokevirtual #422                // Method getBbHeight:()F
+        64: f2d
+        65: dadd
+        66: ldc2_w        #172                // double 0.3d
+        69: dsub
+        70: dstore_3
+        71: aload_0
+        72: invokevirtual #425                // Method getZ:()D
+        75: aload_0
+        76: invokevirtual #399                // Method getBbWidth:()F
+        79: f2d
+        80: aload_0
+        81: getfield      #403                // Field yBodyRot:F
+        84: ldc_w         #407                // float 0.017453292f
+        87: fmul
+        88: f2d
+        89: invokestatic  #428                // Method java/lang/Math.cos:(D)D
+        92: dmul
+        93: dadd
+        94: aload_0
+        95: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+        98: invokeinterface #414,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+       103: ldc2_w        #417                // double 0.6d
+       106: dmul
+       107: ldc2_w        #172                // double 0.3d
+       110: dsub
+       111: dadd
+       112: dstore        5
+       114: aload_0
+       115: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+       118: getstatic     #431                // Field net/minecraft/core/particles/ParticleTypes.ENTITY_EFFECT:Lnet/minecraft/core/particles/ParticleType;
+       121: ldc_w         #437                // float 0.49803922f
+       124: ldc_w         #438                // float 0.5137255f
+       127: ldc_w         #439                // float 0.57254905f
+       130: invokestatic  #440                // Method net/minecraft/core/particles/ColorParticleOption.create:(Lnet/minecraft/core/particles/ParticleType;FFF)Lnet/minecraft/core/particles/ColorParticleOption;
+       133: dload_1
+       134: dload_3
+       135: dload         5
+       137: dconst_0
+       138: dconst_0
+       139: dconst_0
+       140: invokevirtual #446                // Method net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+       143: return
+
+  protected boolean isImmobile();
+    Code:
+         0: aload_0
+         1: invokespecial #452                // Method net/minecraft/world/entity/raid/Raider.isImmobile:()Z
+         4: ifne          28
+         7: aload_0
+         8: getfield      #11                 // Field attackTick:I
+        11: ifgt          28
+        14: aload_0
+        15: getfield      #15                 // Field stunnedTick:I
+        18: ifgt          28
+        21: aload_0
+        22: getfield      #18                 // Field roarTick:I
+        25: ifle          32
+        28: iconst_1
+        29: goto          33
+        32: iconst_0
+        33: ireturn
+
+  public boolean hasLineOfSight(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: getfield      #15                 // Field stunnedTick:I
+         4: ifgt          14
+         7: aload_0
+         8: getfield      #18                 // Field roarTick:I
+        11: ifle          16
+        14: iconst_0
+        15: ireturn
+        16: aload_0
+        17: aload_1
+        18: invokespecial #453                // Method net/minecraft/world/entity/raid/Raider.hasLineOfSight:(Lnet/minecraft/world/entity/Entity;)Z
+        21: ireturn
+
+  protected void blockedByItem(net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource, float, boolean);
+    Code:
+         0: aload_0
+         1: getfield      #18                 // Field roarTick:I
+         4: ifne          66
+         7: aload_0
+         8: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+        11: invokeinterface #414,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+        16: ldc2_w        #457                // double 0.5d
+        19: dcmpg
+        20: ifge          56
+        23: aload_0
+        24: bipush        40
+        26: putfield      #15                 // Field stunnedTick:I
+        29: aload_0
+        30: getstatic     #459                // Field net/minecraft/sounds/SoundEvents.RAVAGER_STUNNED:Lnet/minecraft/sounds/SoundEvent;
+        33: fconst_1
+        34: fconst_1
+        35: invokevirtual #382                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V
+        38: aload_0
+        39: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+        42: aload_0
+        43: bipush        39
+        45: invokevirtual #464                // Method net/minecraft/world/level/Level.broadcastEntityEvent:(Lnet/minecraft/world/entity/Entity;B)V
+        48: aload_1
+        49: aload_0
+        50: invokevirtual #468                // Method net/minecraft/world/entity/LivingEntity.push:(Lnet/minecraft/world/entity/Entity;)V
+        53: goto          61
+        56: aload_0
+        57: aload_1
+        58: invokevirtual #472                // Method strongKnockback:(Lnet/minecraft/world/entity/Entity;)V
+        61: aload_1
+        62: iconst_1
+        63: putfield      #475                // Field net/minecraft/world/entity/LivingEntity.syncVelocity:Z
+        66: return
+
+  private void roar();
+    Code:
+         0: aload_0
+         1: invokevirtual #232                // Method isAlive:()Z
+         4: ifeq          160
+         7: aload_0
+         8: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+        11: astore_2
+        12: aload_2
+        13: instanceof    #270                // class net/minecraft/server/level/ServerLevel
+        16: ifeq          160
+        19: aload_2
+        20: checkcast     #270                // class net/minecraft/server/level/ServerLevel
+        23: astore_1
+        24: aload_1
+        25: invokevirtual #276                // Method net/minecraft/server/level/ServerLevel.getGameRules:()Lnet/minecraft/world/level/gamerules/GameRules;
+        28: getstatic     #280                // Field net/minecraft/world/level/gamerules/GameRules.MOB_GRIEFING:Lnet/minecraft/world/level/gamerules/GameRule;
+        31: invokevirtual #286                // Method net/minecraft/world/level/gamerules/GameRules.get:(Lnet/minecraft/world/level/gamerules/GameRule;)Ljava/lang/Object;
+        34: checkcast     #290                // class java/lang/Boolean
+        37: invokevirtual #292                // Method java/lang/Boolean.booleanValue:()Z
+        40: ifeq          49
+        43: getstatic     #478                // Field ROAR_TARGET_WITH_GRIEFING:Ljava/util/function/Predicate;
+        46: goto          52
+        49: getstatic     #482                // Field ROAR_TARGET_WITHOUT_GRIEFING:Ljava/util/function/Predicate;
+        52: astore_2
+        53: aload_0
+        54: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+        57: ldc           #119                // class net/minecraft/world/entity/LivingEntity
+        59: aload_0
+        60: invokevirtual #295                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        63: ldc2_w        #485                // double 4.0d
+        66: invokevirtual #301                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+        69: aload_2
+        70: invokevirtual #487                // Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
+        73: astore_3
+        74: aload_3
+        75: invokeinterface #491,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        80: astore        4
+        82: aload         4
+        84: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        89: ifeq          146
+        92: aload         4
+        94: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        99: checkcast     #119                // class net/minecraft/world/entity/LivingEntity
+       102: astore        5
+       104: aload         5
+       106: instanceof    #494                // class net/minecraft/world/entity/monster/illager/AbstractIllager
+       109: ifne          129
+       112: aload         5
+       114: aload_1
+       115: aload_0
+       116: invokevirtual #496                // Method damageSources:()Lnet/minecraft/world/damagesource/DamageSources;
+       119: aload_0
+       120: invokevirtual #500                // Method net/minecraft/world/damagesource/DamageSources.mobAttack:(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;
+       123: ldc           #71                 // float 6.0f
+       125: invokevirtual #506                // Method net/minecraft/world/entity/LivingEntity.hurtServer:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z
+       128: pop
+       129: aload         5
+       131: instanceof    #69                 // class net/minecraft/world/entity/player/Player
+       134: ifne          143
+       137: aload_0
+       138: aload         5
+       140: invokevirtual #472                // Method strongKnockback:(Lnet/minecraft/world/entity/Entity;)V
+       143: goto          82
+       146: aload_0
+       147: getstatic     #510                // Field net/minecraft/world/level/gameevent/GameEvent.ENTITY_ACTION:Lnet/minecraft/core/Holder$Reference;
+       150: invokevirtual #516                // Method gameEvent:(Lnet/minecraft/core/Holder;)V
+       153: aload_1
+       154: aload_0
+       155: bipush        69
+       157: invokevirtual #520                // Method net/minecraft/server/level/ServerLevel.broadcastEntityEvent:(Lnet/minecraft/world/entity/Entity;B)V
+       160: return
+
+  private void applyRoarKnockbackClient();
+    Code:
+         0: aload_0
+         1: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+         4: ldc           #119                // class net/minecraft/world/entity/LivingEntity
+         6: aload_0
+         7: invokevirtual #295                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        10: ldc2_w        #485                // double 4.0d
+        13: invokevirtual #301                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+        16: getstatic     #521                // Field ROAR_TARGET_ON_CLIENT:Ljava/util/function/Predicate;
+        19: invokevirtual #487                // Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
+        22: astore_1
+        23: aload_1
+        24: invokeinterface #491,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        29: astore_2
+        30: aload_2
+        31: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        36: ifeq          57
+        39: aload_2
+        40: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        45: checkcast     #119                // class net/minecraft/world/entity/LivingEntity
+        48: astore_3
+        49: aload_0
+        50: aload_3
+        51: invokevirtual #472                // Method strongKnockback:(Lnet/minecraft/world/entity/Entity;)V
+        54: goto          30
+        57: return
+
+  private void strongKnockback(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_1
+         1: invokevirtual #524                // Method net/minecraft/world/entity/Entity.getX:()D
+         4: aload_0
+         5: invokevirtual #396                // Method getX:()D
+         8: dsub
+         9: dstore_2
+        10: aload_1
+        11: invokevirtual #527                // Method net/minecraft/world/entity/Entity.getZ:()D
+        14: aload_0
+        15: invokevirtual #425                // Method getZ:()D
+        18: dsub
+        19: dstore        4
+        21: dload_2
+        22: dload_2
+        23: dmul
+        24: dload         4
+        26: dload         4
+        28: dmul
+        29: dadd
+        30: ldc2_w        #528                // double 0.001d
+        33: invokestatic  #530                // Method java/lang/Math.max:(DD)D
+        36: dstore        6
+        38: aload_1
+        39: dload_2
+        40: dload         6
+        42: ddiv
+        43: ldc2_w        #485                // double 4.0d
+        46: dmul
+        47: ldc2_w        #299                // double 0.2d
+        50: dload         4
+        52: dload         6
+        54: ddiv
+        55: ldc2_w        #485                // double 4.0d
+        58: dmul
+        59: invokevirtual #534                // Method net/minecraft/world/entity/Entity.push:(DDD)V
+        62: return
+
+  public void handleEntityEvent(byte);
+    Code:
+         0: iload_1
+         1: iconst_4
+         2: if_icmpne     23
+         5: aload_0
+         6: bipush        10
+         8: putfield      #11                 // Field attackTick:I
+        11: aload_0
+        12: getstatic     #537                // Field net/minecraft/sounds/SoundEvents.RAVAGER_ATTACK:Lnet/minecraft/sounds/SoundEvent;
+        15: fconst_1
+        16: fconst_1
+        17: invokevirtual #382                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V
+        20: goto          52
+        23: iload_1
+        24: bipush        39
+        26: if_icmpne     38
+        29: aload_0
+        30: bipush        40
+        32: putfield      #15                 // Field stunnedTick:I
+        35: goto          52
+        38: iload_1
+        39: bipush        69
+        41: if_icmpne     52
+        44: aload_0
+        45: invokevirtual #540                // Method addRoarParticleEffects:()V
+        48: aload_0
+        49: invokevirtual #543                // Method applyRoarKnockbackClient:()V
+        52: aload_0
+        53: iload_1
+        54: invokespecial #546                // Method net/minecraft/world/entity/raid/Raider.handleEntityEvent:(B)V
+        57: return
+
+  private void addRoarParticleEffects();
+    Code:
+         0: aload_0
+         1: invokevirtual #295                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+         4: invokevirtual #550                // Method net/minecraft/world/phys/AABB.getCenter:()Lnet/minecraft/world/phys/Vec3;
+         7: astore_1
+         8: iconst_0
+         9: istore_2
+        10: iload_2
+        11: bipush        40
+        13: if_icmpge     93
+        16: aload_0
+        17: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+        20: invokeinterface #554,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextGaussian:()D
+        25: ldc2_w        #299                // double 0.2d
+        28: dmul
+        29: dstore_3
+        30: aload_0
+        31: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+        34: invokeinterface #554,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextGaussian:()D
+        39: ldc2_w        #299                // double 0.2d
+        42: dmul
+        43: dstore        5
+        45: aload_0
+        46: getfield      #386                // Field random:Lnet/minecraft/util/RandomSource;
+        49: invokeinterface #554,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextGaussian:()D
+        54: ldc2_w        #299                // double 0.2d
+        57: dmul
+        58: dstore        7
+        60: aload_0
+        61: invokevirtual #266                // Method level:()Lnet/minecraft/world/level/Level;
+        64: getstatic     #557                // Field net/minecraft/core/particles/ParticleTypes.POOF:Lnet/minecraft/core/particles/SimpleParticleType;
+        67: aload_1
+        68: getfield      #561                // Field net/minecraft/world/phys/Vec3.x:D
+        71: aload_1
+        72: getfield      #566                // Field net/minecraft/world/phys/Vec3.y:D
+        75: aload_1
+        76: getfield      #569                // Field net/minecraft/world/phys/Vec3.z:D
+        79: dload_3
+        80: dload         5
+        82: dload         7
+        84: invokevirtual #446                // Method net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+        87: iinc          2, 1
+        90: goto          10
+        93: return
+
+  public int getAttackTick();
+    Code:
+         0: aload_0
+         1: getfield      #11                 // Field attackTick:I
+         4: ireturn
+
+  public int getStunnedTick();
+    Code:
+         0: aload_0
+         1: getfield      #15                 // Field stunnedTick:I
+         4: ireturn
+
+  public int getRoarTick();
+    Code:
+         0: aload_0
+         1: getfield      #18                 // Field roarTick:I
+         4: ireturn
+
+  public boolean doHurtTarget(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: bipush        10
+         3: putfield      #11                 // Field attackTick:I
+         6: aload_1
+         7: aload_0
+         8: iconst_4
+         9: invokevirtual #520                // Method net/minecraft/server/level/ServerLevel.broadcastEntityEvent:(Lnet/minecraft/world/entity/Entity;B)V
+        12: aload_0
+        13: getstatic     #537                // Field net/minecraft/sounds/SoundEvents.RAVAGER_ATTACK:Lnet/minecraft/sounds/SoundEvent;
+        16: fconst_1
+        17: fconst_1
+        18: invokevirtual #382                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V
+        21: aload_0
+        22: aload_1
+        23: aload_2
+        24: invokespecial #572                // Method net/minecraft/world/entity/raid/Raider.doHurtTarget:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;)Z
+        27: ireturn
+
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+    Code:
+         0: getstatic     #576                // Field net/minecraft/sounds/SoundEvents.RAVAGER_AMBIENT:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+    Code:
+         0: getstatic     #579                // Field net/minecraft/sounds/SoundEvents.RAVAGER_HURT:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+    Code:
+         0: getstatic     #582                // Field net/minecraft/sounds/SoundEvents.RAVAGER_DEATH:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected void playStepSound(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_0
+         1: getstatic     #585                // Field net/minecraft/sounds/SoundEvents.RAVAGER_STEP:Lnet/minecraft/sounds/SoundEvent;
+         4: ldc_w         #588                // float 0.15f
+         7: fconst_1
+         8: invokevirtual #382                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V
+        11: return
+
+  public boolean checkSpawnObstruction(net.minecraft.world.level.LevelReader);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: invokevirtual #295                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+         5: invokeinterface #589,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.containsAnyLiquid:(Lnet/minecraft/world/phys/AABB;)Z
+        10: ifne          17
+        13: iconst_1
+        14: goto          18
+        17: iconst_0
+        18: ireturn
+
+  public void applyRaidBuffs(net.minecraft.server.level.ServerLevel, int, boolean);
+    Code:
+         0: return
+
+  public boolean canBeLeader();
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  protected net.minecraft.world.phys.AABB getAttackBoundingBox(double);
+    Code:
+         0: aload_0
+         1: dload_1
+         2: invokespecial #595                // Method net/minecraft/world/entity/raid/Raider.getAttackBoundingBox:(D)Lnet/minecraft/world/phys/AABB;
+         5: astore_3
+         6: aload_3
+         7: ldc2_w        #598                // double 0.05d
+        10: dconst_0
+        11: ldc2_w        #598                // double 0.05d
+        14: invokevirtual #600                // Method net/minecraft/world/phys/AABB.deflate:(DDD)Lnet/minecraft/world/phys/AABB;
+        17: areturn
+
+  private static boolean lambda$registerGoals$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel);
+    Code:
+         0: aload_0
+         1: invokevirtual #604                // Method net/minecraft/world/entity/LivingEntity.isBaby:()Z
+         4: ifne          11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: ireturn
+
+  private static boolean lambda$static$2(net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: aload_0
+         1: instanceof    #1                  // class net/minecraft/world/entity/monster/Ravager
+         4: ifne          25
+         7: aload_0
+         8: invokevirtual #607                // Method net/minecraft/world/entity/LivingEntity.isAlive:()Z
+        11: ifeq          25
+        14: aload_0
+        15: invokevirtual #608                // Method net/minecraft/world/entity/LivingEntity.isLocalInstanceAuthoritative:()Z
+        18: ifeq          25
+        21: iconst_1
+        22: goto          26
+        25: iconst_0
+        26: ireturn
+
+  private static boolean lambda$static$1(net.minecraft.world.entity.Entity);
+    Code:
+         0: getstatic     #478                // Field ROAR_TARGET_WITH_GRIEFING:Ljava/util/function/Predicate;
+         3: aload_0
+         4: invokeinterface #611,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+         9: ifeq          26
+        12: aload_0
+        13: getstatic     #616                // Field net/minecraft/world/entity/EntityTypes.ARMOR_STAND:Lnet/minecraft/world/entity/EntityType;
+        16: invokevirtual #622                // Method net/minecraft/world/entity/Entity.is:(Ljava/lang/Object;)Z
+        19: ifne          26
+        22: iconst_1
+        23: goto          27
+        26: iconst_0
+        27: ireturn
+
+  private static boolean lambda$static$0(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: instanceof    #1                  // class net/minecraft/world/entity/monster/Ravager
+         4: ifne          18
+         7: aload_0
+         8: invokevirtual #624                // Method net/minecraft/world/entity/Entity.isAlive:()Z
+        11: ifeq          18
+        14: iconst_1
+        15: goto          19
+        18: iconst_0
+        19: ireturn
+
+  static {};
+    Code:
+         0: invokedynamic #625,  0            // InvokeDynamic #1:test:()Ljava/util/function/Predicate;
+         5: putstatic     #478                // Field ROAR_TARGET_WITH_GRIEFING:Ljava/util/function/Predicate;
+         8: invokedynamic #628,  0            // InvokeDynamic #2:test:()Ljava/util/function/Predicate;
+        13: putstatic     #482                // Field ROAR_TARGET_WITHOUT_GRIEFING:Ljava/util/function/Predicate;
+        16: invokedynamic #629,  0            // InvokeDynamic #3:test:()Ljava/util/function/Predicate;
+        21: putstatic     #521                // Field ROAR_TARGET_ON_CLIENT:Ljava/util/function/Predicate;
+        24: return
+}

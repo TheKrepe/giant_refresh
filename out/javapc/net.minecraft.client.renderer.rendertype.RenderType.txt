@@ -1,0 +1,255 @@
+Compiled from "RenderType.java"
+public class net.minecraft.client.renderer.rendertype.RenderType {
+  private static final int MEGABYTE;
+
+  public static final int BIG_BUFFER_SIZE;
+
+  public static final int SMALL_BUFFER_SIZE;
+
+  public static final int TRANSIENT_BUFFER_SIZE;
+
+  private final net.minecraft.client.renderer.rendertype.RenderSetup state;
+
+  private final boolean hasBlending;
+
+  private final java.util.Optional<net.minecraft.client.renderer.rendertype.RenderType> outline;
+
+  protected final java.lang.String name;
+
+  private net.minecraft.client.renderer.rendertype.RenderType(java.lang.String, net.minecraft.client.renderer.rendertype.RenderSetup);
+    Code:
+         0: aload_0
+         1: invokespecial #3                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #9                  // Field name:Ljava/lang/String;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        14: aload_0
+        15: aload_2
+        16: getfield      #17                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.outlineProperty:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        19: getstatic     #23                 // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.AFFECTS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        22: if_acmpne     61
+        25: aload_2
+        26: getfield      #28                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.textures:Ljava/util/Map;
+        29: aload_2
+        30: getfield      #32                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.outlineTextureName:Ljava/lang/String;
+        33: ldc           #35                 // String Sampler0
+        35: invokestatic  #37                 // Method java/util/Objects.requireNonNullElse:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        38: invokeinterface #43,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+        43: checkcast     #49                 // class net/minecraft/client/renderer/rendertype/RenderSetup$TextureBinding
+        46: invokestatic  #51                 // Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;
+        49: aload_2
+        50: invokedynamic #57,  0             // InvokeDynamic #0:apply:(Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Ljava/util/function/Function;
+        55: invokevirtual #61                 // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+        58: goto          64
+        61: invokestatic  #65                 // Method java/util/Optional.empty:()Ljava/util/Optional;
+        64: putfield      #69                 // Field outline:Ljava/util/Optional;
+        67: aload_0
+        68: aload_0
+        69: invokevirtual #73                 // Method calculateHasBlending:()Z
+        72: putfield      #77                 // Field hasBlending:Z
+        75: return
+
+  static net.minecraft.client.renderer.rendertype.RenderType create(java.lang.String, net.minecraft.client.renderer.rendertype.RenderSetup);
+    Code:
+         0: new           #1                  // class net/minecraft/client/renderer/rendertype/RenderType
+         3: dup
+         4: aload_0
+         5: aload_1
+         6: invokespecial #81                 // Method "<init>":(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)V
+         9: areturn
+
+  public java.lang.String toString();
+    Code:
+         0: aload_0
+         1: getfield      #9                  // Field name:Ljava/lang/String;
+         4: aload_0
+         5: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         8: invokestatic  #84                 // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        11: invokedynamic #90,  0             // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+        16: areturn
+
+  public boolean hasBlending();
+    Code:
+         0: aload_0
+         1: getfield      #77                 // Field hasBlending:Z
+         4: ireturn
+
+  private boolean calculateHasBlending();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #94                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         7: invokevirtual #98                 // Method com/mojang/renderpearl/api/pipeline/RenderPipeline.getColorTargetStates:()Ljava/util/List;
+        10: astore_1
+        11: aload_1
+        12: invokeinterface #104,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        17: astore_2
+        18: aload_2
+        19: invokeinterface #110,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        24: ifeq          56
+        27: aload_2
+        28: invokeinterface #115,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        33: checkcast     #119                // class com/mojang/renderpearl/api/pipeline/ColorTargetState
+        36: astore_3
+        37: aload_3
+        38: ifnull        53
+        41: aload_3
+        42: invokevirtual #121                // Method com/mojang/renderpearl/api/pipeline/ColorTargetState.blendFunction:()Ljava/util/Optional;
+        45: invokevirtual #124                // Method java/util/Optional.isPresent:()Z
+        48: ifeq          53
+        51: iconst_1
+        52: ireturn
+        53: goto          18
+        56: iconst_0
+        57: ireturn
+
+  public net.minecraft.client.renderer.rendertype.PreparedRenderType prepare();
+    Code:
+         0: invokestatic  #127                // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+         3: astore_1
+         4: aload_0
+         5: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         8: aload_1
+         9: invokevirtual #133                // Method net/minecraft/client/Minecraft.getTextureManager:()Lnet/minecraft/client/renderer/texture/TextureManager;
+        12: invokestatic  #137                // Method com/mojang/blaze3d/systems/RenderSystem.getSamplerCache:()Lcom/mojang/blaze3d/systems/SamplerCache;
+        15: aload_1
+        16: getfield      #143                // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+        19: invokevirtual #147                // Method net/minecraft/client/renderer/GameRenderer.overlayTexture:()Lnet/minecraft/client/renderer/texture/OverlayTexture;
+        22: invokevirtual #153                // Method net/minecraft/client/renderer/texture/OverlayTexture.getTextureView:()Lcom/mojang/renderpearl/api/textures/GpuTextureView;
+        25: aload_1
+        26: getfield      #143                // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+        29: invokevirtual #159                // Method net/minecraft/client/renderer/GameRenderer.lightmap:()Lcom/mojang/renderpearl/api/textures/GpuTextureView;
+        32: invokevirtual #162                // Method net/minecraft/client/renderer/rendertype/RenderSetup.prepareTextures:(Lnet/minecraft/client/renderer/texture/TextureManager;Lcom/mojang/blaze3d/systems/SamplerCache;Lcom/mojang/renderpearl/api/textures/GpuTextureView;Lcom/mojang/renderpearl/api/textures/GpuTextureView;)Ljava/util/List;
+        35: astore_2
+        36: new           #166                // class net/minecraft/client/renderer/rendertype/PreparedRenderType
+        39: dup
+        40: aload_0
+        41: getfield      #9                  // Field name:Ljava/lang/String;
+        44: aload_0
+        45: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        48: getfield      #94                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+        51: aload_0
+        52: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        55: getfield      #168                // Field net/minecraft/client/renderer/rendertype/RenderSetup.oitPipelineSet:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        58: aload_0
+        59: invokestatic  #172                // Method com/mojang/blaze3d/systems/RenderSystem.getModelViewMatrixCopy:()Lorg/joml/Matrix4f;
+        62: invokevirtual #176                // Method writeDynamicTransforms:(Lorg/joml/Matrix4f;)Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;
+        65: new           #180                // class com/mojang/blaze3d/systems/ScissorState
+        68: dup
+        69: invokestatic  #182                // Method com/mojang/blaze3d/systems/RenderSystem.getScissorStateForRenderTypeDraws:()Lcom/mojang/blaze3d/systems/ScissorState;
+        72: invokespecial #186                // Method com/mojang/blaze3d/systems/ScissorState."<init>":(Lcom/mojang/blaze3d/systems/ScissorState;)V
+        75: aload_2
+        76: invokespecial #189                // Method net/minecraft/client/renderer/rendertype/PreparedRenderType."<init>":(Ljava/lang/String;Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/client/renderer/oit/OitPipelineSet;Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;Lcom/mojang/blaze3d/systems/ScissorState;Ljava/util/List;)V
+        79: areturn
+
+  private com.mojang.renderpearl.api.buffers.GpuBufferSlice writeDynamicTransforms(org.joml.Matrix4f);
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #192                // Field net/minecraft/client/renderer/rendertype/RenderSetup.layeringTransform:Lnet/minecraft/client/renderer/rendertype/LayeringTransform;
+         7: invokevirtual #196                // Method net/minecraft/client/renderer/rendertype/LayeringTransform.getModifier:()Ljava/util/function/Consumer;
+        10: astore_2
+        11: aload_2
+        12: ifnull        22
+        15: aload_2
+        16: aload_1
+        17: invokeinterface #202,  2          // InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V
+        22: invokestatic  #208                // Method com/mojang/blaze3d/systems/RenderSystem.getDynamicUniforms:()Lnet/minecraft/client/renderer/DynamicGpuData;
+        25: aload_1
+        26: aload_0
+        27: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        30: getfield      #212                // Field net/minecraft/client/renderer/rendertype/RenderSetup.textureTransform:Lnet/minecraft/client/renderer/rendertype/TextureTransform;
+        33: invokevirtual #216                // Method net/minecraft/client/renderer/rendertype/TextureTransform.createMatrix:()Lorg/joml/Matrix4f;
+        36: invokevirtual #221                // Method net/minecraft/client/renderer/DynamicGpuData.writeTransform:(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)Lcom/mojang/renderpearl/api/buffers/GpuBufferSlice;
+        39: areturn
+
+  public com.mojang.renderpearl.api.vertex.VertexFormat format();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #94                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         7: iconst_0
+         8: invokevirtual #227                // Method com/mojang/renderpearl/api/pipeline/RenderPipeline.getVertexFormatBinding:(I)Lcom/mojang/renderpearl/api/vertex/VertexFormat;
+        11: areturn
+
+  public com.mojang.renderpearl.api.pipeline.PrimitiveTopology primitiveTopology();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #94                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         7: invokevirtual #231                // Method com/mojang/renderpearl/api/pipeline/RenderPipeline.getPrimitiveTopology:()Lcom/mojang/renderpearl/api/pipeline/PrimitiveTopology;
+        10: areturn
+
+  public java.util.Optional<net.minecraft.client.renderer.rendertype.RenderType> outline();
+    Code:
+         0: aload_0
+         1: getfield      #69                 // Field outline:Ljava/util/Optional;
+         4: areturn
+
+  public boolean isOutline();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #17                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.outlineProperty:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+         7: getstatic     #235                // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.IS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        10: if_acmpne     17
+        13: iconst_1
+        14: goto          18
+        17: iconst_0
+        18: ireturn
+
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #94                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         7: areturn
+
+  public boolean affectsCrumbling();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #238                // Field net/minecraft/client/renderer/rendertype/RenderSetup.affectsCrumbling:Z
+         7: ireturn
+
+  public boolean canConsolidateConsecutiveGeometry();
+    Code:
+         0: aload_0
+         1: invokevirtual #241                // Method primitiveTopology:()Lcom/mojang/renderpearl/api/pipeline/PrimitiveTopology;
+         4: getfield      #244                // Field com/mojang/renderpearl/api/pipeline/PrimitiveTopology.connectedPrimitives:Z
+         7: ifne          14
+        10: iconst_1
+        11: goto          15
+        14: iconst_0
+        15: ireturn
+
+  public boolean sortOnUpload();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #249                // Field net/minecraft/client/renderer/rendertype/RenderSetup.sortOnUpload:Z
+         7: ireturn
+
+  public boolean forceSolidModelPhase();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field state:Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+         4: getfield      #252                // Field net/minecraft/client/renderer/rendertype/RenderSetup.forceSolidModelPhase:Z
+         7: ireturn
+
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$new$0(net.minecraft.client.renderer.rendertype.RenderSetup, net.minecraft.client.renderer.rendertype.RenderSetup$TextureBinding);
+    Code:
+         0: getstatic     #255                // Field net/minecraft/client/renderer/rendertype/RenderTypes.OUTLINE:Ljava/util/function/BiFunction;
+         3: aload_1
+         4: invokevirtual #261                // Method net/minecraft/client/renderer/rendertype/RenderSetup$TextureBinding.location:()Lnet/minecraft/resources/Identifier;
+         7: aload_0
+         8: getfield      #94                 // Field net/minecraft/client/renderer/rendertype/RenderSetup.pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+        11: invokevirtual #265                // Method com/mojang/renderpearl/api/pipeline/RenderPipeline.isCull:()Z
+        14: invokestatic  #268                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        17: invokeinterface #273,  3          // InterfaceMethod java/util/function/BiFunction.apply:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        22: checkcast     #1                  // class net/minecraft/client/renderer/rendertype/RenderType
+        25: areturn
+}

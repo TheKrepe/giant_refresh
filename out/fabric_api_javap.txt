@@ -1,0 +1,142 @@
+Compiled from "BiomeModifications.java"
+public final class net.fabricmc.fabric.api.biome.v1.BiomeModifications {
+  private net.fabricmc.fabric.api.biome.v1.BiomeModifications();
+  public static void addFeature(java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext>, net.minecraft.world.level.levelgen.GenerationStep$Decoration, net.minecraft.resources.ResourceKey<net.minecraft.world.level.levelgen.placement.PlacedFeature>);
+  public static void addCarver(java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext>, net.minecraft.resources.ResourceKey<net.minecraft.world.level.levelgen.carver.WorldCarver>);
+  public static void addSpawn(java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext>, net.minecraft.world.entity.MobCategory, net.minecraft.world.entity.EntityType<?>, int, int, int);
+  public static net.fabricmc.fabric.api.biome.v1.BiomeModification create(net.minecraft.resources.Identifier);
+  private static void lambda$addSpawn$0(int, int, net.minecraft.world.entity.MobCategory, net.minecraft.world.entity.EntityType, int, net.fabricmc.fabric.api.biome.v1.BiomeModificationContext);
+  private static void lambda$addCarver$0(net.minecraft.resources.ResourceKey, net.fabricmc.fabric.api.biome.v1.BiomeModificationContext);
+  private static void lambda$addFeature$0(net.minecraft.world.level.levelgen.GenerationStep$Decoration, net.minecraft.resources.ResourceKey, net.fabricmc.fabric.api.biome.v1.BiomeModificationContext);
+}
+Compiled from "BiomeSelectors.java"
+public final class net.fabricmc.fabric.api.biome.v1.BiomeSelectors {
+  private net.fabricmc.fabric.api.biome.v1.BiomeSelectors();
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> all();
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> vanilla();
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> foundInOverworld();
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> foundInTheNether();
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> foundInTheEnd();
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> tag(net.minecraft.tags.TagKey<net.minecraft.world.level.biome.Biome>);
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> excludeByKey(net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome>...);
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> excludeByKey(java.util.Collection<net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome>>);
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> includeByKey(net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome>...);
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> includeByKey(java.util.Collection<net.minecraft.resources.ResourceKey<net.minecraft.world.level.biome.Biome>>);
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> spawnsOneOf(net.minecraft.world.entity.EntityType<?>...);
+  public static java.util.function.Predicate<net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext> spawnsOneOf(java.util.Set<net.minecraft.world.entity.EntityType<?>>);
+  private static boolean lambda$spawnsOneOf$0(java.util.Set, net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$includeByKey$0(java.util.Collection, net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$excludeByKey$0(java.util.Collection, net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$tag$0(net.minecraft.tags.TagKey, net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$foundInTheEnd$0(net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$foundInTheNether$0(net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$foundInOverworld$0(net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$vanilla$0(net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+  private static boolean lambda$all$0(net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext);
+}
+Compiled from "CreativeModeTabEvents.java"
+public interface net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput {
+  public abstract void modifyOutput(net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+}
+Compiled from "CreativeModeTabEvents.java"
+public interface net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll {
+  public abstract void modifyOutput(net.minecraft.world.item.CreativeModeTab, net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+}
+Compiled from "CreativeModeTabEvents.java"
+public final class net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents {
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll> MODIFY_OUTPUT_ALL;
+  private net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents();
+  public static net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutput> modifyOutputEvent(net.minecraft.resources.ResourceKey<net.minecraft.world.item.CreativeModeTab>);
+  private static net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll lambda$static$0(net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll[]);
+  private static void lambda$static$1(net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents$ModifyOutputAll[], net.minecraft.world.item.CreativeModeTab, net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput);
+  static {};
+}
+Compiled from "ServerEntityEvents.java"
+public interface net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$AllowLoad {
+  public abstract boolean onAllowLoad(net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.EntitySpawnReason, boolean);
+}
+Compiled from "ServerEntityEvents.java"
+public interface net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$EquipmentChange {
+  public abstract void onChange(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+}
+Compiled from "ServerEntityEvents.java"
+public interface net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Load {
+  public abstract void onLoad(net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel);
+}
+Compiled from "ServerEntityEvents.java"
+public interface net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Unload {
+  public abstract void onUnload(net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel);
+}
+Compiled from "ServerEntityEvents.java"
+public final class net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents {
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Load> ENTITY_LOAD;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$AllowLoad> ALLOW_LOAD;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Unload> ENTITY_UNLOAD;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$EquipmentChange> EQUIPMENT_CHANGE;
+  private net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents();
+  private static net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$EquipmentChange lambda$static$6(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$EquipmentChange[]);
+  private static void lambda$static$7(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$EquipmentChange[], net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack);
+  private static net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Unload lambda$static$4(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Unload[]);
+  private static void lambda$static$5(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Unload[], net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel);
+  private static net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$AllowLoad lambda$static$2(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$AllowLoad[]);
+  private static boolean lambda$static$3(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$AllowLoad[], net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.EntitySpawnReason, boolean);
+  private static net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Load lambda$static$0(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Load[]);
+  private static void lambda$static$1(net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents$Load[], net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel);
+  static {};
+}
+Compiled from "FabricDefaultAttributeRegistry.java"
+public interface net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyConsumer {
+  public abstract void accept(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>, net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder);
+}
+Compiled from "FabricDefaultAttributeRegistry.java"
+public interface net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyContext {
+  public abstract void modify(java.util.function.Predicate<net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>>, net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyConsumer);
+  public default void modify(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>, net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyConsumer);
+  public default void modify(java.util.Collection<net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>>, net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyConsumer);
+  public default void modifyAll(net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyConsumer);
+  private static boolean lambda$modifyAll$0(net.minecraft.world.entity.EntityType);
+}
+Compiled from "FabricDefaultAttributeRegistry.java"
+public interface net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyDefaultAttribute {
+  public abstract void modify(net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyContext);
+}
+Compiled from "FabricDefaultAttributeRegistry.java"
+public final class net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry {
+  private static final org.slf4j.Logger LOGGER;
+  public static final net.fabricmc.fabric.api.event.Event<net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyDefaultAttribute> MODIFY;
+  private net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry();
+  public static void register(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>, net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder);
+  public static void register(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.LivingEntity>, net.minecraft.world.entity.ai.attributes.AttributeSupplier);
+  private static net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyDefaultAttribute lambda$static$0(net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyDefaultAttribute[]);
+  private static void lambda$static$1(net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyDefaultAttribute[], net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry$ModifyContext);
+  static {};
+}
+Compiled from "FabricEntityType.java"
+public interface net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType$Builder<T extends net.minecraft.world.entity.Entity> {
+  public default net.minecraft.world.entity.EntityType$Builder<T> alwaysUpdateVelocity(boolean);
+  public default net.minecraft.world.entity.EntityType$Builder<T> canPotentiallyExecuteCommands(boolean);
+  public static <T extends net.minecraft.world.entity.LivingEntity> net.minecraft.world.entity.EntityType$Builder<T> createLiving(net.minecraft.world.entity.EntityType$EntityFactory<T>, net.minecraft.world.entity.MobCategory, java.util.function.UnaryOperator<net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType$Builder$Living<T>>);
+  public static <T extends net.minecraft.world.entity.Mob> net.minecraft.world.entity.EntityType$Builder<T> createMob(net.minecraft.world.entity.EntityType$EntityFactory<T>, net.minecraft.world.entity.MobCategory, java.util.function.UnaryOperator<net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType$Builder$Mob<T>>);
+}
+Compiled from "FabricEntityType.java"
+public interface net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType {
+}
+Compiled from "EntityRendererRegistry.java"
+public final class net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry {
+  public static <E extends net.minecraft.world.entity.Entity> void register(net.minecraft.world.entity.EntityType<? extends E>, net.minecraft.client.renderer.entity.EntityRendererProvider<E>);
+  private net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry();
+}
+Compiled from "ModelLayerRegistry.java"
+public interface net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry$TexturedArmorModelSetProvider {
+  public abstract net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.builders.LayerDefinition> createArmorModelSet();
+}
+Compiled from "ModelLayerRegistry.java"
+public interface net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry$TexturedLayerDefinitionProvider {
+  public abstract net.minecraft.client.model.geom.builders.LayerDefinition createLayerDefinition();
+}
+Compiled from "ModelLayerRegistry.java"
+public final class net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry {
+  public static void registerModelLayer(net.minecraft.client.model.geom.ModelLayerLocation, net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry$TexturedLayerDefinitionProvider);
+  public static void registerArmorModelLayers(net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation>, net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry$TexturedArmorModelSetProvider);
+  private net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry();
+}

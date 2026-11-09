@@ -1,0 +1,53 @@
+Compiled from "ModelLayerLocation.java"
+public final class net.minecraft.client.model.geom.ModelLayerLocation extends java.lang.Record {
+  private final net.minecraft.resources.Identifier model;
+
+  private final java.lang.String layer;
+
+  public net.minecraft.client.model.geom.ModelLayerLocation(net.minecraft.resources.Identifier, java.lang.String);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Record."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field model:Lnet/minecraft/resources/Identifier;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field layer:Ljava/lang/String;
+        14: return
+
+  public java.lang.String toString();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field model:Lnet/minecraft/resources/Identifier;
+         4: invokestatic  #17                 // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+         7: aload_0
+         8: getfield      #13                 // Field layer:Ljava/lang/String;
+        11: invokedynamic #23,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+        16: areturn
+
+  public final int hashCode();
+    Code:
+         0: aload_0
+         1: invokedynamic #27,  0             // InvokeDynamic #1:hashCode:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)I
+         6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #31,  0             // InvokeDynamic #1:equals:(Lnet/minecraft/client/model/geom/ModelLayerLocation;Ljava/lang/Object;)Z
+         7: ireturn
+
+  public net.minecraft.resources.Identifier model();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field model:Lnet/minecraft/resources/Identifier;
+         4: areturn
+
+  public java.lang.String layer();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field layer:Ljava/lang/String;
+         4: areturn
+}

@@ -1,0 +1,1050 @@
+Compiled from "EntityRenderers.java"
+public class net.minecraft.client.renderer.entity.EntityRenderers {
+  private static final org.slf4j.Logger LOGGER;
+
+  private static final java.util.Map<net.minecraft.world.entity.EntityType<?>, net.minecraft.client.renderer.entity.EntityRendererProvider<?>> PROVIDERS;
+
+  public net.minecraft.client.renderer.entity.EntityRenderers();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  private static <T extends net.minecraft.world.entity.Entity> void register(net.minecraft.world.entity.EntityType<? extends T>, net.minecraft.client.renderer.entity.EntityRendererProvider<T>);
+    Code:
+         0: getstatic     #7                  // Field PROVIDERS:Ljava/util/Map;
+         3: aload_0
+         4: aload_1
+         5: invokeinterface #13,  3           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        10: pop
+        11: return
+
+  public static java.util.Map<net.minecraft.world.entity.EntityType<?>, net.minecraft.client.renderer.entity.EntityRenderer<?, ?>> createEntityRenderers(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: invokestatic  #19                 // Method com/google/common/collect/ImmutableMap.builder:()Lcom/google/common/collect/ImmutableMap$Builder;
+         3: astore_1
+         4: getstatic     #7                  // Field PROVIDERS:Ljava/util/Map;
+         7: aload_1
+         8: aload_0
+         9: invokedynamic #25,  0             // InvokeDynamic #0:accept:(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)Ljava/util/function/BiConsumer;
+        14: invokeinterface #29,  2           // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+        19: aload_1
+        20: invokevirtual #33                 // Method com/google/common/collect/ImmutableMap$Builder.build:()Lcom/google/common/collect/ImmutableMap;
+        23: areturn
+
+  public static <T extends net.minecraft.world.entity.Avatar & net.minecraft.client.entity.ClientAvatarEntity> java.util.Map<net.minecraft.world.entity.player.PlayerModelType, net.minecraft.client.renderer.entity.player.AvatarRenderer<T>> createAvatarRenderers(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: getstatic     #39                 // Field net/minecraft/world/entity/player/PlayerModelType.WIDE:Lnet/minecraft/world/entity/player/PlayerModelType;
+         3: new           #45                 // class net/minecraft/client/renderer/entity/player/AvatarRenderer
+         6: dup
+         7: aload_0
+         8: iconst_0
+         9: invokespecial #47                 // Method net/minecraft/client/renderer/entity/player/AvatarRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Z)V
+        12: getstatic     #50                 // Field net/minecraft/world/entity/player/PlayerModelType.SLIM:Lnet/minecraft/world/entity/player/PlayerModelType;
+        15: new           #45                 // class net/minecraft/client/renderer/entity/player/AvatarRenderer
+        18: dup
+        19: aload_0
+        20: iconst_1
+        21: invokespecial #47                 // Method net/minecraft/client/renderer/entity/player/AvatarRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Z)V
+        24: invokestatic  #53                 // InterfaceMethod java/util/Map.of:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;
+        27: areturn
+        28: astore_1
+        29: new           #59                 // class java/lang/IllegalArgumentException
+        32: dup
+        33: ldc           #61                 // String Failed to create avatar models
+        35: aload_1
+        36: invokespecial #63                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+        39: athrow
+      Exception table:
+         from    to  target type
+             0    27    28   Class java/lang/Exception
+
+  public static boolean validateRegistrations();
+    Code:
+         0: iconst_1
+         1: istore_0
+         2: getstatic     #66                 // Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;
+         5: invokeinterface #72,  1           // InterfaceMethod net/minecraft/core/DefaultedRegistry.iterator:()Ljava/util/Iterator;
+        10: astore_1
+        11: aload_1
+        12: invokeinterface #78,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        17: ifeq          83
+        20: aload_1
+        21: invokeinterface #84,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        26: checkcast     #88                 // class net/minecraft/world/entity/EntityType
+        29: astore_2
+        30: aload_2
+        31: getstatic     #90                 // Field net/minecraft/world/entity/EntityTypes.PLAYER:Lnet/minecraft/world/entity/EntityType;
+        34: if_acmpeq     11
+        37: aload_2
+        38: getstatic     #96                 // Field net/minecraft/world/entity/EntityTypes.MANNEQUIN:Lnet/minecraft/world/entity/EntityType;
+        41: if_acmpne     47
+        44: goto          11
+        47: getstatic     #7                  // Field PROVIDERS:Ljava/util/Map;
+        50: aload_2
+        51: invokeinterface #99,  2           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+        56: ifne          80
+        59: getstatic     #103                // Field LOGGER:Lorg/slf4j/Logger;
+        62: ldc           #107                // String No renderer registered for {}
+        64: getstatic     #66                 // Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;
+        67: aload_2
+        68: invokeinterface #109,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/Identifier;
+        73: invokeinterface #113,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+        78: iconst_0
+        79: istore_0
+        80: goto          11
+        83: iload_0
+        84: ifne          91
+        87: iconst_1
+        88: goto          92
+        91: iconst_0
+        92: ireturn
+
+  private static void lambda$createEntityRenderers$0(com.google.common.collect.ImmutableMap$Builder, net.minecraft.client.renderer.entity.EntityRendererProvider$Context, net.minecraft.world.entity.EntityType, net.minecraft.client.renderer.entity.EntityRendererProvider);
+    Code:
+         0: aload_0
+         1: aload_2
+         2: aload_3
+         3: aload_1
+         4: invokeinterface #119,  2          // InterfaceMethod net/minecraft/client/renderer/entity/EntityRendererProvider.create:(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)Lnet/minecraft/client/renderer/entity/EntityRenderer;
+         9: invokevirtual #125                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        12: pop
+        13: goto          45
+        16: astore        4
+        18: new           #59                 // class java/lang/IllegalArgumentException
+        21: dup
+        22: getstatic     #66                 // Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;
+        25: aload_2
+        26: invokeinterface #109,  2          // InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/Identifier;
+        31: invokestatic  #128                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        34: invokedynamic #134,  0            // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+        39: aload         4
+        41: invokespecial #63                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+        44: athrow
+        45: return
+      Exception table:
+         from    to  target type
+             0    13    16   Class java/lang/Exception
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$42(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #138                // class net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #140                // Field net/minecraft/client/model/geom/ModelLayers.ZOMBIFIED_PIGLIN:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: getstatic     #146                // Field net/minecraft/client/model/geom/ModelLayers.ZOMBIFIED_PIGLIN_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #149                // Field net/minecraft/client/model/geom/ModelLayers.ZOMBIFIED_PIGLIN_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        14: getstatic     #153                // Field net/minecraft/client/model/geom/ModelLayers.ZOMBIFIED_PIGLIN_BABY_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        17: invokespecial #156                // Method net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/ArmorModelSet;Lnet/minecraft/client/renderer/entity/ArmorModelSet;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$41(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #159                // class net/minecraft/client/renderer/entity/UndeadHorseRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #161                // Field net/minecraft/client/resources/model/EquipmentClientInfo$LayerType.ZOMBIE_HORSE_SADDLE:Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;
+         8: getstatic     #167                // Field net/minecraft/client/model/geom/ModelLayers.ZOMBIE_HORSE_SADDLE:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #169                // Field net/minecraft/client/renderer/entity/UndeadHorseRenderer$Type.ZOMBIE:Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;
+        14: getstatic     #175                // Field net/minecraft/client/renderer/entity/UndeadHorseRenderer$Type.ZOMBIE_BABY:Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;
+        17: invokespecial #178                // Method net/minecraft/client/renderer/entity/UndeadHorseRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$40(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #181                // class net/minecraft/client/renderer/entity/LlamaRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #183                // Field net/minecraft/client/model/geom/ModelLayers.TRADER_LLAMA:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: getstatic     #186                // Field net/minecraft/client/model/geom/ModelLayers.TRADER_LLAMA_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: invokespecial #189                // Method net/minecraft/client/renderer/entity/LlamaRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        14: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$39(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #192                // class net/minecraft/client/renderer/entity/SquidRenderer
+         3: dup
+         4: aload_0
+         5: new           #194                // class net/minecraft/client/model/animal/squid/SquidModel
+         8: dup
+         9: aload_0
+        10: getstatic     #196                // Field net/minecraft/client/model/geom/ModelLayers.SQUID:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        13: invokevirtual #199                // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        16: invokespecial #205                // Method net/minecraft/client/model/animal/squid/SquidModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        19: new           #194                // class net/minecraft/client/model/animal/squid/SquidModel
+        22: dup
+        23: aload_0
+        24: getstatic     #208                // Field net/minecraft/client/model/geom/ModelLayers.SQUID_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        27: invokevirtual #199                // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        30: invokespecial #205                // Method net/minecraft/client/model/animal/squid/SquidModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        33: invokespecial #211                // Method net/minecraft/client/renderer/entity/SquidRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/animal/squid/SquidModel;Lnet/minecraft/client/model/animal/squid/SquidModel;)V
+        36: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$38(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #216                // Field net/minecraft/client/model/geom/ModelLayers.SPRUCE_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$37(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #222                // Field net/minecraft/client/model/geom/ModelLayers.SPRUCE_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$36(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #225                // class net/minecraft/client/renderer/entity/MinecartRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #227                // Field net/minecraft/client/model/geom/ModelLayers.SPAWNER_MINECART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #230                // Method net/minecraft/client/renderer/entity/MinecartRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$35(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #231                // class net/minecraft/client/renderer/entity/ThrownItemRenderer
+         3: dup
+         4: aload_0
+         5: ldc           #233                // float 0.75f
+         7: iconst_1
+         8: invokespecial #234                // Method net/minecraft/client/renderer/entity/ThrownItemRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;FZ)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$34(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #159                // class net/minecraft/client/renderer/entity/UndeadHorseRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #237                // Field net/minecraft/client/resources/model/EquipmentClientInfo$LayerType.SKELETON_HORSE_SADDLE:Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;
+         8: getstatic     #240                // Field net/minecraft/client/model/geom/ModelLayers.SKELETON_HORSE_SADDLE:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #242                // Field net/minecraft/client/renderer/entity/UndeadHorseRenderer$Type.SKELETON:Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;
+        14: getstatic     #245                // Field net/minecraft/client/renderer/entity/UndeadHorseRenderer$Type.SKELETON_BABY:Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;
+        17: invokespecial #178                // Method net/minecraft/client/renderer/entity/UndeadHorseRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;Lnet/minecraft/client/renderer/entity/UndeadHorseRenderer$Type;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$33(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #248                // Field net/minecraft/client/model/geom/ModelLayers.POPLAR_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$32(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #251                // Field net/minecraft/client/model/geom/ModelLayers.POPLAR_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$31(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #254                // class net/minecraft/client/renderer/entity/PiglinRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #256                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_BRUTE:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: getstatic     #256                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_BRUTE:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #259                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_BRUTE_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        14: getstatic     #259                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_BRUTE_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        17: invokespecial #262                // Method net/minecraft/client/renderer/entity/PiglinRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/ArmorModelSet;Lnet/minecraft/client/renderer/entity/ArmorModelSet;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$30(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #254                // class net/minecraft/client/renderer/entity/PiglinRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #263                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: getstatic     #266                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #269                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        14: getstatic     #272                // Field net/minecraft/client/model/geom/ModelLayers.PIGLIN_BABY_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        17: invokespecial #262                // Method net/minecraft/client/renderer/entity/PiglinRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/ArmorModelSet;Lnet/minecraft/client/renderer/entity/ArmorModelSet;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$29(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #275                // Field net/minecraft/client/model/geom/ModelLayers.PALE_OAK_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$28(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #278                // Field net/minecraft/client/model/geom/ModelLayers.PALE_OAK_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$27(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #281                // Field net/minecraft/client/model/geom/ModelLayers.OAK_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$26(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #284                // Field net/minecraft/client/model/geom/ModelLayers.OAK_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$25(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #287                // class net/minecraft/client/renderer/entity/DonkeyRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #289                // Field net/minecraft/client/resources/model/EquipmentClientInfo$LayerType.MULE_SADDLE:Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;
+         8: getstatic     #292                // Field net/minecraft/client/model/geom/ModelLayers.MULE_SADDLE:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #294                // Field net/minecraft/client/renderer/entity/DonkeyRenderer$Type.MULE:Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;
+        14: getstatic     #300                // Field net/minecraft/client/renderer/entity/DonkeyRenderer$Type.MULE_BABY:Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;
+        17: invokespecial #303                // Method net/minecraft/client/renderer/entity/DonkeyRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$24(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #225                // class net/minecraft/client/renderer/entity/MinecartRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #306                // Field net/minecraft/client/model/geom/ModelLayers.MINECART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #230                // Method net/minecraft/client/renderer/entity/MinecartRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$23(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #309                // Field net/minecraft/client/model/geom/ModelLayers.MANGROVE_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$22(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #312                // Field net/minecraft/client/model/geom/ModelLayers.MANGROVE_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$21(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #181                // class net/minecraft/client/renderer/entity/LlamaRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #315                // Field net/minecraft/client/model/geom/ModelLayers.LLAMA:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: getstatic     #318                // Field net/minecraft/client/model/geom/ModelLayers.LLAMA_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: invokespecial #189                // Method net/minecraft/client/renderer/entity/LlamaRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        14: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$20(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #321                // Field net/minecraft/client/model/geom/ModelLayers.JUNGLE_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$19(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #324                // Field net/minecraft/client/model/geom/ModelLayers.JUNGLE_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$18(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #225                // class net/minecraft/client/renderer/entity/MinecartRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #327                // Field net/minecraft/client/model/geom/ModelLayers.HOPPER_MINECART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #230                // Method net/minecraft/client/renderer/entity/MinecartRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$17(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #330                // class net/minecraft/client/renderer/entity/GlowSquidRenderer
+         3: dup
+         4: aload_0
+         5: new           #194                // class net/minecraft/client/model/animal/squid/SquidModel
+         8: dup
+         9: aload_0
+        10: getstatic     #332                // Field net/minecraft/client/model/geom/ModelLayers.GLOW_SQUID:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        13: invokevirtual #199                // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        16: invokespecial #205                // Method net/minecraft/client/model/animal/squid/SquidModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        19: new           #194                // class net/minecraft/client/model/animal/squid/SquidModel
+        22: dup
+        23: aload_0
+        24: getstatic     #335                // Field net/minecraft/client/model/geom/ModelLayers.GLOW_SQUID_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        27: invokevirtual #199                // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        30: invokespecial #205                // Method net/minecraft/client/model/animal/squid/SquidModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        33: invokespecial #338                // Method net/minecraft/client/renderer/entity/GlowSquidRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/animal/squid/SquidModel;Lnet/minecraft/client/model/animal/squid/SquidModel;)V
+        36: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$16(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #339                // class net/minecraft/client/renderer/entity/GiantMobRenderer
+         3: dup
+         4: aload_0
+         5: ldc_w         #341                // float 6.0f
+         8: invokespecial #342                // Method net/minecraft/client/renderer/entity/GiantMobRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;F)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$15(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #225                // class net/minecraft/client/renderer/entity/MinecartRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #345                // Field net/minecraft/client/model/geom/ModelLayers.FURNACE_MINECART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #230                // Method net/minecraft/client/renderer/entity/MinecartRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$14(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #231                // class net/minecraft/client/renderer/entity/ThrownItemRenderer
+         3: dup
+         4: aload_0
+         5: ldc_w         #348                // float 3.0f
+         8: iconst_1
+         9: invokespecial #234                // Method net/minecraft/client/renderer/entity/ThrownItemRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;FZ)V
+        12: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$13(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #231                // class net/minecraft/client/renderer/entity/ThrownItemRenderer
+         3: dup
+         4: aload_0
+         5: fconst_1
+         6: iconst_1
+         7: invokespecial #234                // Method net/minecraft/client/renderer/entity/ThrownItemRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;FZ)V
+        10: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$12(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #287                // class net/minecraft/client/renderer/entity/DonkeyRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #349                // Field net/minecraft/client/resources/model/EquipmentClientInfo$LayerType.DONKEY_SADDLE:Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;
+         8: getstatic     #352                // Field net/minecraft/client/model/geom/ModelLayers.DONKEY_SADDLE:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        11: getstatic     #354                // Field net/minecraft/client/renderer/entity/DonkeyRenderer$Type.DONKEY:Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;
+        14: getstatic     #357                // Field net/minecraft/client/renderer/entity/DonkeyRenderer$Type.DONKEY_BABY:Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;
+        17: invokespecial #303                // Method net/minecraft/client/renderer/entity/DonkeyRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/model/geom/ModelLayerLocation;Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;Lnet/minecraft/client/renderer/entity/DonkeyRenderer$Type;)V
+        20: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$11(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #360                // Field net/minecraft/client/model/geom/ModelLayers.DARK_OAK_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$10(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #363                // Field net/minecraft/client/model/geom/ModelLayers.DARK_OAK_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$9(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #225                // class net/minecraft/client/renderer/entity/MinecartRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #366                // Field net/minecraft/client/model/geom/ModelLayers.COMMAND_BLOCK_MINECART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #230                // Method net/minecraft/client/renderer/entity/MinecartRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$8(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #225                // class net/minecraft/client/renderer/entity/MinecartRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #369                // Field net/minecraft/client/model/geom/ModelLayers.CHEST_MINECART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #230                // Method net/minecraft/client/renderer/entity/MinecartRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$7(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #372                // Field net/minecraft/client/model/geom/ModelLayers.CHERRY_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$6(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #375                // Field net/minecraft/client/model/geom/ModelLayers.CHERRY_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$5(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #378                // Field net/minecraft/client/model/geom/ModelLayers.BIRCH_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$4(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #381                // Field net/minecraft/client/model/geom/ModelLayers.BIRCH_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$3(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #384                // class net/minecraft/client/renderer/entity/RaftRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #386                // Field net/minecraft/client/model/geom/ModelLayers.BAMBOO_RAFT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #389                // Method net/minecraft/client/renderer/entity/RaftRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$2(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #384                // class net/minecraft/client/renderer/entity/RaftRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #390                // Field net/minecraft/client/model/geom/ModelLayers.BAMBOO_CHEST_RAFT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #389                // Method net/minecraft/client/renderer/entity/RaftRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$1(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #393                // Field net/minecraft/client/model/geom/ModelLayers.ACACIA_CHEST_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  private static net.minecraft.client.renderer.entity.EntityRenderer lambda$static$0(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: new           #214                // class net/minecraft/client/renderer/entity/BoatRenderer
+         3: dup
+         4: aload_0
+         5: getstatic     #396                // Field net/minecraft/client/model/geom/ModelLayers.ACACIA_BOAT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+         8: invokespecial #219                // Method net/minecraft/client/renderer/entity/BoatRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/geom/ModelLayerLocation;)V
+        11: areturn
+
+  static {};
+    Code:
+         0: invokestatic  #399                // Method com/mojang/logging/LogUtils.getLogger:()Lorg/slf4j/Logger;
+         3: putstatic     #103                // Field LOGGER:Lorg/slf4j/Logger;
+         6: new           #405                // class it/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap
+         9: dup
+        10: invokespecial #407                // Method it/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap."<init>":()V
+        13: putstatic     #7                  // Field PROVIDERS:Ljava/util/Map;
+        16: getstatic     #408                // Field net/minecraft/world/entity/EntityTypes.ACACIA_BOAT:Lnet/minecraft/world/entity/EntityType;
+        19: invokedynamic #410,  0            // InvokeDynamic #2:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        24: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        27: getstatic     #417                // Field net/minecraft/world/entity/EntityTypes.ACACIA_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+        30: invokedynamic #419,  0            // InvokeDynamic #3:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        35: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        38: getstatic     #420                // Field net/minecraft/world/entity/EntityTypes.ALLAY:Lnet/minecraft/world/entity/EntityType;
+        41: invokedynamic #423,  0            // InvokeDynamic #4:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        46: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        49: getstatic     #424                // Field net/minecraft/world/entity/EntityTypes.AREA_EFFECT_CLOUD:Lnet/minecraft/world/entity/EntityType;
+        52: invokedynamic #427,  0            // InvokeDynamic #5:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        57: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        60: getstatic     #428                // Field net/minecraft/world/entity/EntityTypes.ARMADILLO:Lnet/minecraft/world/entity/EntityType;
+        63: invokedynamic #431,  0            // InvokeDynamic #6:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        68: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        71: getstatic     #432                // Field net/minecraft/world/entity/EntityTypes.ARMOR_STAND:Lnet/minecraft/world/entity/EntityType;
+        74: invokedynamic #435,  0            // InvokeDynamic #7:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        79: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        82: getstatic     #436                // Field net/minecraft/world/entity/EntityTypes.ARROW:Lnet/minecraft/world/entity/EntityType;
+        85: invokedynamic #439,  0            // InvokeDynamic #8:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+        90: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+        93: getstatic     #440                // Field net/minecraft/world/entity/EntityTypes.AXOLOTL:Lnet/minecraft/world/entity/EntityType;
+        96: invokedynamic #443,  0            // InvokeDynamic #9:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       101: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       104: getstatic     #444                // Field net/minecraft/world/entity/EntityTypes.BAMBOO_CHEST_RAFT:Lnet/minecraft/world/entity/EntityType;
+       107: invokedynamic #446,  0            // InvokeDynamic #10:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       112: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       115: getstatic     #447                // Field net/minecraft/world/entity/EntityTypes.BAMBOO_RAFT:Lnet/minecraft/world/entity/EntityType;
+       118: invokedynamic #449,  0            // InvokeDynamic #11:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       123: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       126: getstatic     #450                // Field net/minecraft/world/entity/EntityTypes.BAT:Lnet/minecraft/world/entity/EntityType;
+       129: invokedynamic #453,  0            // InvokeDynamic #12:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       134: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       137: getstatic     #454                // Field net/minecraft/world/entity/EntityTypes.BEE:Lnet/minecraft/world/entity/EntityType;
+       140: invokedynamic #457,  0            // InvokeDynamic #13:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       145: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       148: getstatic     #458                // Field net/minecraft/world/entity/EntityTypes.BIRCH_BOAT:Lnet/minecraft/world/entity/EntityType;
+       151: invokedynamic #460,  0            // InvokeDynamic #14:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       156: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       159: getstatic     #461                // Field net/minecraft/world/entity/EntityTypes.BIRCH_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+       162: invokedynamic #463,  0            // InvokeDynamic #15:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       167: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       170: getstatic     #464                // Field net/minecraft/world/entity/EntityTypes.BLAZE:Lnet/minecraft/world/entity/EntityType;
+       173: invokedynamic #467,  0            // InvokeDynamic #16:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       178: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       181: getstatic     #468                // Field net/minecraft/world/entity/EntityTypes.BLOCK_DISPLAY:Lnet/minecraft/world/entity/EntityType;
+       184: invokedynamic #471,  0            // InvokeDynamic #17:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       189: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       192: getstatic     #472                // Field net/minecraft/world/entity/EntityTypes.BOGGED:Lnet/minecraft/world/entity/EntityType;
+       195: invokedynamic #475,  0            // InvokeDynamic #18:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       200: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       203: getstatic     #476                // Field net/minecraft/world/entity/EntityTypes.BREEZE:Lnet/minecraft/world/entity/EntityType;
+       206: invokedynamic #479,  0            // InvokeDynamic #19:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       211: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       214: getstatic     #480                // Field net/minecraft/world/entity/EntityTypes.BREEZE_WIND_CHARGE:Lnet/minecraft/world/entity/EntityType;
+       217: invokedynamic #483,  0            // InvokeDynamic #20:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       222: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       225: getstatic     #484                // Field net/minecraft/world/entity/EntityTypes.CAMEL:Lnet/minecraft/world/entity/EntityType;
+       228: invokedynamic #487,  0            // InvokeDynamic #21:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       233: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       236: getstatic     #488                // Field net/minecraft/world/entity/EntityTypes.CAMEL_HUSK:Lnet/minecraft/world/entity/EntityType;
+       239: invokedynamic #491,  0            // InvokeDynamic #22:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       244: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       247: getstatic     #492                // Field net/minecraft/world/entity/EntityTypes.CAT:Lnet/minecraft/world/entity/EntityType;
+       250: invokedynamic #495,  0            // InvokeDynamic #23:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       255: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       258: getstatic     #496                // Field net/minecraft/world/entity/EntityTypes.CAVE_SPIDER:Lnet/minecraft/world/entity/EntityType;
+       261: invokedynamic #499,  0            // InvokeDynamic #24:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       266: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       269: getstatic     #500                // Field net/minecraft/world/entity/EntityTypes.CHERRY_BOAT:Lnet/minecraft/world/entity/EntityType;
+       272: invokedynamic #502,  0            // InvokeDynamic #25:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       277: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       280: getstatic     #503                // Field net/minecraft/world/entity/EntityTypes.CHERRY_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+       283: invokedynamic #505,  0            // InvokeDynamic #26:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       288: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       291: getstatic     #506                // Field net/minecraft/world/entity/EntityTypes.CHEST_MINECART:Lnet/minecraft/world/entity/EntityType;
+       294: invokedynamic #508,  0            // InvokeDynamic #27:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       299: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       302: getstatic     #509                // Field net/minecraft/world/entity/EntityTypes.CHICKEN:Lnet/minecraft/world/entity/EntityType;
+       305: invokedynamic #512,  0            // InvokeDynamic #28:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       310: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       313: getstatic     #513                // Field net/minecraft/world/entity/EntityTypes.COD:Lnet/minecraft/world/entity/EntityType;
+       316: invokedynamic #516,  0            // InvokeDynamic #29:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       321: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       324: getstatic     #517                // Field net/minecraft/world/entity/EntityTypes.COMMAND_BLOCK_MINECART:Lnet/minecraft/world/entity/EntityType;
+       327: invokedynamic #519,  0            // InvokeDynamic #30:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       332: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       335: getstatic     #520                // Field net/minecraft/world/entity/EntityTypes.COPPER_GOLEM:Lnet/minecraft/world/entity/EntityType;
+       338: invokedynamic #523,  0            // InvokeDynamic #31:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       343: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       346: getstatic     #524                // Field net/minecraft/world/entity/EntityTypes.COW:Lnet/minecraft/world/entity/EntityType;
+       349: invokedynamic #527,  0            // InvokeDynamic #32:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       354: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       357: getstatic     #528                // Field net/minecraft/world/entity/EntityTypes.CREAKING:Lnet/minecraft/world/entity/EntityType;
+       360: invokedynamic #531,  0            // InvokeDynamic #33:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       365: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       368: getstatic     #532                // Field net/minecraft/world/entity/EntityTypes.CREEPER:Lnet/minecraft/world/entity/EntityType;
+       371: invokedynamic #535,  0            // InvokeDynamic #34:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       376: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       379: getstatic     #536                // Field net/minecraft/world/entity/EntityTypes.CUSHION:Lnet/minecraft/world/entity/EntityType;
+       382: invokedynamic #539,  0            // InvokeDynamic #35:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       387: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       390: getstatic     #540                // Field net/minecraft/world/entity/EntityTypes.DARK_OAK_BOAT:Lnet/minecraft/world/entity/EntityType;
+       393: invokedynamic #542,  0            // InvokeDynamic #36:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       398: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       401: getstatic     #543                // Field net/minecraft/world/entity/EntityTypes.DARK_OAK_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+       404: invokedynamic #545,  0            // InvokeDynamic #37:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       409: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       412: getstatic     #546                // Field net/minecraft/world/entity/EntityTypes.DOLPHIN:Lnet/minecraft/world/entity/EntityType;
+       415: invokedynamic #549,  0            // InvokeDynamic #38:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       420: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       423: getstatic     #550                // Field net/minecraft/world/entity/EntityTypes.DONKEY:Lnet/minecraft/world/entity/EntityType;
+       426: invokedynamic #552,  0            // InvokeDynamic #39:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       431: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       434: getstatic     #553                // Field net/minecraft/world/entity/EntityTypes.DRAGON_FIREBALL:Lnet/minecraft/world/entity/EntityType;
+       437: invokedynamic #556,  0            // InvokeDynamic #40:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       442: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       445: getstatic     #557                // Field net/minecraft/world/entity/EntityTypes.DROWNED:Lnet/minecraft/world/entity/EntityType;
+       448: invokedynamic #560,  0            // InvokeDynamic #41:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       453: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       456: getstatic     #561                // Field net/minecraft/world/entity/EntityTypes.EGG:Lnet/minecraft/world/entity/EntityType;
+       459: invokedynamic #564,  0            // InvokeDynamic #42:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       464: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       467: getstatic     #565                // Field net/minecraft/world/entity/EntityTypes.ELDER_GUARDIAN:Lnet/minecraft/world/entity/EntityType;
+       470: invokedynamic #568,  0            // InvokeDynamic #43:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       475: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       478: getstatic     #569                // Field net/minecraft/world/entity/EntityTypes.ENDERMAN:Lnet/minecraft/world/entity/EntityType;
+       481: invokedynamic #572,  0            // InvokeDynamic #44:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       486: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       489: getstatic     #573                // Field net/minecraft/world/entity/EntityTypes.ENDERMITE:Lnet/minecraft/world/entity/EntityType;
+       492: invokedynamic #576,  0            // InvokeDynamic #45:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       497: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       500: getstatic     #577                // Field net/minecraft/world/entity/EntityTypes.ENDER_DRAGON:Lnet/minecraft/world/entity/EntityType;
+       503: invokedynamic #580,  0            // InvokeDynamic #46:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       508: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       511: getstatic     #581                // Field net/minecraft/world/entity/EntityTypes.ENDER_PEARL:Lnet/minecraft/world/entity/EntityType;
+       514: invokedynamic #564,  0            // InvokeDynamic #42:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       519: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       522: getstatic     #584                // Field net/minecraft/world/entity/EntityTypes.END_CRYSTAL:Lnet/minecraft/world/entity/EntityType;
+       525: invokedynamic #587,  0            // InvokeDynamic #47:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       530: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       533: getstatic     #588                // Field net/minecraft/world/entity/EntityTypes.EVOKER:Lnet/minecraft/world/entity/EntityType;
+       536: invokedynamic #591,  0            // InvokeDynamic #48:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       541: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       544: getstatic     #592                // Field net/minecraft/world/entity/EntityTypes.EVOKER_FANGS:Lnet/minecraft/world/entity/EntityType;
+       547: invokedynamic #595,  0            // InvokeDynamic #49:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       552: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       555: getstatic     #596                // Field net/minecraft/world/entity/EntityTypes.EXPERIENCE_BOTTLE:Lnet/minecraft/world/entity/EntityType;
+       558: invokedynamic #564,  0            // InvokeDynamic #42:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       563: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       566: getstatic     #599                // Field net/minecraft/world/entity/EntityTypes.EXPERIENCE_ORB:Lnet/minecraft/world/entity/EntityType;
+       569: invokedynamic #602,  0            // InvokeDynamic #50:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       574: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       577: getstatic     #603                // Field net/minecraft/world/entity/EntityTypes.EYE_OF_ENDER:Lnet/minecraft/world/entity/EntityType;
+       580: invokedynamic #606,  0            // InvokeDynamic #51:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       585: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       588: getstatic     #607                // Field net/minecraft/world/entity/EntityTypes.FALLING_BLOCK:Lnet/minecraft/world/entity/EntityType;
+       591: invokedynamic #610,  0            // InvokeDynamic #52:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       596: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       599: getstatic     #611                // Field net/minecraft/world/entity/EntityTypes.FIREBALL:Lnet/minecraft/world/entity/EntityType;
+       602: invokedynamic #614,  0            // InvokeDynamic #53:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       607: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       610: getstatic     #615                // Field net/minecraft/world/entity/EntityTypes.FIREWORK_ROCKET:Lnet/minecraft/world/entity/EntityType;
+       613: invokedynamic #618,  0            // InvokeDynamic #54:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       618: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       621: getstatic     #619                // Field net/minecraft/world/entity/EntityTypes.FISHING_BOBBER:Lnet/minecraft/world/entity/EntityType;
+       624: invokedynamic #622,  0            // InvokeDynamic #55:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       629: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       632: getstatic     #623                // Field net/minecraft/world/entity/EntityTypes.FOX:Lnet/minecraft/world/entity/EntityType;
+       635: invokedynamic #626,  0            // InvokeDynamic #56:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       640: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       643: getstatic     #627                // Field net/minecraft/world/entity/EntityTypes.FROG:Lnet/minecraft/world/entity/EntityType;
+       646: invokedynamic #630,  0            // InvokeDynamic #57:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       651: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       654: getstatic     #631                // Field net/minecraft/world/entity/EntityTypes.FURNACE_MINECART:Lnet/minecraft/world/entity/EntityType;
+       657: invokedynamic #633,  0            // InvokeDynamic #58:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       662: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       665: getstatic     #634                // Field net/minecraft/world/entity/EntityTypes.GHAST:Lnet/minecraft/world/entity/EntityType;
+       668: invokedynamic #637,  0            // InvokeDynamic #59:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       673: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       676: getstatic     #638                // Field net/minecraft/world/entity/EntityTypes.HAPPY_GHAST:Lnet/minecraft/world/entity/EntityType;
+       679: invokedynamic #641,  0            // InvokeDynamic #60:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       684: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       687: getstatic     #642                // Field net/minecraft/world/entity/EntityTypes.GIANT:Lnet/minecraft/world/entity/EntityType;
+       690: invokedynamic #645,  0            // InvokeDynamic #61:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       695: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       698: getstatic     #646                // Field net/minecraft/world/entity/EntityTypes.GLOW_ITEM_FRAME:Lnet/minecraft/world/entity/EntityType;
+       701: invokedynamic #649,  0            // InvokeDynamic #62:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       706: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       709: getstatic     #650                // Field net/minecraft/world/entity/EntityTypes.GLOW_SQUID:Lnet/minecraft/world/entity/EntityType;
+       712: invokedynamic #652,  0            // InvokeDynamic #63:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       717: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       720: getstatic     #653                // Field net/minecraft/world/entity/EntityTypes.GOAT:Lnet/minecraft/world/entity/EntityType;
+       723: invokedynamic #656,  0            // InvokeDynamic #64:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       728: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       731: getstatic     #657                // Field net/minecraft/world/entity/EntityTypes.GUARDIAN:Lnet/minecraft/world/entity/EntityType;
+       734: invokedynamic #660,  0            // InvokeDynamic #65:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       739: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       742: getstatic     #661                // Field net/minecraft/world/entity/EntityTypes.HOGLIN:Lnet/minecraft/world/entity/EntityType;
+       745: invokedynamic #664,  0            // InvokeDynamic #66:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       750: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       753: getstatic     #665                // Field net/minecraft/world/entity/EntityTypes.HOPPER_MINECART:Lnet/minecraft/world/entity/EntityType;
+       756: invokedynamic #667,  0            // InvokeDynamic #67:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       761: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       764: getstatic     #668                // Field net/minecraft/world/entity/EntityTypes.HORSE:Lnet/minecraft/world/entity/EntityType;
+       767: invokedynamic #671,  0            // InvokeDynamic #68:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       772: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       775: getstatic     #672                // Field net/minecraft/world/entity/EntityTypes.HUSK:Lnet/minecraft/world/entity/EntityType;
+       778: invokedynamic #675,  0            // InvokeDynamic #69:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       783: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       786: getstatic     #676                // Field net/minecraft/world/entity/EntityTypes.ILLUSIONER:Lnet/minecraft/world/entity/EntityType;
+       789: invokedynamic #679,  0            // InvokeDynamic #70:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       794: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       797: getstatic     #680                // Field net/minecraft/world/entity/EntityTypes.INTERACTION:Lnet/minecraft/world/entity/EntityType;
+       800: invokedynamic #427,  0            // InvokeDynamic #5:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       805: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       808: getstatic     #683                // Field net/minecraft/world/entity/EntityTypes.IRON_GOLEM:Lnet/minecraft/world/entity/EntityType;
+       811: invokedynamic #686,  0            // InvokeDynamic #71:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       816: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       819: getstatic     #687                // Field net/minecraft/world/entity/EntityTypes.ITEM:Lnet/minecraft/world/entity/EntityType;
+       822: invokedynamic #690,  0            // InvokeDynamic #72:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       827: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       830: getstatic     #691                // Field net/minecraft/world/entity/EntityTypes.ITEM_DISPLAY:Lnet/minecraft/world/entity/EntityType;
+       833: invokedynamic #694,  0            // InvokeDynamic #73:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       838: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       841: getstatic     #695                // Field net/minecraft/world/entity/EntityTypes.ITEM_FRAME:Lnet/minecraft/world/entity/EntityType;
+       844: invokedynamic #649,  0            // InvokeDynamic #62:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       849: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       852: getstatic     #698                // Field net/minecraft/world/entity/EntityTypes.JUNGLE_BOAT:Lnet/minecraft/world/entity/EntityType;
+       855: invokedynamic #700,  0            // InvokeDynamic #74:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       860: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       863: getstatic     #701                // Field net/minecraft/world/entity/EntityTypes.JUNGLE_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+       866: invokedynamic #703,  0            // InvokeDynamic #75:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       871: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       874: getstatic     #704                // Field net/minecraft/world/entity/EntityTypes.LEASH_KNOT:Lnet/minecraft/world/entity/EntityType;
+       877: invokedynamic #707,  0            // InvokeDynamic #76:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       882: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       885: getstatic     #708                // Field net/minecraft/world/entity/EntityTypes.LIGHTNING_BOLT:Lnet/minecraft/world/entity/EntityType;
+       888: invokedynamic #711,  0            // InvokeDynamic #77:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       893: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       896: getstatic     #712                // Field net/minecraft/world/entity/EntityTypes.LINGERING_POTION:Lnet/minecraft/world/entity/EntityType;
+       899: invokedynamic #564,  0            // InvokeDynamic #42:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       904: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       907: getstatic     #715                // Field net/minecraft/world/entity/EntityTypes.LLAMA:Lnet/minecraft/world/entity/EntityType;
+       910: invokedynamic #717,  0            // InvokeDynamic #78:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       915: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       918: getstatic     #718                // Field net/minecraft/world/entity/EntityTypes.LLAMA_SPIT:Lnet/minecraft/world/entity/EntityType;
+       921: invokedynamic #721,  0            // InvokeDynamic #79:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       926: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       929: getstatic     #722                // Field net/minecraft/world/entity/EntityTypes.MAGMA_CUBE:Lnet/minecraft/world/entity/EntityType;
+       932: invokedynamic #725,  0            // InvokeDynamic #80:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       937: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       940: getstatic     #726                // Field net/minecraft/world/entity/EntityTypes.MANGROVE_BOAT:Lnet/minecraft/world/entity/EntityType;
+       943: invokedynamic #728,  0            // InvokeDynamic #81:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       948: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       951: getstatic     #729                // Field net/minecraft/world/entity/EntityTypes.MANGROVE_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+       954: invokedynamic #731,  0            // InvokeDynamic #82:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       959: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       962: getstatic     #732                // Field net/minecraft/world/entity/EntityTypes.MARKER:Lnet/minecraft/world/entity/EntityType;
+       965: invokedynamic #427,  0            // InvokeDynamic #5:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       970: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       973: getstatic     #735                // Field net/minecraft/world/entity/EntityTypes.MINECART:Lnet/minecraft/world/entity/EntityType;
+       976: invokedynamic #737,  0            // InvokeDynamic #83:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       981: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       984: getstatic     #738                // Field net/minecraft/world/entity/EntityTypes.MOOSHROOM:Lnet/minecraft/world/entity/EntityType;
+       987: invokedynamic #741,  0            // InvokeDynamic #84:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+       992: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+       995: getstatic     #742                // Field net/minecraft/world/entity/EntityTypes.MULE:Lnet/minecraft/world/entity/EntityType;
+       998: invokedynamic #744,  0            // InvokeDynamic #85:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1003: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1006: getstatic     #745                // Field net/minecraft/world/entity/EntityTypes.NAUTILUS:Lnet/minecraft/world/entity/EntityType;
+      1009: invokedynamic #748,  0            // InvokeDynamic #86:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1014: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1017: getstatic     #749                // Field net/minecraft/world/entity/EntityTypes.OAK_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1020: invokedynamic #751,  0            // InvokeDynamic #87:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1025: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1028: getstatic     #752                // Field net/minecraft/world/entity/EntityTypes.OAK_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1031: invokedynamic #754,  0            // InvokeDynamic #88:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1036: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1039: getstatic     #755                // Field net/minecraft/world/entity/EntityTypes.OCELOT:Lnet/minecraft/world/entity/EntityType;
+      1042: invokedynamic #758,  0            // InvokeDynamic #89:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1047: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1050: getstatic     #759                // Field net/minecraft/world/entity/EntityTypes.OMINOUS_ITEM_SPAWNER:Lnet/minecraft/world/entity/EntityType;
+      1053: invokedynamic #762,  0            // InvokeDynamic #90:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1058: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1061: getstatic     #763                // Field net/minecraft/world/entity/EntityTypes.PAINTING:Lnet/minecraft/world/entity/EntityType;
+      1064: invokedynamic #766,  0            // InvokeDynamic #91:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1069: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1072: getstatic     #767                // Field net/minecraft/world/entity/EntityTypes.PALE_OAK_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1075: invokedynamic #769,  0            // InvokeDynamic #92:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1080: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1083: getstatic     #770                // Field net/minecraft/world/entity/EntityTypes.PALE_OAK_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1086: invokedynamic #772,  0            // InvokeDynamic #93:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1091: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1094: getstatic     #773                // Field net/minecraft/world/entity/EntityTypes.PANDA:Lnet/minecraft/world/entity/EntityType;
+      1097: invokedynamic #776,  0            // InvokeDynamic #94:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1102: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1105: getstatic     #777                // Field net/minecraft/world/entity/EntityTypes.PARCHED:Lnet/minecraft/world/entity/EntityType;
+      1108: invokedynamic #780,  0            // InvokeDynamic #95:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1113: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1116: getstatic     #781                // Field net/minecraft/world/entity/EntityTypes.PARROT:Lnet/minecraft/world/entity/EntityType;
+      1119: invokedynamic #784,  0            // InvokeDynamic #96:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1124: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1127: getstatic     #785                // Field net/minecraft/world/entity/EntityTypes.PHANTOM:Lnet/minecraft/world/entity/EntityType;
+      1130: invokedynamic #788,  0            // InvokeDynamic #97:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1135: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1138: getstatic     #789                // Field net/minecraft/world/entity/EntityTypes.PIG:Lnet/minecraft/world/entity/EntityType;
+      1141: invokedynamic #792,  0            // InvokeDynamic #98:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1146: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1149: getstatic     #793                // Field net/minecraft/world/entity/EntityTypes.PIGLIN:Lnet/minecraft/world/entity/EntityType;
+      1152: invokedynamic #795,  0            // InvokeDynamic #99:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1157: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1160: getstatic     #796                // Field net/minecraft/world/entity/EntityTypes.PIGLIN_BRUTE:Lnet/minecraft/world/entity/EntityType;
+      1163: invokedynamic #798,  0            // InvokeDynamic #100:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1168: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1171: getstatic     #799                // Field net/minecraft/world/entity/EntityTypes.PILLAGER:Lnet/minecraft/world/entity/EntityType;
+      1174: invokedynamic #802,  0            // InvokeDynamic #101:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1179: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1182: getstatic     #803                // Field net/minecraft/world/entity/EntityTypes.POLAR_BEAR:Lnet/minecraft/world/entity/EntityType;
+      1185: invokedynamic #806,  0            // InvokeDynamic #102:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1190: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1193: getstatic     #807                // Field net/minecraft/world/entity/EntityTypes.POPLAR_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1196: invokedynamic #809,  0            // InvokeDynamic #103:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1201: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1204: getstatic     #810                // Field net/minecraft/world/entity/EntityTypes.POPLAR_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1207: invokedynamic #812,  0            // InvokeDynamic #104:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1212: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1215: getstatic     #813                // Field net/minecraft/world/entity/EntityTypes.PUFFERFISH:Lnet/minecraft/world/entity/EntityType;
+      1218: invokedynamic #816,  0            // InvokeDynamic #105:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1223: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1226: getstatic     #817                // Field net/minecraft/world/entity/EntityTypes.RABBIT:Lnet/minecraft/world/entity/EntityType;
+      1229: invokedynamic #820,  0            // InvokeDynamic #106:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1234: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1237: getstatic     #821                // Field net/minecraft/world/entity/EntityTypes.RAVAGER:Lnet/minecraft/world/entity/EntityType;
+      1240: invokedynamic #824,  0            // InvokeDynamic #107:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1245: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1248: getstatic     #825                // Field net/minecraft/world/entity/EntityTypes.SALMON:Lnet/minecraft/world/entity/EntityType;
+      1251: invokedynamic #828,  0            // InvokeDynamic #108:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1256: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1259: getstatic     #829                // Field net/minecraft/world/entity/EntityTypes.SHEEP:Lnet/minecraft/world/entity/EntityType;
+      1262: invokedynamic #832,  0            // InvokeDynamic #109:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1267: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1270: getstatic     #833                // Field net/minecraft/world/entity/EntityTypes.SHULKER:Lnet/minecraft/world/entity/EntityType;
+      1273: invokedynamic #836,  0            // InvokeDynamic #110:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1278: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1281: getstatic     #837                // Field net/minecraft/world/entity/EntityTypes.SHULKER_BULLET:Lnet/minecraft/world/entity/EntityType;
+      1284: invokedynamic #840,  0            // InvokeDynamic #111:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1289: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1292: getstatic     #841                // Field net/minecraft/world/entity/EntityTypes.SILVERFISH:Lnet/minecraft/world/entity/EntityType;
+      1295: invokedynamic #844,  0            // InvokeDynamic #112:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1300: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1303: getstatic     #845                // Field net/minecraft/world/entity/EntityTypes.SKELETON:Lnet/minecraft/world/entity/EntityType;
+      1306: invokedynamic #847,  0            // InvokeDynamic #113:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1311: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1314: getstatic     #848                // Field net/minecraft/world/entity/EntityTypes.SKELETON_HORSE:Lnet/minecraft/world/entity/EntityType;
+      1317: invokedynamic #851,  0            // InvokeDynamic #114:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1322: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1325: getstatic     #852                // Field net/minecraft/world/entity/EntityTypes.SLIME:Lnet/minecraft/world/entity/EntityType;
+      1328: invokedynamic #855,  0            // InvokeDynamic #115:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1333: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1336: getstatic     #856                // Field net/minecraft/world/entity/EntityTypes.SMALL_FIREBALL:Lnet/minecraft/world/entity/EntityType;
+      1339: invokedynamic #859,  0            // InvokeDynamic #116:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1344: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1347: getstatic     #860                // Field net/minecraft/world/entity/EntityTypes.SNIFFER:Lnet/minecraft/world/entity/EntityType;
+      1350: invokedynamic #863,  0            // InvokeDynamic #117:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1355: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1358: getstatic     #864                // Field net/minecraft/world/entity/EntityTypes.SNOWBALL:Lnet/minecraft/world/entity/EntityType;
+      1361: invokedynamic #564,  0            // InvokeDynamic #42:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1366: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1369: getstatic     #867                // Field net/minecraft/world/entity/EntityTypes.SNOW_GOLEM:Lnet/minecraft/world/entity/EntityType;
+      1372: invokedynamic #870,  0            // InvokeDynamic #118:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1377: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1380: getstatic     #871                // Field net/minecraft/world/entity/EntityTypes.SPAWNER_MINECART:Lnet/minecraft/world/entity/EntityType;
+      1383: invokedynamic #873,  0            // InvokeDynamic #119:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1388: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1391: getstatic     #874                // Field net/minecraft/world/entity/EntityTypes.SPECTRAL_ARROW:Lnet/minecraft/world/entity/EntityType;
+      1394: invokedynamic #877,  0            // InvokeDynamic #120:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1399: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1402: getstatic     #878                // Field net/minecraft/world/entity/EntityTypes.SPIDER:Lnet/minecraft/world/entity/EntityType;
+      1405: invokedynamic #881,  0            // InvokeDynamic #121:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1410: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1413: getstatic     #882                // Field net/minecraft/world/entity/EntityTypes.SPLASH_POTION:Lnet/minecraft/world/entity/EntityType;
+      1416: invokedynamic #564,  0            // InvokeDynamic #42:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1421: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1424: getstatic     #885                // Field net/minecraft/world/entity/EntityTypes.SPRUCE_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1427: invokedynamic #887,  0            // InvokeDynamic #122:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1432: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1435: getstatic     #888                // Field net/minecraft/world/entity/EntityTypes.SPRUCE_CHEST_BOAT:Lnet/minecraft/world/entity/EntityType;
+      1438: invokedynamic #890,  0            // InvokeDynamic #123:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1443: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1446: getstatic     #891                // Field net/minecraft/world/entity/EntityTypes.SQUID:Lnet/minecraft/world/entity/EntityType;
+      1449: invokedynamic #893,  0            // InvokeDynamic #124:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1454: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1457: getstatic     #894                // Field net/minecraft/world/entity/EntityTypes.STRAY:Lnet/minecraft/world/entity/EntityType;
+      1460: invokedynamic #897,  0            // InvokeDynamic #125:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1465: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1468: getstatic     #898                // Field net/minecraft/world/entity/EntityTypes.STRIDER:Lnet/minecraft/world/entity/EntityType;
+      1471: invokedynamic #901,  0            // InvokeDynamic #126:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1476: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1479: getstatic     #902                // Field net/minecraft/world/entity/EntityTypes.SULFUR_CUBE:Lnet/minecraft/world/entity/EntityType;
+      1482: invokedynamic #905,  0            // InvokeDynamic #127:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1487: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1490: getstatic     #906                // Field net/minecraft/world/entity/EntityTypes.TADPOLE:Lnet/minecraft/world/entity/EntityType;
+      1493: invokedynamic #909,  0            // InvokeDynamic #128:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1498: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1501: getstatic     #910                // Field net/minecraft/world/entity/EntityTypes.TEXT_DISPLAY:Lnet/minecraft/world/entity/EntityType;
+      1504: invokedynamic #913,  0            // InvokeDynamic #129:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1509: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1512: getstatic     #914                // Field net/minecraft/world/entity/EntityTypes.TNT:Lnet/minecraft/world/entity/EntityType;
+      1515: invokedynamic #917,  0            // InvokeDynamic #130:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1520: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1523: getstatic     #918                // Field net/minecraft/world/entity/EntityTypes.TNT_MINECART:Lnet/minecraft/world/entity/EntityType;
+      1526: invokedynamic #921,  0            // InvokeDynamic #131:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1531: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1534: getstatic     #922                // Field net/minecraft/world/entity/EntityTypes.TRADER_LLAMA:Lnet/minecraft/world/entity/EntityType;
+      1537: invokedynamic #924,  0            // InvokeDynamic #132:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1542: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1545: getstatic     #925                // Field net/minecraft/world/entity/EntityTypes.TRIDENT:Lnet/minecraft/world/entity/EntityType;
+      1548: invokedynamic #928,  0            // InvokeDynamic #133:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1553: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1556: getstatic     #929                // Field net/minecraft/world/entity/EntityTypes.TROPICAL_FISH:Lnet/minecraft/world/entity/EntityType;
+      1559: invokedynamic #932,  0            // InvokeDynamic #134:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1564: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1567: getstatic     #933                // Field net/minecraft/world/entity/EntityTypes.TURTLE:Lnet/minecraft/world/entity/EntityType;
+      1570: invokedynamic #936,  0            // InvokeDynamic #135:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1575: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1578: getstatic     #937                // Field net/minecraft/world/entity/EntityTypes.VEX:Lnet/minecraft/world/entity/EntityType;
+      1581: invokedynamic #940,  0            // InvokeDynamic #136:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1586: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1589: getstatic     #941                // Field net/minecraft/world/entity/EntityTypes.VILLAGER:Lnet/minecraft/world/entity/EntityType;
+      1592: invokedynamic #944,  0            // InvokeDynamic #137:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1597: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1600: getstatic     #945                // Field net/minecraft/world/entity/EntityTypes.VINDICATOR:Lnet/minecraft/world/entity/EntityType;
+      1603: invokedynamic #948,  0            // InvokeDynamic #138:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1608: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1611: getstatic     #949                // Field net/minecraft/world/entity/EntityTypes.WANDERING_TRADER:Lnet/minecraft/world/entity/EntityType;
+      1614: invokedynamic #952,  0            // InvokeDynamic #139:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1619: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1622: getstatic     #953                // Field net/minecraft/world/entity/EntityTypes.WARDEN:Lnet/minecraft/world/entity/EntityType;
+      1625: invokedynamic #956,  0            // InvokeDynamic #140:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1630: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1633: getstatic     #957                // Field net/minecraft/world/entity/EntityTypes.WIND_CHARGE:Lnet/minecraft/world/entity/EntityType;
+      1636: invokedynamic #483,  0            // InvokeDynamic #20:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1641: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1644: getstatic     #960                // Field net/minecraft/world/entity/EntityTypes.WITCH:Lnet/minecraft/world/entity/EntityType;
+      1647: invokedynamic #963,  0            // InvokeDynamic #141:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1652: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1655: getstatic     #964                // Field net/minecraft/world/entity/EntityTypes.WITHER:Lnet/minecraft/world/entity/EntityType;
+      1658: invokedynamic #967,  0            // InvokeDynamic #142:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1663: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1666: getstatic     #968                // Field net/minecraft/world/entity/EntityTypes.WITHER_SKELETON:Lnet/minecraft/world/entity/EntityType;
+      1669: invokedynamic #971,  0            // InvokeDynamic #143:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1674: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1677: getstatic     #972                // Field net/minecraft/world/entity/EntityTypes.WITHER_SKULL:Lnet/minecraft/world/entity/EntityType;
+      1680: invokedynamic #975,  0            // InvokeDynamic #144:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1685: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1688: getstatic     #976                // Field net/minecraft/world/entity/EntityTypes.WOLF:Lnet/minecraft/world/entity/EntityType;
+      1691: invokedynamic #979,  0            // InvokeDynamic #145:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1696: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1699: getstatic     #980                // Field net/minecraft/world/entity/EntityTypes.ZOGLIN:Lnet/minecraft/world/entity/EntityType;
+      1702: invokedynamic #983,  0            // InvokeDynamic #146:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1707: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1710: getstatic     #984                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE:Lnet/minecraft/world/entity/EntityType;
+      1713: invokedynamic #986,  0            // InvokeDynamic #147:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1718: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1721: getstatic     #987                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_HORSE:Lnet/minecraft/world/entity/EntityType;
+      1724: invokedynamic #990,  0            // InvokeDynamic #148:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1729: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1732: getstatic     #991                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_NAUTILUS:Lnet/minecraft/world/entity/EntityType;
+      1735: invokedynamic #994,  0            // InvokeDynamic #149:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1740: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1743: getstatic     #995                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_VILLAGER:Lnet/minecraft/world/entity/EntityType;
+      1746: invokedynamic #998,  0            // InvokeDynamic #150:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1751: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1754: getstatic     #999                // Field net/minecraft/world/entity/EntityTypes.ZOMBIFIED_PIGLIN:Lnet/minecraft/world/entity/EntityType;
+      1757: invokedynamic #1001,  0           // InvokeDynamic #151:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+      1762: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+      1765: return
+}

@@ -1,0 +1,21 @@
+Compiled from "Skeleton.java"
+public class net.minecraft.world.entity.monster.skeleton.Skeleton extends net.minecraft.world.entity.monster.skeleton.AbstractSkeleton {
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> DATA_STRAY_CONVERSION_ID;
+  private final net.minecraft.world.entity.ConversionTracker<net.minecraft.world.entity.monster.skeleton.AbstractSkeleton> freezingTracker;
+  public net.minecraft.world.entity.monster.skeleton.Skeleton(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.skeleton.Skeleton>, net.minecraft.world.level.Level);
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  public boolean isShaking();
+  public void tick();
+  protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+  protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+  public void startFreezeConversion(int);
+  public boolean canFreeze();
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+  protected net.minecraft.sounds.SoundEvent getStepSound();
+  private boolean lambda$new$2();
+  private static java.lang.Integer lambda$new$1();
+  private static net.minecraft.world.entity.EntityType lambda$new$0();
+  static {};
+}

@@ -1,0 +1,28 @@
+Compiled from "Sensor.java"
+public abstract class net.minecraft.world.entity.ai.sensing.Sensor<E extends net.minecraft.world.entity.LivingEntity> {
+  private static final int DEFAULT_SCAN_RATE;
+  private static final int DEFAULT_TARGETING_RANGE;
+  private static final net.minecraft.world.entity.ai.targeting.TargetingConditions TARGET_CONDITIONS;
+  private static final net.minecraft.world.entity.ai.targeting.TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING;
+  private static final net.minecraft.world.entity.ai.targeting.TargetingConditions ATTACK_TARGET_CONDITIONS;
+  private static final net.minecraft.world.entity.ai.targeting.TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING;
+  private static final net.minecraft.world.entity.ai.targeting.TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_LINE_OF_SIGHT;
+  private static final net.minecraft.world.entity.ai.targeting.TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_AND_LINE_OF_SIGHT;
+  private final int scanRate;
+  private long timeToTick;
+  public net.minecraft.world.entity.ai.sensing.Sensor(int);
+  public net.minecraft.world.entity.ai.sensing.Sensor();
+  public void randomlyDelayStart(net.minecraft.util.RandomSource);
+  public final void tick(net.minecraft.server.level.ServerLevel, E);
+  private void updateTargetingConditionRanges(E);
+  protected abstract void doTick(net.minecraft.server.level.ServerLevel, E);
+  public abstract java.util.Set<net.minecraft.world.entity.ai.memory.MemoryModuleType<?>> requires();
+  public static boolean isEntityTargetable(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  public static boolean isEntityAttackable(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  public static java.util.function.BiPredicate<net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity> wasEntityAttackableLastNTicks(net.minecraft.world.entity.LivingEntity, int);
+  public static boolean isEntityAttackableIgnoringLineOfSight(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  public static <T, U> java.util.function.BiPredicate<T, U> rememberPositives(int, java.util.function.BiPredicate<T, U>);
+  private static boolean lambda$rememberPositives$0(java.util.function.BiPredicate, java.util.concurrent.atomic.AtomicInteger, int, java.lang.Object, java.lang.Object);
+  private static boolean lambda$wasEntityAttackableLastNTicks$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity);
+  static {};
+}

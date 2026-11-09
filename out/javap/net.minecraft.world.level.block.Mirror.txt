@@ -1,0 +1,23 @@
+Compiled from "Mirror.java"
+public final class net.minecraft.world.level.block.Mirror extends java.lang.Enum<net.minecraft.world.level.block.Mirror> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.level.block.Mirror NONE;
+  public static final net.minecraft.world.level.block.Mirror LEFT_RIGHT;
+  public static final net.minecraft.world.level.block.Mirror FRONT_BACK;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.block.Mirror> CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.block.Mirror> LEGACY_CODEC;
+  private final java.lang.String id;
+  private final net.minecraft.network.chat.Component symbol;
+  private final com.mojang.math.OctahedralGroup rotation;
+  private static final net.minecraft.world.level.block.Mirror[] $VALUES;
+  public static net.minecraft.world.level.block.Mirror[] values();
+  public static net.minecraft.world.level.block.Mirror valueOf(java.lang.String);
+  private net.minecraft.world.level.block.Mirror(java.lang.String, com.mojang.math.OctahedralGroup);
+  public int mirror(int, int);
+  public net.minecraft.world.level.block.Rotation getRotation(net.minecraft.core.Direction);
+  public net.minecraft.core.Direction mirror(net.minecraft.core.Direction);
+  public com.mojang.math.OctahedralGroup rotation();
+  public net.minecraft.network.chat.Component symbol();
+  public java.lang.String getSerializedName();
+  private static net.minecraft.world.level.block.Mirror[] $values();
+  static {};
+}

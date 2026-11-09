@@ -1,0 +1,1318 @@
+Compiled from "HappyGhast.java"
+public class net.minecraft.world.entity.animal.happyghast.HappyGhast extends net.minecraft.world.entity.animal.Animal {
+  public static final float BABY_SCALE;
+
+  public static final int WANDER_GROUND_DISTANCE;
+
+  public static final int SMALL_RESTRICTION_RADIUS;
+
+  public static final int LARGE_RESTRICTION_RADIUS;
+
+  public static final int RESTRICTION_RADIUS_BUFFER;
+
+  public static final int FAST_HEALING_TICKS;
+
+  public static final int SLOW_HEALING_TICKS;
+
+  public static final int MAX_PASSANGERS;
+
+  private static final int STILL_TIMEOUT_ON_LOAD_GRACE_PERIOD;
+
+  private static final int MAX_STILL_TIMEOUT;
+
+  private static final net.minecraft.world.entity.ai.Brain$Provider<net.minecraft.world.entity.animal.happyghast.HappyGhast> BRAIN_PROVIDER;
+
+  public static final float SPEED_MULTIPLIER_WHEN_PANICKING;
+
+  private int leashHolderTime;
+
+  private int serverStillTimeout;
+
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> IS_LEASH_HOLDER;
+
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> STAYS_STILL;
+
+  private static final float MAX_SCALE;
+
+  private static final net.minecraft.world.entity.EntityDimensions BABY_DIMENSIONS;
+
+  public net.minecraft.world.entity.animal.happyghast.HappyGhast(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.animal.happyghast.HappyGhast>, net.minecraft.world.level.Level);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #3                  // Method net/minecraft/world/entity/animal/Animal."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+         6: aload_0
+         7: iconst_0
+         8: putfield      #9                  // Field leashHolderTime:I
+        11: aload_0
+        12: new           #15                 // class net/minecraft/world/entity/monster/Ghast$GhastMoveControl
+        15: dup
+        16: aload_0
+        17: iconst_1
+        18: aload_0
+        19: invokedynamic #17,  0             // InvokeDynamic #0:getAsBoolean:(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)Ljava/util/function/BooleanSupplier;
+        24: invokespecial #21                 // Method net/minecraft/world/entity/monster/Ghast$GhastMoveControl."<init>":(Lnet/minecraft/world/entity/Mob;ZLjava/util/function/BooleanSupplier;)V
+        27: putfield      #24                 // Field moveControl:Lnet/minecraft/world/entity/ai/control/MoveControl;
+        30: aload_0
+        31: new           #28                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastLookControl
+        34: dup
+        35: aload_0
+        36: invokespecial #30                 // Method net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastLookControl."<init>":(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)V
+        39: putfield      #33                 // Field lookControl:Lnet/minecraft/world/entity/ai/control/LookControl;
+        42: return
+
+  private void setServerStillTimeout(int);
+    Code:
+         0: aload_0
+         1: getfield      #37                 // Field serverStillTimeout:I
+         4: ifgt          59
+         7: iload_1
+         8: ifle          59
+        11: aload_0
+        12: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        15: astore_3
+        16: aload_3
+        17: instanceof    #44                 // class net/minecraft/server/level/ServerLevel
+        20: ifeq          59
+        23: aload_3
+        24: checkcast     #44                 // class net/minecraft/server/level/ServerLevel
+        27: astore_2
+        28: aload_0
+        29: aload_0
+        30: invokevirtual #46                 // Method getX:()D
+        33: aload_0
+        34: invokevirtual #50                 // Method getY:()D
+        37: aload_0
+        38: invokevirtual #53                 // Method getZ:()D
+        41: invokevirtual #56                 // Method syncPacketPositionCodec:(DDD)V
+        44: aload_2
+        45: invokevirtual #60                 // Method net/minecraft/server/level/ServerLevel.getChunkSource:()Lnet/minecraft/server/level/ServerChunkCache;
+        48: getfield      #64                 // Field net/minecraft/server/level/ServerChunkCache.chunkMap:Lnet/minecraft/server/level/ChunkMap;
+        51: aload_0
+        52: aload_0
+        53: invokestatic  #70                 // Method net/minecraft/network/protocol/game/ClientboundEntityPositionSyncPacket.of:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/network/protocol/game/ClientboundEntityPositionSyncPacket;
+        56: invokevirtual #76                 // Method net/minecraft/server/level/ChunkMap.sendToTrackingPlayers:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V
+        59: aload_0
+        60: iload_1
+        61: putfield      #37                 // Field serverStillTimeout:I
+        64: aload_0
+        65: invokevirtual #82                 // Method syncStayStillFlag:()V
+        68: return
+
+  private net.minecraft.world.entity.ai.navigation.PathNavigation createBabyNavigation(net.minecraft.world.level.Level);
+    Code:
+         0: new           #86                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast$BabyFlyingPathNavigation
+         3: dup
+         4: aload_0
+         5: aload_1
+         6: invokespecial #88                 // Method net/minecraft/world/entity/animal/happyghast/HappyGhast$BabyFlyingPathNavigation."<init>":(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;Lnet/minecraft/world/level/Level;)V
+         9: areturn
+
+  protected void registerGoals();
+    Code:
+         0: aload_0
+         1: getfield      #91                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+         4: iconst_3
+         5: new           #95                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastFloatGoal
+         8: dup
+         9: aload_0
+        10: invokespecial #97                 // Method net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastFloatGoal."<init>":(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)V
+        13: invokevirtual #98                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        16: aload_0
+        17: getfield      #91                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        20: iconst_4
+        21: new           #104                // class net/minecraft/world/entity/ai/goal/TemptGoal$ForNonPathfinders
+        24: dup
+        25: aload_0
+        26: dconst_1
+        27: aload_0
+        28: invokedynamic #106,  0            // InvokeDynamic #1:test:(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)Ljava/util/function/Predicate;
+        33: iconst_0
+        34: ldc2_w        #110                // double 7.0d
+        37: invokespecial #112                // Method net/minecraft/world/entity/ai/goal/TemptGoal$ForNonPathfinders."<init>":(Lnet/minecraft/world/entity/Mob;DLjava/util/function/Predicate;ZD)V
+        40: invokevirtual #98                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        43: aload_0
+        44: getfield      #91                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        47: iconst_5
+        48: new           #115                // class net/minecraft/world/entity/monster/Ghast$RandomFloatAroundGoal
+        51: dup
+        52: aload_0
+        53: bipush        16
+        55: invokespecial #117                // Method net/minecraft/world/entity/monster/Ghast$RandomFloatAroundGoal."<init>":(Lnet/minecraft/world/entity/Mob;I)V
+        58: invokevirtual #98                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        61: return
+
+  private void adultGhastSetup();
+    Code:
+         0: aload_0
+         1: new           #15                 // class net/minecraft/world/entity/monster/Ghast$GhastMoveControl
+         4: dup
+         5: aload_0
+         6: iconst_1
+         7: aload_0
+         8: invokedynamic #17,  0             // InvokeDynamic #0:getAsBoolean:(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)Ljava/util/function/BooleanSupplier;
+        13: invokespecial #21                 // Method net/minecraft/world/entity/monster/Ghast$GhastMoveControl."<init>":(Lnet/minecraft/world/entity/Mob;ZLjava/util/function/BooleanSupplier;)V
+        16: putfield      #24                 // Field moveControl:Lnet/minecraft/world/entity/ai/control/MoveControl;
+        19: aload_0
+        20: new           #28                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastLookControl
+        23: dup
+        24: aload_0
+        25: invokespecial #30                 // Method net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastLookControl."<init>":(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)V
+        28: putfield      #33                 // Field lookControl:Lnet/minecraft/world/entity/ai/control/LookControl;
+        31: aload_0
+        32: aload_0
+        33: aload_0
+        34: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        37: invokevirtual #120                // Method createNavigation:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+        40: putfield      #124                // Field navigation:Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+        43: aload_0
+        44: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        47: astore_2
+        48: aload_2
+        49: instanceof    #44                 // class net/minecraft/server/level/ServerLevel
+        52: ifeq          89
+        55: aload_2
+        56: checkcast     #44                 // class net/minecraft/server/level/ServerLevel
+        59: astore_1
+        60: aload_0
+        61: invokedynamic #128,  0            // InvokeDynamic #2:test:()Ljava/util/function/Predicate;
+        66: invokevirtual #131                // Method removeAllGoals:(Ljava/util/function/Predicate;)V
+        69: aload_0
+        70: invokevirtual #135                // Method registerGoals:()V
+        73: aload_0
+        74: invokevirtual #138                // Method getBrain:()Lnet/minecraft/world/entity/ai/Brain;
+        77: aload_1
+        78: aload_0
+        79: invokevirtual #142                // Method net/minecraft/world/entity/ai/Brain.stopAll:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)V
+        82: aload_0
+        83: getfield      #148                // Field brain:Lnet/minecraft/world/entity/ai/Brain;
+        86: invokevirtual #152                // Method net/minecraft/world/entity/ai/Brain.clearMemories:()V
+        89: return
+
+  private void babyGhastSetup();
+    Code:
+         0: aload_0
+         1: new           #155                // class net/minecraft/world/entity/ai/control/FlyingMoveControl
+         4: dup
+         5: aload_0
+         6: sipush        180
+         9: iconst_1
+        10: invokespecial #157                // Method net/minecraft/world/entity/ai/control/FlyingMoveControl."<init>":(Lnet/minecraft/world/entity/Mob;IZ)V
+        13: putfield      #24                 // Field moveControl:Lnet/minecraft/world/entity/ai/control/MoveControl;
+        16: aload_0
+        17: new           #160                // class net/minecraft/world/entity/ai/control/LookControl
+        20: dup
+        21: aload_0
+        22: invokespecial #162                // Method net/minecraft/world/entity/ai/control/LookControl."<init>":(Lnet/minecraft/world/entity/Mob;)V
+        25: putfield      #33                 // Field lookControl:Lnet/minecraft/world/entity/ai/control/LookControl;
+        28: aload_0
+        29: aload_0
+        30: aload_0
+        31: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        34: invokevirtual #165                // Method createBabyNavigation:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+        37: putfield      #124                // Field navigation:Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+        40: aload_0
+        41: iconst_0
+        42: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        45: aload_0
+        46: invokedynamic #172,  0            // InvokeDynamic #3:test:()Ljava/util/function/Predicate;
+        51: invokevirtual #131                // Method removeAllGoals:(Ljava/util/function/Predicate;)V
+        54: return
+
+  protected void ageBoundaryReached();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          14
+         7: aload_0
+         8: invokevirtual #177                // Method babyGhastSetup:()V
+        11: goto          18
+        14: aload_0
+        15: invokevirtual #180                // Method adultGhastSetup:()V
+        18: aload_0
+        19: invokespecial #183                // Method net/minecraft/world/entity/animal/Animal.ageBoundaryReached:()V
+        22: return
+
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+    Code:
+         0: invokestatic  #186                // Method net/minecraft/world/entity/animal/Animal.createAnimalAttributes:()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+         3: getstatic     #190                // Field net/minecraft/world/entity/ai/attributes/Attributes.MAX_HEALTH:Lnet/minecraft/core/Holder;
+         6: ldc2_w        #196                // double 20.0d
+         9: invokevirtual #198                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        12: getstatic     #204                // Field net/minecraft/world/entity/ai/attributes/Attributes.TEMPT_RANGE:Lnet/minecraft/core/Holder;
+        15: ldc2_w        #207                // double 16.0d
+        18: invokevirtual #198                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        21: getstatic     #209                // Field net/minecraft/world/entity/ai/attributes/Attributes.FLYING_SPEED:Lnet/minecraft/core/Holder;
+        24: ldc2_w        #212                // double 0.05d
+        27: invokevirtual #198                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        30: getstatic     #214                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        33: ldc2_w        #212                // double 0.05d
+        36: invokevirtual #198                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        39: getstatic     #217                // Field net/minecraft/world/entity/ai/attributes/Attributes.FOLLOW_RANGE:Lnet/minecraft/core/Holder;
+        42: ldc2_w        #207                // double 16.0d
+        45: invokevirtual #198                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        48: getstatic     #220                // Field net/minecraft/world/entity/ai/attributes/Attributes.CAMERA_DISTANCE:Lnet/minecraft/core/Holder;
+        51: ldc2_w        #223                // double 8.0d
+        54: invokevirtual #198                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        57: areturn
+
+  protected float sanitizeScale(float);
+    Code:
+         0: fload_1
+         1: fconst_1
+         2: invokestatic  #225                // Method java/lang/Math.min:(FF)F
+         5: freturn
+
+  protected void checkFallDamage(double, boolean, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos);
+    Code:
+         0: return
+
+  public boolean onClimbable();
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  public void travel(net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_0
+         1: getstatic     #209                // Field net/minecraft/world/entity/ai/attributes/Attributes.FLYING_SPEED:Lnet/minecraft/core/Holder;
+         4: invokevirtual #231                // Method getAttributeValue:(Lnet/minecraft/core/Holder;)D
+         7: d2f
+         8: ldc           #235                // float 5.0f
+        10: fmul
+        11: ldc           #236                // float 3.0f
+        13: fdiv
+        14: fstore_2
+        15: aload_0
+        16: aload_1
+        17: fload_2
+        18: fload_2
+        19: fload_2
+        20: invokevirtual #237                // Method travelFlying:(Lnet/minecraft/world/phys/Vec3;FFF)V
+        23: return
+
+  public float getWalkTargetValue(net.minecraft.core.BlockPos, net.minecraft.world.level.LevelReader);
+    Code:
+         0: aload_2
+         1: aload_1
+         2: invokeinterface #241,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.isEmptyBlock:(Lnet/minecraft/core/BlockPos;)Z
+         7: ifne          12
+        10: fconst_0
+        11: freturn
+        12: aload_2
+        13: aload_1
+        14: invokevirtual #247                // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+        17: invokeinterface #241,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.isEmptyBlock:(Lnet/minecraft/core/BlockPos;)Z
+        22: ifeq          43
+        25: aload_2
+        26: aload_1
+        27: iconst_2
+        28: invokevirtual #253                // Method net/minecraft/core/BlockPos.below:(I)Lnet/minecraft/core/BlockPos;
+        31: invokeinterface #241,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.isEmptyBlock:(Lnet/minecraft/core/BlockPos;)Z
+        36: ifne          43
+        39: ldc_w         #256                // float 10.0f
+        42: freturn
+        43: ldc           #235                // float 5.0f
+        45: freturn
+
+  public boolean canBreatheUnderwater();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          9
+         7: iconst_1
+         8: ireturn
+         9: aload_0
+        10: invokespecial #257                // Method net/minecraft/world/entity/animal/Animal.canBreatheUnderwater:()Z
+        13: ireturn
+
+  protected boolean shouldStayCloseToLeashHolder();
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  protected void playStepSound(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: return
+
+  public float getVoicePitch();
+    Code:
+         0: fconst_1
+         1: freturn
+
+  public net.minecraft.sounds.SoundSource getSoundSource();
+    Code:
+         0: getstatic     #260                // Field net/minecraft/sounds/SoundSource.NEUTRAL:Lnet/minecraft/sounds/SoundSource;
+         3: areturn
+
+  public int getAmbientSoundInterval();
+    Code:
+         0: aload_0
+         1: invokespecial #266                // Method net/minecraft/world/entity/animal/Animal.getAmbientSoundInterval:()I
+         4: istore_1
+         5: aload_0
+         6: invokevirtual #270                // Method isVehicle:()Z
+         9: ifeq          17
+        12: iload_1
+        13: bipush        6
+        15: imul
+        16: ireturn
+        17: iload_1
+        18: ireturn
+
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          13
+         7: getstatic     #273                // Field net/minecraft/sounds/SoundEvents.GHASTLING_AMBIENT:Lnet/minecraft/sounds/SoundEvent;
+        10: goto          16
+        13: getstatic     #279                // Field net/minecraft/sounds/SoundEvents.HAPPY_GHAST_AMBIENT:Lnet/minecraft/sounds/SoundEvent;
+        16: areturn
+
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          13
+         7: getstatic     #282                // Field net/minecraft/sounds/SoundEvents.GHASTLING_HURT:Lnet/minecraft/sounds/SoundEvent;
+        10: goto          16
+        13: getstatic     #285                // Field net/minecraft/sounds/SoundEvents.HAPPY_GHAST_HURT:Lnet/minecraft/sounds/SoundEvent;
+        16: areturn
+
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          13
+         7: getstatic     #288                // Field net/minecraft/sounds/SoundEvents.GHASTLING_DEATH:Lnet/minecraft/sounds/SoundEvent;
+        10: goto          16
+        13: getstatic     #291                // Field net/minecraft/sounds/SoundEvents.HAPPY_GHAST_DEATH:Lnet/minecraft/sounds/SoundEvent;
+        16: areturn
+
+  protected float getSoundVolume();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          11
+         7: fconst_1
+         8: goto          14
+        11: ldc_w         #294                // float 4.0f
+        14: freturn
+
+  public int getMaxSpawnClusterSize();
+    Code:
+         0: iconst_1
+         1: ireturn
+
+  public net.minecraft.world.entity.EntityDimensions getDefaultDimensions(net.minecraft.world.entity.Pose);
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          13
+         7: getstatic     #295                // Field BABY_DIMENSIONS:Lnet/minecraft/world/entity/EntityDimensions;
+        10: goto          18
+        13: aload_0
+        14: aload_1
+        15: invokespecial #299                // Method net/minecraft/world/entity/animal/Animal.getDefaultDimensions:(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
+        18: areturn
+
+  public net.minecraft.world.entity.AgeableMob getBreedOffspring(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.AgeableMob);
+    Code:
+         0: getstatic     #303                // Field net/minecraft/world/entity/EntityTypes.HAPPY_GHAST:Lnet/minecraft/world/entity/EntityType;
+         3: aload_1
+         4: getstatic     #309                // Field net/minecraft/world/entity/EntitySpawnReason.BREEDING:Lnet/minecraft/world/entity/EntitySpawnReason;
+         7: invokevirtual #315                // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+        10: checkcast     #321                // class net/minecraft/world/entity/AgeableMob
+        13: areturn
+
+  public boolean canFallInLove();
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  public float getAgeScale();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          13
+         7: ldc_w         #323                // float 0.2375f
+        10: goto          14
+        13: fconst_1
+        14: freturn
+
+  public boolean isFood(net.minecraft.world.item.ItemStack);
+    Code:
+         0: aload_1
+         1: getstatic     #324                // Field net/minecraft/tags/ItemTags.HAPPY_GHAST_FOOD:Lnet/minecraft/tags/TagKey;
+         4: invokevirtual #330                // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+         7: ireturn
+
+  public boolean canUseSlot(net.minecraft.world.entity.EquipmentSlot);
+    Code:
+         0: aload_1
+         1: getstatic     #336                // Field net/minecraft/world/entity/EquipmentSlot.BODY:Lnet/minecraft/world/entity/EquipmentSlot;
+         4: if_acmpne     27
+         7: aload_0
+         8: invokevirtual #342                // Method isAlive:()Z
+        11: ifeq          25
+        14: aload_0
+        15: invokevirtual #173                // Method isBaby:()Z
+        18: ifne          25
+        21: iconst_1
+        22: goto          26
+        25: iconst_0
+        26: ireturn
+        27: aload_0
+        28: aload_1
+        29: invokespecial #345                // Method net/minecraft/world/entity/animal/Animal.canUseSlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Z
+        32: ireturn
+
+  protected boolean canDispenserEquipIntoSlot(net.minecraft.world.entity.EquipmentSlot);
+    Code:
+         0: aload_1
+         1: getstatic     #336                // Field net/minecraft/world/entity/EquipmentSlot.BODY:Lnet/minecraft/world/entity/EquipmentSlot;
+         4: if_acmpne     11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: ireturn
+
+  public net.minecraft.world.InteractionResult mobInteract(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand);
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          14
+         7: aload_0
+         8: aload_1
+         9: aload_2
+        10: invokespecial #349                // Method net/minecraft/world/entity/animal/Animal.mobInteract:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;
+        13: areturn
+        14: aload_1
+        15: aload_2
+        16: invokevirtual #353                // Method net/minecraft/world/entity/player/Player.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;
+        19: astore_3
+        20: aload_3
+        21: invokevirtual #359                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+        24: ifne          49
+        27: aload_3
+        28: aload_1
+        29: aload_0
+        30: aload_2
+        31: invokevirtual #362                // Method net/minecraft/world/item/ItemStack.interactLivingEntity:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;
+        34: astore        4
+        36: aload         4
+        38: invokeinterface #366,  1          // InterfaceMethod net/minecraft/world/InteractionResult.consumesAction:()Z
+        43: ifeq          49
+        46: aload         4
+        48: areturn
+        49: aload_0
+        50: invokevirtual #371                // Method isWearingBodyArmor:()Z
+        53: ifeq          72
+        56: aload_1
+        57: invokevirtual #374                // Method net/minecraft/world/entity/player/Player.isSecondaryUseActive:()Z
+        60: ifne          72
+        63: aload_0
+        64: aload_1
+        65: invokevirtual #377                // Method doPlayerRide:(Lnet/minecraft/world/entity/player/Player;)V
+        68: getstatic     #381                // Field net/minecraft/world/InteractionResult.SUCCESS:Lnet/minecraft/world/InteractionResult$Success;
+        71: areturn
+        72: aload_0
+        73: aload_1
+        74: aload_2
+        75: invokespecial #349                // Method net/minecraft/world/entity/animal/Animal.mobInteract:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;
+        78: areturn
+
+  private void doPlayerRide(net.minecraft.world.entity.player.Player);
+    Code:
+         0: aload_0
+         1: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+         4: invokevirtual #385                // Method net/minecraft/world/level/Level.isClientSide:()Z
+         7: ifne          16
+        10: aload_1
+        11: aload_0
+        12: invokevirtual #390                // Method net/minecraft/world/entity/player/Player.startRiding:(Lnet/minecraft/world/entity/Entity;)Z
+        15: pop
+        16: return
+
+  protected void addPassenger(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: invokevirtual #270                // Method isVehicle:()Z
+         4: ifne          14
+         7: aload_0
+         8: getstatic     #394                // Field net/minecraft/sounds/SoundEvents.HARNESS_GOGGLES_DOWN:Lnet/minecraft/sounds/SoundEvent;
+        11: invokevirtual #397                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;)V
+        14: aload_0
+        15: aload_1
+        16: invokespecial #401                // Method net/minecraft/world/entity/animal/Animal.addPassenger:(Lnet/minecraft/world/entity/Entity;)V
+        19: aload_0
+        20: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        23: invokevirtual #385                // Method net/minecraft/world/level/Level.isClientSide:()Z
+        26: ifne          59
+        29: aload_0
+        30: invokevirtual #405                // Method scanPlayerAboveGhast:()Z
+        33: ifne          44
+        36: aload_0
+        37: iconst_0
+        38: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        41: goto          59
+        44: aload_0
+        45: getfield      #37                 // Field serverStillTimeout:I
+        48: bipush        10
+        50: if_icmple     59
+        53: aload_0
+        54: bipush        10
+        56: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        59: return
+
+  protected void removePassenger(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #408                // Method net/minecraft/world/entity/animal/Animal.removePassenger:(Lnet/minecraft/world/entity/Entity;)V
+         5: aload_0
+         6: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+         9: invokevirtual #385                // Method net/minecraft/world/level/Level.isClientSide:()Z
+        12: ifne          21
+        15: aload_0
+        16: bipush        10
+        18: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        21: aload_0
+        22: invokevirtual #270                // Method isVehicle:()Z
+        25: ifne          39
+        28: aload_0
+        29: invokevirtual #411                // Method clearHome:()V
+        32: aload_0
+        33: getstatic     #414                // Field net/minecraft/sounds/SoundEvents.HARNESS_GOGGLES_UP:Lnet/minecraft/sounds/SoundEvent;
+        36: invokevirtual #397                // Method playSound:(Lnet/minecraft/sounds/SoundEvent;)V
+        39: return
+
+  protected boolean canAddPassenger(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: invokevirtual #417                // Method getPassengers:()Ljava/util/List;
+         4: invokeinterface #421,  1          // InterfaceMethod java/util/List.size:()I
+         9: iconst_4
+        10: if_icmpge     17
+        13: iconst_1
+        14: goto          18
+        17: iconst_0
+        18: ireturn
+
+  public net.minecraft.world.entity.LivingEntity getControllingPassenger();
+    Code:
+         0: aload_0
+         1: invokevirtual #426                // Method getFirstPassenger:()Lnet/minecraft/world/entity/Entity;
+         4: astore_1
+         5: aload_0
+         6: invokevirtual #371                // Method isWearingBodyArmor:()Z
+         9: ifeq          33
+        12: aload_0
+        13: invokevirtual #430                // Method isOnStillTimeout:()Z
+        16: ifne          33
+        19: aload_1
+        20: instanceof    #354                // class net/minecraft/world/entity/player/Player
+        23: ifeq          33
+        26: aload_1
+        27: checkcast     #354                // class net/minecraft/world/entity/player/Player
+        30: astore_2
+        31: aload_2
+        32: areturn
+        33: aload_0
+        34: invokespecial #433                // Method net/minecraft/world/entity/animal/Animal.getControllingPassenger:()Lnet/minecraft/world/entity/LivingEntity;
+        37: areturn
+
+  protected net.minecraft.world.phys.Vec3 getRiddenInput(net.minecraft.world.entity.player.Player, net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_1
+         1: getfield      #437                // Field net/minecraft/world/entity/player/Player.xxa:F
+         4: fstore_3
+         5: fconst_0
+         6: fstore        4
+         8: fconst_0
+         9: fstore        5
+        11: aload_1
+        12: getfield      #441                // Field net/minecraft/world/entity/player/Player.zza:F
+        15: fconst_0
+        16: fcmpl
+        17: ifeq          82
+        20: aload_1
+        21: invokevirtual #444                // Method net/minecraft/world/entity/player/Player.getXRot:()F
+        24: ldc_w         #450                // float 0.017453292f
+        27: fmul
+        28: f2d
+        29: invokestatic  #451                // Method net/minecraft/util/Mth.cos:(D)F
+        32: fstore        6
+        34: aload_1
+        35: invokevirtual #444                // Method net/minecraft/world/entity/player/Player.getXRot:()F
+        38: ldc_w         #450                // float 0.017453292f
+        41: fmul
+        42: f2d
+        43: invokestatic  #455                // Method net/minecraft/util/Mth.sin:(D)F
+        46: fneg
+        47: fstore        7
+        49: aload_1
+        50: getfield      #441                // Field net/minecraft/world/entity/player/Player.zza:F
+        53: fconst_0
+        54: fcmpg
+        55: ifge          74
+        58: fload         6
+        60: ldc_w         #458                // float -0.5f
+        63: fmul
+        64: fstore        6
+        66: fload         7
+        68: ldc_w         #458                // float -0.5f
+        71: fmul
+        72: fstore        7
+        74: fload         7
+        76: fstore        5
+        78: fload         6
+        80: fstore        4
+        82: aload_1
+        83: invokevirtual #459                // Method net/minecraft/world/entity/player/Player.isJumping:()Z
+        86: ifeq          97
+        89: fload         5
+        91: ldc_w         #462                // float 0.5f
+        94: fadd
+        95: fstore        5
+        97: new           #463                // class net/minecraft/world/phys/Vec3
+       100: dup
+       101: fload_3
+       102: f2d
+       103: fload         5
+       105: f2d
+       106: fload         4
+       108: f2d
+       109: invokespecial #465                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       112: ldc2_w        #467                // double 3.9000000953674316d
+       115: aload_0
+       116: getstatic     #209                // Field net/minecraft/world/entity/ai/attributes/Attributes.FLYING_SPEED:Lnet/minecraft/core/Holder;
+       119: invokevirtual #231                // Method getAttributeValue:(Lnet/minecraft/core/Holder;)D
+       122: dmul
+       123: invokevirtual #469                // Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;
+       126: areturn
+
+  protected net.minecraft.world.phys.Vec2 getRiddenRotation(net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: new           #473                // class net/minecraft/world/phys/Vec2
+         3: dup
+         4: aload_1
+         5: invokevirtual #475                // Method net/minecraft/world/entity/LivingEntity.getXRot:()F
+         8: ldc_w         #462                // float 0.5f
+        11: fmul
+        12: aload_1
+        13: invokevirtual #478                // Method net/minecraft/world/entity/LivingEntity.getYRot:()F
+        16: invokespecial #481                // Method net/minecraft/world/phys/Vec2."<init>":(FF)V
+        19: areturn
+
+  protected void tickRidden(net.minecraft.world.entity.player.Player, net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #484                // Method net/minecraft/world/entity/animal/Animal.tickRidden:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;)V
+         6: aload_0
+         7: aload_1
+         8: invokevirtual #488                // Method getRiddenRotation:(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/phys/Vec2;
+        11: astore_3
+        12: aload_0
+        13: invokevirtual #492                // Method getYRot:()F
+        16: fstore        4
+        18: aload_3
+        19: getfield      #493                // Field net/minecraft/world/phys/Vec2.y:F
+        22: fload         4
+        24: fsub
+        25: invokestatic  #496                // Method net/minecraft/util/Mth.wrapDegrees:(F)F
+        28: fstore        5
+        30: ldc_w         #500                // float 0.08f
+        33: fstore        6
+        35: fload         4
+        37: fload         5
+        39: ldc_w         #500                // float 0.08f
+        42: fmul
+        43: fadd
+        44: fstore        4
+        46: aload_0
+        47: fload         4
+        49: aload_3
+        50: getfield      #501                // Field net/minecraft/world/phys/Vec2.x:F
+        53: invokevirtual #504                // Method setRot:(FF)V
+        56: aload_0
+        57: aload_0
+        58: aload_0
+        59: fload         4
+        61: dup_x1
+        62: putfield      #507                // Field yHeadRot:F
+        65: dup_x1
+        66: putfield      #510                // Field yBodyRot:F
+        69: putfield      #513                // Field yRotO:F
+        72: return
+
+  protected net.minecraft.world.entity.ai.Brain<net.minecraft.world.entity.animal.happyghast.HappyGhast> makeBrain(net.minecraft.world.entity.ai.Brain$Packed);
+    Code:
+         0: getstatic     #516                // Field BRAIN_PROVIDER:Lnet/minecraft/world/entity/ai/Brain$Provider;
+         3: aload_0
+         4: aload_1
+         5: invokevirtual #520                // Method net/minecraft/world/entity/ai/Brain$Provider.makeBrain:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/world/entity/ai/Brain;
+         8: areturn
+
+  public net.minecraft.world.entity.ai.Brain<net.minecraft.world.entity.animal.happyghast.HappyGhast> getBrain();
+    Code:
+         0: aload_0
+         1: invokespecial #526                // Method net/minecraft/world/entity/animal/Animal.getBrain:()Lnet/minecraft/world/entity/ai/Brain;
+         4: areturn
+
+  protected void customServerAiStep(net.minecraft.server.level.ServerLevel);
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifeq          54
+         7: invokestatic  #527                // Method net/minecraft/util/profiling/Profiler.get:()Lnet/minecraft/util/profiling/ProfilerFiller;
+        10: astore_2
+        11: aload_2
+        12: ldc_w         #533                // String happyGhastBrain
+        15: invokeinterface #535,  2          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.push:(Ljava/lang/String;)V
+        20: aload_0
+        21: invokevirtual #138                // Method getBrain:()Lnet/minecraft/world/entity/ai/Brain;
+        24: aload_1
+        25: aload_0
+        26: invokevirtual #541                // Method net/minecraft/world/entity/ai/Brain.tick:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)V
+        29: aload_2
+        30: invokeinterface #544,  1          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.pop:()V
+        35: aload_2
+        36: ldc_w         #547                // String happyGhastActivityUpdate
+        39: invokeinterface #535,  2          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.push:(Ljava/lang/String;)V
+        44: aload_0
+        45: invokestatic  #549                // Method net/minecraft/world/entity/animal/happyghast/HappyGhastAi.updateActivity:(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)V
+        48: aload_2
+        49: invokeinterface #544,  1          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.pop:()V
+        54: aload_0
+        55: invokevirtual #554                // Method checkRestriction:()V
+        58: aload_0
+        59: aload_1
+        60: invokespecial #557                // Method net/minecraft/world/entity/animal/Animal.customServerAiStep:(Lnet/minecraft/server/level/ServerLevel;)V
+        63: return
+
+  public void tick();
+    Code:
+         0: aload_0
+         1: invokespecial #561                // Method net/minecraft/world/entity/animal/Animal.tick:()V
+         4: aload_0
+         5: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+         8: invokevirtual #385                // Method net/minecraft/world/level/Level.isClientSide:()Z
+        11: ifeq          15
+        14: return
+        15: aload_0
+        16: getfield      #9                  // Field leashHolderTime:I
+        19: ifle          32
+        22: aload_0
+        23: dup
+        24: getfield      #9                  // Field leashHolderTime:I
+        27: iconst_1
+        28: isub
+        29: putfield      #9                  // Field leashHolderTime:I
+        32: aload_0
+        33: aload_0
+        34: getfield      #9                  // Field leashHolderTime:I
+        37: ifle          44
+        40: iconst_1
+        41: goto          45
+        44: iconst_0
+        45: invokevirtual #563                // Method setLeashHolder:(Z)V
+        48: aload_0
+        49: getfield      #37                 // Field serverStillTimeout:I
+        52: ifle          82
+        55: aload_0
+        56: getfield      #567                // Field tickCount:I
+        59: bipush        60
+        61: if_icmple     74
+        64: aload_0
+        65: dup
+        66: getfield      #37                 // Field serverStillTimeout:I
+        69: iconst_1
+        70: isub
+        71: putfield      #37                 // Field serverStillTimeout:I
+        74: aload_0
+        75: aload_0
+        76: getfield      #37                 // Field serverStillTimeout:I
+        79: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        82: aload_0
+        83: invokevirtual #405                // Method scanPlayerAboveGhast:()Z
+        86: ifeq          95
+        89: aload_0
+        90: bipush        10
+        92: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        95: return
+
+  public void aiStep();
+    Code:
+         0: aload_0
+         1: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+         4: invokevirtual #385                // Method net/minecraft/world/level/Level.isClientSide:()Z
+         7: ifne          18
+        10: aload_0
+        11: aload_0
+        12: invokevirtual #430                // Method isOnStillTimeout:()Z
+        15: invokevirtual #570                // Method setRequiresPrecisePosition:(Z)V
+        18: aload_0
+        19: invokespecial #573                // Method net/minecraft/world/entity/animal/Animal.aiStep:()V
+        22: aload_0
+        23: invokevirtual #576                // Method continuousHeal:()V
+        26: return
+
+  private int getHappyGhastRestrictionRadius();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifne          23
+         7: aload_0
+         8: getstatic     #336                // Field net/minecraft/world/entity/EquipmentSlot.BODY:Lnet/minecraft/world/entity/EquipmentSlot;
+        11: invokevirtual #579                // Method getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;
+        14: invokevirtual #359                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+        17: ifeq          23
+        20: bipush        64
+        22: ireturn
+        23: bipush        32
+        25: ireturn
+
+  private void checkRestriction();
+    Code:
+         0: aload_0
+         1: invokevirtual #583                // Method isLeashed:()Z
+         4: ifne          14
+         7: aload_0
+         8: invokevirtual #270                // Method isVehicle:()Z
+        11: ifeq          15
+        14: return
+        15: aload_0
+        16: invokevirtual #586                // Method getHappyGhastRestrictionRadius:()I
+        19: istore_1
+        20: aload_0
+        21: invokevirtual #589                // Method hasHome:()Z
+        24: ifeq          55
+        27: aload_0
+        28: invokevirtual #592                // Method getHomePosition:()Lnet/minecraft/core/BlockPos;
+        31: aload_0
+        32: invokevirtual #595                // Method blockPosition:()Lnet/minecraft/core/BlockPos;
+        35: iload_1
+        36: bipush        16
+        38: iadd
+        39: i2d
+        40: invokevirtual #598                // Method net/minecraft/core/BlockPos.closerThan:(Lnet/minecraft/core/Vec3i;D)Z
+        43: ifeq          55
+        46: iload_1
+        47: aload_0
+        48: invokevirtual #602                // Method getHomeRadius:()I
+        51: if_icmpne     55
+        54: return
+        55: aload_0
+        56: aload_0
+        57: invokevirtual #595                // Method blockPosition:()Lnet/minecraft/core/BlockPos;
+        60: iload_1
+        61: invokevirtual #605                // Method setHomeTo:(Lnet/minecraft/core/BlockPos;I)V
+        64: return
+
+  private void continuousHeal();
+    Code:
+         0: aload_0
+         1: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+         4: astore_2
+         5: aload_2
+         6: instanceof    #44                 // class net/minecraft/server/level/ServerLevel
+         9: ifeq          43
+        12: aload_2
+        13: checkcast     #44                 // class net/minecraft/server/level/ServerLevel
+        16: astore_1
+        17: aload_0
+        18: invokevirtual #342                // Method isAlive:()Z
+        21: ifeq          43
+        24: aload_0
+        25: getfield      #609                // Field deathTime:I
+        28: ifne          43
+        31: aload_0
+        32: invokevirtual #612                // Method getMaxHealth:()F
+        35: aload_0
+        36: invokevirtual #615                // Method getHealth:()F
+        39: fcmpl
+        40: ifne          44
+        43: return
+        44: aload_0
+        45: invokevirtual #618                // Method isInClouds:()Z
+        48: ifne          65
+        51: aload_1
+        52: aload_0
+        53: invokevirtual #595                // Method blockPosition:()Lnet/minecraft/core/BlockPos;
+        56: invokevirtual #621                // Method net/minecraft/server/level/ServerLevel.precipitationAt:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/biome/Biome$Precipitation;
+        59: getstatic     #625                // Field net/minecraft/world/level/biome/Biome$Precipitation.NONE:Lnet/minecraft/world/level/biome/Biome$Precipitation;
+        62: if_acmpeq     69
+        65: iconst_1
+        66: goto          70
+        69: iconst_0
+        70: istore_2
+        71: aload_0
+        72: getfield      #567                // Field tickCount:I
+        75: iload_2
+        76: ifeq          84
+        79: bipush        20
+        81: goto          87
+        84: sipush        600
+        87: irem
+        88: ifne          96
+        91: aload_0
+        92: fconst_1
+        93: invokevirtual #631                // Method heal:(F)V
+        96: return
+
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #635                // Method net/minecraft/world/entity/animal/Animal.defineSynchedData:(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V
+         5: aload_1
+         6: getstatic     #639                // Field IS_LEASH_HOLDER:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         9: iconst_0
+        10: invokestatic  #643                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        13: invokevirtual #649                // Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;
+        16: pop
+        17: aload_1
+        18: getstatic     #655                // Field STAYS_STILL:Lnet/minecraft/network/syncher/EntityDataAccessor;
+        21: iconst_0
+        22: invokestatic  #643                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        25: invokevirtual #649                // Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;
+        28: pop
+        29: return
+
+  private void setLeashHolder(boolean);
+    Code:
+         0: aload_0
+         1: getfield      #658                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+         4: getstatic     #639                // Field IS_LEASH_HOLDER:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         7: iload_1
+         8: invokestatic  #643                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        11: invokevirtual #662                // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V
+        14: return
+
+  public boolean isLeashHolder();
+    Code:
+         0: aload_0
+         1: getfield      #658                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+         4: getstatic     #639                // Field IS_LEASH_HOLDER:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         7: invokevirtual #668                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+        10: checkcast     #644                // class java/lang/Boolean
+        13: invokevirtual #671                // Method java/lang/Boolean.booleanValue:()Z
+        16: ireturn
+
+  private void syncStayStillFlag();
+    Code:
+         0: aload_0
+         1: getfield      #658                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+         4: getstatic     #655                // Field STAYS_STILL:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         7: aload_0
+         8: getfield      #37                 // Field serverStillTimeout:I
+        11: ifle          18
+        14: iconst_1
+        15: goto          19
+        18: iconst_0
+        19: invokestatic  #643                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        22: invokevirtual #662                // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V
+        25: return
+
+  public boolean staysStill();
+    Code:
+         0: aload_0
+         1: getfield      #658                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+         4: getstatic     #655                // Field STAYS_STILL:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         7: invokevirtual #668                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+        10: checkcast     #644                // class java/lang/Boolean
+        13: invokevirtual #671                // Method java/lang/Boolean.booleanValue:()Z
+        16: ireturn
+
+  public boolean supportQuadLeashAsHolder();
+    Code:
+         0: iconst_1
+         1: ireturn
+
+  public net.minecraft.world.phys.Vec3[] getQuadLeashHolderOffsets();
+    Code:
+         0: aload_0
+         1: ldc2_w        #674                // double -0.03125d
+         4: ldc2_w        #676                // double 0.4375d
+         7: ldc2_w        #678                // double 0.46875d
+        10: ldc2_w        #680                // double 0.03125d
+        13: invokestatic  #682                // InterfaceMethod net/minecraft/world/entity/Leashable.createQuadLeashOffsets:(Lnet/minecraft/world/entity/Entity;DDDD)[Lnet/minecraft/world/phys/Vec3;
+        16: areturn
+
+  public net.minecraft.world.phys.Vec3 getLeashOffset();
+    Code:
+         0: getstatic     #688                // Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;
+         3: areturn
+
+  public double leashElasticDistance();
+    Code:
+         0: ldc2_w        #692                // double 10.0d
+         3: dreturn
+
+  public double leashSnapDistance();
+    Code:
+         0: ldc2_w        #207                // double 16.0d
+         3: dreturn
+
+  public void onElasticLeashPull();
+    Code:
+         0: aload_0
+         1: invokespecial #694                // Method net/minecraft/world/entity/animal/Animal.onElasticLeashPull:()V
+         4: aload_0
+         5: invokevirtual #697                // Method getMoveControl:()Lnet/minecraft/world/entity/ai/control/MoveControl;
+         8: invokevirtual #701                // Method net/minecraft/world/entity/ai/control/MoveControl.setWait:()V
+        11: return
+
+  public void notifyLeashHolder(net.minecraft.world.entity.Leashable);
+    Code:
+         0: aload_1
+         1: invokeinterface #706,  1          // InterfaceMethod net/minecraft/world/entity/Leashable.supportQuadLeash:()Z
+         6: ifeq          14
+         9: aload_0
+        10: iconst_5
+        11: putfield      #9                  // Field leashHolderTime:I
+        14: return
+
+  public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #709                // Method net/minecraft/world/entity/animal/Animal.addAdditionalSaveData:(Lnet/minecraft/world/level/storage/ValueOutput;)V
+         5: aload_1
+         6: ldc_w         #713                // String still_timeout
+         9: aload_0
+        10: getfield      #37                 // Field serverStillTimeout:I
+        13: invokeinterface #715,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueOutput.putInt:(Ljava/lang/String;I)V
+        18: return
+
+  public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #721                // Method net/minecraft/world/entity/animal/Animal.readAdditionalSaveData:(Lnet/minecraft/world/level/storage/ValueInput;)V
+         5: aload_0
+         6: aload_1
+         7: ldc_w         #713                // String still_timeout
+        10: iconst_0
+        11: invokeinterface #725,  3          // InterfaceMethod net/minecraft/world/level/storage/ValueInput.getIntOr:(Ljava/lang/String;I)I
+        16: invokevirtual #168                // Method setServerStillTimeout:(I)V
+        19: return
+
+  public boolean isOnStillTimeout();
+    Code:
+         0: aload_0
+         1: invokevirtual #731                // Method staysStill:()Z
+         4: ifne          14
+         7: aload_0
+         8: getfield      #37                 // Field serverStillTimeout:I
+        11: ifle          18
+        14: iconst_1
+        15: goto          19
+        18: iconst_0
+        19: ireturn
+
+  private boolean scanPlayerAboveGhast();
+    Code:
+         0: aload_0
+         1: invokevirtual #734                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+         4: astore_1
+         5: new           #738                // class net/minecraft/world/phys/AABB
+         8: dup
+         9: aload_1
+        10: getfield      #740                // Field net/minecraft/world/phys/AABB.minX:D
+        13: dconst_1
+        14: dsub
+        15: aload_1
+        16: getfield      #744                // Field net/minecraft/world/phys/AABB.maxY:D
+        19: ldc2_w        #747                // double 9.999999747378752E-6d
+        22: dsub
+        23: aload_1
+        24: getfield      #749                // Field net/minecraft/world/phys/AABB.minZ:D
+        27: dconst_1
+        28: dsub
+        29: aload_1
+        30: getfield      #752                // Field net/minecraft/world/phys/AABB.maxX:D
+        33: dconst_1
+        34: dadd
+        35: aload_1
+        36: getfield      #744                // Field net/minecraft/world/phys/AABB.maxY:D
+        39: aload_1
+        40: invokevirtual #755                // Method net/minecraft/world/phys/AABB.getYsize:()D
+        43: ldc2_w        #758                // double 2.0d
+        46: ddiv
+        47: dadd
+        48: aload_1
+        49: getfield      #760                // Field net/minecraft/world/phys/AABB.maxZ:D
+        52: dconst_1
+        53: dadd
+        54: invokespecial #763                // Method net/minecraft/world/phys/AABB."<init>":(DDDDDD)V
+        57: astore_2
+        58: aload_0
+        59: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        62: invokevirtual #766                // Method net/minecraft/world/level/Level.players:()Ljava/util/List;
+        65: invokeinterface #769,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        70: astore_3
+        71: aload_3
+        72: invokeinterface #773,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        77: ifeq          134
+        80: aload_3
+        81: invokeinterface #778,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        86: checkcast     #354                // class net/minecraft/world/entity/player/Player
+        89: astore        4
+        91: aload         4
+        93: invokevirtual #782                // Method net/minecraft/world/entity/player/Player.isSpectator:()Z
+        96: ifeq          102
+        99: goto          71
+       102: aload         4
+       104: invokevirtual #785                // Method net/minecraft/world/entity/player/Player.getRootVehicle:()Lnet/minecraft/world/entity/Entity;
+       107: astore        5
+       109: aload         5
+       111: instanceof    #10                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast
+       114: ifne          131
+       117: aload_2
+       118: aload         5
+       120: invokevirtual #788                // Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;
+       123: invokevirtual #794                // Method net/minecraft/world/phys/AABB.contains:(Lnet/minecraft/world/phys/Vec3;)Z
+       126: ifeq          131
+       129: iconst_1
+       130: ireturn
+       131: goto          71
+       134: iconst_0
+       135: ireturn
+
+  protected net.minecraft.world.entity.ai.control.BodyRotationControl createBodyControl();
+    Code:
+         0: new           #798                // class net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastBodyRotationControl
+         3: dup
+         4: aload_0
+         5: invokespecial #800                // Method net/minecraft/world/entity/animal/happyghast/HappyGhast$HappyGhastBodyRotationControl."<init>":(Lnet/minecraft/world/entity/animal/happyghast/HappyGhast;)V
+         8: areturn
+
+  public boolean canBeCollidedWith(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifne          14
+         7: aload_0
+         8: invokevirtual #342                // Method isAlive:()Z
+        11: ifne          16
+        14: iconst_0
+        15: ireturn
+        16: aload_0
+        17: invokevirtual #40                 // Method level:()Lnet/minecraft/world/level/Level;
+        20: invokevirtual #385                // Method net/minecraft/world/level/Level.isClientSide:()Z
+        23: ifeq          53
+        26: aload_1
+        27: instanceof    #354                // class net/minecraft/world/entity/player/Player
+        30: ifeq          53
+        33: aload_1
+        34: invokevirtual #788                // Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;
+        37: getfield      #801                // Field net/minecraft/world/phys/Vec3.y:D
+        40: aload_0
+        41: invokevirtual #734                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        44: getfield      #744                // Field net/minecraft/world/phys/AABB.maxY:D
+        47: dcmpl
+        48: iflt          53
+        51: iconst_1
+        52: ireturn
+        53: aload_0
+        54: invokevirtual #270                // Method isVehicle:()Z
+        57: ifeq          69
+        60: aload_1
+        61: instanceof    #10                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast
+        64: ifeq          69
+        67: iconst_1
+        68: ireturn
+        69: aload_0
+        70: invokevirtual #430                // Method isOnStillTimeout:()Z
+        73: ireturn
+
+  public boolean isFlyingVehicle();
+    Code:
+         0: aload_0
+         1: invokevirtual #173                // Method isBaby:()Z
+         4: ifne          11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: ireturn
+
+  public net.minecraft.world.phys.Vec3 getDismountLocationForPassenger(net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: new           #463                // class net/minecraft/world/phys/Vec3
+         3: dup
+         4: aload_0
+         5: invokevirtual #46                 // Method getX:()D
+         8: aload_0
+         9: invokevirtual #734                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        12: getfield      #744                // Field net/minecraft/world/phys/AABB.maxY:D
+        15: aload_0
+        16: invokevirtual #53                 // Method getZ:()D
+        19: invokespecial #465                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+        22: areturn
+
+  private static boolean lambda$babyGhastSetup$0(net.minecraft.world.entity.ai.goal.Goal);
+    Code:
+         0: iconst_1
+         1: ireturn
+
+  private static boolean lambda$adultGhastSetup$0(net.minecraft.world.entity.ai.goal.Goal);
+    Code:
+         0: iconst_1
+         1: ireturn
+
+  private boolean lambda$registerGoals$0(net.minecraft.world.item.ItemStack);
+    Code:
+         0: aload_0
+         1: invokevirtual #371                // Method isWearingBodyArmor:()Z
+         4: ifne          14
+         7: aload_0
+         8: invokevirtual #173                // Method isBaby:()Z
+        11: ifeq          24
+        14: aload_1
+        15: getstatic     #324                // Field net/minecraft/tags/ItemTags.HAPPY_GHAST_FOOD:Lnet/minecraft/tags/TagKey;
+        18: invokevirtual #330                // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+        21: goto          31
+        24: aload_1
+        25: getstatic     #803                // Field net/minecraft/tags/ItemTags.HAPPY_GHAST_TEMPT_ITEMS:Lnet/minecraft/tags/TagKey;
+        28: invokevirtual #330                // Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z
+        31: ireturn
+
+  private static java.util.List lambda$static$0(net.minecraft.world.entity.animal.happyghast.HappyGhast);
+    Code:
+         0: invokestatic  #806                // Method net/minecraft/world/entity/animal/happyghast/HappyGhastAi.getActivities:()Ljava/util/List;
+         3: areturn
+
+  static {};
+    Code:
+         0: getstatic     #809                // Field net/minecraft/world/entity/ai/sensing/SensorType.NEAREST_LIVING_ENTITIES:Lnet/minecraft/world/entity/ai/sensing/SensorType;
+         3: getstatic     #815                // Field net/minecraft/world/entity/ai/sensing/SensorType.HURT_BY:Lnet/minecraft/world/entity/ai/sensing/SensorType;
+         6: getstatic     #818                // Field net/minecraft/world/entity/ai/sensing/SensorType.FOOD_TEMPTATIONS:Lnet/minecraft/world/entity/ai/sensing/SensorType;
+         9: getstatic     #821                // Field net/minecraft/world/entity/ai/sensing/SensorType.NEAREST_ADULT_ANY_TYPE:Lnet/minecraft/world/entity/ai/sensing/SensorType;
+        12: getstatic     #824                // Field net/minecraft/world/entity/ai/sensing/SensorType.NEAREST_PLAYERS:Lnet/minecraft/world/entity/ai/sensing/SensorType;
+        15: invokestatic  #827                // InterfaceMethod java/util/List.of:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/List;
+        18: invokedynamic #830,  0            // InvokeDynamic #4:createActivities:()Lnet/minecraft/world/entity/ai/Brain$ActivitySupplier;
+        23: invokestatic  #834                // Method net/minecraft/world/entity/ai/Brain.provider:(Ljava/util/Collection;Lnet/minecraft/world/entity/ai/Brain$ActivitySupplier;)Lnet/minecraft/world/entity/ai/Brain$Provider;
+        26: putstatic     #516                // Field BRAIN_PROVIDER:Lnet/minecraft/world/entity/ai/Brain$Provider;
+        29: ldc           #10                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast
+        31: getstatic     #838                // Field net/minecraft/network/syncher/EntityDataSerializers.BOOLEAN:Lnet/minecraft/network/syncher/EntityDataSerializer;
+        34: invokestatic  #844                // Method net/minecraft/network/syncher/SynchedEntityData.defineId:(Ljava/lang/Class;Lnet/minecraft/network/syncher/EntityDataSerializer;)Lnet/minecraft/network/syncher/EntityDataAccessor;
+        37: putstatic     #639                // Field IS_LEASH_HOLDER:Lnet/minecraft/network/syncher/EntityDataAccessor;
+        40: ldc           #10                 // class net/minecraft/world/entity/animal/happyghast/HappyGhast
+        42: getstatic     #838                // Field net/minecraft/network/syncher/EntityDataSerializers.BOOLEAN:Lnet/minecraft/network/syncher/EntityDataSerializer;
+        45: invokestatic  #844                // Method net/minecraft/network/syncher/SynchedEntityData.defineId:(Ljava/lang/Class;Lnet/minecraft/network/syncher/EntityDataSerializer;)Lnet/minecraft/network/syncher/EntityDataAccessor;
+        48: putstatic     #655                // Field STAYS_STILL:Lnet/minecraft/network/syncher/EntityDataAccessor;
+        51: getstatic     #303                // Field net/minecraft/world/entity/EntityTypes.HAPPY_GHAST:Lnet/minecraft/world/entity/EntityType;
+        54: invokevirtual #848                // Method net/minecraft/world/entity/EntityType.getDimensions:()Lnet/minecraft/world/entity/EntityDimensions;
+        57: ldc_w         #323                // float 0.2375f
+        60: invokevirtual #852                // Method net/minecraft/world/entity/EntityDimensions.scale:(F)Lnet/minecraft/world/entity/EntityDimensions;
+        63: ldc_w         #857                // float 0.46875f
+        66: invokevirtual #858                // Method net/minecraft/world/entity/EntityDimensions.withEyeHeight:(F)Lnet/minecraft/world/entity/EntityDimensions;
+        69: putstatic     #295                // Field BABY_DIMENSIONS:Lnet/minecraft/world/entity/EntityDimensions;
+        72: return
+}

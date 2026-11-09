@@ -1,0 +1,10 @@
+Compiled from "VillagerHostilesSensor.java"
+public class net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor extends net.minecraft.world.entity.ai.sensing.NearestVisibleLivingEntitySensor {
+  private static final com.google.common.collect.ImmutableMap<net.minecraft.world.entity.EntityType<?>, java.lang.Float> ACCEPTABLE_DISTANCE_FROM_HOSTILES;
+  public net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor();
+  protected boolean isMatchingEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  private boolean isClose(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+  protected net.minecraft.world.entity.ai.memory.MemoryModuleType<net.minecraft.world.entity.LivingEntity> getMemoryToSet();
+  private boolean isHostile(net.minecraft.world.entity.LivingEntity);
+  static {};
+}

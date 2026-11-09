@@ -1,0 +1,15 @@
+Compiled from "AttributeModifier.java"
+public interface net.minecraft.world.attribute.modifier.AttributeModifier<Subject, Argument> {
+  public static final java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<java.lang.Boolean, ?>> BOOLEAN_LIBRARY;
+  public static final java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<java.lang.Float, ?>> FLOAT_LIBRARY;
+  public static final java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<org.joml.Vector3fc, ?>> RGB_COLOR_LIBRARY;
+  public static final java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<org.joml.Vector4fc, ?>> ARGB_COLOR_LIBRARY;
+  public static final java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<java.lang.Integer, ?>> INTEGER_LIBRARY;
+  public static final java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<net.minecraft.world.level.biome.MobSpawnSettings, ?>> MOB_SPAWN_SETTINGS_LIBRARY;
+  public static <Value> net.minecraft.world.attribute.modifier.AttributeModifier<Value, Value> override();
+  public static <Element> java.util.Map<net.minecraft.world.attribute.modifier.AttributeModifier$OperationId, net.minecraft.world.attribute.modifier.AttributeModifier<java.util.List<Element>, ?>> listLibrary();
+  public abstract Subject apply(Subject, Argument);
+  public abstract com.mojang.serialization.Codec<Argument> argumentCodec(net.minecraft.world.attribute.EnvironmentAttribute<Subject>);
+  public abstract net.minecraft.world.attribute.LerpFunction<Argument> argumentKeyframeLerp(net.minecraft.world.attribute.EnvironmentAttribute<Subject>);
+  static {};
+}

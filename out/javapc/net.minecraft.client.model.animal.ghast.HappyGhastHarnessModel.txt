@@ -1,0 +1,119 @@
+Compiled from "HappyGhastHarnessModel.java"
+public class net.minecraft.client.model.animal.ghast.HappyGhastHarnessModel extends net.minecraft.client.model.EntityModel<net.minecraft.client.renderer.entity.state.HappyGhastRenderState> {
+  private static final float GOGGLES_Y_OFFSET;
+
+  private final net.minecraft.client.model.geom.ModelPart goggles;
+
+  public net.minecraft.client.model.animal.ghast.HappyGhastHarnessModel(net.minecraft.client.model.geom.ModelPart);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #1                  // Method net/minecraft/client/model/EntityModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+         5: aload_0
+         6: aload_1
+         7: ldc           #9                  // String goggles
+         9: invokevirtual #11                 // Method net/minecraft/client/model/geom/ModelPart.getChild:(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;
+        12: putfield      #17                 // Field goggles:Lnet/minecraft/client/model/geom/ModelPart;
+        15: return
+
+  public static net.minecraft.client.model.geom.builders.LayerDefinition createHarnessLayer(boolean);
+    Code:
+         0: new           #22                 // class net/minecraft/client/model/geom/builders/MeshDefinition
+         3: dup
+         4: invokespecial #24                 // Method net/minecraft/client/model/geom/builders/MeshDefinition."<init>":()V
+         7: astore_1
+         8: aload_1
+         9: invokevirtual #27                 // Method net/minecraft/client/model/geom/builders/MeshDefinition.getRoot:()Lnet/minecraft/client/model/geom/builders/PartDefinition;
+        12: astore_2
+        13: aload_2
+        14: ldc           #31                 // String harness
+        16: invokestatic  #33                 // Method net/minecraft/client/model/geom/builders/CubeListBuilder.create:()Lnet/minecraft/client/model/geom/builders/CubeListBuilder;
+        19: iconst_0
+        20: iconst_0
+        21: invokevirtual #39                 // Method net/minecraft/client/model/geom/builders/CubeListBuilder.texOffs:(II)Lnet/minecraft/client/model/geom/builders/CubeListBuilder;
+        24: ldc           #43                 // float -8.0f
+        26: ldc           #44                 // float -16.0f
+        28: ldc           #43                 // float -8.0f
+        30: ldc           #45                 // float 16.0f
+        32: ldc           #45                 // float 16.0f
+        34: ldc           #45                 // float 16.0f
+        36: invokevirtual #46                 // Method net/minecraft/client/model/geom/builders/CubeListBuilder.addBox:(FFFFFF)Lnet/minecraft/client/model/geom/builders/CubeListBuilder;
+        39: fconst_0
+        40: ldc           #50                 // float 24.0f
+        42: fconst_0
+        43: invokestatic  #51                 // Method net/minecraft/client/model/geom/PartPose.offset:(FFF)Lnet/minecraft/client/model/geom/PartPose;
+        46: invokevirtual #57                 // Method net/minecraft/client/model/geom/builders/PartDefinition.addOrReplaceChild:(Ljava/lang/String;Lnet/minecraft/client/model/geom/builders/CubeListBuilder;Lnet/minecraft/client/model/geom/PartPose;)Lnet/minecraft/client/model/geom/builders/PartDefinition;
+        49: pop
+        50: aload_2
+        51: ldc           #9                  // String goggles
+        53: invokestatic  #33                 // Method net/minecraft/client/model/geom/builders/CubeListBuilder.create:()Lnet/minecraft/client/model/geom/builders/CubeListBuilder;
+        56: iconst_0
+        57: bipush        32
+        59: invokevirtual #39                 // Method net/minecraft/client/model/geom/builders/CubeListBuilder.texOffs:(II)Lnet/minecraft/client/model/geom/builders/CubeListBuilder;
+        62: ldc           #43                 // float -8.0f
+        64: ldc           #63                 // float -2.5f
+        66: ldc           #63                 // float -2.5f
+        68: ldc           #45                 // float 16.0f
+        70: ldc           #64                 // float 5.0f
+        72: ldc           #64                 // float 5.0f
+        74: new           #65                 // class net/minecraft/client/model/geom/builders/CubeDeformation
+        77: dup
+        78: ldc           #67                 // float 0.15f
+        80: invokespecial #68                 // Method net/minecraft/client/model/geom/builders/CubeDeformation."<init>":(F)V
+        83: invokevirtual #71                 // Method net/minecraft/client/model/geom/builders/CubeListBuilder.addBox:(FFFFFFLnet/minecraft/client/model/geom/builders/CubeDeformation;)Lnet/minecraft/client/model/geom/builders/CubeListBuilder;
+        86: fconst_0
+        87: ldc           #74                 // float 14.0f
+        89: ldc           #75                 // float -5.5f
+        91: invokestatic  #51                 // Method net/minecraft/client/model/geom/PartPose.offset:(FFF)Lnet/minecraft/client/model/geom/PartPose;
+        94: invokevirtual #57                 // Method net/minecraft/client/model/geom/builders/PartDefinition.addOrReplaceChild:(Ljava/lang/String;Lnet/minecraft/client/model/geom/builders/CubeListBuilder;Lnet/minecraft/client/model/geom/PartPose;)Lnet/minecraft/client/model/geom/builders/PartDefinition;
+        97: pop
+        98: aload_1
+        99: bipush        64
+       101: bipush        64
+       103: invokestatic  #76                 // Method net/minecraft/client/model/geom/builders/LayerDefinition.create:(Lnet/minecraft/client/model/geom/builders/MeshDefinition;II)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+       106: ldc           #81                 // float 4.0f
+       108: invokestatic  #82                 // InterfaceMethod net/minecraft/client/model/geom/builders/MeshTransformer.scaling:(F)Lnet/minecraft/client/model/geom/builders/MeshTransformer;
+       111: invokevirtual #88                 // Method net/minecraft/client/model/geom/builders/LayerDefinition.apply:(Lnet/minecraft/client/model/geom/builders/MeshTransformer;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+       114: iload_0
+       115: ifeq          124
+       118: getstatic     #92                 // Field net/minecraft/client/model/animal/ghast/HappyGhastModel.BABY_TRANSFORMER:Lnet/minecraft/client/model/geom/builders/MeshTransformer;
+       121: goto          127
+       124: getstatic     #98                 // Field net/minecraft/client/model/geom/builders/MeshTransformer.IDENTITY:Lnet/minecraft/client/model/geom/builders/MeshTransformer;
+       127: invokevirtual #88                 // Method net/minecraft/client/model/geom/builders/LayerDefinition.apply:(Lnet/minecraft/client/model/geom/builders/MeshTransformer;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+       130: areturn
+
+  public void setupAnim(net.minecraft.client.renderer.entity.state.HappyGhastRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #101                // Method net/minecraft/client/model/EntityModel.setupAnim:(Ljava/lang/Object;)V
+         5: aload_1
+         6: getfield      #105                // Field net/minecraft/client/renderer/entity/state/HappyGhastRenderState.isRidden:Z
+         9: ifeq          32
+        12: aload_0
+        13: getfield      #17                 // Field goggles:Lnet/minecraft/client/model/geom/ModelPart;
+        16: fconst_0
+        17: putfield      #111                // Field net/minecraft/client/model/geom/ModelPart.xRot:F
+        20: aload_0
+        21: getfield      #17                 // Field goggles:Lnet/minecraft/client/model/geom/ModelPart;
+        24: ldc           #74                 // float 14.0f
+        26: putfield      #115                // Field net/minecraft/client/model/geom/ModelPart.y:F
+        29: goto          50
+        32: aload_0
+        33: getfield      #17                 // Field goggles:Lnet/minecraft/client/model/geom/ModelPart;
+        36: ldc           #118                // float -0.7854f
+        38: putfield      #111                // Field net/minecraft/client/model/geom/ModelPart.xRot:F
+        41: aload_0
+        42: getfield      #17                 // Field goggles:Lnet/minecraft/client/model/geom/ModelPart;
+        45: ldc           #119                // float 9.0f
+        47: putfield      #115                // Field net/minecraft/client/model/geom/ModelPart.y:F
+        50: return
+
+  public void setupAnim(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #106                // class net/minecraft/client/renderer/entity/state/HappyGhastRenderState
+         5: invokevirtual #120                // Method setupAnim:(Lnet/minecraft/client/renderer/entity/state/HappyGhastRenderState;)V
+         8: return
+}

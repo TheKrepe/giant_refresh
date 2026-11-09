@@ -1,0 +1,10 @@
+Compiled from "SkullModelBase.java"
+public abstract class net.minecraft.client.model.object.skull.SkullModelBase extends net.minecraft.client.model.Model<net.minecraft.client.model.object.skull.SkullModelBase$State> {
+  public net.minecraft.client.model.object.skull.SkullModelBase(net.minecraft.client.model.geom.ModelPart);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #1,  0              // InvokeDynamic #0:apply:()Ljava/util/function/Function;
+         7: invokespecial #5                  // Method net/minecraft/client/model/Model."<init>":(Lnet/minecraft/client/model/geom/ModelPart;Ljava/util/function/Function;)V
+        10: return
+}

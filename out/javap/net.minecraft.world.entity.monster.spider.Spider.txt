@@ -1,0 +1,24 @@
+Compiled from "Spider.java"
+public class net.minecraft.world.entity.monster.spider.Spider extends net.minecraft.world.entity.monster.Monster {
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Byte> DATA_FLAGS_ID;
+  private static final float SPIDER_SPECIAL_EFFECT_CHANCE;
+  public net.minecraft.world.entity.monster.spider.Spider(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.spider.Spider>, net.minecraft.world.level.Level);
+  protected void registerGoals();
+  protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(net.minecraft.world.level.Level);
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+  public void tick();
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+  protected void playStepSound(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public boolean onClimbable();
+  public void makeStuckInBlock(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.phys.Vec3);
+  public boolean canBeAffected(net.minecraft.world.effect.MobEffectInstance);
+  public boolean isClimbing();
+  public void setClimbing(boolean);
+  public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.DifficultyInstance, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.world.entity.SpawnGroupData);
+  public net.minecraft.world.phys.Vec3 getVehicleAttachmentPoint(net.minecraft.world.entity.Entity);
+  private static boolean lambda$registerGoals$0(net.minecraft.world.entity.LivingEntity);
+  static {};
+}

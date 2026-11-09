@@ -1,0 +1,26 @@
+Compiled from "AvoidEntityGoal.java"
+public class net.minecraft.world.entity.ai.goal.AvoidEntityGoal<T extends net.minecraft.world.entity.LivingEntity> extends net.minecraft.world.entity.ai.goal.Goal {
+  protected final net.minecraft.world.entity.PathfinderMob mob;
+  private final double walkSpeedModifier;
+  private final double sprintSpeedModifier;
+  protected T toAvoid;
+  protected final float maxDist;
+  protected net.minecraft.world.level.pathfinder.Path path;
+  protected final net.minecraft.world.entity.ai.navigation.PathNavigation pathNav;
+  protected final java.lang.Class<T> avoidClass;
+  protected final java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity> avoidPredicate;
+  protected final java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity> predicateOnAvoidEntity;
+  private final net.minecraft.world.entity.ai.targeting.TargetingConditions avoidEntityTargeting;
+  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, float, double, double);
+  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, java.util.function.Predicate<net.minecraft.world.entity.LivingEntity>, float, double, double, java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity>);
+  public net.minecraft.world.entity.ai.goal.AvoidEntityGoal(net.minecraft.world.entity.PathfinderMob, java.lang.Class<T>, float, double, double, java.util.function.Predicate<? super net.minecraft.world.entity.LivingEntity>);
+  public boolean canUse();
+  public boolean canContinueToUse();
+  public void start();
+  public void stop();
+  public void tick();
+  private static boolean lambda$canUse$0(net.minecraft.world.entity.LivingEntity);
+  private static boolean lambda$new$2(net.minecraft.world.entity.LivingEntity);
+  private static boolean lambda$new$1(java.util.function.Predicate, java.util.function.Predicate, net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel);
+  private static boolean lambda$new$0(net.minecraft.world.entity.LivingEntity);
+}

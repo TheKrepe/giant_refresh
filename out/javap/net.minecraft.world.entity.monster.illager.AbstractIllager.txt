@@ -1,0 +1,8 @@
+Compiled from "AbstractIllager.java"
+public abstract class net.minecraft.world.entity.monster.illager.AbstractIllager extends net.minecraft.world.entity.raid.Raider {
+  protected net.minecraft.world.entity.monster.illager.AbstractIllager(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.illager.AbstractIllager>, net.minecraft.world.level.Level);
+  protected void registerGoals();
+  public net.minecraft.world.entity.monster.illager.AbstractIllager$IllagerArmPose getArmPose();
+  public boolean canAttack(net.minecraft.world.entity.LivingEntity);
+  protected boolean considersEntityAsAlly(net.minecraft.world.entity.Entity);
+}

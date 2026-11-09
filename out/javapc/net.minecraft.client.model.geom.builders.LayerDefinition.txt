@@ -1,0 +1,58 @@
+Compiled from "LayerDefinition.java"
+public class net.minecraft.client.model.geom.builders.LayerDefinition {
+  private final net.minecraft.client.model.geom.builders.MeshDefinition mesh;
+
+  private final net.minecraft.client.model.geom.builders.MaterialDefinition material;
+
+  private net.minecraft.client.model.geom.builders.LayerDefinition(net.minecraft.client.model.geom.builders.MeshDefinition, net.minecraft.client.model.geom.builders.MaterialDefinition);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #7                  // Field mesh:Lnet/minecraft/client/model/geom/builders/MeshDefinition;
+         9: aload_0
+        10: aload_2
+        11: putfield      #13                 // Field material:Lnet/minecraft/client/model/geom/builders/MaterialDefinition;
+        14: return
+
+  public net.minecraft.client.model.geom.builders.LayerDefinition apply(net.minecraft.client.model.geom.builders.MeshTransformer);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/builders/LayerDefinition
+         3: dup
+         4: aload_1
+         5: aload_0
+         6: getfield      #7                  // Field mesh:Lnet/minecraft/client/model/geom/builders/MeshDefinition;
+         9: invokeinterface #17,  2           // InterfaceMethod net/minecraft/client/model/geom/builders/MeshTransformer.apply:(Lnet/minecraft/client/model/geom/builders/MeshDefinition;)Lnet/minecraft/client/model/geom/builders/MeshDefinition;
+        14: aload_0
+        15: getfield      #13                 // Field material:Lnet/minecraft/client/model/geom/builders/MaterialDefinition;
+        18: invokespecial #23                 // Method "<init>":(Lnet/minecraft/client/model/geom/builders/MeshDefinition;Lnet/minecraft/client/model/geom/builders/MaterialDefinition;)V
+        21: areturn
+
+  public net.minecraft.client.model.geom.ModelPart bakeRoot();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field mesh:Lnet/minecraft/client/model/geom/builders/MeshDefinition;
+         4: invokevirtual #26                 // Method net/minecraft/client/model/geom/builders/MeshDefinition.getRoot:()Lnet/minecraft/client/model/geom/builders/PartDefinition;
+         7: aload_0
+         8: getfield      #13                 // Field material:Lnet/minecraft/client/model/geom/builders/MaterialDefinition;
+        11: getfield      #32                 // Field net/minecraft/client/model/geom/builders/MaterialDefinition.xTexSize:I
+        14: aload_0
+        15: getfield      #13                 // Field material:Lnet/minecraft/client/model/geom/builders/MaterialDefinition;
+        18: getfield      #38                 // Field net/minecraft/client/model/geom/builders/MaterialDefinition.yTexSize:I
+        21: invokevirtual #41                 // Method net/minecraft/client/model/geom/builders/PartDefinition.bake:(II)Lnet/minecraft/client/model/geom/ModelPart;
+        24: areturn
+
+  public static net.minecraft.client.model.geom.builders.LayerDefinition create(net.minecraft.client.model.geom.builders.MeshDefinition, int, int);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/builders/LayerDefinition
+         3: dup
+         4: aload_0
+         5: new           #33                 // class net/minecraft/client/model/geom/builders/MaterialDefinition
+         8: dup
+         9: iload_1
+        10: iload_2
+        11: invokespecial #47                 // Method net/minecraft/client/model/geom/builders/MaterialDefinition."<init>":(II)V
+        14: invokespecial #23                 // Method "<init>":(Lnet/minecraft/client/model/geom/builders/MeshDefinition;Lnet/minecraft/client/model/geom/builders/MaterialDefinition;)V
+        17: areturn
+}

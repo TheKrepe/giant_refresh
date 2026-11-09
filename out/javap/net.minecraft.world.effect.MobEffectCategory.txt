@@ -1,0 +1,14 @@
+Compiled from "MobEffectCategory.java"
+public final class net.minecraft.world.effect.MobEffectCategory extends java.lang.Enum<net.minecraft.world.effect.MobEffectCategory> {
+  public static final net.minecraft.world.effect.MobEffectCategory BENEFICIAL;
+  public static final net.minecraft.world.effect.MobEffectCategory HARMFUL;
+  public static final net.minecraft.world.effect.MobEffectCategory NEUTRAL;
+  private final net.minecraft.ChatFormatting tooltipFormatting;
+  private static final net.minecraft.world.effect.MobEffectCategory[] $VALUES;
+  public static net.minecraft.world.effect.MobEffectCategory[] values();
+  public static net.minecraft.world.effect.MobEffectCategory valueOf(java.lang.String);
+  private net.minecraft.world.effect.MobEffectCategory(net.minecraft.ChatFormatting);
+  public net.minecraft.ChatFormatting getTooltipFormatting();
+  private static net.minecraft.world.effect.MobEffectCategory[] $values();
+  static {};
+}

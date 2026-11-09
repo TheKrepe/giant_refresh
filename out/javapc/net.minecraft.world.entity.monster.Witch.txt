@@ -1,0 +1,702 @@
+Compiled from "Witch.java"
+public class net.minecraft.world.entity.monster.Witch extends net.minecraft.world.entity.raid.Raider implements net.minecraft.world.entity.monster.RangedAttackMob {
+  private static final net.minecraft.resources.Identifier SPEED_MODIFIER_DRINKING_ID;
+
+  private static final net.minecraft.world.entity.ai.attributes.AttributeModifier SPEED_MODIFIER_DRINKING;
+
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> DATA_USING_ITEM;
+
+  private int usingTime;
+
+  private net.minecraft.world.entity.ai.goal.target.NearestHealableRaiderTargetGoal<net.minecraft.world.entity.raid.Raider> healRaidersGoal;
+
+  private net.minecraft.world.entity.ai.goal.target.NearestAttackableWitchTargetGoal<net.minecraft.world.entity.player.Player> attackPlayersGoal;
+
+  public net.minecraft.world.entity.monster.Witch(net.minecraft.world.entity.EntityType<? extends net.minecraft.world.entity.monster.Witch>, net.minecraft.world.level.Level);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #1                  // Method net/minecraft/world/entity/raid/Raider."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+         6: return
+
+  protected void registerGoals();
+    Code:
+         0: aload_0
+         1: invokespecial #7                  // Method net/minecraft/world/entity/raid/Raider.registerGoals:()V
+         4: aload_0
+         5: new           #11                 // class net/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal
+         8: dup
+         9: aload_0
+        10: ldc           #2                  // class net/minecraft/world/entity/raid/Raider
+        12: iconst_1
+        13: aload_0
+        14: invokedynamic #13,  0             // InvokeDynamic #0:test:(Lnet/minecraft/world/entity/monster/Witch;)Lnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;
+        19: invokespecial #17                 // Method net/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal."<init>":(Lnet/minecraft/world/entity/raid/Raider;Ljava/lang/Class;ZLnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;)V
+        22: putfield      #20                 // Field healRaidersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal;
+        25: aload_0
+        26: new           #26                 // class net/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal
+        29: dup
+        30: aload_0
+        31: ldc           #28                 // class net/minecraft/world/entity/player/Player
+        33: bipush        10
+        35: iconst_1
+        36: iconst_0
+        37: aconst_null
+        38: invokespecial #30                 // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal."<init>":(Lnet/minecraft/world/entity/raid/Raider;Ljava/lang/Class;IZZLnet/minecraft/world/entity/ai/targeting/TargetingConditions$Selector;)V
+        41: putfield      #33                 // Field attackPlayersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal;
+        44: aload_0
+        45: getfield      #37                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        48: iconst_1
+        49: new           #41                 // class net/minecraft/world/entity/ai/goal/FloatGoal
+        52: dup
+        53: aload_0
+        54: invokespecial #43                 // Method net/minecraft/world/entity/ai/goal/FloatGoal."<init>":(Lnet/minecraft/world/entity/Mob;)V
+        57: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        60: aload_0
+        61: getfield      #37                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        64: iconst_2
+        65: new           #52                 // class net/minecraft/world/entity/ai/goal/RangedAttackGoal
+        68: dup
+        69: aload_0
+        70: dconst_1
+        71: bipush        60
+        73: ldc           #56                 // float 10.0f
+        75: invokespecial #57                 // Method net/minecraft/world/entity/ai/goal/RangedAttackGoal."<init>":(Lnet/minecraft/world/entity/monster/RangedAttackMob;DIF)V
+        78: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        81: aload_0
+        82: getfield      #37                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+        85: iconst_2
+        86: new           #60                 // class net/minecraft/world/entity/ai/goal/WaterAvoidingRandomStrollGoal
+        89: dup
+        90: aload_0
+        91: dconst_1
+        92: invokespecial #62                 // Method net/minecraft/world/entity/ai/goal/WaterAvoidingRandomStrollGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;D)V
+        95: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+        98: aload_0
+        99: getfield      #37                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       102: iconst_3
+       103: new           #65                 // class net/minecraft/world/entity/ai/goal/LookAtPlayerGoal
+       106: dup
+       107: aload_0
+       108: ldc           #28                 // class net/minecraft/world/entity/player/Player
+       110: ldc           #67                 // float 8.0f
+       112: invokespecial #68                 // Method net/minecraft/world/entity/ai/goal/LookAtPlayerGoal."<init>":(Lnet/minecraft/world/entity/Mob;Ljava/lang/Class;F)V
+       115: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       118: aload_0
+       119: getfield      #37                 // Field goalSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       122: iconst_3
+       123: new           #71                 // class net/minecraft/world/entity/ai/goal/RandomLookAroundGoal
+       126: dup
+       127: aload_0
+       128: invokespecial #73                 // Method net/minecraft/world/entity/ai/goal/RandomLookAroundGoal."<init>":(Lnet/minecraft/world/entity/Mob;)V
+       131: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       134: aload_0
+       135: getfield      #74                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       138: iconst_1
+       139: new           #77                 // class net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal
+       142: dup
+       143: aload_0
+       144: iconst_1
+       145: anewarray     #79                 // class java/lang/Class
+       148: dup
+       149: iconst_0
+       150: ldc           #2                  // class net/minecraft/world/entity/raid/Raider
+       152: aastore
+       153: invokespecial #81                 // Method net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal."<init>":(Lnet/minecraft/world/entity/PathfinderMob;[Ljava/lang/Class;)V
+       156: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       159: aload_0
+       160: getfield      #74                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       163: iconst_2
+       164: aload_0
+       165: getfield      #20                 // Field healRaidersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal;
+       168: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       171: aload_0
+       172: getfield      #74                 // Field targetSelector:Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+       175: iconst_3
+       176: aload_0
+       177: getfield      #33                 // Field attackPlayersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal;
+       180: invokevirtual #46                 // Method net/minecraft/world/entity/ai/goal/GoalSelector.addGoal:(ILnet/minecraft/world/entity/ai/goal/Goal;)V
+       183: return
+
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #84                 // Method net/minecraft/world/entity/raid/Raider.defineSynchedData:(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V
+         5: aload_1
+         6: getstatic     #88                 // Field DATA_USING_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         9: iconst_0
+        10: invokestatic  #92                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        13: invokevirtual #98                 // Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;
+        16: pop
+        17: return
+
+  protected net.minecraft.sounds.SoundEvent getAmbientSound();
+    Code:
+         0: getstatic     #104                // Field net/minecraft/sounds/SoundEvents.WITCH_AMBIENT:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource);
+    Code:
+         0: getstatic     #110                // Field net/minecraft/sounds/SoundEvents.WITCH_HURT:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  protected net.minecraft.sounds.SoundEvent getDeathSound();
+    Code:
+         0: getstatic     #113                // Field net/minecraft/sounds/SoundEvents.WITCH_DEATH:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  public void setUsingItem(boolean);
+    Code:
+         0: aload_0
+         1: invokevirtual #116                // Method getEntityData:()Lnet/minecraft/network/syncher/SynchedEntityData;
+         4: getstatic     #88                 // Field DATA_USING_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         7: iload_1
+         8: invokestatic  #92                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        11: invokevirtual #120                // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V
+        14: return
+
+  public boolean isDrinkingPotion();
+    Code:
+         0: aload_0
+         1: invokevirtual #116                // Method getEntityData:()Lnet/minecraft/network/syncher/SynchedEntityData;
+         4: getstatic     #88                 // Field DATA_USING_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+         7: invokevirtual #126                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+        10: checkcast     #93                 // class java/lang/Boolean
+        13: invokevirtual #130                // Method java/lang/Boolean.booleanValue:()Z
+        16: ireturn
+
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+    Code:
+         0: invokestatic  #134                // Method net/minecraft/world/entity/monster/Monster.createMonsterAttributes:()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+         3: getstatic     #140                // Field net/minecraft/world/entity/ai/attributes/Attributes.MAX_HEALTH:Lnet/minecraft/core/Holder;
+         6: ldc2_w        #146                // double 26.0d
+         9: invokevirtual #148                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        12: getstatic     #154                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+        15: ldc2_w        #157                // double 0.25d
+        18: invokevirtual #148                // Method net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder.add:(Lnet/minecraft/core/Holder;D)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;
+        21: areturn
+
+  public void aiStep();
+    Code:
+         0: aload_0
+         1: invokevirtual #159                // Method level:()Lnet/minecraft/world/level/Level;
+         4: invokevirtual #163                // Method net/minecraft/world/level/Level.isClientSide:()Z
+         7: ifne          501
+        10: aload_0
+        11: invokevirtual #168                // Method isAlive:()Z
+        14: ifeq          501
+        17: aload_0
+        18: getfield      #20                 // Field healRaidersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal;
+        21: invokevirtual #171                // Method net/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal.decrementCooldown:()V
+        24: aload_0
+        25: getfield      #20                 // Field healRaidersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal;
+        28: invokevirtual #174                // Method net/minecraft/world/entity/ai/goal/target/NearestHealableRaiderTargetGoal.getCooldown:()I
+        31: ifgt          45
+        34: aload_0
+        35: getfield      #33                 // Field attackPlayersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal;
+        38: iconst_1
+        39: invokevirtual #178                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal.setCanAttack:(Z)V
+        42: goto          53
+        45: aload_0
+        46: getfield      #33                 // Field attackPlayersGoal:Lnet/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal;
+        49: iconst_0
+        50: invokevirtual #178                // Method net/minecraft/world/entity/ai/goal/target/NearestAttackableWitchTargetGoal.setCanAttack:(Z)V
+        53: aload_0
+        54: invokevirtual #182                // Method isDrinkingPotion:()Z
+        57: ifeq          173
+        60: aload_0
+        61: dup
+        62: getfield      #185                // Field usingTime:I
+        65: dup_x1
+        66: iconst_1
+        67: isub
+        68: putfield      #185                // Field usingTime:I
+        71: ifgt          475
+        74: aload_0
+        75: iconst_0
+        76: invokevirtual #189                // Method setUsingItem:(Z)V
+        79: aload_0
+        80: invokevirtual #192                // Method getMainHandItem:()Lnet/minecraft/world/item/ItemStack;
+        83: astore_1
+        84: aload_0
+        85: getstatic     #196                // Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+        88: getstatic     #202                // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        91: invokevirtual #208                // Method setItemSlot:(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V
+        94: aload_1
+        95: getstatic     #212                // Field net/minecraft/core/component/DataComponents.POTION_CONTENTS:Lnet/minecraft/core/component/DataComponentType;
+        98: invokevirtual #218                // Method net/minecraft/world/item/ItemStack.get:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;
+       101: checkcast     #221                // class net/minecraft/world/item/alchemy/PotionContents
+       104: astore_2
+       105: aload_1
+       106: getstatic     #223                // Field net/minecraft/world/item/Items.POTION:Lnet/minecraft/world/item/Item;
+       109: invokevirtual #229                // Method net/minecraft/world/item/ItemStack.is:(Ljava/lang/Object;)Z
+       112: ifeq          146
+       115: aload_2
+       116: ifnull        146
+       119: aload_2
+       120: aload_0
+       121: invokedynamic #233,  0            // InvokeDynamic #1:accept:(Lnet/minecraft/world/entity/monster/Witch;)Ljava/util/function/Consumer;
+       126: aload_1
+       127: getstatic     #237                // Field net/minecraft/core/component/DataComponents.POTION_DURATION_SCALE:Lnet/minecraft/core/component/DataComponentType;
+       130: fconst_1
+       131: invokestatic  #240                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+       134: invokevirtual #245                // Method net/minecraft/world/item/ItemStack.getOrDefault:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+       137: checkcast     #241                // class java/lang/Float
+       140: invokevirtual #249                // Method java/lang/Float.floatValue:()F
+       143: invokevirtual #253                // Method net/minecraft/world/item/alchemy/PotionContents.forEachEffect:(Ljava/util/function/Consumer;F)V
+       146: aload_0
+       147: getstatic     #257                // Field net/minecraft/world/level/gameevent/GameEvent.DRINK:Lnet/minecraft/core/Holder$Reference;
+       150: invokevirtual #263                // Method gameEvent:(Lnet/minecraft/core/Holder;)V
+       153: aload_0
+       154: getstatic     #154                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+       157: invokevirtual #267                // Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;
+       160: getstatic     #271                // Field SPEED_MODIFIER_DRINKING:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;
+       163: invokevirtual #275                // Method net/minecraft/world/entity/ai/attributes/AttributeModifier.id:()Lnet/minecraft/resources/Identifier;
+       166: invokevirtual #281                // Method net/minecraft/world/entity/ai/attributes/AttributeInstance.removeModifier:(Lnet/minecraft/resources/Identifier;)Z
+       169: pop
+       170: goto          475
+       173: aconst_null
+       174: astore_1
+       175: aload_0
+       176: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       179: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       184: ldc_w         #296                // float 0.15f
+       187: fcmpg
+       188: ifge          218
+       191: aload_0
+       192: getstatic     #297                // Field net/minecraft/tags/FluidTags.WATER:Lnet/minecraft/tags/TagKey;
+       195: invokevirtual #303                // Method isEyeInFluid:(Lnet/minecraft/tags/TagKey;)Z
+       198: ifeq          218
+       201: aload_0
+       202: getstatic     #307                // Field net/minecraft/world/effect/MobEffects.WATER_BREATHING:Lnet/minecraft/core/Holder;
+       205: invokevirtual #312                // Method hasEffect:(Lnet/minecraft/core/Holder;)Z
+       208: ifne          218
+       211: getstatic     #316                // Field net/minecraft/world/item/alchemy/Potions.WATER_BREATHING:Lnet/minecraft/core/Holder;
+       214: astore_1
+       215: goto          365
+       218: aload_0
+       219: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       222: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       227: ldc_w         #296                // float 0.15f
+       230: fcmpg
+       231: ifge          278
+       234: aload_0
+       235: invokevirtual #319                // Method isOnFire:()Z
+       238: ifne          261
+       241: aload_0
+       242: invokevirtual #322                // Method getLastDamageSource:()Lnet/minecraft/world/damagesource/DamageSource;
+       245: ifnull        278
+       248: aload_0
+       249: invokevirtual #322                // Method getLastDamageSource:()Lnet/minecraft/world/damagesource/DamageSource;
+       252: getstatic     #326                // Field net/minecraft/tags/DamageTypeTags.IS_FIRE:Lnet/minecraft/tags/TagKey;
+       255: invokevirtual #331                // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z
+       258: ifeq          278
+       261: aload_0
+       262: getstatic     #335                // Field net/minecraft/world/effect/MobEffects.FIRE_RESISTANCE:Lnet/minecraft/core/Holder;
+       265: invokevirtual #312                // Method hasEffect:(Lnet/minecraft/core/Holder;)Z
+       268: ifne          278
+       271: getstatic     #338                // Field net/minecraft/world/item/alchemy/Potions.FIRE_RESISTANCE:Lnet/minecraft/core/Holder;
+       274: astore_1
+       275: goto          365
+       278: aload_0
+       279: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       282: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       287: ldc_w         #339                // float 0.05f
+       290: fcmpg
+       291: ifge          313
+       294: aload_0
+       295: invokevirtual #340                // Method getHealth:()F
+       298: aload_0
+       299: invokevirtual #343                // Method getMaxHealth:()F
+       302: fcmpg
+       303: ifge          313
+       306: getstatic     #346                // Field net/minecraft/world/item/alchemy/Potions.HEALING:Lnet/minecraft/core/Holder;
+       309: astore_1
+       310: goto          365
+       313: aload_0
+       314: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       317: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       322: ldc_w         #349                // float 0.5f
+       325: fcmpg
+       326: ifge          365
+       329: aload_0
+       330: invokevirtual #350                // Method getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+       333: ifnull        365
+       336: aload_0
+       337: getstatic     #354                // Field net/minecraft/world/effect/MobEffects.SPEED:Lnet/minecraft/core/Holder;
+       340: invokevirtual #312                // Method hasEffect:(Lnet/minecraft/core/Holder;)Z
+       343: ifne          365
+       346: aload_0
+       347: invokevirtual #350                // Method getTarget:()Lnet/minecraft/world/entity/LivingEntity;
+       350: aload_0
+       351: invokevirtual #357                // Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(Lnet/minecraft/world/entity/Entity;)D
+       354: ldc2_w        #363                // double 121.0d
+       357: dcmpl
+       358: ifle          365
+       361: getstatic     #365                // Field net/minecraft/world/item/alchemy/Potions.SWIFTNESS:Lnet/minecraft/core/Holder;
+       364: astore_1
+       365: aload_1
+       366: ifnull        475
+       369: aload_0
+       370: getstatic     #196                // Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;
+       373: getstatic     #223                // Field net/minecraft/world/item/Items.POTION:Lnet/minecraft/world/item/Item;
+       376: aload_1
+       377: invokestatic  #368                // Method net/minecraft/world/item/alchemy/PotionContents.createItemStack:(Lnet/minecraft/world/item/Item;Lnet/minecraft/core/Holder;)Lnet/minecraft/world/item/ItemStack;
+       380: invokevirtual #208                // Method setItemSlot:(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V
+       383: aload_0
+       384: aload_0
+       385: invokevirtual #192                // Method getMainHandItem:()Lnet/minecraft/world/item/ItemStack;
+       388: aload_0
+       389: invokevirtual #372                // Method net/minecraft/world/item/ItemStack.getUseDuration:(Lnet/minecraft/world/entity/LivingEntity;)I
+       392: putfield      #185                // Field usingTime:I
+       395: aload_0
+       396: iconst_1
+       397: invokevirtual #189                // Method setUsingItem:(Z)V
+       400: aload_0
+       401: invokevirtual #376                // Method isSilent:()Z
+       404: ifne          452
+       407: aload_0
+       408: invokevirtual #159                // Method level:()Lnet/minecraft/world/level/Level;
+       411: aconst_null
+       412: aload_0
+       413: invokevirtual #379                // Method getX:()D
+       416: aload_0
+       417: invokevirtual #383                // Method getY:()D
+       420: aload_0
+       421: invokevirtual #386                // Method getZ:()D
+       424: getstatic     #389                // Field net/minecraft/sounds/SoundEvents.WITCH_DRINK:Lnet/minecraft/sounds/SoundEvent;
+       427: aload_0
+       428: invokevirtual #392                // Method getSoundSource:()Lnet/minecraft/sounds/SoundSource;
+       431: fconst_1
+       432: ldc_w         #396                // float 0.8f
+       435: aload_0
+       436: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       439: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       444: ldc_w         #397                // float 0.4f
+       447: fmul
+       448: fadd
+       449: invokevirtual #398                // Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/Entity;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V
+       452: aload_0
+       453: getstatic     #154                // Field net/minecraft/world/entity/ai/attributes/Attributes.MOVEMENT_SPEED:Lnet/minecraft/core/Holder;
+       456: invokevirtual #267                // Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;
+       459: astore_2
+       460: aload_2
+       461: getstatic     #402                // Field SPEED_MODIFIER_DRINKING_ID:Lnet/minecraft/resources/Identifier;
+       464: invokevirtual #281                // Method net/minecraft/world/entity/ai/attributes/AttributeInstance.removeModifier:(Lnet/minecraft/resources/Identifier;)Z
+       467: pop
+       468: aload_2
+       469: getstatic     #271                // Field SPEED_MODIFIER_DRINKING:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;
+       472: invokevirtual #406                // Method net/minecraft/world/entity/ai/attributes/AttributeInstance.addTransientModifier:(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V
+       475: aload_0
+       476: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       479: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       484: ldc_w         #410                // float 7.5E-4f
+       487: fcmpg
+       488: ifge          501
+       491: aload_0
+       492: invokevirtual #159                // Method level:()Lnet/minecraft/world/level/Level;
+       495: aload_0
+       496: bipush        15
+       498: invokevirtual #413                // Method net/minecraft/world/level/Level.broadcastEntityEvent:(Lnet/minecraft/world/entity/Entity;B)V
+       501: aload_0
+       502: invokespecial #417                // Method net/minecraft/world/entity/raid/Raider.aiStep:()V
+       505: return
+
+  public net.minecraft.sounds.SoundEvent getCelebrateSound();
+    Code:
+         0: getstatic     #420                // Field net/minecraft/sounds/SoundEvents.WITCH_CELEBRATE:Lnet/minecraft/sounds/SoundEvent;
+         3: areturn
+
+  public void handleEntityEvent(byte);
+    Code:
+         0: iload_1
+         1: bipush        15
+         3: if_icmpne     109
+         6: iconst_0
+         7: istore_2
+         8: iload_2
+         9: aload_0
+        10: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+        13: bipush        35
+        15: invokeinterface #423,  2          // InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I
+        20: bipush        10
+        22: iadd
+        23: if_icmpge     106
+        26: aload_0
+        27: invokevirtual #159                // Method level:()Lnet/minecraft/world/level/Level;
+        30: getstatic     #427                // Field net/minecraft/core/particles/ParticleTypes.WITCH:Lnet/minecraft/core/particles/SimpleParticleType;
+        33: aload_0
+        34: invokevirtual #379                // Method getX:()D
+        37: aload_0
+        38: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+        41: invokeinterface #433,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextGaussian:()D
+        46: ldc2_w        #436                // double 0.12999999523162842d
+        49: dmul
+        50: dadd
+        51: aload_0
+        52: invokevirtual #438                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        55: getfield      #442                // Field net/minecraft/world/phys/AABB.maxY:D
+        58: ldc2_w        #448                // double 0.5d
+        61: dadd
+        62: aload_0
+        63: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+        66: invokeinterface #433,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextGaussian:()D
+        71: ldc2_w        #436                // double 0.12999999523162842d
+        74: dmul
+        75: dadd
+        76: aload_0
+        77: invokevirtual #386                // Method getZ:()D
+        80: aload_0
+        81: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+        84: invokeinterface #433,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextGaussian:()D
+        89: ldc2_w        #436                // double 0.12999999523162842d
+        92: dmul
+        93: dadd
+        94: dconst_0
+        95: dconst_0
+        96: dconst_0
+        97: invokevirtual #450                // Method net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+       100: iinc          2, 1
+       103: goto          8
+       106: goto          114
+       109: aload_0
+       110: iload_1
+       111: invokespecial #454                // Method net/minecraft/world/entity/raid/Raider.handleEntityEvent:(B)V
+       114: return
+
+  protected float getDamageAfterMagicAbsorb(net.minecraft.world.damagesource.DamageSource, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: fload_2
+         3: invokespecial #458                // Method net/minecraft/world/entity/raid/Raider.getDamageAfterMagicAbsorb:(Lnet/minecraft/world/damagesource/DamageSource;F)F
+         6: fstore_2
+         7: aload_1
+         8: invokevirtual #462                // Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;
+        11: aload_0
+        12: if_acmpne     17
+        15: fconst_0
+        16: fstore_2
+        17: aload_1
+        18: getstatic     #466                // Field net/minecraft/tags/DamageTypeTags.WITCH_RESISTANT_TO:Lnet/minecraft/tags/TagKey;
+        21: invokevirtual #331                // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z
+        24: ifeq          33
+        27: fload_2
+        28: ldc_w         #296                // float 0.15f
+        31: fmul
+        32: fstore_2
+        33: fload_2
+        34: freturn
+
+  public void performRangedAttack(net.minecraft.world.entity.LivingEntity, float);
+    Code:
+         0: aload_0
+         1: invokevirtual #182                // Method isDrinkingPotion:()Z
+         4: ifeq          8
+         7: return
+         8: aload_1
+         9: invokevirtual #469                // Method net/minecraft/world/entity/LivingEntity.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        12: astore_3
+        13: aload_1
+        14: invokevirtual #473                // Method net/minecraft/world/entity/LivingEntity.getX:()D
+        17: aload_3
+        18: getfield      #474                // Field net/minecraft/world/phys/Vec3.x:D
+        21: dadd
+        22: aload_0
+        23: invokevirtual #379                // Method getX:()D
+        26: dsub
+        27: dstore        4
+        29: aload_1
+        30: invokevirtual #479                // Method net/minecraft/world/entity/LivingEntity.getEyeY:()D
+        33: ldc2_w        #482                // double 1.100000023841858d
+        36: dsub
+        37: aload_0
+        38: invokevirtual #383                // Method getY:()D
+        41: dsub
+        42: dstore        6
+        44: aload_1
+        45: invokevirtual #484                // Method net/minecraft/world/entity/LivingEntity.getZ:()D
+        48: aload_3
+        49: getfield      #485                // Field net/minecraft/world/phys/Vec3.z:D
+        52: dadd
+        53: aload_0
+        54: invokevirtual #386                // Method getZ:()D
+        57: dsub
+        58: dstore        8
+        60: dload         4
+        62: dload         4
+        64: dmul
+        65: dload         8
+        67: dload         8
+        69: dmul
+        70: dadd
+        71: invokestatic  #488                // Method java/lang/Math.sqrt:(D)D
+        74: dstore        10
+        76: getstatic     #494                // Field net/minecraft/world/item/alchemy/Potions.HARMING:Lnet/minecraft/core/Holder;
+        79: astore        12
+        81: aload_1
+        82: instanceof    #2                  // class net/minecraft/world/entity/raid/Raider
+        85: ifeq          120
+        88: aload_1
+        89: invokevirtual #497                // Method net/minecraft/world/entity/LivingEntity.getHealth:()F
+        92: ldc_w         #498                // float 4.0f
+        95: fcmpg
+        96: ifgt          107
+        99: getstatic     #346                // Field net/minecraft/world/item/alchemy/Potions.HEALING:Lnet/minecraft/core/Holder;
+       102: astore        12
+       104: goto          112
+       107: getstatic     #499                // Field net/minecraft/world/item/alchemy/Potions.REGENERATION:Lnet/minecraft/core/Holder;
+       110: astore        12
+       112: aload_0
+       113: aconst_null
+       114: invokevirtual #502                // Method setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V
+       117: goto          215
+       120: dload         10
+       122: ldc2_w        #506                // double 8.0d
+       125: dcmpl
+       126: iflt          147
+       129: aload_1
+       130: getstatic     #508                // Field net/minecraft/world/effect/MobEffects.SLOWNESS:Lnet/minecraft/core/Holder;
+       133: invokevirtual #511                // Method net/minecraft/world/entity/LivingEntity.hasEffect:(Lnet/minecraft/core/Holder;)Z
+       136: ifne          147
+       139: getstatic     #512                // Field net/minecraft/world/item/alchemy/Potions.SLOWNESS:Lnet/minecraft/core/Holder;
+       142: astore        12
+       144: goto          215
+       147: aload_1
+       148: invokevirtual #497                // Method net/minecraft/world/entity/LivingEntity.getHealth:()F
+       151: ldc           #67                 // float 8.0f
+       153: fcmpl
+       154: iflt          175
+       157: aload_1
+       158: getstatic     #513                // Field net/minecraft/world/effect/MobEffects.POISON:Lnet/minecraft/core/Holder;
+       161: invokevirtual #511                // Method net/minecraft/world/entity/LivingEntity.hasEffect:(Lnet/minecraft/core/Holder;)Z
+       164: ifne          175
+       167: getstatic     #516                // Field net/minecraft/world/item/alchemy/Potions.POISON:Lnet/minecraft/core/Holder;
+       170: astore        12
+       172: goto          215
+       175: dload         10
+       177: ldc2_w        #517                // double 3.0d
+       180: dcmpg
+       181: ifgt          215
+       184: aload_1
+       185: getstatic     #519                // Field net/minecraft/world/effect/MobEffects.WEAKNESS:Lnet/minecraft/core/Holder;
+       188: invokevirtual #511                // Method net/minecraft/world/entity/LivingEntity.hasEffect:(Lnet/minecraft/core/Holder;)Z
+       191: ifne          215
+       194: aload_0
+       195: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       198: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       203: ldc_w         #522                // float 0.25f
+       206: fcmpg
+       207: ifge          215
+       210: getstatic     #523                // Field net/minecraft/world/item/alchemy/Potions.WEAKNESS:Lnet/minecraft/core/Holder;
+       213: astore        12
+       215: aload_0
+       216: invokevirtual #159                // Method level:()Lnet/minecraft/world/level/Level;
+       219: astore        14
+       221: aload         14
+       223: instanceof    #524                // class net/minecraft/server/level/ServerLevel
+       226: ifeq          297
+       229: aload         14
+       231: checkcast     #524                // class net/minecraft/server/level/ServerLevel
+       234: astore        13
+       236: getstatic     #526                // Field net/minecraft/world/item/Items.SPLASH_POTION:Lnet/minecraft/world/item/Item;
+       239: aload         12
+       241: invokestatic  #368                // Method net/minecraft/world/item/alchemy/PotionContents.createItemStack:(Lnet/minecraft/world/item/Item;Lnet/minecraft/core/Holder;)Lnet/minecraft/world/item/ItemStack;
+       244: astore        14
+       246: invokedynamic #529,  0            // InvokeDynamic #2:create:()Lnet/minecraft/world/entity/projectile/Projectile$ProjectileFactory;
+       251: aload         13
+       253: aload         14
+       255: aload_0
+       256: dload         4
+       258: dload         6
+       260: dload         10
+       262: ldc2_w        #533                // double 0.2d
+       265: dmul
+       266: dadd
+       267: dload         8
+       269: dload         10
+       271: ldc2_w        #535                // double 2.0d
+       274: dcmpg
+       275: ifgt          284
+       278: ldc_w         #537                // float 0.45f
+       281: goto          287
+       284: ldc_w         #538                // float 0.75f
+       287: aload_0
+       288: aload         13
+       290: invokevirtual #539                // Method rangedAttackUncertainty:(Lnet/minecraft/world/level/Level;)F
+       293: invokestatic  #543                // Method net/minecraft/world/entity/projectile/Projectile.spawnProjectileUsingShoot:(Lnet/minecraft/world/entity/projectile/Projectile$ProjectileFactory;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;DDDFF)Lnet/minecraft/world/entity/projectile/Projectile;
+       296: pop
+       297: aload_0
+       298: invokevirtual #376                // Method isSilent:()Z
+       301: ifne          349
+       304: aload_0
+       305: invokevirtual #159                // Method level:()Lnet/minecraft/world/level/Level;
+       308: aconst_null
+       309: aload_0
+       310: invokevirtual #379                // Method getX:()D
+       313: aload_0
+       314: invokevirtual #383                // Method getY:()D
+       317: aload_0
+       318: invokevirtual #386                // Method getZ:()D
+       321: getstatic     #549                // Field net/minecraft/sounds/SoundEvents.WITCH_THROW:Lnet/minecraft/sounds/SoundEvent;
+       324: aload_0
+       325: invokevirtual #392                // Method getSoundSource:()Lnet/minecraft/sounds/SoundSource;
+       328: fconst_1
+       329: ldc_w         #396                // float 0.8f
+       332: aload_0
+       333: getfield      #287                // Field random:Lnet/minecraft/util/RandomSource;
+       336: invokeinterface #291,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+       341: ldc_w         #397                // float 0.4f
+       344: fmul
+       345: fadd
+       346: invokevirtual #398                // Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/Entity;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V
+       349: return
+
+  public float rangedAttackUncertainty(net.minecraft.world.level.Level);
+    Code:
+         0: ldc           #67                 // float 8.0f
+         2: freturn
+
+  public void applyRaidBuffs(net.minecraft.server.level.ServerLevel, int, boolean);
+    Code:
+         0: return
+
+  public boolean canBeLeader();
+    Code:
+         0: iconst_0
+         1: ireturn
+
+  private boolean lambda$registerGoals$0(net.minecraft.world.entity.LivingEntity, net.minecraft.server.level.ServerLevel);
+    Code:
+         0: aload_0
+         1: invokevirtual #552                // Method hasActiveRaid:()Z
+         4: ifeq          21
+         7: aload_1
+         8: getstatic     #555                // Field net/minecraft/world/entity/EntityTypes.WITCH:Lnet/minecraft/world/entity/EntityType;
+        11: invokevirtual #560                // Method net/minecraft/world/entity/LivingEntity.is:(Ljava/lang/Object;)Z
+        14: ifne          21
+        17: iconst_1
+        18: goto          22
+        21: iconst_0
+        22: ireturn
+
+  static {};
+    Code:
+         0: ldc_w         #561                // String drinking
+         3: invokestatic  #563                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+         6: putstatic     #402                // Field SPEED_MODIFIER_DRINKING_ID:Lnet/minecraft/resources/Identifier;
+         9: new           #276                // class net/minecraft/world/entity/ai/attributes/AttributeModifier
+        12: dup
+        13: getstatic     #402                // Field SPEED_MODIFIER_DRINKING_ID:Lnet/minecraft/resources/Identifier;
+        16: ldc2_w        #569                // double -0.25d
+        19: getstatic     #571                // Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;
+        22: invokespecial #577                // Method net/minecraft/world/entity/ai/attributes/AttributeModifier."<init>":(Lnet/minecraft/resources/Identifier;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V
+        25: putstatic     #271                // Field SPEED_MODIFIER_DRINKING:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;
+        28: ldc           #21                 // class net/minecraft/world/entity/monster/Witch
+        30: getstatic     #580                // Field net/minecraft/network/syncher/EntityDataSerializers.BOOLEAN:Lnet/minecraft/network/syncher/EntityDataSerializer;
+        33: invokestatic  #586                // Method net/minecraft/network/syncher/SynchedEntityData.defineId:(Ljava/lang/Class;Lnet/minecraft/network/syncher/EntityDataSerializer;)Lnet/minecraft/network/syncher/EntityDataAccessor;
+        36: putstatic     #88                 // Field DATA_USING_ITEM:Lnet/minecraft/network/syncher/EntityDataAccessor;
+        39: return
+}

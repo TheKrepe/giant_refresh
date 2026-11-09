@@ -1,0 +1,177 @@
+Compiled from "CamelModel.java"
+public abstract class net.minecraft.client.model.animal.camel.CamelModel extends net.minecraft.client.model.EntityModel<net.minecraft.client.renderer.entity.state.CamelRenderState> {
+  private static final float MAX_WALK_ANIMATION_SPEED;
+
+  private static final float WALK_ANIMATION_SCALE_FACTOR;
+
+  protected final net.minecraft.client.model.geom.ModelPart head;
+
+  private final net.minecraft.client.animation.KeyframeAnimation walkAnimation;
+
+  private final net.minecraft.client.animation.KeyframeAnimation sitAnimation;
+
+  private final net.minecraft.client.animation.KeyframeAnimation sitPoseAnimation;
+
+  private final net.minecraft.client.animation.KeyframeAnimation standupAnimation;
+
+  private final net.minecraft.client.animation.KeyframeAnimation idleAnimation;
+
+  private final net.minecraft.client.animation.KeyframeAnimation dashAnimation;
+
+  public net.minecraft.client.model.animal.camel.CamelModel(net.minecraft.client.model.geom.ModelPart, net.minecraft.client.animation.AnimationDefinition, net.minecraft.client.animation.AnimationDefinition, net.minecraft.client.animation.AnimationDefinition, net.minecraft.client.animation.AnimationDefinition, net.minecraft.client.animation.AnimationDefinition, net.minecraft.client.animation.AnimationDefinition);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #1                  // Method net/minecraft/client/model/EntityModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+         5: aload_1
+         6: ldc           #9                  // String body
+         8: invokevirtual #11                 // Method net/minecraft/client/model/geom/ModelPart.getChild:(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;
+        11: astore        8
+        13: aload_0
+        14: aload         8
+        16: ldc           #17                 // String head
+        18: invokevirtual #11                 // Method net/minecraft/client/model/geom/ModelPart.getChild:(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;
+        21: putfield      #19                 // Field head:Lnet/minecraft/client/model/geom/ModelPart;
+        24: aload_0
+        25: aload_2
+        26: aload_1
+        27: invokevirtual #24                 // Method net/minecraft/client/animation/AnimationDefinition.bake:(Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/animation/KeyframeAnimation;
+        30: putfield      #30                 // Field walkAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        33: aload_0
+        34: aload_3
+        35: aload_1
+        36: invokevirtual #24                 // Method net/minecraft/client/animation/AnimationDefinition.bake:(Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/animation/KeyframeAnimation;
+        39: putfield      #34                 // Field sitAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        42: aload_0
+        43: aload         4
+        45: aload_1
+        46: invokevirtual #24                 // Method net/minecraft/client/animation/AnimationDefinition.bake:(Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/animation/KeyframeAnimation;
+        49: putfield      #37                 // Field sitPoseAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        52: aload_0
+        53: aload         5
+        55: aload_1
+        56: invokevirtual #24                 // Method net/minecraft/client/animation/AnimationDefinition.bake:(Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/animation/KeyframeAnimation;
+        59: putfield      #40                 // Field standupAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        62: aload_0
+        63: aload         6
+        65: aload_1
+        66: invokevirtual #24                 // Method net/minecraft/client/animation/AnimationDefinition.bake:(Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/animation/KeyframeAnimation;
+        69: putfield      #43                 // Field idleAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        72: aload_0
+        73: aload         7
+        75: aload_1
+        76: invokevirtual #24                 // Method net/minecraft/client/animation/AnimationDefinition.bake:(Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/animation/KeyframeAnimation;
+        79: putfield      #46                 // Field dashAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        82: return
+
+  public void setupAnim(net.minecraft.client.renderer.entity.state.CamelRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #49                 // Method net/minecraft/client/model/EntityModel.setupAnim:(Ljava/lang/Object;)V
+         5: aload_0
+         6: aload_1
+         7: aload_1
+         8: getfield      #53                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.yRot:F
+        11: aload_1
+        12: getfield      #59                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.xRot:F
+        15: invokevirtual #62                 // Method applyHeadRotation:(Lnet/minecraft/client/renderer/entity/state/CamelRenderState;FF)V
+        18: aload_0
+        19: getfield      #30                 // Field walkAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        22: aload_1
+        23: getfield      #66                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.walkAnimationPos:F
+        26: aload_1
+        27: getfield      #69                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.walkAnimationSpeed:F
+        30: fconst_2
+        31: ldc           #72                 // float 2.5f
+        33: invokevirtual #73                 // Method net/minecraft/client/animation/KeyframeAnimation.applyWalk:(FFFF)V
+        36: aload_0
+        37: getfield      #34                 // Field sitAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        40: aload_1
+        41: getfield      #79                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.sitAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        44: aload_1
+        45: getfield      #83                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.ageInTicks:F
+        48: invokevirtual #86                 // Method net/minecraft/client/animation/KeyframeAnimation.apply:(Lnet/minecraft/world/entity/AnimationState;F)V
+        51: aload_0
+        52: getfield      #37                 // Field sitPoseAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        55: aload_1
+        56: getfield      #90                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.sitPoseAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        59: aload_1
+        60: getfield      #83                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.ageInTicks:F
+        63: invokevirtual #86                 // Method net/minecraft/client/animation/KeyframeAnimation.apply:(Lnet/minecraft/world/entity/AnimationState;F)V
+        66: aload_0
+        67: getfield      #40                 // Field standupAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        70: aload_1
+        71: getfield      #93                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.sitUpAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        74: aload_1
+        75: getfield      #83                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.ageInTicks:F
+        78: invokevirtual #86                 // Method net/minecraft/client/animation/KeyframeAnimation.apply:(Lnet/minecraft/world/entity/AnimationState;F)V
+        81: aload_0
+        82: getfield      #43                 // Field idleAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+        85: aload_1
+        86: getfield      #96                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.idleAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        89: aload_1
+        90: getfield      #83                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.ageInTicks:F
+        93: invokevirtual #86                 // Method net/minecraft/client/animation/KeyframeAnimation.apply:(Lnet/minecraft/world/entity/AnimationState;F)V
+        96: aload_0
+        97: getfield      #46                 // Field dashAnimation:Lnet/minecraft/client/animation/KeyframeAnimation;
+       100: aload_1
+       101: getfield      #99                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.dashAnimationState:Lnet/minecraft/world/entity/AnimationState;
+       104: aload_1
+       105: getfield      #83                 // Field net/minecraft/client/renderer/entity/state/CamelRenderState.ageInTicks:F
+       108: invokevirtual #86                 // Method net/minecraft/client/animation/KeyframeAnimation.apply:(Lnet/minecraft/world/entity/AnimationState;F)V
+       111: return
+
+  private void applyHeadRotation(net.minecraft.client.renderer.entity.state.CamelRenderState, float, float);
+    Code:
+         0: fload_2
+         1: ldc           #104                // float -30.0f
+         3: ldc           #105                // float 30.0f
+         5: invokestatic  #106                // Method net/minecraft/util/Mth.clamp:(FFF)F
+         8: fstore_2
+         9: fload_3
+        10: ldc           #112                // float -25.0f
+        12: ldc           #113                // float 45.0f
+        14: invokestatic  #106                // Method net/minecraft/util/Mth.clamp:(FFF)F
+        17: fstore_3
+        18: aload_1
+        19: getfield      #114                // Field net/minecraft/client/renderer/entity/state/CamelRenderState.jumpCooldown:F
+        22: fconst_0
+        23: fcmpl
+        24: ifle          51
+        27: ldc           #113                // float 45.0f
+        29: aload_1
+        30: getfield      #114                // Field net/minecraft/client/renderer/entity/state/CamelRenderState.jumpCooldown:F
+        33: fmul
+        34: ldc           #117                // float 55.0f
+        36: fdiv
+        37: fstore        4
+        39: fload_3
+        40: fload         4
+        42: fadd
+        43: ldc           #112                // float -25.0f
+        45: ldc           #118                // float 70.0f
+        47: invokestatic  #106                // Method net/minecraft/util/Mth.clamp:(FFF)F
+        50: fstore_3
+        51: aload_0
+        52: getfield      #19                 // Field head:Lnet/minecraft/client/model/geom/ModelPart;
+        55: fload_2
+        56: ldc           #119                // float 0.017453292f
+        58: fmul
+        59: putfield      #120                // Field net/minecraft/client/model/geom/ModelPart.yRot:F
+        62: aload_0
+        63: getfield      #19                 // Field head:Lnet/minecraft/client/model/geom/ModelPart;
+        66: fload_3
+        67: ldc           #119                // float 0.017453292f
+        69: fmul
+        70: putfield      #121                // Field net/minecraft/client/model/geom/ModelPart.xRot:F
+        73: return
+
+  public void setupAnim(java.lang.Object);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #54                 // class net/minecraft/client/renderer/entity/state/CamelRenderState
+         5: invokevirtual #122                // Method setupAnim:(Lnet/minecraft/client/renderer/entity/state/CamelRenderState;)V
+         8: return
+}

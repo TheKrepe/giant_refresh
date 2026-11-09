@@ -1,0 +1,165 @@
+Compiled from "ArmedEntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.ArmedEntityRenderState extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState {
+  public net.minecraft.world.entity.HumanoidArm mainArm;
+
+  public net.minecraft.client.model.HumanoidModel$ArmPose rightArmPose;
+
+  public final net.minecraft.client.renderer.item.ItemStackRenderState rightHandItemState;
+
+  public net.minecraft.world.item.ItemStack rightHandItemStack;
+
+  public net.minecraft.client.model.HumanoidModel$ArmPose leftArmPose;
+
+  public final net.minecraft.client.renderer.item.ItemStackRenderState leftHandItemState;
+
+  public net.minecraft.world.item.ItemStack leftHandItemStack;
+
+  public net.minecraft.world.entity.LivingEntity$SwingDescription currentSwing;
+
+  public float swingAnimation;
+
+  public net.minecraft.client.renderer.entity.state.ArmedEntityRenderState();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/client/renderer/entity/state/LivingEntityRenderState."<init>":()V
+         4: aload_0
+         5: getstatic     #7                  // Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;
+         8: putfield      #13                 // Field mainArm:Lnet/minecraft/world/entity/HumanoidArm;
+        11: aload_0
+        12: getstatic     #18                 // Field net/minecraft/client/model/HumanoidModel$ArmPose.EMPTY:Lnet/minecraft/client/model/HumanoidModel$ArmPose;
+        15: putfield      #24                 // Field rightArmPose:Lnet/minecraft/client/model/HumanoidModel$ArmPose;
+        18: aload_0
+        19: new           #27                 // class net/minecraft/client/renderer/item/ItemStackRenderState
+        22: dup
+        23: invokespecial #29                 // Method net/minecraft/client/renderer/item/ItemStackRenderState."<init>":()V
+        26: putfield      #30                 // Field rightHandItemState:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        29: aload_0
+        30: getstatic     #34                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        33: putfield      #39                 // Field rightHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        36: aload_0
+        37: getstatic     #18                 // Field net/minecraft/client/model/HumanoidModel$ArmPose.EMPTY:Lnet/minecraft/client/model/HumanoidModel$ArmPose;
+        40: putfield      #42                 // Field leftArmPose:Lnet/minecraft/client/model/HumanoidModel$ArmPose;
+        43: aload_0
+        44: new           #27                 // class net/minecraft/client/renderer/item/ItemStackRenderState
+        47: dup
+        48: invokespecial #29                 // Method net/minecraft/client/renderer/item/ItemStackRenderState."<init>":()V
+        51: putfield      #45                 // Field leftHandItemState:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        54: aload_0
+        55: getstatic     #34                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;
+        58: putfield      #48                 // Field leftHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        61: return
+
+  public net.minecraft.client.renderer.item.ItemStackRenderState getMainHandItemState();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field mainArm:Lnet/minecraft/world/entity/HumanoidArm;
+         4: getstatic     #7                  // Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;
+         7: if_acmpne     17
+        10: aload_0
+        11: getfield      #30                 // Field rightHandItemState:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        14: goto          21
+        17: aload_0
+        18: getfield      #45                 // Field leftHandItemState:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        21: areturn
+
+  public net.minecraft.world.item.ItemStack getMainHandItemStack();
+    Code:
+         0: aload_0
+         1: getfield      #13                 // Field mainArm:Lnet/minecraft/world/entity/HumanoidArm;
+         4: getstatic     #7                  // Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;
+         7: if_acmpne     17
+        10: aload_0
+        11: getfield      #39                 // Field rightHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        14: goto          21
+        17: aload_0
+        18: getfield      #48                 // Field leftHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        21: areturn
+
+  public net.minecraft.world.item.ItemStack getUseItemStackForArm(net.minecraft.world.entity.HumanoidArm);
+    Code:
+         0: aload_1
+         1: getstatic     #7                  // Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;
+         4: if_acmpne     14
+         7: aload_0
+         8: getfield      #39                 // Field rightHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        11: goto          18
+        14: aload_0
+        15: getfield      #48                 // Field leftHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        18: areturn
+
+  public net.minecraft.client.model.HumanoidModel$ArmPose getArmPose(net.minecraft.world.entity.HumanoidArm);
+    Code:
+         0: getstatic     #51                 // Field net/minecraft/client/renderer/entity/state/ArmedEntityRenderState$1.$SwitchMap$net$minecraft$world$entity$HumanoidArm:[I
+         3: aload_1
+         4: invokevirtual #57                 // Method net/minecraft/world/entity/HumanoidArm.ordinal:()I
+         7: iaload
+         8: lookupswitch  { // 2
+                       1: 46
+                       2: 53
+                 default: 36
+            }
+        36: new           #61                 // class java/lang/MatchException
+        39: dup
+        40: aconst_null
+        41: aconst_null
+        42: invokespecial #63                 // Method java/lang/MatchException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+        45: athrow
+        46: aload_0
+        47: getfield      #42                 // Field leftArmPose:Lnet/minecraft/client/model/HumanoidModel$ArmPose;
+        50: goto          57
+        53: aload_0
+        54: getfield      #24                 // Field rightArmPose:Lnet/minecraft/client/model/HumanoidModel$ArmPose;
+        57: areturn
+
+  public float ticksUsingItem(net.minecraft.world.entity.HumanoidArm);
+    Code:
+         0: fconst_0
+         1: freturn
+
+  public static void extractArmedEntityRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.ArmedEntityRenderState, net.minecraft.client.renderer.item.ItemModelResolver, float);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: invokevirtual #66                 // Method net/minecraft/world/entity/LivingEntity.getMainArm:()Lnet/minecraft/world/entity/HumanoidArm;
+         5: putfield      #13                 // Field mainArm:Lnet/minecraft/world/entity/HumanoidArm;
+         8: aload_1
+         9: aload_0
+        10: invokevirtual #72                 // Method net/minecraft/world/entity/LivingEntity.getCurrentSwing:()Lnet/minecraft/world/entity/LivingEntity$SwingDescription;
+        13: putfield      #76                 // Field currentSwing:Lnet/minecraft/world/entity/LivingEntity$SwingDescription;
+        16: aload_1
+        17: aload_0
+        18: fload_3
+        19: invokevirtual #80                 // Method net/minecraft/world/entity/LivingEntity.getSwingAnimation:(F)F
+        22: putfield      #84                 // Field swingAnimation:F
+        25: aload_2
+        26: aload_1
+        27: getfield      #30                 // Field rightHandItemState:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        30: aload_0
+        31: getstatic     #7                  // Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;
+        34: invokevirtual #88                 // Method net/minecraft/world/entity/LivingEntity.getItemHeldByArm:(Lnet/minecraft/world/entity/HumanoidArm;)Lnet/minecraft/world/item/ItemStack;
+        37: getstatic     #92                 // Field net/minecraft/world/item/ItemDisplayContext.THIRD_PERSON_RIGHT_HAND:Lnet/minecraft/world/item/ItemDisplayContext;
+        40: aload_0
+        41: invokevirtual #98                 // Method net/minecraft/client/renderer/item/ItemModelResolver.updateForLiving:(Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lnet/minecraft/world/entity/LivingEntity;)V
+        44: aload_2
+        45: aload_1
+        46: getfield      #45                 // Field leftHandItemState:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        49: aload_0
+        50: getstatic     #104                // Field net/minecraft/world/entity/HumanoidArm.LEFT:Lnet/minecraft/world/entity/HumanoidArm;
+        53: invokevirtual #88                 // Method net/minecraft/world/entity/LivingEntity.getItemHeldByArm:(Lnet/minecraft/world/entity/HumanoidArm;)Lnet/minecraft/world/item/ItemStack;
+        56: getstatic     #107                // Field net/minecraft/world/item/ItemDisplayContext.THIRD_PERSON_LEFT_HAND:Lnet/minecraft/world/item/ItemDisplayContext;
+        59: aload_0
+        60: invokevirtual #98                 // Method net/minecraft/client/renderer/item/ItemModelResolver.updateForLiving:(Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lnet/minecraft/world/entity/LivingEntity;)V
+        63: aload_1
+        64: aload_0
+        65: getstatic     #104                // Field net/minecraft/world/entity/HumanoidArm.LEFT:Lnet/minecraft/world/entity/HumanoidArm;
+        68: invokevirtual #88                 // Method net/minecraft/world/entity/LivingEntity.getItemHeldByArm:(Lnet/minecraft/world/entity/HumanoidArm;)Lnet/minecraft/world/item/ItemStack;
+        71: invokevirtual #110                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+        74: putfield      #48                 // Field leftHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        77: aload_1
+        78: aload_0
+        79: getstatic     #7                  // Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;
+        82: invokevirtual #88                 // Method net/minecraft/world/entity/LivingEntity.getItemHeldByArm:(Lnet/minecraft/world/entity/HumanoidArm;)Lnet/minecraft/world/item/ItemStack;
+        85: invokevirtual #110                // Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;
+        88: putfield      #39                 // Field rightHandItemStack:Lnet/minecraft/world/item/ItemStack;
+        91: return
+}

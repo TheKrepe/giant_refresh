@@ -1,0 +1,81 @@
+Compiled from "CubeDeformation.java"
+public class net.minecraft.client.model.geom.builders.CubeDeformation {
+  public static final net.minecraft.client.model.geom.builders.CubeDeformation NONE;
+
+  final float growX;
+
+  final float growY;
+
+  final float growZ;
+
+  public net.minecraft.client.model.geom.builders.CubeDeformation(float, float, float);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: fload_1
+         6: putfield      #7                  // Field growX:F
+         9: aload_0
+        10: fload_2
+        11: putfield      #13                 // Field growY:F
+        14: aload_0
+        15: fload_3
+        16: putfield      #16                 // Field growZ:F
+        19: return
+
+  public net.minecraft.client.model.geom.builders.CubeDeformation(float);
+    Code:
+         0: aload_0
+         1: fload_1
+         2: fload_1
+         3: fload_1
+         4: invokespecial #19                 // Method "<init>":(FFF)V
+         7: return
+
+  public net.minecraft.client.model.geom.builders.CubeDeformation extend(float);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/builders/CubeDeformation
+         3: dup
+         4: aload_0
+         5: getfield      #7                  // Field growX:F
+         8: fload_1
+         9: fadd
+        10: aload_0
+        11: getfield      #13                 // Field growY:F
+        14: fload_1
+        15: fadd
+        16: aload_0
+        17: getfield      #16                 // Field growZ:F
+        20: fload_1
+        21: fadd
+        22: invokespecial #19                 // Method "<init>":(FFF)V
+        25: areturn
+
+  public net.minecraft.client.model.geom.builders.CubeDeformation extend(float, float, float);
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/builders/CubeDeformation
+         3: dup
+         4: aload_0
+         5: getfield      #7                  // Field growX:F
+         8: fload_1
+         9: fadd
+        10: aload_0
+        11: getfield      #13                 // Field growY:F
+        14: fload_2
+        15: fadd
+        16: aload_0
+        17: getfield      #16                 // Field growZ:F
+        20: fload_3
+        21: fadd
+        22: invokespecial #19                 // Method "<init>":(FFF)V
+        25: areturn
+
+  static {};
+    Code:
+         0: new           #8                  // class net/minecraft/client/model/geom/builders/CubeDeformation
+         3: dup
+         4: fconst_0
+         5: invokespecial #22                 // Method "<init>":(F)V
+         8: putstatic     #25                 // Field NONE:Lnet/minecraft/client/model/geom/builders/CubeDeformation;
+        11: return
+}

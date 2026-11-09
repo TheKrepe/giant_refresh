@@ -1,0 +1,529 @@
+Compiled from "SpawnPlacements.java"
+public class net.minecraft.world.entity.SpawnPlacements {
+  private static final java.util.Map<net.minecraft.world.entity.EntityType<?>, net.minecraft.world.entity.SpawnPlacements$Data> DATA_BY_TYPE;
+
+  public net.minecraft.world.entity.SpawnPlacements();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  private static <T extends net.minecraft.world.entity.Mob> void register(net.minecraft.world.entity.EntityType<T>, net.minecraft.world.entity.SpawnPlacementType, net.minecraft.world.level.levelgen.Heightmap$Types, net.minecraft.world.entity.SpawnPlacements$SpawnPredicate<T>);
+    Code:
+         0: getstatic     #7                  // Field DATA_BY_TYPE:Ljava/util/Map;
+         3: aload_0
+         4: new           #13                 // class net/minecraft/world/entity/SpawnPlacements$Data
+         7: dup
+         8: aload_2
+         9: aload_1
+        10: aload_3
+        11: invokespecial #15                 // Method net/minecraft/world/entity/SpawnPlacements$Data."<init>":(Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+        14: invokeinterface #18,  3           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        19: checkcast     #13                 // class net/minecraft/world/entity/SpawnPlacements$Data
+        22: astore        4
+        24: aload         4
+        26: ifnull        54
+        29: new           #24                 // class java/lang/IllegalStateException
+        32: dup
+        33: getstatic     #26                 // Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;
+        36: aload_0
+        37: invokeinterface #32,  2           // InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/Identifier;
+        42: invokestatic  #38                 // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+        45: invokedynamic #44,  0             // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+        50: invokespecial #48                 // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+        53: athrow
+        54: return
+
+  public static net.minecraft.world.entity.SpawnPlacementType getPlacementType(net.minecraft.world.entity.EntityType<?>);
+    Code:
+         0: getstatic     #7                  // Field DATA_BY_TYPE:Ljava/util/Map;
+         3: aload_0
+         4: invokeinterface #51,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+         9: checkcast     #13                 // class net/minecraft/world/entity/SpawnPlacements$Data
+        12: astore_1
+        13: aload_1
+        14: ifnonnull     23
+        17: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+        20: goto          27
+        23: aload_1
+        24: getfield      #61                 // Field net/minecraft/world/entity/SpawnPlacements$Data.placement:Lnet/minecraft/world/entity/SpawnPlacementType;
+        27: areturn
+
+  public static boolean isSpawnPositionOk(net.minecraft.world.entity.EntityType<?>, net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: invokestatic  #64                 // Method getPlacementType:(Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/entity/SpawnPlacementType;
+         4: aload_1
+         5: aload_2
+         6: aload_0
+         7: invokeinterface #68,  4           // InterfaceMethod net/minecraft/world/entity/SpawnPlacementType.isSpawnPositionOk:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntityType;)Z
+        12: ireturn
+
+  public static net.minecraft.world.level.levelgen.Heightmap$Types getHeightmapType(net.minecraft.world.entity.EntityType<?>);
+    Code:
+         0: getstatic     #7                  // Field DATA_BY_TYPE:Ljava/util/Map;
+         3: aload_0
+         4: invokeinterface #51,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+         9: checkcast     #13                 // class net/minecraft/world/entity/SpawnPlacements$Data
+        12: astore_1
+        13: aload_1
+        14: ifnonnull     23
+        17: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        20: goto          27
+        23: aload_1
+        24: getfield      #80                 // Field net/minecraft/world/entity/SpawnPlacements$Data.heightMap:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        27: areturn
+
+  public static <T extends net.minecraft.world.entity.Entity> boolean checkSpawnRules(net.minecraft.world.entity.EntityType<T>, net.minecraft.world.level.ServerLevelAccessor, net.minecraft.world.entity.EntitySpawnReason, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+    Code:
+         0: aload_0
+         1: invokevirtual #83                 // Method net/minecraft/world/entity/EntityType.isAllowedInPeaceful:()Z
+         4: ifne          21
+         7: aload_1
+         8: invokeinterface #89,  1           // InterfaceMethod net/minecraft/world/level/ServerLevelAccessor.getDifficulty:()Lnet/minecraft/world/Difficulty;
+        13: getstatic     #95                 // Field net/minecraft/world/Difficulty.PEACEFUL:Lnet/minecraft/world/Difficulty;
+        16: if_acmpne     21
+        19: iconst_0
+        20: ireturn
+        21: getstatic     #7                  // Field DATA_BY_TYPE:Ljava/util/Map;
+        24: aload_0
+        25: invokeinterface #51,  2           // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+        30: checkcast     #13                 // class net/minecraft/world/entity/SpawnPlacements$Data
+        33: astore        5
+        35: aload         5
+        37: ifnull        59
+        40: aload         5
+        42: getfield      #101                // Field net/minecraft/world/entity/SpawnPlacements$Data.predicate:Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+        45: aload_0
+        46: aload_1
+        47: aload_2
+        48: aload_3
+        49: aload         4
+        51: invokeinterface #105,  6          // InterfaceMethod net/minecraft/world/entity/SpawnPlacements$SpawnPredicate.test:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)Z
+        56: ifeq          63
+        59: iconst_1
+        60: goto          64
+        63: iconst_0
+        64: ireturn
+
+  static {};
+    Code:
+         0: invokestatic  #111                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+         3: putstatic     #7                  // Field DATA_BY_TYPE:Ljava/util/Map;
+         6: getstatic     #117                // Field net/minecraft/world/entity/EntityTypes.AXOLOTL:Lnet/minecraft/world/entity/EntityType;
+         9: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+        12: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        15: invokedynamic #126,  0            // InvokeDynamic #1:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+        20: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+        23: getstatic     #133                // Field net/minecraft/world/entity/EntityTypes.COD:Lnet/minecraft/world/entity/EntityType;
+        26: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+        29: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        32: invokedynamic #136,  0            // InvokeDynamic #2:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+        37: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+        40: getstatic     #137                // Field net/minecraft/world/entity/EntityTypes.DOLPHIN:Lnet/minecraft/world/entity/EntityType;
+        43: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+        46: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        49: invokedynamic #140,  0            // InvokeDynamic #3:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+        54: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+        57: getstatic     #141                // Field net/minecraft/world/entity/EntityTypes.DROWNED:Lnet/minecraft/world/entity/EntityType;
+        60: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+        63: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        66: invokedynamic #144,  0            // InvokeDynamic #4:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+        71: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+        74: getstatic     #145                // Field net/minecraft/world/entity/EntityTypes.GUARDIAN:Lnet/minecraft/world/entity/EntityType;
+        77: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+        80: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        83: invokedynamic #148,  0            // InvokeDynamic #5:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+        88: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+        91: getstatic     #149                // Field net/minecraft/world/entity/EntityTypes.PUFFERFISH:Lnet/minecraft/world/entity/EntityType;
+        94: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+        97: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       100: invokedynamic #136,  0            // InvokeDynamic #2:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       105: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       108: getstatic     #152                // Field net/minecraft/world/entity/EntityTypes.SALMON:Lnet/minecraft/world/entity/EntityType;
+       111: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+       114: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       117: invokedynamic #136,  0            // InvokeDynamic #2:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       122: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       125: getstatic     #155                // Field net/minecraft/world/entity/EntityTypes.SQUID:Lnet/minecraft/world/entity/EntityType;
+       128: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+       131: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       134: invokedynamic #140,  0            // InvokeDynamic #3:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       139: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       142: getstatic     #158                // Field net/minecraft/world/entity/EntityTypes.TROPICAL_FISH:Lnet/minecraft/world/entity/EntityType;
+       145: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+       148: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       151: invokedynamic #161,  0            // InvokeDynamic #6:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       156: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       159: getstatic     #162                // Field net/minecraft/world/entity/EntityTypes.ARMADILLO:Lnet/minecraft/world/entity/EntityType;
+       162: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       165: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       168: invokedynamic #168,  0            // InvokeDynamic #7:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       173: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       176: getstatic     #169                // Field net/minecraft/world/entity/EntityTypes.BAT:Lnet/minecraft/world/entity/EntityType;
+       179: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       182: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       185: invokedynamic #172,  0            // InvokeDynamic #8:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       190: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       193: getstatic     #173                // Field net/minecraft/world/entity/EntityTypes.BLAZE:Lnet/minecraft/world/entity/EntityType;
+       196: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       199: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       202: invokedynamic #176,  0            // InvokeDynamic #9:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       207: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       210: getstatic     #177                // Field net/minecraft/world/entity/EntityTypes.BOGGED:Lnet/minecraft/world/entity/EntityType;
+       213: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       216: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       219: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       224: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       227: getstatic     #181                // Field net/minecraft/world/entity/EntityTypes.BREEZE:Lnet/minecraft/world/entity/EntityType;
+       230: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       233: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       236: invokedynamic #176,  0            // InvokeDynamic #9:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       241: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       244: getstatic     #184                // Field net/minecraft/world/entity/EntityTypes.CAMEL:Lnet/minecraft/world/entity/EntityType;
+       247: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       250: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       253: invokedynamic #187,  0            // InvokeDynamic #11:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       258: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       261: getstatic     #188                // Field net/minecraft/world/entity/EntityTypes.CAMEL_HUSK:Lnet/minecraft/world/entity/EntityType;
+       264: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       267: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       270: invokedynamic #191,  0            // InvokeDynamic #12:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       275: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       278: getstatic     #192                // Field net/minecraft/world/entity/EntityTypes.CAVE_SPIDER:Lnet/minecraft/world/entity/EntityType;
+       281: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       284: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       287: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       292: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       295: getstatic     #195                // Field net/minecraft/world/entity/EntityTypes.CHICKEN:Lnet/minecraft/world/entity/EntityType;
+       298: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       301: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       304: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       309: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       312: getstatic     #199                // Field net/minecraft/world/entity/EntityTypes.COW:Lnet/minecraft/world/entity/EntityType;
+       315: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       318: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       321: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       326: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       329: getstatic     #202                // Field net/minecraft/world/entity/EntityTypes.CREEPER:Lnet/minecraft/world/entity/EntityType;
+       332: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       335: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       338: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       343: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       346: getstatic     #205                // Field net/minecraft/world/entity/EntityTypes.DONKEY:Lnet/minecraft/world/entity/EntityType;
+       349: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       352: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       355: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       360: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       363: getstatic     #208                // Field net/minecraft/world/entity/EntityTypes.ENDERMAN:Lnet/minecraft/world/entity/EntityType;
+       366: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       369: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       372: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       377: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       380: getstatic     #211                // Field net/minecraft/world/entity/EntityTypes.ENDERMITE:Lnet/minecraft/world/entity/EntityType;
+       383: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       386: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       389: invokedynamic #214,  0            // InvokeDynamic #14:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       394: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       397: getstatic     #215                // Field net/minecraft/world/entity/EntityTypes.ENDER_DRAGON:Lnet/minecraft/world/entity/EntityType;
+       400: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       403: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       406: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       411: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       414: getstatic     #219                // Field net/minecraft/world/entity/EntityTypes.FROG:Lnet/minecraft/world/entity/EntityType;
+       417: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       420: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       423: invokedynamic #222,  0            // InvokeDynamic #16:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       428: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       431: getstatic     #223                // Field net/minecraft/world/entity/EntityTypes.GHAST:Lnet/minecraft/world/entity/EntityType;
+       434: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       437: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       440: invokedynamic #226,  0            // InvokeDynamic #17:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       445: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       448: getstatic     #227                // Field net/minecraft/world/entity/EntityTypes.HAPPY_GHAST:Lnet/minecraft/world/entity/EntityType;
+       451: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       454: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       457: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       462: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       465: getstatic     #230                // Field net/minecraft/world/entity/EntityTypes.GIANT:Lnet/minecraft/world/entity/EntityType;
+       468: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       471: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       474: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       479: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       482: getstatic     #233                // Field net/minecraft/world/entity/EntityTypes.GLOW_SQUID:Lnet/minecraft/world/entity/EntityType;
+       485: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+       488: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       491: invokedynamic #236,  0            // InvokeDynamic #18:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       496: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       499: getstatic     #237                // Field net/minecraft/world/entity/EntityTypes.GOAT:Lnet/minecraft/world/entity/EntityType;
+       502: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       505: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       508: invokedynamic #240,  0            // InvokeDynamic #19:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       513: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       516: getstatic     #241                // Field net/minecraft/world/entity/EntityTypes.HORSE:Lnet/minecraft/world/entity/EntityType;
+       519: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       522: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       525: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       530: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       533: getstatic     #244                // Field net/minecraft/world/entity/EntityTypes.HUSK:Lnet/minecraft/world/entity/EntityType;
+       536: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       539: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       542: invokedynamic #191,  0            // InvokeDynamic #12:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       547: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       550: getstatic     #247                // Field net/minecraft/world/entity/EntityTypes.IRON_GOLEM:Lnet/minecraft/world/entity/EntityType;
+       553: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       556: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       559: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       564: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       567: getstatic     #250                // Field net/minecraft/world/entity/EntityTypes.LLAMA:Lnet/minecraft/world/entity/EntityType;
+       570: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       573: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       576: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       581: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       584: getstatic     #253                // Field net/minecraft/world/entity/EntityTypes.MAGMA_CUBE:Lnet/minecraft/world/entity/EntityType;
+       587: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       590: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       593: invokedynamic #256,  0            // InvokeDynamic #20:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       598: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       601: getstatic     #257                // Field net/minecraft/world/entity/EntityTypes.SULFUR_CUBE:Lnet/minecraft/world/entity/EntityType;
+       604: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       607: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       610: invokedynamic #260,  0            // InvokeDynamic #21:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       615: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       618: getstatic     #261                // Field net/minecraft/world/entity/EntityTypes.MOOSHROOM:Lnet/minecraft/world/entity/EntityType;
+       621: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       624: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       627: invokedynamic #264,  0            // InvokeDynamic #22:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       632: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       635: getstatic     #265                // Field net/minecraft/world/entity/EntityTypes.MULE:Lnet/minecraft/world/entity/EntityType;
+       638: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       641: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       644: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       649: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       652: getstatic     #268                // Field net/minecraft/world/entity/EntityTypes.NAUTILUS:Lnet/minecraft/world/entity/EntityType;
+       655: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+       658: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       661: invokedynamic #271,  0            // InvokeDynamic #23:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       666: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       669: getstatic     #272                // Field net/minecraft/world/entity/EntityTypes.OCELOT:Lnet/minecraft/world/entity/EntityType;
+       672: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       675: getstatic     #275                // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       678: invokedynamic #278,  0            // InvokeDynamic #24:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       683: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       686: getstatic     #279                // Field net/minecraft/world/entity/EntityTypes.PARROT:Lnet/minecraft/world/entity/EntityType;
+       689: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       692: getstatic     #275                // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       695: invokedynamic #282,  0            // InvokeDynamic #25:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       700: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       703: getstatic     #283                // Field net/minecraft/world/entity/EntityTypes.PIG:Lnet/minecraft/world/entity/EntityType;
+       706: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       709: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       712: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       717: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       720: getstatic     #286                // Field net/minecraft/world/entity/EntityTypes.HOGLIN:Lnet/minecraft/world/entity/EntityType;
+       723: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       726: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       729: invokedynamic #289,  0            // InvokeDynamic #26:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       734: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       737: getstatic     #290                // Field net/minecraft/world/entity/EntityTypes.PIGLIN:Lnet/minecraft/world/entity/EntityType;
+       740: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       743: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       746: invokedynamic #293,  0            // InvokeDynamic #27:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       751: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       754: getstatic     #294                // Field net/minecraft/world/entity/EntityTypes.PILLAGER:Lnet/minecraft/world/entity/EntityType;
+       757: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       760: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       763: invokedynamic #297,  0            // InvokeDynamic #28:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       768: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       771: getstatic     #298                // Field net/minecraft/world/entity/EntityTypes.POLAR_BEAR:Lnet/minecraft/world/entity/EntityType;
+       774: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       777: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       780: invokedynamic #301,  0            // InvokeDynamic #29:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       785: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       788: getstatic     #302                // Field net/minecraft/world/entity/EntityTypes.RABBIT:Lnet/minecraft/world/entity/EntityType;
+       791: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       794: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       797: invokedynamic #305,  0            // InvokeDynamic #30:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       802: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       805: getstatic     #306                // Field net/minecraft/world/entity/EntityTypes.SHEEP:Lnet/minecraft/world/entity/EntityType;
+       808: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       811: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       814: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       819: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       822: getstatic     #309                // Field net/minecraft/world/entity/EntityTypes.SILVERFISH:Lnet/minecraft/world/entity/EntityType;
+       825: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       828: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       831: invokedynamic #312,  0            // InvokeDynamic #31:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       836: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       839: getstatic     #313                // Field net/minecraft/world/entity/EntityTypes.SKELETON:Lnet/minecraft/world/entity/EntityType;
+       842: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       845: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       848: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       853: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       856: getstatic     #316                // Field net/minecraft/world/entity/EntityTypes.SKELETON_HORSE:Lnet/minecraft/world/entity/EntityType;
+       859: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       862: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       865: invokedynamic #319,  0            // InvokeDynamic #32:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       870: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       873: getstatic     #320                // Field net/minecraft/world/entity/EntityTypes.SLIME:Lnet/minecraft/world/entity/EntityType;
+       876: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       879: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       882: invokedynamic #323,  0            // InvokeDynamic #33:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       887: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       890: getstatic     #324                // Field net/minecraft/world/entity/EntityTypes.SNOW_GOLEM:Lnet/minecraft/world/entity/EntityType;
+       893: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       896: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       899: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       904: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       907: getstatic     #327                // Field net/minecraft/world/entity/EntityTypes.SPIDER:Lnet/minecraft/world/entity/EntityType;
+       910: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       913: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       916: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       921: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       924: getstatic     #330                // Field net/minecraft/world/entity/EntityTypes.STRAY:Lnet/minecraft/world/entity/EntityType;
+       927: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       930: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       933: invokedynamic #333,  0            // InvokeDynamic #34:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       938: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       941: getstatic     #334                // Field net/minecraft/world/entity/EntityTypes.PARCHED:Lnet/minecraft/world/entity/EntityType;
+       944: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       947: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       950: invokedynamic #191,  0            // InvokeDynamic #12:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       955: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       958: getstatic     #337                // Field net/minecraft/world/entity/EntityTypes.STRIDER:Lnet/minecraft/world/entity/EntityType;
+       961: getstatic     #340                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_LAVA:Lnet/minecraft/world/entity/SpawnPlacementType;
+       964: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       967: invokedynamic #343,  0            // InvokeDynamic #35:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       972: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       975: getstatic     #344                // Field net/minecraft/world/entity/EntityTypes.TURTLE:Lnet/minecraft/world/entity/EntityType;
+       978: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       981: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       984: invokedynamic #347,  0            // InvokeDynamic #36:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+       989: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+       992: getstatic     #348                // Field net/minecraft/world/entity/EntityTypes.VILLAGER:Lnet/minecraft/world/entity/EntityType;
+       995: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+       998: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1001: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1006: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1009: getstatic     #351                // Field net/minecraft/world/entity/EntityTypes.WITCH:Lnet/minecraft/world/entity/EntityType;
+      1012: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1015: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1018: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1023: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1026: getstatic     #354                // Field net/minecraft/world/entity/EntityTypes.WITHER:Lnet/minecraft/world/entity/EntityType;
+      1029: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1032: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1035: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1040: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1043: getstatic     #357                // Field net/minecraft/world/entity/EntityTypes.WITHER_SKELETON:Lnet/minecraft/world/entity/EntityType;
+      1046: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1049: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1052: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1057: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1060: getstatic     #360                // Field net/minecraft/world/entity/EntityTypes.WOLF:Lnet/minecraft/world/entity/EntityType;
+      1063: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1066: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1069: invokedynamic #363,  0            // InvokeDynamic #37:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1074: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1077: getstatic     #364                // Field net/minecraft/world/entity/EntityTypes.ZOGLIN:Lnet/minecraft/world/entity/EntityType;
+      1080: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1083: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1086: invokedynamic #176,  0            // InvokeDynamic #9:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1091: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1094: getstatic     #367                // Field net/minecraft/world/entity/EntityTypes.CREAKING:Lnet/minecraft/world/entity/EntityType;
+      1097: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1100: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1103: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1108: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1111: getstatic     #370                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE:Lnet/minecraft/world/entity/EntityType;
+      1114: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1117: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1120: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1125: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1128: getstatic     #373                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_HORSE:Lnet/minecraft/world/entity/EntityType;
+      1131: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1134: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1137: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1142: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1145: getstatic     #376                // Field net/minecraft/world/entity/EntityTypes.ZOMBIFIED_PIGLIN:Lnet/minecraft/world/entity/EntityType;
+      1148: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1151: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1154: invokedynamic #379,  0            // InvokeDynamic #38:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1159: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1162: getstatic     #380                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_VILLAGER:Lnet/minecraft/world/entity/EntityType;
+      1165: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1168: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1171: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1176: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1179: getstatic     #383                // Field net/minecraft/world/entity/EntityTypes.CAT:Lnet/minecraft/world/entity/EntityType;
+      1182: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1185: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1188: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1193: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1196: getstatic     #386                // Field net/minecraft/world/entity/EntityTypes.ELDER_GUARDIAN:Lnet/minecraft/world/entity/EntityType;
+      1199: getstatic     #123                // Field net/minecraft/world/entity/SpawnPlacementTypes.IN_WATER:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1202: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1205: invokedynamic #148,  0            // InvokeDynamic #5:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1210: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1213: getstatic     #389                // Field net/minecraft/world/entity/EntityTypes.EVOKER:Lnet/minecraft/world/entity/EntityType;
+      1216: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1219: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1222: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1227: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1230: getstatic     #392                // Field net/minecraft/world/entity/EntityTypes.FOX:Lnet/minecraft/world/entity/EntityType;
+      1233: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1236: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1239: invokedynamic #395,  0            // InvokeDynamic #39:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1244: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1247: getstatic     #396                // Field net/minecraft/world/entity/EntityTypes.ILLUSIONER:Lnet/minecraft/world/entity/EntityType;
+      1250: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1253: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1256: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1261: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1264: getstatic     #399                // Field net/minecraft/world/entity/EntityTypes.PANDA:Lnet/minecraft/world/entity/EntityType;
+      1267: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1270: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1273: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1278: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1281: getstatic     #402                // Field net/minecraft/world/entity/EntityTypes.PHANTOM:Lnet/minecraft/world/entity/EntityType;
+      1284: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1287: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1290: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1295: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1298: getstatic     #405                // Field net/minecraft/world/entity/EntityTypes.RAVAGER:Lnet/minecraft/world/entity/EntityType;
+      1301: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1304: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1307: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1312: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1315: getstatic     #408                // Field net/minecraft/world/entity/EntityTypes.SHULKER:Lnet/minecraft/world/entity/EntityType;
+      1318: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1321: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1324: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1329: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1332: getstatic     #411                // Field net/minecraft/world/entity/EntityTypes.TRADER_LLAMA:Lnet/minecraft/world/entity/EntityType;
+      1335: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1338: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1341: invokedynamic #198,  0            // InvokeDynamic #13:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1346: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1349: getstatic     #414                // Field net/minecraft/world/entity/EntityTypes.VEX:Lnet/minecraft/world/entity/EntityType;
+      1352: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1355: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1358: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1363: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1366: getstatic     #417                // Field net/minecraft/world/entity/EntityTypes.VINDICATOR:Lnet/minecraft/world/entity/EntityType;
+      1369: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1372: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1375: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1380: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1383: getstatic     #420                // Field net/minecraft/world/entity/EntityTypes.WANDERING_TRADER:Lnet/minecraft/world/entity/EntityType;
+      1386: getstatic     #165                // Field net/minecraft/world/entity/SpawnPlacementTypes.ON_GROUND:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1389: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1392: invokedynamic #218,  0            // InvokeDynamic #15:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1397: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1400: getstatic     #423                // Field net/minecraft/world/entity/EntityTypes.WARDEN:Lnet/minecraft/world/entity/EntityType;
+      1403: getstatic     #55                 // Field net/minecraft/world/entity/SpawnPlacementTypes.NO_RESTRICTIONS:Lnet/minecraft/world/entity/SpawnPlacementType;
+      1406: getstatic     #74                 // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+      1409: invokedynamic #180,  0            // InvokeDynamic #10:test:()Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;
+      1414: invokestatic  #129                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
+      1417: return
+}

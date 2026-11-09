@@ -1,0 +1,24 @@
+Compiled from "IronGolemRenderState.java"
+public class net.minecraft.client.renderer.entity.state.IronGolemRenderState extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState {
+  public float attackTicksRemaining;
+
+  public int offerFlowerTick;
+
+  public final net.minecraft.client.renderer.block.BlockModelRenderState flowerBlock;
+
+  public net.minecraft.world.entity.Crackiness$Level crackiness;
+
+  public net.minecraft.client.renderer.entity.state.IronGolemRenderState();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/client/renderer/entity/state/LivingEntityRenderState."<init>":()V
+         4: aload_0
+         5: new           #7                  // class net/minecraft/client/renderer/block/BlockModelRenderState
+         8: dup
+         9: invokespecial #9                  // Method net/minecraft/client/renderer/block/BlockModelRenderState."<init>":()V
+        12: putfield      #10                 // Field flowerBlock:Lnet/minecraft/client/renderer/block/BlockModelRenderState;
+        15: aload_0
+        16: getstatic     #16                 // Field net/minecraft/world/entity/Crackiness$Level.NONE:Lnet/minecraft/world/entity/Crackiness$Level;
+        19: putfield      #22                 // Field crackiness:Lnet/minecraft/world/entity/Crackiness$Level;
+        22: return
+}

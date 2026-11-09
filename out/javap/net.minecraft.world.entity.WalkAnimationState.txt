@@ -1,0 +1,16 @@
+Compiled from "WalkAnimationState.java"
+public class net.minecraft.world.entity.WalkAnimationState {
+  private float speedOld;
+  private float speed;
+  private float position;
+  private float positionScale;
+  public net.minecraft.world.entity.WalkAnimationState();
+  public void setSpeed(float);
+  public void update(float, float, float);
+  public void stop();
+  public float speed();
+  public float speed(float);
+  public float position();
+  public float position(float);
+  public boolean isMoving();
+}

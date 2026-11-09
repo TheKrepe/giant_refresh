@@ -1,0 +1,661 @@
+Compiled from "CarvedPumpkinBlock.java"
+public class net.minecraft.world.level.block.CarvedPumpkinBlock extends net.minecraft.world.level.block.HorizontalDirectionalBlock {
+  public static final net.minecraft.world.level.block.state.properties.EnumProperty<net.minecraft.core.Direction> FACING;
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern snowGolemBase;
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern snowGolemFull;
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern ironGolemBase;
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern ironGolemFull;
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern copperGolemBase;
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern copperGolemFull;
+
+  private static final java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> PUMPKINS_PREDICATE;
+
+  protected net.minecraft.world.level.block.CarvedPumpkinBlock(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #1                  // Method net/minecraft/world/level/block/HorizontalDirectionalBlock."<init>":(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+         5: aload_0
+         6: aload_0
+         7: getfield      #7                  // Field stateDefinition:Lnet/minecraft/world/level/block/state/StateDefinition;
+        10: invokevirtual #13                 // Method net/minecraft/world/level/block/state/StateDefinition.any:()Lnet/minecraft/world/level/block/state/StateHolder;
+        13: checkcast     #19                 // class net/minecraft/world/level/block/state/BlockState
+        16: getstatic     #21                 // Field FACING:Lnet/minecraft/world/level/block/state/properties/EnumProperty;
+        19: getstatic     #25                 // Field net/minecraft/core/Direction.NORTH:Lnet/minecraft/core/Direction;
+        22: invokevirtual #31                 // Method net/minecraft/world/level/block/state/BlockState.setValue:(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;
+        25: checkcast     #19                 // class net/minecraft/world/level/block/state/BlockState
+        28: invokevirtual #35                 // Method registerDefaultState:(Lnet/minecraft/world/level/block/state/BlockState;)V
+        31: return
+
+  protected void onPlace(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, boolean);
+    Code:
+         0: aload         4
+         2: aload_1
+         3: invokevirtual #39                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+         6: invokevirtual #43                 // Method net/minecraft/world/level/block/state/BlockState.is:(Ljava/lang/Object;)Z
+         9: ifeq          13
+        12: return
+        13: aload_0
+        14: aload_2
+        15: aload_3
+        16: invokevirtual #47                 // Method trySpawnGolem:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V
+        19: return
+
+  public boolean canSpawnGolem(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: invokevirtual #51                 // Method getOrCreateSnowGolemBase:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: aload_1
+         5: aload_2
+         6: invokevirtual #55                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern.find:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+         9: ifnonnull     36
+        12: aload_0
+        13: invokevirtual #61                 // Method getOrCreateIronGolemBase:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        16: aload_1
+        17: aload_2
+        18: invokevirtual #55                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern.find:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+        21: ifnonnull     36
+        24: aload_0
+        25: invokevirtual #64                 // Method getOrCreateCopperGolemBase:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        28: aload_1
+        29: aload_2
+        30: invokevirtual #55                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern.find:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+        33: ifnull        40
+        36: iconst_1
+        37: goto          41
+        40: iconst_0
+        41: ireturn
+
+  private void trySpawnGolem(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: invokevirtual #67                 // Method getOrCreateSnowGolemFull:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: aload_1
+         5: aload_2
+         6: invokevirtual #55                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern.find:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+         9: astore_3
+        10: aload_3
+        11: ifnull        52
+        14: getstatic     #70                 // Field net/minecraft/world/entity/EntityTypes.SNOW_GOLEM:Lnet/minecraft/world/entity/EntityType;
+        17: aload_1
+        18: getstatic     #76                 // Field net/minecraft/world/entity/EntitySpawnReason.TRIGGERED:Lnet/minecraft/world/entity/EntitySpawnReason;
+        21: invokevirtual #82                 // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+        24: checkcast     #88                 // class net/minecraft/world/entity/animal/golem/SnowGolem
+        27: astore        4
+        29: aload         4
+        31: ifnull        52
+        34: aload_1
+        35: aload_3
+        36: aload         4
+        38: aload_3
+        39: iconst_0
+        40: iconst_2
+        41: iconst_0
+        42: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+        45: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+        48: invokestatic  #101                // Method spawnGolemInWorld:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;)V
+        51: return
+        52: aload_0
+        53: invokevirtual #105                // Method getOrCreateIronGolemFull:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        56: aload_1
+        57: aload_2
+        58: invokevirtual #55                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern.find:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+        61: astore        4
+        63: aload         4
+        65: ifnull        114
+        68: getstatic     #108                // Field net/minecraft/world/entity/EntityTypes.IRON_GOLEM:Lnet/minecraft/world/entity/EntityType;
+        71: aload_1
+        72: getstatic     #76                 // Field net/minecraft/world/entity/EntitySpawnReason.TRIGGERED:Lnet/minecraft/world/entity/EntitySpawnReason;
+        75: invokevirtual #82                 // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+        78: checkcast     #111                // class net/minecraft/world/entity/animal/golem/IronGolem
+        81: astore        5
+        83: aload         5
+        85: ifnull        114
+        88: aload         5
+        90: iconst_1
+        91: invokevirtual #113                // Method net/minecraft/world/entity/animal/golem/IronGolem.setPlayerCreated:(Z)V
+        94: aload_1
+        95: aload         4
+        97: aload         5
+        99: aload         4
+       101: iconst_1
+       102: iconst_2
+       103: iconst_0
+       104: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+       107: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+       110: invokestatic  #101                // Method spawnGolemInWorld:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;)V
+       113: return
+       114: aload_0
+       115: invokevirtual #117                // Method getOrCreateCopperGolemFull:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+       118: aload_1
+       119: aload_2
+       120: invokevirtual #55                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern.find:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;
+       123: astore        5
+       125: aload         5
+       127: ifnull        187
+       130: getstatic     #120                // Field net/minecraft/world/entity/EntityTypes.COPPER_GOLEM:Lnet/minecraft/world/entity/EntityType;
+       133: aload_1
+       134: getstatic     #76                 // Field net/minecraft/world/entity/EntitySpawnReason.TRIGGERED:Lnet/minecraft/world/entity/EntitySpawnReason;
+       137: invokevirtual #82                 // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+       140: checkcast     #123                // class net/minecraft/world/entity/animal/golem/CopperGolem
+       143: astore        6
+       145: aload         6
+       147: ifnull        187
+       150: aload_1
+       151: aload         5
+       153: aload         6
+       155: aload         5
+       157: iconst_0
+       158: iconst_0
+       159: iconst_0
+       160: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+       163: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+       166: invokestatic  #101                // Method spawnGolemInWorld:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;)V
+       169: aload_0
+       170: aload_1
+       171: aload         5
+       173: invokevirtual #125                // Method replaceCopperBlockWithChest:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;)V
+       176: aload         6
+       178: aload_0
+       179: aload         5
+       181: invokevirtual #129                // Method getWeatherStateFromPattern:(Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;)Lnet/minecraft/world/level/block/WeatheringCopper$WeatherState;
+       184: invokevirtual #133                // Method net/minecraft/world/entity/animal/golem/CopperGolem.spawn:(Lnet/minecraft/world/level/block/WeatheringCopper$WeatherState;)V
+       187: return
+
+  private net.minecraft.world.level.block.WeatheringCopper$WeatherState getWeatherStateFromPattern(net.minecraft.world.level.block.state.pattern.BlockPattern$BlockPatternMatch);
+    Code:
+         0: aload_1
+         1: iconst_0
+         2: iconst_1
+         3: iconst_0
+         4: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+         7: invokevirtual #137                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getState:()Lnet/minecraft/world/level/block/state/BlockState;
+        10: astore_2
+        11: aload_2
+        12: invokevirtual #39                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+        15: astore_3
+        16: aload_3
+        17: instanceof    #141                // class net/minecraft/world/level/block/WeatheringCopper
+        20: ifeq          40
+        23: aload_3
+        24: checkcast     #141                // class net/minecraft/world/level/block/WeatheringCopper
+        27: astore        4
+        29: aload         4
+        31: invokeinterface #143,  1          // InterfaceMethod net/minecraft/world/level/block/WeatheringCopper.getAge:()Ljava/lang/Enum;
+        36: checkcast     #147                // class net/minecraft/world/level/block/WeatheringCopper$WeatherState
+        39: areturn
+        40: getstatic     #149                // Field net/minecraft/world/item/HoneycombItem.WAX_OFF_BY_BLOCK:Ljava/util/function/Supplier;
+        43: invokeinterface #155,  1          // InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;
+        48: checkcast     #161                // class com/google/common/collect/BiMap
+        51: aload_2
+        52: invokevirtual #39                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+        55: invokeinterface #163,  2          // InterfaceMethod com/google/common/collect/BiMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+        60: checkcast     #166                // class net/minecraft/world/level/block/Block
+        63: invokestatic  #168                // Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;
+        66: invokedynamic #174,  0            // InvokeDynamic #0:test:()Ljava/util/function/Predicate;
+        71: invokevirtual #178                // Method java/util/Optional.filter:(Ljava/util/function/Predicate;)Ljava/util/Optional;
+        74: invokedynamic #182,  0            // InvokeDynamic #1:apply:()Ljava/util/function/Function;
+        79: invokevirtual #186                // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+        82: getstatic     #190                // Field net/minecraft/world/level/block/Blocks.COPPER_BLOCK:Lnet/minecraft/world/level/block/WeatheringCopperCollection;
+        85: invokevirtual #196                // Method net/minecraft/world/level/block/WeatheringCopperCollection.weathering:()Lnet/minecraft/world/level/block/WeatheringCopperCollection$ByState;
+        88: invokevirtual #202                // Method net/minecraft/world/level/block/WeatheringCopperCollection$ByState.unaffected:()Ljava/lang/Object;
+        91: checkcast     #141                // class net/minecraft/world/level/block/WeatheringCopper
+        94: invokevirtual #207                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+        97: checkcast     #141                // class net/minecraft/world/level/block/WeatheringCopper
+       100: invokeinterface #143,  1          // InterfaceMethod net/minecraft/world/level/block/WeatheringCopper.getAge:()Ljava/lang/Enum;
+       105: checkcast     #147                // class net/minecraft/world/level/block/WeatheringCopper$WeatherState
+       108: areturn
+
+  private static void spawnGolemInWorld(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.pattern.BlockPattern$BlockPatternMatch, net.minecraft.world.entity.Entity, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokestatic  #210                // Method clearPatternBlocks:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;)V
+         5: aload_2
+         6: aload_3
+         7: invokevirtual #213                // Method net/minecraft/core/BlockPos.getX:()I
+        10: i2d
+        11: ldc2_w        #219                // double 0.5d
+        14: dadd
+        15: aload_3
+        16: invokevirtual #221                // Method net/minecraft/core/BlockPos.getY:()I
+        19: i2d
+        20: ldc2_w        #224                // double 0.05d
+        23: dadd
+        24: aload_3
+        25: invokevirtual #226                // Method net/minecraft/core/BlockPos.getZ:()I
+        28: i2d
+        29: ldc2_w        #219                // double 0.5d
+        32: dadd
+        33: fconst_0
+        34: fconst_0
+        35: invokevirtual #229                // Method net/minecraft/world/entity/Entity.snapTo:(DDDFF)V
+        38: aload_0
+        39: aload_2
+        40: invokevirtual #235                // Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z
+        43: pop
+        44: aload_0
+        45: ldc           #241                // class net/minecraft/server/level/ServerPlayer
+        47: aload_2
+        48: invokevirtual #243                // Method net/minecraft/world/entity/Entity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+        51: ldc2_w        #247                // double 5.0d
+        54: invokevirtual #249                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+        57: invokevirtual #255                // Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;
+        60: invokeinterface #259,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        65: astore        4
+        67: aload         4
+        69: invokeinterface #265,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        74: ifeq          101
+        77: aload         4
+        79: invokeinterface #271,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        84: checkcast     #241                // class net/minecraft/server/level/ServerPlayer
+        87: astore        5
+        89: getstatic     #274                // Field net/minecraft/advancements/triggers/CriteriaTriggers.SUMMONED_ENTITY:Lnet/minecraft/advancements/triggers/SummonedEntityTrigger;
+        92: aload         5
+        94: aload_2
+        95: invokevirtual #280                // Method net/minecraft/advancements/triggers/SummonedEntityTrigger.trigger:(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/Entity;)V
+        98: goto          67
+       101: aload_0
+       102: aload_1
+       103: invokestatic  #286                // Method updatePatternBlocks:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch;)V
+       106: return
+
+  public static void clearPatternBlocks(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.pattern.BlockPattern$BlockPatternMatch);
+    Code:
+         0: iconst_0
+         1: istore_2
+         2: iload_2
+         3: aload_1
+         4: invokevirtual #289                // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getWidth:()I
+         7: if_icmpge     78
+        10: iconst_0
+        11: istore_3
+        12: iload_3
+        13: aload_1
+        14: invokevirtual #292                // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getHeight:()I
+        17: if_icmpge     72
+        20: aload_1
+        21: iload_2
+        22: iload_3
+        23: iconst_0
+        24: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+        27: astore        4
+        29: aload_0
+        30: aload         4
+        32: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+        35: getstatic     #295                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+        38: invokevirtual #299                // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+        41: iconst_2
+        42: invokevirtual #302                // Method net/minecraft/world/level/Level.setBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z
+        45: pop
+        46: aload_0
+        47: sipush        2001
+        50: aload         4
+        52: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+        55: aload         4
+        57: invokevirtual #137                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getState:()Lnet/minecraft/world/level/block/state/BlockState;
+        60: invokestatic  #308                // Method net/minecraft/world/level/block/Block.getId:(Lnet/minecraft/world/level/block/state/BlockState;)I
+        63: invokevirtual #312                // Method net/minecraft/world/level/Level.levelEvent:(ILnet/minecraft/core/BlockPos;I)V
+        66: iinc          3, 1
+        69: goto          12
+        72: iinc          2, 1
+        75: goto          2
+        78: return
+
+  public static void updatePatternBlocks(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.pattern.BlockPattern$BlockPatternMatch);
+    Code:
+         0: iconst_0
+         1: istore_2
+         2: iload_2
+         3: aload_1
+         4: invokevirtual #289                // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getWidth:()I
+         7: if_icmpge     53
+        10: iconst_0
+        11: istore_3
+        12: iload_3
+        13: aload_1
+        14: invokevirtual #292                // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getHeight:()I
+        17: if_icmpge     47
+        20: aload_1
+        21: iload_2
+        22: iload_3
+        23: iconst_0
+        24: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+        27: astore        4
+        29: aload_0
+        30: aload         4
+        32: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+        35: getstatic     #295                // Field net/minecraft/world/level/block/Blocks.AIR:Lnet/minecraft/world/level/block/Block;
+        38: invokevirtual #316                // Method net/minecraft/world/level/Level.updateNeighborsAt:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;)V
+        41: iinc          3, 1
+        44: goto          12
+        47: iinc          2, 1
+        50: goto          2
+        53: return
+
+  public net.minecraft.world.level.block.state.BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext);
+    Code:
+         0: aload_0
+         1: invokevirtual #320                // Method defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+         4: getstatic     #21                 // Field FACING:Lnet/minecraft/world/level/block/state/properties/EnumProperty;
+         7: aload_1
+         8: invokevirtual #321                // Method net/minecraft/world/item/context/BlockPlaceContext.getHorizontalDirection:()Lnet/minecraft/core/Direction;
+        11: invokevirtual #327                // Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;
+        14: invokevirtual #31                 // Method net/minecraft/world/level/block/state/BlockState.setValue:(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;
+        17: checkcast     #19                 // class net/minecraft/world/level/block/state/BlockState
+        20: areturn
+
+  protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition$Builder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.state.BlockState>);
+    Code:
+         0: aload_1
+         1: iconst_1
+         2: anewarray     #330                // class net/minecraft/world/level/block/state/properties/Property
+         5: dup
+         6: iconst_0
+         7: getstatic     #21                 // Field FACING:Lnet/minecraft/world/level/block/state/properties/EnumProperty;
+        10: aastore
+        11: invokevirtual #332                // Method net/minecraft/world/level/block/state/StateDefinition$Builder.add:([Lnet/minecraft/world/level/block/state/properties/Property;)Lnet/minecraft/world/level/block/state/StateDefinition$Builder;
+        14: pop
+        15: return
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern getOrCreateSnowGolemBase();
+    Code:
+         0: aload_0
+         1: getfield      #338                // Field snowGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: ifnonnull     56
+         7: aload_0
+         8: invokestatic  #342                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.start:()Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        11: iconst_3
+        12: anewarray     #348                // class java/lang/String
+        15: dup
+        16: iconst_0
+        17: ldc_w         #350                // String
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: ldc_w         #352                // String #
+        26: aastore
+        27: dup
+        28: iconst_2
+        29: ldc_w         #352                // String #
+        32: aastore
+        33: invokevirtual #354                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.aisle:([Ljava/lang/String;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        36: bipush        35
+        38: getstatic     #358                // Field net/minecraft/world/level/block/Blocks.SNOW_BLOCK:Lnet/minecraft/world/level/block/Block;
+        41: invokestatic  #361                // Method net/minecraft/world/level/block/state/predicate/BlockStatePredicate.forBlock:(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/state/predicate/BlockStatePredicate;
+        44: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        47: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        50: invokevirtual #375                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.build:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        53: putfield      #338                // Field snowGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        56: aload_0
+        57: getfield      #338                // Field snowGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        60: areturn
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern getOrCreateSnowGolemFull();
+    Code:
+         0: aload_0
+         1: getfield      #378                // Field snowGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: ifnonnull     67
+         7: aload_0
+         8: invokestatic  #342                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.start:()Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        11: iconst_3
+        12: anewarray     #348                // class java/lang/String
+        15: dup
+        16: iconst_0
+        17: ldc_w         #381                // String ^
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: ldc_w         #352                // String #
+        26: aastore
+        27: dup
+        28: iconst_2
+        29: ldc_w         #352                // String #
+        32: aastore
+        33: invokevirtual #354                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.aisle:([Ljava/lang/String;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        36: bipush        94
+        38: getstatic     #383                // Field PUMPKINS_PREDICATE:Ljava/util/function/Predicate;
+        41: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        44: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        47: bipush        35
+        49: getstatic     #358                // Field net/minecraft/world/level/block/Blocks.SNOW_BLOCK:Lnet/minecraft/world/level/block/Block;
+        52: invokestatic  #361                // Method net/minecraft/world/level/block/state/predicate/BlockStatePredicate.forBlock:(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/state/predicate/BlockStatePredicate;
+        55: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        58: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        61: invokevirtual #375                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.build:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        64: putfield      #378                // Field snowGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        67: aload_0
+        68: getfield      #378                // Field snowGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        71: areturn
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern getOrCreateIronGolemBase();
+    Code:
+         0: aload_0
+         1: getfield      #387                // Field ironGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: ifnonnull     69
+         7: aload_0
+         8: invokestatic  #342                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.start:()Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        11: iconst_3
+        12: anewarray     #348                // class java/lang/String
+        15: dup
+        16: iconst_0
+        17: ldc_w         #390                // String ~ ~
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: ldc_w         #392                // String ###
+        26: aastore
+        27: dup
+        28: iconst_2
+        29: ldc_w         #394                // String ~#~
+        32: aastore
+        33: invokevirtual #354                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.aisle:([Ljava/lang/String;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        36: bipush        35
+        38: getstatic     #396                // Field net/minecraft/world/level/block/Blocks.IRON_BLOCK:Lnet/minecraft/world/level/block/Block;
+        41: invokestatic  #361                // Method net/minecraft/world/level/block/state/predicate/BlockStatePredicate.forBlock:(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/state/predicate/BlockStatePredicate;
+        44: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        47: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        50: bipush        126
+        52: invokedynamic #399,  0            // InvokeDynamic #2:test:()Ljava/util/function/Predicate;
+        57: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        60: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        63: invokevirtual #375                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.build:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        66: putfield      #387                // Field ironGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        69: aload_0
+        70: getfield      #387                // Field ironGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        73: areturn
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern getOrCreateIronGolemFull();
+    Code:
+         0: aload_0
+         1: getfield      #400                // Field ironGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: ifnonnull     80
+         7: aload_0
+         8: invokestatic  #342                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.start:()Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        11: iconst_3
+        12: anewarray     #348                // class java/lang/String
+        15: dup
+        16: iconst_0
+        17: ldc_w         #403                // String ~^~
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: ldc_w         #392                // String ###
+        26: aastore
+        27: dup
+        28: iconst_2
+        29: ldc_w         #394                // String ~#~
+        32: aastore
+        33: invokevirtual #354                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.aisle:([Ljava/lang/String;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        36: bipush        94
+        38: getstatic     #383                // Field PUMPKINS_PREDICATE:Ljava/util/function/Predicate;
+        41: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        44: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        47: bipush        35
+        49: getstatic     #396                // Field net/minecraft/world/level/block/Blocks.IRON_BLOCK:Lnet/minecraft/world/level/block/Block;
+        52: invokestatic  #361                // Method net/minecraft/world/level/block/state/predicate/BlockStatePredicate.forBlock:(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/state/predicate/BlockStatePredicate;
+        55: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        58: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        61: bipush        126
+        63: invokedynamic #399,  0            // InvokeDynamic #2:test:()Ljava/util/function/Predicate;
+        68: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        71: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        74: invokevirtual #375                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.build:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        77: putfield      #400                // Field ironGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        80: aload_0
+        81: getfield      #400                // Field ironGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        84: areturn
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern getOrCreateCopperGolemBase();
+    Code:
+         0: aload_0
+         1: getfield      #405                // Field copperGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: ifnonnull     49
+         7: aload_0
+         8: invokestatic  #342                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.start:()Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        11: iconst_2
+        12: anewarray     #348                // class java/lang/String
+        15: dup
+        16: iconst_0
+        17: ldc_w         #350                // String
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: ldc_w         #352                // String #
+        26: aastore
+        27: invokevirtual #354                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.aisle:([Ljava/lang/String;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        30: bipush        35
+        32: invokedynamic #408,  0            // InvokeDynamic #3:test:()Ljava/util/function/Predicate;
+        37: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        40: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        43: invokevirtual #375                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.build:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        46: putfield      #405                // Field copperGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        49: aload_0
+        50: getfield      #405                // Field copperGolemBase:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        53: areturn
+
+  private net.minecraft.world.level.block.state.pattern.BlockPattern getOrCreateCopperGolemFull();
+    Code:
+         0: aload_0
+         1: getfield      #409                // Field copperGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+         4: ifnonnull     60
+         7: aload_0
+         8: invokestatic  #342                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.start:()Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        11: iconst_2
+        12: anewarray     #348                // class java/lang/String
+        15: dup
+        16: iconst_0
+        17: ldc_w         #381                // String ^
+        20: aastore
+        21: dup
+        22: iconst_1
+        23: ldc_w         #352                // String #
+        26: aastore
+        27: invokevirtual #354                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.aisle:([Ljava/lang/String;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        30: bipush        94
+        32: getstatic     #383                // Field PUMPKINS_PREDICATE:Ljava/util/function/Predicate;
+        35: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        38: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        41: bipush        35
+        43: invokedynamic #412,  0            // InvokeDynamic #4:test:()Ljava/util/function/Predicate;
+        48: invokestatic  #367                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.hasState:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+        51: invokevirtual #371                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.where:(CLjava/util/function/Predicate;)Lnet/minecraft/world/level/block/state/pattern/BlockPatternBuilder;
+        54: invokevirtual #375                // Method net/minecraft/world/level/block/state/pattern/BlockPatternBuilder.build:()Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        57: putfield      #409                // Field copperGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        60: aload_0
+        61: getfield      #409                // Field copperGolemFull:Lnet/minecraft/world/level/block/state/pattern/BlockPattern;
+        64: areturn
+
+  public void replaceCopperBlockWithChest(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.pattern.BlockPattern$BlockPatternMatch);
+    Code:
+         0: aload_2
+         1: iconst_0
+         2: iconst_1
+         3: iconst_0
+         4: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+         7: astore_3
+         8: aload_2
+         9: iconst_0
+        10: iconst_0
+        11: iconst_0
+        12: invokevirtual #90                 // Method net/minecraft/world/level/block/state/pattern/BlockPattern$BlockPatternMatch.getBlock:(III)Lnet/minecraft/world/level/block/state/pattern/BlockInWorld;
+        15: astore        4
+        17: aload         4
+        19: invokevirtual #137                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getState:()Lnet/minecraft/world/level/block/state/BlockState;
+        22: getstatic     #21                 // Field FACING:Lnet/minecraft/world/level/block/state/properties/EnumProperty;
+        25: invokevirtual #413                // Method net/minecraft/world/level/block/state/BlockState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;
+        28: checkcast     #26                 // class net/minecraft/core/Direction
+        31: astore        5
+        33: aload_3
+        34: invokevirtual #137                // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getState:()Lnet/minecraft/world/level/block/state/BlockState;
+        37: invokevirtual #39                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+        40: aload         5
+        42: aload_1
+        43: aload_3
+        44: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+        47: invokestatic  #417                // Method net/minecraft/world/level/block/CopperChestBlock.getFromCopperBlock:(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        50: astore        6
+        52: aload_1
+        53: aload_3
+        54: invokevirtual #95                 // Method net/minecraft/world/level/block/state/pattern/BlockInWorld.getPos:()Lnet/minecraft/core/BlockPos;
+        57: aload         6
+        59: iconst_2
+        60: invokevirtual #302                // Method net/minecraft/world/level/Level.setBlock:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z
+        63: pop
+        64: return
+
+  private static boolean lambda$getOrCreateCopperGolemFull$0(net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_0
+         1: getstatic     #423                // Field net/minecraft/tags/BlockTags.COPPER:Lnet/minecraft/tags/TagKey;
+         4: invokevirtual #429                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z
+         7: ireturn
+
+  private static boolean lambda$getOrCreateCopperGolemBase$0(net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_0
+         1: getstatic     #423                // Field net/minecraft/tags/BlockTags.COPPER:Lnet/minecraft/tags/TagKey;
+         4: invokevirtual #429                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z
+         7: ireturn
+
+  private static boolean lambda$static$0(net.minecraft.world.level.block.state.BlockState);
+    Code:
+         0: aload_0
+         1: getstatic     #432                // Field net/minecraft/world/level/block/Blocks.CARVED_PUMPKIN:Lnet/minecraft/world/level/block/Block;
+         4: invokevirtual #43                 // Method net/minecraft/world/level/block/state/BlockState.is:(Ljava/lang/Object;)Z
+         7: ifne          20
+        10: aload_0
+        11: getstatic     #435                // Field net/minecraft/world/level/block/Blocks.JACK_O_LANTERN:Lnet/minecraft/world/level/block/Block;
+        14: invokevirtual #43                 // Method net/minecraft/world/level/block/state/BlockState.is:(Ljava/lang/Object;)Z
+        17: ifeq          24
+        20: iconst_1
+        21: goto          25
+        24: iconst_0
+        25: ireturn
+
+  private static net.minecraft.world.level.block.WeatheringCopper lambda$getWeatherStateFromPattern$1(net.minecraft.world.level.block.Block);
+    Code:
+         0: aload_0
+         1: checkcast     #141                // class net/minecraft/world/level/block/WeatheringCopper
+         4: areturn
+
+  private static boolean lambda$getWeatherStateFromPattern$0(net.minecraft.world.level.block.Block);
+    Code:
+         0: aload_0
+         1: instanceof    #141                // class net/minecraft/world/level/block/WeatheringCopper
+         4: ireturn
+
+  static {};
+    Code:
+         0: getstatic     #438                // Field net/minecraft/world/level/block/HorizontalDirectionalBlock.FACING:Lnet/minecraft/world/level/block/state/properties/EnumProperty;
+         3: putstatic     #21                 // Field FACING:Lnet/minecraft/world/level/block/state/properties/EnumProperty;
+         6: invokedynamic #439,  0            // InvokeDynamic #5:test:()Ljava/util/function/Predicate;
+        11: putstatic     #383                // Field PUMPKINS_PREDICATE:Ljava/util/function/Predicate;
+        14: return
+}

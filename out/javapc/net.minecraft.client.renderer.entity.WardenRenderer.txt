@@ -1,0 +1,300 @@
+Compiled from "WardenRenderer.java"
+public class net.minecraft.client.renderer.entity.WardenRenderer extends net.minecraft.client.renderer.entity.MobRenderer<net.minecraft.world.entity.monster.warden.Warden, net.minecraft.client.renderer.entity.state.WardenRenderState, net.minecraft.client.model.monster.warden.WardenModel> {
+  private static final net.minecraft.resources.Identifier TEXTURE;
+
+  private static final net.minecraft.resources.Identifier BIOLUMINESCENT_LAYER_TEXTURE;
+
+  private static final net.minecraft.resources.Identifier HEART_TEXTURE;
+
+  private static final net.minecraft.resources.Identifier PULSATING_SPOTS_TEXTURE_1;
+
+  private static final net.minecraft.resources.Identifier PULSATING_SPOTS_TEXTURE_2;
+
+  public net.minecraft.client.renderer.entity.WardenRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: new           #1                  // class net/minecraft/client/model/monster/warden/WardenModel
+         5: dup
+         6: aload_1
+         7: getstatic     #3                  // Field net/minecraft/client/model/geom/ModelLayers.WARDEN:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        10: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        13: invokespecial #15                 // Method net/minecraft/client/model/monster/warden/WardenModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        16: ldc           #19                 // float 0.9f
+        18: invokespecial #20                 // Method net/minecraft/client/renderer/entity/MobRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/EntityModel;F)V
+        21: new           #1                  // class net/minecraft/client/model/monster/warden/WardenModel
+        24: dup
+        25: aload_1
+        26: getstatic     #25                 // Field net/minecraft/client/model/geom/ModelLayers.WARDEN_BIOLUMINESCENT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        29: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        32: invokespecial #15                 // Method net/minecraft/client/model/monster/warden/WardenModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        35: astore_2
+        36: new           #1                  // class net/minecraft/client/model/monster/warden/WardenModel
+        39: dup
+        40: aload_1
+        41: getstatic     #28                 // Field net/minecraft/client/model/geom/ModelLayers.WARDEN_PULSATING_SPOTS:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        44: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        47: invokespecial #15                 // Method net/minecraft/client/model/monster/warden/WardenModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        50: astore_3
+        51: new           #1                  // class net/minecraft/client/model/monster/warden/WardenModel
+        54: dup
+        55: aload_1
+        56: getstatic     #31                 // Field net/minecraft/client/model/geom/ModelLayers.WARDEN_TENDRILS:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        59: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        62: invokespecial #15                 // Method net/minecraft/client/model/monster/warden/WardenModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        65: astore        4
+        67: new           #1                  // class net/minecraft/client/model/monster/warden/WardenModel
+        70: dup
+        71: aload_1
+        72: getstatic     #34                 // Field net/minecraft/client/model/geom/ModelLayers.WARDEN_HEART:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        75: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        78: invokespecial #15                 // Method net/minecraft/client/model/monster/warden/WardenModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        81: astore        5
+        83: aload_0
+        84: new           #37                 // class net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer
+        87: dup
+        88: aload_0
+        89: invokedynamic #39,  0             // InvokeDynamic #0:apply:()Ljava/util/function/Function;
+        94: invokedynamic #43,  0             // InvokeDynamic #1:apply:()Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;
+        99: aload_2
+       100: invokedynamic #46,  0             // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+       105: iconst_0
+       106: invokespecial #47                 // Method net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;Ljava/util/function/Function;Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;Lnet/minecraft/client/model/EntityModel;Ljava/util/function/Function;Z)V
+       109: invokevirtual #50                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+       112: pop
+       113: aload_0
+       114: new           #37                 // class net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer
+       117: dup
+       118: aload_0
+       119: invokedynamic #56,  0             // InvokeDynamic #3:apply:()Ljava/util/function/Function;
+       124: invokedynamic #57,  0             // InvokeDynamic #4:apply:()Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;
+       129: aload_3
+       130: invokedynamic #46,  0             // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+       135: iconst_0
+       136: invokespecial #47                 // Method net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;Ljava/util/function/Function;Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;Lnet/minecraft/client/model/EntityModel;Ljava/util/function/Function;Z)V
+       139: invokevirtual #50                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+       142: pop
+       143: aload_0
+       144: new           #37                 // class net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer
+       147: dup
+       148: aload_0
+       149: invokedynamic #58,  0             // InvokeDynamic #5:apply:()Ljava/util/function/Function;
+       154: invokedynamic #59,  0             // InvokeDynamic #6:apply:()Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;
+       159: aload_3
+       160: invokedynamic #46,  0             // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+       165: iconst_0
+       166: invokespecial #47                 // Method net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;Ljava/util/function/Function;Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;Lnet/minecraft/client/model/EntityModel;Ljava/util/function/Function;Z)V
+       169: invokevirtual #50                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+       172: pop
+       173: aload_0
+       174: new           #37                 // class net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer
+       177: dup
+       178: aload_0
+       179: invokedynamic #60,  0             // InvokeDynamic #7:apply:()Ljava/util/function/Function;
+       184: invokedynamic #61,  0             // InvokeDynamic #8:apply:()Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;
+       189: aload         4
+       191: invokedynamic #46,  0             // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+       196: iconst_0
+       197: invokespecial #47                 // Method net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;Ljava/util/function/Function;Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;Lnet/minecraft/client/model/EntityModel;Ljava/util/function/Function;Z)V
+       200: invokevirtual #50                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+       203: pop
+       204: aload_0
+       205: new           #37                 // class net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer
+       208: dup
+       209: aload_0
+       210: invokedynamic #62,  0             // InvokeDynamic #9:apply:()Ljava/util/function/Function;
+       215: invokedynamic #63,  0             // InvokeDynamic #10:apply:()Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;
+       220: aload         5
+       222: invokedynamic #46,  0             // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+       227: iconst_0
+       228: invokespecial #47                 // Method net/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;Ljava/util/function/Function;Lnet/minecraft/client/renderer/entity/layers/LivingEntityEmissiveLayer$AlphaFunction;Lnet/minecraft/client/model/EntityModel;Ljava/util/function/Function;Z)V
+       231: invokevirtual #50                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+       234: pop
+       235: return
+
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.WardenRenderState);
+    Code:
+         0: getstatic     #64                 // Field TEXTURE:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  public net.minecraft.client.renderer.entity.state.WardenRenderState createRenderState();
+    Code:
+         0: new           #68                 // class net/minecraft/client/renderer/entity/state/WardenRenderState
+         3: dup
+         4: invokespecial #70                 // Method net/minecraft/client/renderer/entity/state/WardenRenderState."<init>":()V
+         7: areturn
+
+  public void extractRenderState(net.minecraft.world.entity.monster.warden.Warden, net.minecraft.client.renderer.entity.state.WardenRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: fload_3
+         4: invokespecial #73                 // Method net/minecraft/client/renderer/entity/MobRenderer.extractRenderState:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V
+         7: aload_2
+         8: aload_1
+         9: fload_3
+        10: invokevirtual #77                 // Method net/minecraft/world/entity/monster/warden/Warden.getTendrilAnimation:(F)F
+        13: putfield      #83                 // Field net/minecraft/client/renderer/entity/state/WardenRenderState.tendrilAnimation:F
+        16: aload_2
+        17: aload_1
+        18: fload_3
+        19: invokevirtual #87                 // Method net/minecraft/world/entity/monster/warden/Warden.getHeartAnimation:(F)F
+        22: putfield      #90                 // Field net/minecraft/client/renderer/entity/state/WardenRenderState.heartAnimation:F
+        25: aload_2
+        26: getfield      #93                 // Field net/minecraft/client/renderer/entity/state/WardenRenderState.roarAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        29: aload_1
+        30: getfield      #97                 // Field net/minecraft/world/entity/monster/warden/Warden.roarAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        33: invokevirtual #98                 // Method net/minecraft/world/entity/AnimationState.copyFrom:(Lnet/minecraft/world/entity/AnimationState;)V
+        36: aload_2
+        37: getfield      #104                // Field net/minecraft/client/renderer/entity/state/WardenRenderState.sniffAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        40: aload_1
+        41: getfield      #107                // Field net/minecraft/world/entity/monster/warden/Warden.sniffAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        44: invokevirtual #98                 // Method net/minecraft/world/entity/AnimationState.copyFrom:(Lnet/minecraft/world/entity/AnimationState;)V
+        47: aload_2
+        48: getfield      #108                // Field net/minecraft/client/renderer/entity/state/WardenRenderState.emergeAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        51: aload_1
+        52: getfield      #111                // Field net/minecraft/world/entity/monster/warden/Warden.emergeAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        55: invokevirtual #98                 // Method net/minecraft/world/entity/AnimationState.copyFrom:(Lnet/minecraft/world/entity/AnimationState;)V
+        58: aload_2
+        59: getfield      #112                // Field net/minecraft/client/renderer/entity/state/WardenRenderState.diggingAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        62: aload_1
+        63: getfield      #115                // Field net/minecraft/world/entity/monster/warden/Warden.diggingAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        66: invokevirtual #98                 // Method net/minecraft/world/entity/AnimationState.copyFrom:(Lnet/minecraft/world/entity/AnimationState;)V
+        69: aload_2
+        70: getfield      #116                // Field net/minecraft/client/renderer/entity/state/WardenRenderState.attackAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        73: aload_1
+        74: getfield      #119                // Field net/minecraft/world/entity/monster/warden/Warden.attackAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        77: invokevirtual #98                 // Method net/minecraft/world/entity/AnimationState.copyFrom:(Lnet/minecraft/world/entity/AnimationState;)V
+        80: aload_2
+        81: getfield      #120                // Field net/minecraft/client/renderer/entity/state/WardenRenderState.sonicBoomAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        84: aload_1
+        85: getfield      #123                // Field net/minecraft/world/entity/monster/warden/Warden.sonicBoomAnimationState:Lnet/minecraft/world/entity/AnimationState;
+        88: invokevirtual #98                 // Method net/minecraft/world/entity/AnimationState.copyFrom:(Lnet/minecraft/world/entity/AnimationState;)V
+        91: return
+
+  public void extractRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #78                 // class net/minecraft/world/entity/monster/warden/Warden
+         5: aload_2
+         6: checkcast     #68                 // class net/minecraft/client/renderer/entity/state/WardenRenderState
+         9: fload_3
+        10: invokevirtual #124                // Method extractRenderState:(Lnet/minecraft/world/entity/monster/warden/Warden;Lnet/minecraft/client/renderer/entity/state/WardenRenderState;F)V
+        13: return
+
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.LivingEntityRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #68                 // class net/minecraft/client/renderer/entity/state/WardenRenderState
+         5: invokevirtual #127                // Method getTextureLocation:(Lnet/minecraft/client/renderer/entity/state/WardenRenderState;)Lnet/minecraft/resources/Identifier;
+         8: areturn
+
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #78                 // class net/minecraft/world/entity/monster/warden/Warden
+         5: aload_2
+         6: checkcast     #68                 // class net/minecraft/client/renderer/entity/state/WardenRenderState
+         9: fload_3
+        10: invokevirtual #124                // Method extractRenderState:(Lnet/minecraft/world/entity/monster/warden/Warden;Lnet/minecraft/client/renderer/entity/state/WardenRenderState;F)V
+        13: return
+
+  public net.minecraft.client.renderer.entity.state.EntityRenderState createRenderState();
+    Code:
+         0: aload_0
+         1: invokevirtual #131                // Method createRenderState:()Lnet/minecraft/client/renderer/entity/state/WardenRenderState;
+         4: areturn
+
+  private static float lambda$new$9(net.minecraft.client.renderer.entity.state.WardenRenderState, float);
+    Code:
+         0: aload_0
+         1: getfield      #90                 // Field net/minecraft/client/renderer/entity/state/WardenRenderState.heartAnimation:F
+         4: freturn
+
+  private static net.minecraft.resources.Identifier lambda$new$8(net.minecraft.client.renderer.entity.state.WardenRenderState);
+    Code:
+         0: getstatic     #135                // Field HEART_TEXTURE:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  private static float lambda$new$7(net.minecraft.client.renderer.entity.state.WardenRenderState, float);
+    Code:
+         0: aload_0
+         1: getfield      #83                 // Field net/minecraft/client/renderer/entity/state/WardenRenderState.tendrilAnimation:F
+         4: freturn
+
+  private static net.minecraft.resources.Identifier lambda$new$6(net.minecraft.client.renderer.entity.state.WardenRenderState);
+    Code:
+         0: getstatic     #64                 // Field TEXTURE:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  private static float lambda$new$5(net.minecraft.client.renderer.entity.state.WardenRenderState, float);
+    Code:
+         0: fconst_0
+         1: fload_1
+         2: ldc           #138                // float 0.045f
+         4: fmul
+         5: ldc           #141                // float 3.1415927f
+         7: fadd
+         8: f2d
+         9: invokestatic  #142                // Method net/minecraft/util/Mth.cos:(D)F
+        12: ldc           #146                // float 0.25f
+        14: fmul
+        15: invokestatic  #147                // Method java/lang/Math.max:(FF)F
+        18: freturn
+
+  private static net.minecraft.resources.Identifier lambda$new$4(net.minecraft.client.renderer.entity.state.WardenRenderState);
+    Code:
+         0: getstatic     #153                // Field PULSATING_SPOTS_TEXTURE_2:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  private static float lambda$new$3(net.minecraft.client.renderer.entity.state.WardenRenderState, float);
+    Code:
+         0: fconst_0
+         1: fload_1
+         2: ldc           #138                // float 0.045f
+         4: fmul
+         5: f2d
+         6: invokestatic  #142                // Method net/minecraft/util/Mth.cos:(D)F
+         9: ldc           #146                // float 0.25f
+        11: fmul
+        12: invokestatic  #147                // Method java/lang/Math.max:(FF)F
+        15: freturn
+
+  private static net.minecraft.resources.Identifier lambda$new$2(net.minecraft.client.renderer.entity.state.WardenRenderState);
+    Code:
+         0: getstatic     #156                // Field PULSATING_SPOTS_TEXTURE_1:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  private static float lambda$new$1(net.minecraft.client.renderer.entity.state.WardenRenderState, float);
+    Code:
+         0: fconst_1
+         1: freturn
+
+  private static net.minecraft.resources.Identifier lambda$new$0(net.minecraft.client.renderer.entity.state.WardenRenderState);
+    Code:
+         0: getstatic     #159                // Field BIOLUMINESCENT_LAYER_TEXTURE:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  static {};
+    Code:
+         0: ldc           #162                // String textures/entity/warden/warden.png
+         2: invokestatic  #164                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+         5: putstatic     #64                 // Field TEXTURE:Lnet/minecraft/resources/Identifier;
+         8: ldc           #170                // String textures/entity/warden/warden_bioluminescent_layer.png
+        10: invokestatic  #164                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+        13: putstatic     #159                // Field BIOLUMINESCENT_LAYER_TEXTURE:Lnet/minecraft/resources/Identifier;
+        16: ldc           #172                // String textures/entity/warden/warden_heart.png
+        18: invokestatic  #164                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+        21: putstatic     #135                // Field HEART_TEXTURE:Lnet/minecraft/resources/Identifier;
+        24: ldc           #174                // String textures/entity/warden/warden_pulsating_spots_1.png
+        26: invokestatic  #164                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+        29: putstatic     #156                // Field PULSATING_SPOTS_TEXTURE_1:Lnet/minecraft/resources/Identifier;
+        32: ldc           #176                // String textures/entity/warden/warden_pulsating_spots_2.png
+        34: invokestatic  #164                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+        37: putstatic     #153                // Field PULSATING_SPOTS_TEXTURE_2:Lnet/minecraft/resources/Identifier;
+        40: return
+}

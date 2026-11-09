@@ -1,0 +1,113 @@
+Compiled from "VillagerHostilesSensor.java"
+public class net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor extends net.minecraft.world.entity.ai.sensing.NearestVisibleLivingEntitySensor {
+  private static final com.google.common.collect.ImmutableMap<net.minecraft.world.entity.EntityType<?>, java.lang.Float> ACCEPTABLE_DISTANCE_FROM_HOSTILES;
+
+  public net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/world/entity/ai/sensing/NearestVisibleLivingEntitySensor."<init>":()V
+         4: return
+
+  protected boolean isMatchingEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: aload_0
+         1: aload_3
+         2: invokevirtual #7                  // Method isHostile:(Lnet/minecraft/world/entity/LivingEntity;)Z
+         5: ifeq          21
+         8: aload_0
+         9: aload_2
+        10: aload_3
+        11: invokevirtual #13                 // Method isClose:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z
+        14: ifeq          21
+        17: iconst_1
+        18: goto          22
+        21: iconst_0
+        22: ireturn
+
+  private boolean isClose(net.minecraft.world.entity.LivingEntity, net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: getstatic     #17                 // Field ACCEPTABLE_DISTANCE_FROM_HOSTILES:Lcom/google/common/collect/ImmutableMap;
+         3: aload_2
+         4: invokevirtual #21                 // Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;
+         7: invokevirtual #27                 // Method com/google/common/collect/ImmutableMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+        10: checkcast     #33                 // class java/lang/Float
+        13: invokevirtual #35                 // Method java/lang/Float.floatValue:()F
+        16: fstore_3
+        17: aload_2
+        18: aload_1
+        19: invokevirtual #39                 // Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(Lnet/minecraft/world/entity/Entity;)D
+        22: fload_3
+        23: fload_3
+        24: fmul
+        25: f2d
+        26: dcmpg
+        27: ifgt          34
+        30: iconst_1
+        31: goto          35
+        34: iconst_0
+        35: ireturn
+
+  protected net.minecraft.world.entity.ai.memory.MemoryModuleType<net.minecraft.world.entity.LivingEntity> getMemoryToSet();
+    Code:
+         0: getstatic     #43                 // Field net/minecraft/world/entity/ai/memory/MemoryModuleType.NEAREST_HOSTILE:Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;
+         3: areturn
+
+  private boolean isHostile(net.minecraft.world.entity.LivingEntity);
+    Code:
+         0: getstatic     #17                 // Field ACCEPTABLE_DISTANCE_FROM_HOSTILES:Lcom/google/common/collect/ImmutableMap;
+         3: aload_1
+         4: invokevirtual #21                 // Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;
+         7: invokevirtual #49                 // Method com/google/common/collect/ImmutableMap.containsKey:(Ljava/lang/Object;)Z
+        10: ireturn
+
+  static {};
+    Code:
+         0: invokestatic  #53                 // Method com/google/common/collect/ImmutableMap.builder:()Lcom/google/common/collect/ImmutableMap$Builder;
+         3: getstatic     #57                 // Field net/minecraft/world/entity/EntityTypes.DROWNED:Lnet/minecraft/world/entity/EntityType;
+         6: ldc           #63                 // float 8.0f
+         8: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        11: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        14: getstatic     #74                 // Field net/minecraft/world/entity/EntityTypes.EVOKER:Lnet/minecraft/world/entity/EntityType;
+        17: ldc           #77                 // float 12.0f
+        19: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        22: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        25: getstatic     #78                 // Field net/minecraft/world/entity/EntityTypes.HUSK:Lnet/minecraft/world/entity/EntityType;
+        28: ldc           #63                 // float 8.0f
+        30: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        33: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        36: getstatic     #81                 // Field net/minecraft/world/entity/EntityTypes.ILLUSIONER:Lnet/minecraft/world/entity/EntityType;
+        39: ldc           #77                 // float 12.0f
+        41: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        44: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        47: getstatic     #84                 // Field net/minecraft/world/entity/EntityTypes.PILLAGER:Lnet/minecraft/world/entity/EntityType;
+        50: ldc           #87                 // float 15.0f
+        52: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        55: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        58: getstatic     #88                 // Field net/minecraft/world/entity/EntityTypes.RAVAGER:Lnet/minecraft/world/entity/EntityType;
+        61: ldc           #77                 // float 12.0f
+        63: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        66: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        69: getstatic     #91                 // Field net/minecraft/world/entity/EntityTypes.VEX:Lnet/minecraft/world/entity/EntityType;
+        72: ldc           #63                 // float 8.0f
+        74: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        77: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        80: getstatic     #94                 // Field net/minecraft/world/entity/EntityTypes.VINDICATOR:Lnet/minecraft/world/entity/EntityType;
+        83: ldc           #97                 // float 10.0f
+        85: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        88: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+        91: getstatic     #98                 // Field net/minecraft/world/entity/EntityTypes.ZOGLIN:Lnet/minecraft/world/entity/EntityType;
+        94: ldc           #97                 // float 10.0f
+        96: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+        99: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+       102: getstatic     #101                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE:Lnet/minecraft/world/entity/EntityType;
+       105: ldc           #63                 // float 8.0f
+       107: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+       110: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+       113: getstatic     #104                // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_VILLAGER:Lnet/minecraft/world/entity/EntityType;
+       116: ldc           #63                 // float 8.0f
+       118: invokestatic  #64                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+       121: invokevirtual #68                 // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+       124: invokevirtual #107                // Method com/google/common/collect/ImmutableMap$Builder.build:()Lcom/google/common/collect/ImmutableMap;
+       127: putstatic     #17                 // Field ACCEPTABLE_DISTANCE_FROM_HOSTILES:Lcom/google/common/collect/ImmutableMap;
+       130: return
+}

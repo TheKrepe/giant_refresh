@@ -1,0 +1,14 @@
+Compiled from "AbstractSkullBlock.java"
+public abstract class net.minecraft.world.level.block.AbstractSkullBlock extends net.minecraft.world.level.block.BaseEntityBlock {
+  public static final net.minecraft.world.level.block.state.properties.BooleanProperty POWERED;
+  private final net.minecraft.world.level.block.SkullBlock$Type type;
+  public net.minecraft.world.level.block.AbstractSkullBlock(net.minecraft.world.level.block.SkullBlock$Type, net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public <T extends net.minecraft.world.level.block.entity.BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.BlockEntityType<T>);
+  public net.minecraft.world.level.block.SkullBlock$Type getType();
+  protected boolean isPathfindable(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.pathfinder.PathComputationType);
+  protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition$Builder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.state.BlockState>);
+  public net.minecraft.world.level.block.state.BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext);
+  protected void neighborChanged(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation, boolean);
+  static {};
+}

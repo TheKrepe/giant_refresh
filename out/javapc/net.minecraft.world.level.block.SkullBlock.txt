@@ -1,0 +1,149 @@
+Compiled from "SkullBlock.java"
+public class net.minecraft.world.level.block.SkullBlock extends net.minecraft.world.level.block.AbstractSkullBlock {
+  public static final int MAX;
+
+  private static final int ROTATIONS;
+
+  public static final net.minecraft.world.level.block.state.properties.IntegerProperty ROTATION;
+
+  private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE;
+
+  private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE_PIGLIN;
+
+  private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE_DRAGON_OUTLINE;
+
+  protected net.minecraft.world.level.block.SkullBlock(net.minecraft.world.level.block.SkullBlock$Type, net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokespecial #1                  // Method net/minecraft/world/level/block/AbstractSkullBlock."<init>":(Lnet/minecraft/world/level/block/SkullBlock$Type;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+         6: aload_0
+         7: aload_0
+         8: invokevirtual #7                  // Method defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+        11: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+        14: iconst_0
+        15: invokestatic  #17                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        18: invokevirtual #23                 // Method net/minecraft/world/level/block/state/BlockState.setValue:(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;
+        21: checkcast     #24                 // class net/minecraft/world/level/block/state/BlockState
+        24: invokevirtual #29                 // Method registerDefaultState:(Lnet/minecraft/world/level/block/state/BlockState;)V
+        27: return
+
+  protected net.minecraft.world.phys.shapes.VoxelShape getShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+    Code:
+         0: aload_0
+         1: invokevirtual #33                 // Method getType:()Lnet/minecraft/world/level/block/SkullBlock$Type;
+         4: getstatic     #37                 // Field net/minecraft/world/level/block/SkullBlock$Types.DRAGON:Lnet/minecraft/world/level/block/SkullBlock$Types;
+         7: if_acmpne     14
+        10: getstatic     #43                 // Field SHAPE_DRAGON_OUTLINE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        13: areturn
+        14: aload_0
+        15: aload_1
+        16: aload_2
+        17: aload_3
+        18: aload         4
+        20: invokevirtual #47                 // Method getCollisionShape:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        23: areturn
+
+  protected net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+    Code:
+         0: aload_0
+         1: invokevirtual #33                 // Method getType:()Lnet/minecraft/world/level/block/SkullBlock$Type;
+         4: getstatic     #51                 // Field net/minecraft/world/level/block/SkullBlock$Types.PIGLIN:Lnet/minecraft/world/level/block/SkullBlock$Types;
+         7: if_acmpne     16
+        10: getstatic     #54                 // Field SHAPE_PIGLIN:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        13: goto          19
+        16: getstatic     #57                 // Field SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        19: areturn
+
+  public net.minecraft.world.level.block.state.BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #60                 // Method net/minecraft/world/level/block/AbstractSkullBlock.getStateForPlacement:(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;
+         5: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+         8: aload_1
+         9: invokevirtual #64                 // Method net/minecraft/world/item/context/BlockPlaceContext.getRotation:()F
+        12: invokestatic  #70                 // Method net/minecraft/world/level/block/state/properties/RotationSegment.convertToSegment:(F)I
+        15: invokestatic  #17                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        18: invokevirtual #23                 // Method net/minecraft/world/level/block/state/BlockState.setValue:(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;
+        21: checkcast     #24                 // class net/minecraft/world/level/block/state/BlockState
+        24: areturn
+
+  protected net.minecraft.world.level.block.state.BlockState rotate(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.Rotation);
+    Code:
+         0: aload_1
+         1: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+         4: aload_2
+         5: aload_1
+         6: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+         9: invokevirtual #76                 // Method net/minecraft/world/level/block/state/BlockState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;
+        12: checkcast     #18                 // class java/lang/Integer
+        15: invokevirtual #80                 // Method java/lang/Integer.intValue:()I
+        18: getstatic     #84                 // Field ROTATIONS:I
+        21: invokevirtual #88                 // Method net/minecraft/world/level/block/Rotation.rotate:(II)I
+        24: invokestatic  #17                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        27: invokevirtual #23                 // Method net/minecraft/world/level/block/state/BlockState.setValue:(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;
+        30: checkcast     #24                 // class net/minecraft/world/level/block/state/BlockState
+        33: areturn
+
+  protected net.minecraft.world.level.block.state.BlockState mirror(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.Mirror);
+    Code:
+         0: aload_1
+         1: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+         4: aload_2
+         5: aload_1
+         6: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+         9: invokevirtual #76                 // Method net/minecraft/world/level/block/state/BlockState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;
+        12: checkcast     #18                 // class java/lang/Integer
+        15: invokevirtual #80                 // Method java/lang/Integer.intValue:()I
+        18: getstatic     #84                 // Field ROTATIONS:I
+        21: invokevirtual #94                 // Method net/minecraft/world/level/block/Mirror.mirror:(II)I
+        24: invokestatic  #17                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        27: invokevirtual #23                 // Method net/minecraft/world/level/block/state/BlockState.setValue:(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;
+        30: checkcast     #24                 // class net/minecraft/world/level/block/state/BlockState
+        33: areturn
+
+  protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition$Builder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.state.BlockState>);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokespecial #99                 // Method net/minecraft/world/level/block/AbstractSkullBlock.createBlockStateDefinition:(Lnet/minecraft/world/level/block/state/StateDefinition$Builder;)V
+         5: aload_1
+         6: iconst_1
+         7: anewarray     #103                // class net/minecraft/world/level/block/state/properties/Property
+        10: dup
+        11: iconst_0
+        12: getstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+        15: aastore
+        16: invokevirtual #105                // Method net/minecraft/world/level/block/state/StateDefinition$Builder.add:([Lnet/minecraft/world/level/block/state/properties/Property;)Lnet/minecraft/world/level/block/state/StateDefinition$Builder;
+        19: pop
+        20: return
+
+  static {};
+    Code:
+         0: invokestatic  #111                // Method net/minecraft/world/level/block/state/properties/RotationSegment.getMaxSegmentIndex:()I
+         3: putstatic     #114                // Field MAX:I
+         6: getstatic     #114                // Field MAX:I
+         9: iconst_1
+        10: iadd
+        11: putstatic     #84                 // Field ROTATIONS:I
+        14: getstatic     #117                // Field net/minecraft/world/level/block/state/properties/BlockStateProperties.ROTATION_16:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+        17: putstatic     #13                 // Field ROTATION:Lnet/minecraft/world/level/block/state/properties/IntegerProperty;
+        20: ldc2_w        #122                // double 8.0d
+        23: dconst_0
+        24: ldc2_w        #122                // double 8.0d
+        27: invokestatic  #124                // Method net/minecraft/world/level/block/Block.column:(DDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        30: putstatic     #57                 // Field SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        33: ldc2_w        #130                // double 10.0d
+        36: dconst_0
+        37: ldc2_w        #122                // double 8.0d
+        40: invokestatic  #124                // Method net/minecraft/world/level/block/Block.column:(DDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        43: putstatic     #54                 // Field SHAPE_PIGLIN:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        46: ldc2_w        #122                // double 8.0d
+        49: dconst_0
+        50: ldc2_w        #132                // double 8.5d
+        53: invokestatic  #124                // Method net/minecraft/world/level/block/Block.column:(DDD)Lnet/minecraft/world/phys/shapes/VoxelShape;
+        56: putstatic     #43                 // Field SHAPE_DRAGON_OUTLINE:Lnet/minecraft/world/phys/shapes/VoxelShape;
+        59: return
+}

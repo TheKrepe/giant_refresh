@@ -1,0 +1,77 @@
+Compiled from "LivingEntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.LivingEntityRenderState extends net.minecraft.client.renderer.entity.state.EntityRenderState {
+  public float bodyRot;
+
+  public float yRot;
+
+  public float xRot;
+
+  public float deathTime;
+
+  public float walkAnimationPos;
+
+  public float walkAnimationSpeed;
+
+  public float scale;
+
+  public float ageScale;
+
+  public float ticksSinceKineticHitFeedback;
+
+  public boolean isUpsideDown;
+
+  public boolean isFullyFrozen;
+
+  public boolean isBaby;
+
+  public boolean isInWater;
+
+  public boolean isAutoSpinAttack;
+
+  public boolean hasRedOverlay;
+
+  public boolean isInvisibleToPlayer;
+
+  public net.minecraft.core.Direction bedOrientation;
+
+  public net.minecraft.world.entity.Pose pose;
+
+  public final net.minecraft.client.renderer.item.ItemStackRenderState headItem;
+
+  public float wornHeadAnimationPos;
+
+  public net.minecraft.world.level.block.SkullBlock$Type wornHeadType;
+
+  public net.minecraft.world.item.component.ResolvableProfile wornHeadProfile;
+
+  public net.minecraft.client.renderer.entity.state.LivingEntityRenderState();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method net/minecraft/client/renderer/entity/state/EntityRenderState."<init>":()V
+         4: aload_0
+         5: fconst_1
+         6: putfield      #7                  // Field scale:F
+         9: aload_0
+        10: fconst_1
+        11: putfield      #13                 // Field ageScale:F
+        14: aload_0
+        15: getstatic     #16                 // Field net/minecraft/world/entity/Pose.STANDING:Lnet/minecraft/world/entity/Pose;
+        18: putfield      #22                 // Field pose:Lnet/minecraft/world/entity/Pose;
+        21: aload_0
+        22: new           #25                 // class net/minecraft/client/renderer/item/ItemStackRenderState
+        25: dup
+        26: invokespecial #27                 // Method net/minecraft/client/renderer/item/ItemStackRenderState."<init>":()V
+        29: putfield      #28                 // Field headItem:Lnet/minecraft/client/renderer/item/ItemStackRenderState;
+        32: return
+
+  public boolean hasPose(net.minecraft.world.entity.Pose);
+    Code:
+         0: aload_0
+         1: getfield      #22                 // Field pose:Lnet/minecraft/world/entity/Pose;
+         4: aload_1
+         5: if_acmpne     12
+         8: iconst_1
+         9: goto          13
+        12: iconst_0
+        13: ireturn
+}

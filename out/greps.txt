@@ -1,0 +1,630 @@
+== Items ZOMBIE_SPAWN_EGG/ ZOMBIE_HEAD
+1959-  public static final net.minecraft.world.item.Item IRON_GOLEM_SPAWN_EGG;
+1960-
+1961-  public static final net.minecraft.world.item.Item SNOW_GOLEM_SPAWN_EGG;
+1962-
+1963-  public static final net.minecraft.world.item.Item TRADER_LLAMA_SPAWN_EGG;
+1964-
+1965-  public static final net.minecraft.world.item.Item VILLAGER_SPAWN_EGG;
+1966-
+1967-  public static final net.minecraft.world.item.Item WANDERING_TRADER_SPAWN_EGG;
+1968-
+1969-  public static final net.minecraft.world.item.Item BOGGED_SPAWN_EGG;
+1970-
+1971-  public static final net.minecraft.world.item.Item CAMEL_HUSK_SPAWN_EGG;
+1972-
+1973-  public static final net.minecraft.world.item.Item DROWNED_SPAWN_EGG;
+1974-
+1975-  public static final net.minecraft.world.item.Item HUSK_SPAWN_EGG;
+1976-
+1977-  public static final net.minecraft.world.item.Item PARCHED_SPAWN_EGG;
+1978-
+1979-  public static final net.minecraft.world.item.Item SKELETON_SPAWN_EGG;
+1980-
+1981-  public static final net.minecraft.world.item.Item SKELETON_HORSE_SPAWN_EGG;
+1982-
+1983-  public static final net.minecraft.world.item.Item STRAY_SPAWN_EGG;
+1984-
+1985-  public static final net.minecraft.world.item.Item WITHER_SPAWN_EGG;
+1986-
+1987-  public static final net.minecraft.world.item.Item WITHER_SKELETON_SPAWN_EGG;
+1988-
+1989:  public static final net.minecraft.world.item.Item ZOMBIE_SPAWN_EGG;
+1990-
+1991-  public static final net.minecraft.world.item.Item ZOMBIE_HORSE_SPAWN_EGG;
+1992-
+--
+2067-  public static final net.minecraft.world.item.Item WRITTEN_BOOK;
+2068-
+2069-  public static final net.minecraft.world.item.Item BREEZE_ROD;
+2070-
+2071-  public static final net.minecraft.world.item.Item MACE;
+2072-
+2073-  public static final net.minecraft.world.item.Item ITEM_FRAME;
+2074-
+2075-  public static final net.minecraft.world.item.Item GLOW_ITEM_FRAME;
+2076-
+2077-  public static final net.minecraft.world.item.Item FLOWER_POT;
+2078-
+2079-  public static final net.minecraft.world.item.Item CARROT;
+2080-
+2081-  public static final net.minecraft.world.item.Item POTATO;
+2082-
+2083-  public static final net.minecraft.world.item.Item BAKED_POTATO;
+2084-
+2085-  public static final net.minecraft.world.item.Item POISONOUS_POTATO;
+2086-
+2087-  public static final net.minecraft.world.item.Item MAP;
+2088-
+2089-  public static final net.minecraft.world.item.Item GOLDEN_CARROT;
+2090-
+2091-  public static final net.minecraft.world.item.Item SKELETON_SKULL;
+2092-
+2093-  public static final net.minecraft.world.item.Item WITHER_SKELETON_SKULL;
+2094-
+2095-  public static final net.minecraft.world.item.Item PLAYER_HEAD;
+2096-
+2097:  public static final net.minecraft.world.item.Item ZOMBIE_HEAD;
+2098-
+2099-  public static final net.minecraft.world.item.Item CREEPER_HEAD;
+2100-
+--
+11297-      17196: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11298-      17199: getstatic     #7489              // Field net/minecraft/world/food/Foods.BEEF:Lnet/minecraft/world/food/FoodProperties;
+11299-      17202: invokevirtual #6174              // Method net/minecraft/world/item/Item$Properties.food:(Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/Item$Properties;
+11300-      17205: invokestatic  #669               // Method registerItem:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11301-      17208: putstatic     #7491              // Field BEEF:Lnet/minecraft/world/item/Item;
+11302-      17211: getstatic     #7493              // Field net/minecraft/references/ItemIds.COOKED_BEEF:Lnet/minecraft/resources/ResourceKey;
+11303-      17214: new           #16                // class net/minecraft/world/item/Item$Properties
+11304-      17217: dup
+11305-      17218: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11306-      17221: getstatic     #7496              // Field net/minecraft/world/food/Foods.COOKED_BEEF:Lnet/minecraft/world/food/FoodProperties;
+11307-      17224: invokevirtual #6174              // Method net/minecraft/world/item/Item$Properties.food:(Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/Item$Properties;
+11308-      17227: invokestatic  #669               // Method registerItem:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11309-      17230: putstatic     #7498              // Field COOKED_BEEF:Lnet/minecraft/world/item/Item;
+11310-      17233: getstatic     #7500              // Field net/minecraft/references/ItemIds.CHICKEN:Lnet/minecraft/resources/ResourceKey;
+11311-      17236: new           #16                // class net/minecraft/world/item/Item$Properties
+11312-      17239: dup
+11313-      17240: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11314-      17243: getstatic     #7503              // Field net/minecraft/world/food/Foods.CHICKEN:Lnet/minecraft/world/food/FoodProperties;
+11315-      17246: getstatic     #7505              // Field net/minecraft/world/item/component/Consumables.CHICKEN:Lnet/minecraft/world/item/component/Consumable;
+11316-      17249: invokevirtual #6773              // Method net/minecraft/world/item/Item$Properties.food:(Lnet/minecraft/world/food/FoodProperties;Lnet/minecraft/world/item/component/Consumable;)Lnet/minecraft/world/item/Item$Properties;
+11317-      17252: invokestatic  #669               // Method registerItem:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11318-      17255: putstatic     #7507              // Field CHICKEN:Lnet/minecraft/world/item/Item;
+11319-      17258: getstatic     #7509              // Field net/minecraft/references/ItemIds.COOKED_CHICKEN:Lnet/minecraft/resources/ResourceKey;
+11320-      17261: new           #16                // class net/minecraft/world/item/Item$Properties
+11321-      17264: dup
+11322-      17265: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11323-      17268: getstatic     #7512              // Field net/minecraft/world/food/Foods.COOKED_CHICKEN:Lnet/minecraft/world/food/FoodProperties;
+11324-      17271: invokevirtual #6174              // Method net/minecraft/world/item/Item$Properties.food:(Lnet/minecraft/world/food/FoodProperties;)Lnet/minecraft/world/item/Item$Properties;
+11325-      17274: invokestatic  #669               // Method registerItem:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11326-      17277: putstatic     #7514              // Field COOKED_CHICKEN:Lnet/minecraft/world/item/Item;
+11327:      17280: getstatic     #7516              // Field net/minecraft/references/ItemIds.ROTTEN_FLESH:Lnet/minecraft/resources/ResourceKey;
+11328-      17283: new           #16                // class net/minecraft/world/item/Item$Properties
+11329-      17286: dup
+11330-      17287: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11331:      17290: getstatic     #7519              // Field net/minecraft/world/food/Foods.ROTTEN_FLESH:Lnet/minecraft/world/food/FoodProperties;
+11332:      17293: getstatic     #7521              // Field net/minecraft/world/item/component/Consumables.ROTTEN_FLESH:Lnet/minecraft/world/item/component/Consumable;
+11333-      17296: invokevirtual #6773              // Method net/minecraft/world/item/Item$Properties.food:(Lnet/minecraft/world/food/FoodProperties;Lnet/minecraft/world/item/component/Consumable;)Lnet/minecraft/world/item/Item$Properties;
+11334-      17299: invokestatic  #669               // Method registerItem:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11335:      17302: putstatic     #7523              // Field ROTTEN_FLESH:Lnet/minecraft/world/item/Item;
+11336-      17305: getstatic     #7525              // Field net/minecraft/references/ItemIds.ENDER_PEARL:Lnet/minecraft/resources/ResourceKey;
+11337-      17308: invokedynamic #7528,  0          // InvokeDynamic #311:apply:()Ljava/util/function/Function;
+11338-      17313: new           #16                // class net/minecraft/world/item/Item$Properties
+--
+11627-      18151: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11628-      18154: putstatic     #7996              // Field DROWNED_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11629-      18157: getstatic     #7998              // Field net/minecraft/references/ItemIds.HUSK_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11630-      18160: getstatic     #8001              // Field net/minecraft/world/entity/EntityTypes.HUSK:Lnet/minecraft/world/entity/EntityType;
+11631-      18163: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11632-      18166: putstatic     #8004              // Field HUSK_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11633-      18169: getstatic     #8006              // Field net/minecraft/references/ItemIds.PARCHED_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11634-      18172: getstatic     #8009              // Field net/minecraft/world/entity/EntityTypes.PARCHED:Lnet/minecraft/world/entity/EntityType;
+11635-      18175: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11636-      18178: putstatic     #8012              // Field PARCHED_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11637-      18181: getstatic     #8014              // Field net/minecraft/references/ItemIds.SKELETON_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11638-      18184: getstatic     #8017              // Field net/minecraft/world/entity/EntityTypes.SKELETON:Lnet/minecraft/world/entity/EntityType;
+11639-      18187: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11640-      18190: putstatic     #8020              // Field SKELETON_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11641-      18193: getstatic     #8022              // Field net/minecraft/references/ItemIds.SKELETON_HORSE_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11642-      18196: getstatic     #8025              // Field net/minecraft/world/entity/EntityTypes.SKELETON_HORSE:Lnet/minecraft/world/entity/EntityType;
+11643-      18199: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11644-      18202: putstatic     #8028              // Field SKELETON_HORSE_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11645-      18205: getstatic     #8030              // Field net/minecraft/references/ItemIds.STRAY_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11646-      18208: getstatic     #8033              // Field net/minecraft/world/entity/EntityTypes.STRAY:Lnet/minecraft/world/entity/EntityType;
+11647-      18211: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11648-      18214: putstatic     #8036              // Field STRAY_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11649-      18217: getstatic     #8038              // Field net/minecraft/references/ItemIds.WITHER_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11650-      18220: getstatic     #8041              // Field net/minecraft/world/entity/EntityTypes.WITHER:Lnet/minecraft/world/entity/EntityType;
+11651-      18223: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11652-      18226: putstatic     #8044              // Field WITHER_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11653-      18229: getstatic     #8046              // Field net/minecraft/references/ItemIds.WITHER_SKELETON_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11654-      18232: getstatic     #8049              // Field net/minecraft/world/entity/EntityTypes.WITHER_SKELETON:Lnet/minecraft/world/entity/EntityType;
+11655-      18235: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11656-      18238: putstatic     #8052              // Field WITHER_SKELETON_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11657:      18241: getstatic     #8054              // Field net/minecraft/references/ItemIds.ZOMBIE_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11658-      18244: getstatic     #8057              // Field net/minecraft/world/entity/EntityTypes.ZOMBIE:Lnet/minecraft/world/entity/EntityType;
+11659-      18247: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+11660:      18250: putstatic     #8060              // Field ZOMBIE_SPAWN_EGG:Lnet/minecraft/world/item/Item;
+11661-      18253: getstatic     #8062              // Field net/minecraft/references/ItemIds.ZOMBIE_HORSE_SPAWN_EGG:Lnet/minecraft/resources/ResourceKey;
+11662-      18256: getstatic     #8065              // Field net/minecraft/world/entity/EntityTypes.ZOMBIE_HORSE:Lnet/minecraft/world/entity/EntityType;
+11663-      18259: invokestatic  #7656              // Method registerSpawnEgg:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/item/Item;
+--
+11961-      19131: iconst_0
+11962-      19132: getstatic     #8480              // Field net/minecraft/world/entity/EntityTypeIds.SKELETON:Lnet/minecraft/resources/ResourceKey;
+11963-      19135: aastore
+11964-      19136: invokevirtual #8484              // Method net/minecraft/world/item/Item$Properties.loweredMobVisibility:([Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/Item$Properties;
+11965-      19139: invokestatic  #36                // Method registerBlock:(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11966-      19142: putstatic     #8488              // Field SKELETON_SKULL:Lnet/minecraft/world/item/Item;
+11967-      19145: getstatic     #8490              // Field net/minecraft/references/BlockItemIds.WITHER_SKELETON_SKULL:Lnet/minecraft/references/BlockItemId;
+11968-      19148: getstatic     #8493              // Field net/minecraft/world/level/block/Blocks.WITHER_SKELETON_SKULL:Lnet/minecraft/world/level/block/Block;
+11969-      19151: invokedynamic #8495,  0          // InvokeDynamic #326:apply:()Ljava/util/function/BiFunction;
+11970-      19156: new           #16                // class net/minecraft/world/item/Item$Properties
+11971-      19159: dup
+11972-      19160: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11973-      19163: getstatic     #4051              // Field net/minecraft/world/item/Rarity.RARE:Lnet/minecraft/world/item/Rarity;
+11974-      19166: invokevirtual #727               // Method net/minecraft/world/item/Item$Properties.rarity:(Lnet/minecraft/world/item/Rarity;)Lnet/minecraft/world/item/Item$Properties;
+11975-      19169: getstatic     #764               // Field net/minecraft/world/entity/EquipmentSlot.HEAD:Lnet/minecraft/world/entity/EquipmentSlot;
+11976-      19172: invokevirtual #8474              // Method net/minecraft/world/item/Item$Properties.equippableUnswappable:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/Item$Properties;
+11977-      19175: invokestatic  #36                // Method registerBlock:(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11978-      19178: putstatic     #8496              // Field WITHER_SKELETON_SKULL:Lnet/minecraft/world/item/Item;
+11979-      19181: getstatic     #8498              // Field net/minecraft/references/BlockItemIds.PLAYER_HEAD:Lnet/minecraft/references/BlockItemId;
+11980-      19184: getstatic     #8501              // Field net/minecraft/world/level/block/Blocks.PLAYER_HEAD:Lnet/minecraft/world/level/block/Block;
+11981-      19187: invokedynamic #8503,  0          // InvokeDynamic #327:apply:()Ljava/util/function/BiFunction;
+11982-      19192: new           #16                // class net/minecraft/world/item/Item$Properties
+11983-      19195: dup
+11984-      19196: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11985-      19199: getstatic     #721               // Field net/minecraft/world/item/Rarity.UNCOMMON:Lnet/minecraft/world/item/Rarity;
+11986-      19202: invokevirtual #727               // Method net/minecraft/world/item/Item$Properties.rarity:(Lnet/minecraft/world/item/Rarity;)Lnet/minecraft/world/item/Item$Properties;
+11987-      19205: getstatic     #764               // Field net/minecraft/world/entity/EquipmentSlot.HEAD:Lnet/minecraft/world/entity/EquipmentSlot;
+11988-      19208: invokevirtual #8474              // Method net/minecraft/world/item/Item$Properties.equippableUnswappable:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/Item$Properties;
+11989-      19211: invokestatic  #36                // Method registerBlock:(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+11990-      19214: putstatic     #8504              // Field PLAYER_HEAD:Lnet/minecraft/world/item/Item;
+11991:      19217: getstatic     #8506              // Field net/minecraft/references/BlockItemIds.ZOMBIE_HEAD:Lnet/minecraft/references/BlockItemId;
+11992:      19220: getstatic     #8509              // Field net/minecraft/world/level/block/Blocks.ZOMBIE_HEAD:Lnet/minecraft/world/level/block/Block;
+11993-      19223: invokedynamic #8511,  0          // InvokeDynamic #328:apply:()Ljava/util/function/BiFunction;
+11994-      19228: new           #16                // class net/minecraft/world/item/Item$Properties
+11995-      19231: dup
+11996-      19232: invokespecial #18                // Method net/minecraft/world/item/Item$Properties."<init>":()V
+11997-      19235: getstatic     #721               // Field net/minecraft/world/item/Rarity.UNCOMMON:Lnet/minecraft/world/item/Rarity;
+11998-      19238: invokevirtual #727               // Method net/minecraft/world/item/Item$Properties.rarity:(Lnet/minecraft/world/item/Rarity;)Lnet/minecraft/world/item/Item$Properties;
+11999-      19241: getstatic     #764               // Field net/minecraft/world/entity/EquipmentSlot.HEAD:Lnet/minecraft/world/entity/EquipmentSlot;
+12000-      19244: invokevirtual #8474              // Method net/minecraft/world/item/Item$Properties.equippableUnswappable:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/Item$Properties;
+12001-      19247: iconst_1
+12002-      19248: anewarray     #8478              // class net/minecraft/resources/ResourceKey
+12003-      19251: dup
+12004-      19252: iconst_0
+12005-      19253: getstatic     #8512              // Field net/minecraft/world/entity/EntityTypeIds.ZOMBIE:Lnet/minecraft/resources/ResourceKey;
+12006-      19256: aastore
+12007-      19257: invokevirtual #8484              // Method net/minecraft/world/item/Item$Properties.loweredMobVisibility:([Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/Item$Properties;
+12008-      19260: invokestatic  #36                // Method registerBlock:(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/Block;Ljava/util/function/BiFunction;Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;
+12009:      19263: putstatic     #8514              // Field ZOMBIE_HEAD:Lnet/minecraft/world/item/Item;
+grep: write error: Broken pipe
+== Blocks ZOMBIE_HEAD
+821-  public static final net.minecraft.world.level.block.Block OAK_BUTTON;
+822-
+823-  public static final net.minecraft.world.level.block.Block SPRUCE_BUTTON;
+824-
+825-  public static final net.minecraft.world.level.block.Block BIRCH_BUTTON;
+826-
+827-  public static final net.minecraft.world.level.block.Block JUNGLE_BUTTON;
+828-
+829-  public static final net.minecraft.world.level.block.Block ACACIA_BUTTON;
+830-
+831-  public static final net.minecraft.world.level.block.Block CHERRY_BUTTON;
+832-
+833-  public static final net.minecraft.world.level.block.Block DARK_OAK_BUTTON;
+834-
+835-  public static final net.minecraft.world.level.block.Block PALE_OAK_BUTTON;
+836-
+837-  public static final net.minecraft.world.level.block.Block MANGROVE_BUTTON;
+838-
+839-  public static final net.minecraft.world.level.block.Block POPLAR_BUTTON;
+840-
+841-  public static final net.minecraft.world.level.block.Block BAMBOO_BUTTON;
+842-
+843-  public static final net.minecraft.world.level.block.Block SKELETON_SKULL;
+844-
+845-  public static final net.minecraft.world.level.block.Block SKELETON_WALL_SKULL;
+846-
+847-  public static final net.minecraft.world.level.block.Block WITHER_SKELETON_SKULL;
+848-
+849-  public static final net.minecraft.world.level.block.Block WITHER_SKELETON_WALL_SKULL;
+850-
+851:  public static final net.minecraft.world.level.block.Block ZOMBIE_HEAD;
+852-
+853-  public static final net.minecraft.world.level.block.Block ZOMBIE_WALL_HEAD;
+854-
+--
+10183-      11711: invokestatic  #30                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10184-      11714: getstatic     #1653              // Field net/minecraft/world/level/material/MapColor.SAND:Lnet/minecraft/world/level/material/MapColor;
+10185-      11717: invokevirtual #83                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.mapColor:(Lnet/minecraft/world/level/material/MapColor;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10186-      11720: getstatic     #3304              // Field net/minecraft/world/level/block/state/properties/NoteBlockInstrument.PLING:Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;
+10187-      11723: invokevirtual #49                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.instrument:(Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10188-      11726: ldc_w         #953               // float 0.3f
+10189-      11729: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10190-      11732: getstatic     #954               // Field net/minecraft/world/level/block/SoundType.GLASS:Lnet/minecraft/world/level/block/SoundType;
+10191-      11735: invokevirtual #57                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.sound:(Lnet/minecraft/world/level/block/SoundType;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10192-      11738: invokedynamic #3307,  0          // InvokeDynamic #230:applyAsInt:()Ljava/util/function/ToIntFunction;
+10193-      11743: invokevirtual #160               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.lightLevel:(Ljava/util/function/ToIntFunction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10194-      11746: invokedynamic #101,  0           // InvokeDynamic #5:test:()Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;
+10195-      11751: invokevirtual #118               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.isRedstoneConductor:(Lnet/minecraft/world/level/block/state/BlockBehaviour$StatePredicate;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10196-      11754: invokestatic  #1571              // Method register:(Lnet/minecraft/references/BlockItemId;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+10197-      11757: putstatic     #3308              // Field GLOWSTONE:Lnet/minecraft/world/level/block/Block;
+10198-      11760: getstatic     #3310              // Field net/minecraft/references/BlockIds.NETHER_PORTAL:Lnet/minecraft/resources/ResourceKey;
+10199-      11763: invokedynamic #3313,  0          // InvokeDynamic #231:apply:()Ljava/util/function/Function;
+10200-      11768: invokestatic  #30                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10201-      11771: invokevirtual #143               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.noCollision:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10202-      11774: invokevirtual #87                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.randomTicks:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10203-      11777: ldc_w         #1774              // float -1.0f
+10204-      11780: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10205-      11783: getstatic     #954               // Field net/minecraft/world/level/block/SoundType.GLASS:Lnet/minecraft/world/level/block/SoundType;
+10206-      11786: invokevirtual #57                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.sound:(Lnet/minecraft/world/level/block/SoundType;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10207-      11789: invokedynamic #3314,  0          // InvokeDynamic #232:applyAsInt:()Ljava/util/function/ToIntFunction;
+10208-      11794: invokevirtual #160               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.lightLevel:(Ljava/util/function/ToIntFunction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10209-      11797: getstatic     #140               // Field net/minecraft/world/level/material/PushReaction.IMMOVEABLE:Lnet/minecraft/world/level/material/PushReaction;
+10210-      11800: invokevirtual #114               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.pushReaction:(Lnet/minecraft/world/level/material/PushReaction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10211-      11803: invokestatic  #184               // Method register:(Lnet/minecraft/resources/ResourceKey;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+10212-      11806: putstatic     #3315              // Field NETHER_PORTAL:Lnet/minecraft/world/level/block/Block;
+10213:      11809: getstatic     #3317              // Field net/minecraft/references/BlockItemIds.CARVED_PUMPKIN:Lnet/minecraft/references/BlockItemId;
+10214-      11812: invokedynamic #3320,  0          // InvokeDynamic #233:apply:()Ljava/util/function/Function;
+10215-      11817: invokestatic  #30                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10216-      11820: getstatic     #533               // Field net/minecraft/world/level/material/MapColor.COLOR_ORANGE:Lnet/minecraft/world/level/material/MapColor;
+10217-      11823: invokevirtual #83                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.mapColor:(Lnet/minecraft/world/level/material/MapColor;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10218-      11826: fconst_1
+10219-      11827: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10220-      11830: getstatic     #943               // Field net/minecraft/world/level/block/SoundType.WOOD:Lnet/minecraft/world/level/block/SoundType;
+10221-      11833: invokevirtual #57                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.sound:(Lnet/minecraft/world/level/block/SoundType;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10222-      11836: invokedynamic #3250,  0          // InvokeDynamic #220:test:()Lnet/minecraft/world/level/block/state/BlockBehaviour$StateArgumentPredicate;
+10223-      11841: invokevirtual #97                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.isValidSpawn:(Lnet/minecraft/world/level/block/state/BlockBehaviour$StateArgumentPredicate;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10224-      11844: getstatic     #108               // Field net/minecraft/world/level/material/PushReaction.POPPED:Lnet/minecraft/world/level/material/PushReaction;
+10225-      11847: invokevirtual #114               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.pushReaction:(Lnet/minecraft/world/level/material/PushReaction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+10226-      11850: invokestatic  #192               // Method register:(Lnet/minecraft/references/BlockItemId;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+10227:      11853: putstatic     #3321              // Field CARVED_PUMPKIN:Lnet/minecraft/world/level/block/Block;
+10228-      11856: getstatic     #3323              // Field net/minecraft/references/BlockItemIds.JACK_O_LANTERN:Lnet/minecraft/references/BlockItemId;
+10229-      11859: invokedynamic #3320,  0          // InvokeDynamic #233:apply:()Ljava/util/function/Function;
+10230-      11864: invokestatic  #30                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+--
+11470-      15820: invokestatic  #936               // Method wallVariant:(Lnet/minecraft/world/level/block/Block;Z)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11471-      15823: fconst_1
+11472-      15824: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11473-      15827: getstatic     #108               // Field net/minecraft/world/level/material/PushReaction.POPPED:Lnet/minecraft/world/level/material/PushReaction;
+11474-      15830: invokevirtual #114               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.pushReaction:(Lnet/minecraft/world/level/material/PushReaction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11475-      15833: invokestatic  #184               // Method register:(Lnet/minecraft/resources/ResourceKey;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+11476-      15836: putstatic     #4140              // Field SKELETON_WALL_SKULL:Lnet/minecraft/world/level/block/Block;
+11477-      15839: getstatic     #4142              // Field net/minecraft/references/BlockItemIds.WITHER_SKELETON_SKULL:Lnet/minecraft/references/BlockItemId;
+11478-      15842: invokedynamic #4145,  0          // InvokeDynamic #350:apply:()Ljava/util/function/Function;
+11479-      15847: invokestatic  #30                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11480-      15850: getstatic     #4146              // Field net/minecraft/world/level/block/state/properties/NoteBlockInstrument.WITHER_SKELETON:Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;
+11481-      15853: invokevirtual #49                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.instrument:(Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11482-      15856: fconst_1
+11483-      15857: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11484-      15860: getstatic     #108               // Field net/minecraft/world/level/material/PushReaction.POPPED:Lnet/minecraft/world/level/material/PushReaction;
+11485-      15863: invokevirtual #114               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.pushReaction:(Lnet/minecraft/world/level/material/PushReaction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11486-      15866: invokevirtual #90                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.noOcclusion:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11487-      15869: invokestatic  #192               // Method register:(Lnet/minecraft/references/BlockItemId;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+11488-      15872: putstatic     #4149              // Field WITHER_SKELETON_SKULL:Lnet/minecraft/world/level/block/Block;
+11489-      15875: getstatic     #4151              // Field net/minecraft/references/BlockIds.WITHER_SKELETON_WALL_SKULL:Lnet/minecraft/resources/ResourceKey;
+11490-      15878: invokedynamic #4154,  0          // InvokeDynamic #351:apply:()Ljava/util/function/Function;
+11491-      15883: getstatic     #4149              // Field WITHER_SKELETON_SKULL:Lnet/minecraft/world/level/block/Block;
+11492-      15886: iconst_1
+11493-      15887: invokestatic  #936               // Method wallVariant:(Lnet/minecraft/world/level/block/Block;Z)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11494-      15890: fconst_1
+11495-      15891: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11496-      15894: getstatic     #108               // Field net/minecraft/world/level/material/PushReaction.POPPED:Lnet/minecraft/world/level/material/PushReaction;
+11497-      15897: invokevirtual #114               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.pushReaction:(Lnet/minecraft/world/level/material/PushReaction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11498-      15900: invokestatic  #184               // Method register:(Lnet/minecraft/resources/ResourceKey;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+11499-      15903: putstatic     #4155              // Field WITHER_SKELETON_WALL_SKULL:Lnet/minecraft/world/level/block/Block;
+11500:      15906: getstatic     #4157              // Field net/minecraft/references/BlockItemIds.ZOMBIE_HEAD:Lnet/minecraft/references/BlockItemId;
+11501-      15909: invokedynamic #4160,  0          // InvokeDynamic #352:apply:()Ljava/util/function/Function;
+11502-      15914: invokestatic  #30                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.of:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11503-      15917: getstatic     #4161              // Field net/minecraft/world/level/block/state/properties/NoteBlockInstrument.ZOMBIE:Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;
+11504-      15920: invokevirtual #49                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.instrument:(Lnet/minecraft/world/level/block/state/properties/NoteBlockInstrument;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11505-      15923: fconst_1
+11506-      15924: invokevirtual #53                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.strength:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11507-      15927: getstatic     #108               // Field net/minecraft/world/level/material/PushReaction.POPPED:Lnet/minecraft/world/level/material/PushReaction;
+11508-      15930: invokevirtual #114               // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.pushReaction:(Lnet/minecraft/world/level/material/PushReaction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11509-      15933: invokevirtual #90                // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.noOcclusion:()Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11510-      15936: invokestatic  #192               // Method register:(Lnet/minecraft/references/BlockItemId;Ljava/util/function/Function;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)Lnet/minecraft/world/level/block/Block;
+11511:      15939: putstatic     #4163              // Field ZOMBIE_HEAD:Lnet/minecraft/world/level/block/Block;
+11512-      15942: getstatic     #4165              // Field net/minecraft/references/BlockIds.ZOMBIE_WALL_HEAD:Lnet/minecraft/resources/ResourceKey;
+11513-      15945: invokedynamic #4168,  0          // InvokeDynamic #353:apply:()Ljava/util/function/Function;
+11514:      15950: getstatic     #4163              // Field ZOMBIE_HEAD:Lnet/minecraft/world/level/block/Block;
+11515-      15953: iconst_1
+11516-      15954: invokestatic  #936               // Method wallVariant:(Lnet/minecraft/world/level/block/Block;Z)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+11517-      15957: fconst_1
+== EntityType GIANT
+102-
+103-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.projectile.EvokerFangs> EVOKER_FANGS;
+104-
+105-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownExperienceBottle> EXPERIENCE_BOTTLE;
+106-
+107-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.ExperienceOrb> EXPERIENCE_ORB;
+108-
+109-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.projectile.EyeOfEnder> EYE_OF_ENDER;
+110-
+111-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.item.FallingBlockEntity> FALLING_BLOCK;
+112-
+113-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball> FIREBALL;
+114-
+115-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.projectile.FireworkRocketEntity> FIREWORK_ROCKET;
+116-
+117-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.animal.fox.Fox> FOX;
+118-
+119-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.animal.frog.Frog> FROG;
+120-
+121-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.vehicle.minecart.MinecartFurnace> FURNACE_MINECART;
+122-
+123-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.monster.Ghast> GHAST;
+124-
+125-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.animal.happyghast.HappyGhast> HAPPY_GHAST;
+126-
+127:  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.monster.Giant> GIANT;
+128-
+129-  public static final net.minecraft.world.entity.EntityType<net.minecraft.world.entity.decoration.GlowItemFrame> GLOW_ITEM_FRAME;
+130-
+--
+1451-      2569: putstatic     #643                // Field FURNACE_MINECART:Lnet/minecraft/world/entity/EntityType;
+1452-      2572: getstatic     #645                // Field net/minecraft/world/entity/EntityTypeIds.GHAST:Lnet/minecraft/resources/ResourceKey;
+1453-      2575: invokedynamic #648,  0            // InvokeDynamic #62:create:()Lnet/minecraft/world/entity/EntityType$EntityFactory;
+1454-      2580: getstatic     #298                // Field net/minecraft/world/entity/MobCategory.MONSTER:Lnet/minecraft/world/entity/MobCategory;
+1455-      2583: invokestatic  #137                // Method net/minecraft/world/entity/EntityType$Builder.of:(Lnet/minecraft/world/entity/EntityType$EntityFactory;Lnet/minecraft/world/entity/MobCategory;)Lnet/minecraft/world/entity/EntityType$Builder;
+1456-      2586: invokevirtual #198                // Method net/minecraft/world/entity/EntityType$Builder.fireImmune:()Lnet/minecraft/world/entity/EntityType$Builder;
+1457-      2589: ldc_w         #649                // float 4.0f
+1458-      2592: ldc_w         #649                // float 4.0f
+1459-      2595: invokevirtual #147                // Method net/minecraft/world/entity/EntityType$Builder.sized:(FF)Lnet/minecraft/world/entity/EntityType$Builder;
+1460-      2598: ldc_w         #650                // float 2.6f
+1461-      2601: invokevirtual #151                // Method net/minecraft/world/entity/EntityType$Builder.eyeHeight:(F)Lnet/minecraft/world/entity/EntityType$Builder;
+1462-      2604: iconst_1
+1463-      2605: newarray       float
+1464-      2607: dup
+1465-      2608: iconst_0
+1466-      2609: ldc_w         #651                // float 4.0625f
+1467-      2612: fastore
+1468-      2613: invokevirtual #359                // Method net/minecraft/world/entity/EntityType$Builder.passengerAttachments:([F)Lnet/minecraft/world/entity/EntityType$Builder;
+1469-      2616: ldc           #204                // float 0.5f
+1470-      2618: invokevirtual #186                // Method net/minecraft/world/entity/EntityType$Builder.ridingOffset:(F)Lnet/minecraft/world/entity/EntityType$Builder;
+1471-      2621: bipush        10
+1472-      2623: invokevirtual #155                // Method net/minecraft/world/entity/EntityType$Builder.clientTrackingRange:(I)Lnet/minecraft/world/entity/EntityType$Builder;
+1473-      2626: invokevirtual #304                // Method net/minecraft/world/entity/EntityType$Builder.notInPeaceful:()Lnet/minecraft/world/entity/EntityType$Builder;
+1474-      2629: invokestatic  #159                // Method register:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType$Builder;)Lnet/minecraft/world/entity/EntityType;
+1475-      2632: putstatic     #652                // Field GHAST:Lnet/minecraft/world/entity/EntityType;
+1476:      2635: getstatic     #654                // Field net/minecraft/world/entity/EntityTypeIds.HAPPY_GHAST:Lnet/minecraft/resources/ResourceKey;
+1477-      2638: invokedynamic #657,  0            // InvokeDynamic #63:create:()Lnet/minecraft/world/entity/EntityType$EntityFactory;
+1478-      2643: getstatic     #179                // Field net/minecraft/world/entity/MobCategory.CREATURE:Lnet/minecraft/world/entity/MobCategory;
+1479-      2646: invokestatic  #137                // Method net/minecraft/world/entity/EntityType$Builder.of:(Lnet/minecraft/world/entity/EntityType$EntityFactory;Lnet/minecraft/world/entity/MobCategory;)Lnet/minecraft/world/entity/EntityType$Builder;
+--
+1504-      2701: aastore
+1505-      2702: dup
+1506-      2703: iconst_2
+1507-      2704: new           #395                // class net/minecraft/world/phys/Vec3
+1508-      2707: dup
+1509-      2708: dconst_0
+1510-      2709: ldc2_w        #658                // double 4.0d
+1511-      2712: ldc2_w        #662                // double -1.7d
+1512-      2715: invokespecial #401                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+1513-      2718: aastore
+1514-      2719: dup
+1515-      2720: iconst_3
+1516-      2721: new           #395                // class net/minecraft/world/phys/Vec3
+1517-      2724: dup
+1518-      2725: ldc2_w        #660                // double 1.7d
+1519-      2728: ldc2_w        #658                // double 4.0d
+1520-      2731: dconst_0
+1521-      2732: invokespecial #401                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+1522-      2735: aastore
+1523-      2736: invokevirtual #404                // Method net/minecraft/world/entity/EntityType$Builder.passengerAttachments:([Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/entity/EntityType$Builder;
+1524-      2739: ldc           #204                // float 0.5f
+1525-      2741: invokevirtual #186                // Method net/minecraft/world/entity/EntityType$Builder.ridingOffset:(F)Lnet/minecraft/world/entity/EntityType$Builder;
+1526-      2744: bipush        10
+1527-      2746: invokevirtual #155                // Method net/minecraft/world/entity/EntityType$Builder.clientTrackingRange:(I)Lnet/minecraft/world/entity/EntityType$Builder;
+1528-      2749: invokestatic  #159                // Method register:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType$Builder;)Lnet/minecraft/world/entity/EntityType;
+1529:      2752: putstatic     #664                // Field HAPPY_GHAST:Lnet/minecraft/world/entity/EntityType;
+1530:      2755: getstatic     #666                // Field net/minecraft/world/entity/EntityTypeIds.GIANT:Lnet/minecraft/resources/ResourceKey;
+1531-      2758: invokedynamic #669,  0            // InvokeDynamic #64:create:()Lnet/minecraft/world/entity/EntityType$EntityFactory;
+1532-      2763: getstatic     #298                // Field net/minecraft/world/entity/MobCategory.MONSTER:Lnet/minecraft/world/entity/MobCategory;
+1533-      2766: invokestatic  #137                // Method net/minecraft/world/entity/EntityType$Builder.of:(Lnet/minecraft/world/entity/EntityType$EntityFactory;Lnet/minecraft/world/entity/MobCategory;)Lnet/minecraft/world/entity/EntityType$Builder;
+1534-      2769: ldc_w         #670                // float 3.6f
+1535-      2772: ldc_w         #671                // float 12.0f
+1536-      2775: invokevirtual #147                // Method net/minecraft/world/entity/EntityType$Builder.sized:(FF)Lnet/minecraft/world/entity/EntityType$Builder;
+1537-      2778: ldc_w         #672                // float 10.44f
+1538-      2781: invokevirtual #151                // Method net/minecraft/world/entity/EntityType$Builder.eyeHeight:(F)Lnet/minecraft/world/entity/EntityType$Builder;
+1539-      2784: ldc_w         #673                // float -3.75f
+1540-      2787: invokevirtual #186                // Method net/minecraft/world/entity/EntityType$Builder.ridingOffset:(F)Lnet/minecraft/world/entity/EntityType$Builder;
+1541-      2790: bipush        10
+1542-      2792: invokevirtual #155                // Method net/minecraft/world/entity/EntityType$Builder.clientTrackingRange:(I)Lnet/minecraft/world/entity/EntityType$Builder;
+1543-      2795: invokevirtual #304                // Method net/minecraft/world/entity/EntityType$Builder.notInPeaceful:()Lnet/minecraft/world/entity/EntityType$Builder;
+1544-      2798: invokestatic  #159                // Method register:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/EntityType$Builder;)Lnet/minecraft/world/entity/EntityType;
+1545:      2801: putstatic     #674                // Field GIANT:Lnet/minecraft/world/entity/EntityType;
+1546-      2804: getstatic     #676                // Field net/minecraft/world/entity/EntityTypeIds.GLOW_ITEM_FRAME:Lnet/minecraft/resources/ResourceKey;
+1547-      2807: invokedynamic #679,  0            // InvokeDynamic #65:create:()Lnet/minecraft/world/entity/EntityType$EntityFactory;
+1548-      2812: getstatic     #131                // Field net/minecraft/world/entity/MobCategory.MISC:Lnet/minecraft/world/entity/MobCategory;
+== LayerDefinitions
+774-      1710: aload         7
+775-      1712: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+776-      1715: pop
+777-      1716: aload_0
+778-      1717: getstatic     #795                // Field net/minecraft/client/model/geom/ModelLayers.GHAST:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+779-      1720: invokestatic  #798                // Method net/minecraft/client/model/monster/ghast/GhastModel.createBodyLayer:()Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+780-      1723: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+781-      1726: pop
+782-      1727: ldc_w         #801                // float 6.0f
+783-      1730: invokestatic  #123                // InterfaceMethod net/minecraft/client/model/geom/builders/MeshTransformer.scaling:(F)Lnet/minecraft/client/model/geom/builders/MeshTransformer;
+784-      1733: astore        74
+785-      1735: aload_0
+786:      1736: getstatic     #802                // Field net/minecraft/client/model/geom/ModelLayers.GIANT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+787-      1739: aload_1
+788-      1740: aload         74
+789-      1742: invokevirtual #132                // Method net/minecraft/client/model/geom/builders/LayerDefinition.apply:(Lnet/minecraft/client/model/geom/builders/MeshTransformer;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+790-      1745: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+791-      1748: pop
+792:      1749: getstatic     #805                // Field net/minecraft/client/model/geom/ModelLayers.GIANT_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+793-      1752: aload_2
+794-      1753: aload         74
+795-      1755: invokedynamic #808,  0            // InvokeDynamic #6:apply:(Lnet/minecraft/client/model/geom/builders/MeshTransformer;)Ljava/util/function/Function;
+--
+813-      1797: pop
+814-      1798: aload_0
+815-      1799: getstatic     #823                // Field net/minecraft/client/model/geom/ModelLayers.GOAT_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+816-      1802: invokestatic  #826                // Method net/minecraft/client/model/animal/goat/BabyGoatModel.createBodyLayer:()Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+817-      1805: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+818-      1808: pop
+819-      1809: aload_0
+820-      1810: getstatic     #829                // Field net/minecraft/client/model/geom/ModelLayers.GUARDIAN:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+821-      1813: invokestatic  #832                // Method net/minecraft/client/model/monster/guardian/GuardianModel.createBodyLayer:()Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+822-      1816: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+823-      1819: pop
+824-      1820: aload_0
+825:      1821: getstatic     #833                // Field net/minecraft/client/model/geom/ModelLayers.HAPPY_GHAST:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+826-      1824: iconst_0
+827-      1825: getstatic     #13                 // Field net/minecraft/client/model/geom/builders/CubeDeformation.NONE:Lnet/minecraft/client/model/geom/builders/CubeDeformation;
+828-      1828: invokestatic  #836                // Method net/minecraft/client/model/animal/ghast/HappyGhastModel.createBodyLayer:(ZLnet/minecraft/client/model/geom/builders/CubeDeformation;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+829-      1831: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+830-      1834: pop
+831-      1835: aload_0
+832:      1836: getstatic     #841                // Field net/minecraft/client/model/geom/ModelLayers.HAPPY_GHAST_BABY:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+833-      1839: iconst_1
+834-      1840: getstatic     #13                 // Field net/minecraft/client/model/geom/builders/CubeDeformation.NONE:Lnet/minecraft/client/model/geom/builders/CubeDeformation;
+835-      1843: invokestatic  #836                // Method net/minecraft/client/model/animal/ghast/HappyGhastModel.createBodyLayer:(ZLnet/minecraft/client/model/geom/builders/CubeDeformation;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+836-      1846: getstatic     #844                // Field net/minecraft/client/model/animal/ghast/HappyGhastModel.BABY_TRANSFORMER:Lnet/minecraft/client/model/geom/builders/MeshTransformer;
+837-      1849: invokevirtual #132                // Method net/minecraft/client/model/geom/builders/LayerDefinition.apply:(Lnet/minecraft/client/model/geom/builders/MeshTransformer;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+838-      1852: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+839-      1855: pop
+840-      1856: aload_0
+841:      1857: getstatic     #845                // Field net/minecraft/client/model/geom/ModelLayers.HAPPY_GHAST_HARNESS:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+842-      1860: iconst_0
+843-      1861: invokestatic  #848                // Method net/minecraft/client/model/animal/ghast/HappyGhastHarnessModel.createHarnessLayer:(Z)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+844-      1864: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+845-      1867: pop
+846-      1868: aload_0
+847:      1869: getstatic     #853                // Field net/minecraft/client/model/geom/ModelLayers.HAPPY_GHAST_BABY_HARNESS:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+848-      1872: iconst_1
+849-      1873: invokestatic  #848                // Method net/minecraft/client/model/animal/ghast/HappyGhastHarnessModel.createHarnessLayer:(Z)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+850-      1876: getstatic     #844                // Field net/minecraft/client/model/animal/ghast/HappyGhastModel.BABY_TRANSFORMER:Lnet/minecraft/client/model/geom/builders/MeshTransformer;
+851-      1879: invokevirtual #132                // Method net/minecraft/client/model/geom/builders/LayerDefinition.apply:(Lnet/minecraft/client/model/geom/builders/MeshTransformer;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+852-      1882: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+853-      1885: pop
+854-      1886: aload_0
+855:      1887: getstatic     #856                // Field net/minecraft/client/model/geom/ModelLayers.HAPPY_GHAST_ROPES:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+856-      1890: iconst_0
+857-      1891: new           #14                 // class net/minecraft/client/model/geom/builders/CubeDeformation
+858-      1894: dup
+859-      1895: ldc           #189                // float 0.2f
+860-      1897: invokespecial #75                 // Method net/minecraft/client/model/geom/builders/CubeDeformation."<init>":(F)V
+861-      1900: invokestatic  #836                // Method net/minecraft/client/model/animal/ghast/HappyGhastModel.createBodyLayer:(ZLnet/minecraft/client/model/geom/builders/CubeDeformation;)Lnet/minecraft/client/model/geom/builders/LayerDefinition;
+862-      1903: invokevirtual #325                // Method com/google/common/collect/ImmutableMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap$Builder;
+863-      1906: pop
+864-      1907: aload_0
+865:      1908: getstatic     #859                // Field net/minecraft/client/model/geom/ModelLayers.HAPPY_GHAST_BABY_ROPES:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+866-      1911: iconst_1
+867-      1912: new           #14                 // class net/minecraft/client/model/geom/builders/CubeDeformation
+868-      1915: dup
+== EntityRenderers
+744-       646: invokedynamic #630,  0            // InvokeDynamic #57:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+745-       651: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+746-       654: getstatic     #631                // Field net/minecraft/world/entity/EntityTypes.FURNACE_MINECART:Lnet/minecraft/world/entity/EntityType;
+747-       657: invokedynamic #633,  0            // InvokeDynamic #58:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+748-       662: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+749-       665: getstatic     #634                // Field net/minecraft/world/entity/EntityTypes.GHAST:Lnet/minecraft/world/entity/EntityType;
+750-       668: invokedynamic #637,  0            // InvokeDynamic #59:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+751-       673: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+752:       676: getstatic     #638                // Field net/minecraft/world/entity/EntityTypes.HAPPY_GHAST:Lnet/minecraft/world/entity/EntityType;
+753-       679: invokedynamic #641,  0            // InvokeDynamic #60:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+754-       684: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+755:       687: getstatic     #642                // Field net/minecraft/world/entity/EntityTypes.GIANT:Lnet/minecraft/world/entity/EntityType;
+756-       690: invokedynamic #645,  0            // InvokeDynamic #61:create:()Lnet/minecraft/client/renderer/entity/EntityRendererProvider;
+757-       695: invokestatic  #413                // Method register:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+758-       698: getstatic     #646                // Field net/minecraft/world/entity/EntityTypes.GLOW_ITEM_FRAME:Lnet/minecraft/world/entity/EntityType;
+== Registries FEATURE
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.block.entity.BlockEntityType<?>>> BLOCK_ENTITY_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider>>> BLOCK_STATE_PROVIDER_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.block.Block>> BLOCK;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.consume_effects.ConsumeEffect$Type<?>>> CONSUME_EFFECT_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.CreativeModeTab>> CREATIVE_MODE_TAB;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.core.component.DataComponentType<?>>> ENCHANTMENT_EFFECT_COMPONENT_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect>>> ENCHANTMENT_ENTITY_EFFECT_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.LevelBasedValue>>> ENCHANTMENT_LEVEL_BASED_VALUE_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect>>> ENCHANTMENT_LOCATION_BASED_EFFECT_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.providers.EnchantmentProvider>>> ENCHANTMENT_PROVIDER_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect>>> ENCHANTMENT_VALUE_EFFECT_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.entity.EntityType<?>>> ENTITY_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.featuresize.FeatureSizeType<?>>> FEATURE_SIZE_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.levelgen.feature.Feature>>> FEATURE_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType<?>>> FOLIAGE_PLACER_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.Item>> ITEM;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.slot.SlotSource>>> SLOT_SOURCE_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.storage.loot.predicates.LootItemCondition>>> LOOT_CONDITION_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.storage.loot.functions.LootItemFunction>>> LOOT_FUNCTION_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.effect.MobEffect>> MOB_EFFECT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.alchemy.Potion>> POTION;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.crafting.RecipeBookCategory>> RECIPE_BOOK_CATEGORY;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.crafting.display.RecipeDisplay$Type<?>>> RECIPE_DISPLAY;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.crafting.RecipeSerializer<?>>> RECIPE_SERIALIZER;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.crafting.RecipeType<?>>> RECIPE_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.rootplacers.RootPlacerType<?>>> ROOT_PLACER_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.crafting.display.SlotDisplay$Type<?>>> SLOT_DISPLAY;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.sounds.SoundEvent>> SOUND_EVENT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType<?>>> TREE_DECORATOR_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType<?>>> TRUNK_PLACER_TYPE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider>> BLOCK_STATE_PROVIDER;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.entity.animal.feline.CatSoundVariant>> CAT_SOUND_VARIANT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.entity.animal.chicken.ChickenSoundVariant>> CHICKEN_SOUND_VARIANT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.Feature>> FEATURE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.entity.animal.cow.CowSoundVariant>> COW_SOUND_VARIANT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.enchantment.providers.EnchantmentProvider>> ENCHANTMENT_PROVIDER;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment>> ENCHANTMENT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.Instrument>> INSTRUMENT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.JukeboxSong>> JUKEBOX_SONG;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.entity.animal.pig.PigSoundVariant>> PIG_SOUND_VARIANT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.levelgen.placement.PlacedFeature>> PLACED_FEATURE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.trading.TradeSet>> TRADE_SET;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.equipment.trim.TrimMaterial>> TRIM_MATERIAL;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.equipment.trim.TrimPattern>> TRIM_PATTERN;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.trading.VillagerTrade>> VILLAGER_TRADE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.entity.animal.wolf.WolfSoundVariant>> WOLF_SOUND_VARIANT;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.storage.loot.functions.LootItemFunction>> ITEM_MODIFIER;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.level.storage.loot.predicates.LootItemCondition>> PREDICATE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.slot.SlotSource>> SLOT_SOURCE;
+  public static final net.minecraft.resources.ResourceKey<net.minecraft.core.Registry<net.minecraft.world.item.crafting.Recipe<?>>> RECIPE;
+== BuiltInRegistries
+  public static final net.minecraft.core.Registry<net.minecraft.sounds.SoundEvent> SOUND_EVENT;
+  public static final net.minecraft.core.Registry<net.minecraft.world.effect.MobEffect> MOB_EFFECT;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.level.block.Block> BLOCK;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.entity.EntityType<?>> ENTITY_TYPE;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.item.Item> ITEM;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.alchemy.Potion> POTION;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.block.entity.BlockEntityType<?>> BLOCK_ENTITY_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.structure.templatesystem.rule.blockentity.RuleBlockEntityModifierType<?>> RULE_BLOCK_ENTITY_MODIFIER;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.crafting.RecipeType<?>> RECIPE_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.crafting.RecipeSerializer<?>> RECIPE_SERIALIZER;
+  public static final net.minecraft.core.Registry<net.minecraft.world.entity.ai.attributes.Attribute> ATTRIBUTE;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.entity.npc.villager.VillagerType> VILLAGER_TYPE;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.entity.npc.villager.VillagerProfession> VILLAGER_PROFESSION;
+  public static final net.minecraft.core.Registry<net.minecraft.world.entity.ai.village.poi.PoiType> POINT_OF_INTEREST_TYPE;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.entity.ai.memory.MemoryModuleType<?>> MEMORY_MODULE_TYPE;
+  public static final net.minecraft.core.DefaultedRegistry<net.minecraft.world.entity.ai.sensing.SensorType<?>> SENSOR_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.entity.schedule.Activity> ACTIVITY;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.storage.loot.functions.LootItemFunction>> LOOT_FUNCTION_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.storage.loot.predicates.LootItemCondition>> LOOT_CONDITION_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.blockpredicates.BlockPredicateType<?>> BLOCK_PREDICATE_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.levelgen.feature.Feature>> FEATURE_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider>> BLOCK_STATE_PROVIDER_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType<?>> FOLIAGE_PLACER_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType<?>> TRUNK_PLACER_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.rootplacers.RootPlacerType<?>> ROOT_PLACER_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType<?>> TREE_DECORATOR_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.level.levelgen.feature.featuresize.FeatureSizeType<?>> FEATURE_SIZE_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.CreativeModeTab> CREATIVE_MODE_TAB;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.Codec<? extends net.minecraft.advancements.predicates.entity.EntitySubPredicate>> ENTITY_SUB_PREDICATE_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.core.component.DataComponentType<?>> ENCHANTMENT_EFFECT_COMPONENT_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.LevelBasedValue>> ENCHANTMENT_LEVEL_BASED_VALUE_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect>> ENCHANTMENT_ENTITY_EFFECT_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.effects.EnchantmentLocationBasedEffect>> ENCHANTMENT_LOCATION_BASED_EFFECT_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect>> ENCHANTMENT_VALUE_EFFECT_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.enchantment.providers.EnchantmentProvider>> ENCHANTMENT_PROVIDER_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.consume_effects.ConsumeEffect$Type<?>> CONSUME_EFFECT_TYPE;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.crafting.display.RecipeDisplay$Type<?>> RECIPE_DISPLAY;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.crafting.display.SlotDisplay$Type<?>> SLOT_DISPLAY;
+  public static final net.minecraft.core.Registry<net.minecraft.world.item.crafting.RecipeBookCategory> RECIPE_BOOK_CATEGORY;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.entity.variant.SpawnCondition>> SPAWN_CONDITION_TYPE;
+  public static final net.minecraft.core.Registry<com.mojang.serialization.MapCodec<? extends net.minecraft.world.item.slot.SlotSource>> SLOT_SOURCE_TYPE;

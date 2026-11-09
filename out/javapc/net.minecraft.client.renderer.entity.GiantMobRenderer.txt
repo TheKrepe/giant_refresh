@@ -1,0 +1,111 @@
+Compiled from "GiantMobRenderer.java"
+public class net.minecraft.client.renderer.entity.GiantMobRenderer extends net.minecraft.client.renderer.entity.MobRenderer<net.minecraft.world.entity.monster.Giant, net.minecraft.client.renderer.entity.state.ZombieRenderState, net.minecraft.client.model.HumanoidModel<net.minecraft.client.renderer.entity.state.ZombieRenderState>> {
+  private static final net.minecraft.resources.Identifier ZOMBIE_LOCATION;
+
+  public net.minecraft.client.renderer.entity.GiantMobRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: new           #1                  // class net/minecraft/client/model/monster/zombie/GiantZombieModel
+         5: dup
+         6: aload_1
+         7: getstatic     #3                  // Field net/minecraft/client/model/geom/ModelLayers.GIANT:Lnet/minecraft/client/model/geom/ModelLayerLocation;
+        10: invokevirtual #9                  // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;
+        13: invokespecial #15                 // Method net/minecraft/client/model/monster/zombie/GiantZombieModel."<init>":(Lnet/minecraft/client/model/geom/ModelPart;)V
+        16: ldc           #19                 // float 0.5f
+        18: fload_2
+        19: fmul
+        20: invokespecial #20                 // Method net/minecraft/client/renderer/entity/MobRenderer."<init>":(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/client/model/EntityModel;F)V
+        23: aload_0
+        24: new           #25                 // class net/minecraft/client/renderer/entity/layers/ItemInHandLayer
+        27: dup
+        28: aload_0
+        29: invokespecial #27                 // Method net/minecraft/client/renderer/entity/layers/ItemInHandLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;)V
+        32: invokevirtual #30                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+        35: pop
+        36: aload_0
+        37: new           #36                 // class net/minecraft/client/renderer/entity/layers/HumanoidArmorLayer
+        40: dup
+        41: aload_0
+        42: getstatic     #38                 // Field net/minecraft/client/model/geom/ModelLayers.GIANT_ARMOR:Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        45: aload_1
+        46: invokevirtual #42                 // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.getModelSet:()Lnet/minecraft/client/model/geom/EntityModelSet;
+        49: invokedynamic #46,  0             // InvokeDynamic #0:apply:()Ljava/util/function/Function;
+        54: invokestatic  #50                 // Method net/minecraft/client/renderer/entity/ArmorModelSet.bake:(Lnet/minecraft/client/renderer/entity/ArmorModelSet;Lnet/minecraft/client/model/geom/EntityModelSet;Ljava/util/function/Function;)Lnet/minecraft/client/renderer/entity/ArmorModelSet;
+        57: aload_1
+        58: invokevirtual #56                 // Method net/minecraft/client/renderer/entity/EntityRendererProvider$Context.getEquipmentRenderer:()Lnet/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer;
+        61: invokespecial #60                 // Method net/minecraft/client/renderer/entity/layers/HumanoidArmorLayer."<init>":(Lnet/minecraft/client/renderer/entity/RenderLayerParent;Lnet/minecraft/client/renderer/entity/ArmorModelSet;Lnet/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer;)V
+        64: invokevirtual #30                 // Method addLayer:(Lnet/minecraft/client/renderer/entity/layers/RenderLayer;)Z
+        67: pop
+        68: return
+
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.ZombieRenderState);
+    Code:
+         0: getstatic     #63                 // Field ZOMBIE_LOCATION:Lnet/minecraft/resources/Identifier;
+         3: areturn
+
+  public net.minecraft.client.renderer.entity.state.ZombieRenderState createRenderState();
+    Code:
+         0: new           #67                 // class net/minecraft/client/renderer/entity/state/ZombieRenderState
+         3: dup
+         4: invokespecial #69                 // Method net/minecraft/client/renderer/entity/state/ZombieRenderState."<init>":()V
+         7: areturn
+
+  public void extractRenderState(net.minecraft.world.entity.monster.Giant, net.minecraft.client.renderer.entity.state.ZombieRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: fload_3
+         4: invokespecial #72                 // Method net/minecraft/client/renderer/entity/MobRenderer.extractRenderState:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V
+         7: aload_1
+         8: aload_2
+         9: fload_3
+        10: aload_0
+        11: getfield      #76                 // Field itemModelResolver:Lnet/minecraft/client/renderer/item/ItemModelResolver;
+        14: invokestatic  #80                 // Method net/minecraft/client/renderer/entity/HumanoidMobRenderer.extractHumanoidRenderState:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;FLnet/minecraft/client/renderer/item/ItemModelResolver;)V
+        17: return
+
+  public void extractRenderState(net.minecraft.world.entity.LivingEntity, net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #86                 // class net/minecraft/world/entity/monster/Giant
+         5: aload_2
+         6: checkcast     #67                 // class net/minecraft/client/renderer/entity/state/ZombieRenderState
+         9: fload_3
+        10: invokevirtual #88                 // Method extractRenderState:(Lnet/minecraft/world/entity/monster/Giant;Lnet/minecraft/client/renderer/entity/state/ZombieRenderState;F)V
+        13: return
+
+  public net.minecraft.resources.Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.LivingEntityRenderState);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #67                 // class net/minecraft/client/renderer/entity/state/ZombieRenderState
+         5: invokevirtual #91                 // Method getTextureLocation:(Lnet/minecraft/client/renderer/entity/state/ZombieRenderState;)Lnet/minecraft/resources/Identifier;
+         8: areturn
+
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #86                 // class net/minecraft/world/entity/monster/Giant
+         5: aload_2
+         6: checkcast     #67                 // class net/minecraft/client/renderer/entity/state/ZombieRenderState
+         9: fload_3
+        10: invokevirtual #88                 // Method extractRenderState:(Lnet/minecraft/world/entity/monster/Giant;Lnet/minecraft/client/renderer/entity/state/ZombieRenderState;F)V
+        13: return
+
+  public net.minecraft.client.renderer.entity.state.EntityRenderState createRenderState();
+    Code:
+         0: aload_0
+         1: invokevirtual #95                 // Method createRenderState:()Lnet/minecraft/client/renderer/entity/state/ZombieRenderState;
+         4: areturn
+
+  static {};
+    Code:
+         0: ldc           #99                 // String textures/entity/zombie/zombie.png
+         2: invokestatic  #101                // Method net/minecraft/resources/Identifier.withDefaultNamespace:(Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+         5: putstatic     #63                 // Field ZOMBIE_LOCATION:Lnet/minecraft/resources/Identifier;
+         8: return
+}

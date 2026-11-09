@@ -1,0 +1,15 @@
+Compiled from "AnimationState.java"
+public class net.minecraft.world.entity.AnimationState {
+  private static final int STOPPED;
+  private int startTick;
+  public net.minecraft.world.entity.AnimationState();
+  public void start(int);
+  public void startIfStopped(int);
+  public void animateWhen(boolean, int);
+  public void stop();
+  public void ifStarted(java.util.function.Consumer<net.minecraft.world.entity.AnimationState>);
+  public void fastForward(int, float);
+  public long getTimeInMillis(float);
+  public boolean isStarted();
+  public void copyFrom(net.minecraft.world.entity.AnimationState);
+}

@@ -1,0 +1,17 @@
+Compiled from "SkullBlock.java"
+public class net.minecraft.world.level.block.SkullBlock extends net.minecraft.world.level.block.AbstractSkullBlock {
+  public static final int MAX;
+  private static final int ROTATIONS;
+  public static final net.minecraft.world.level.block.state.properties.IntegerProperty ROTATION;
+  private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE;
+  private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE_PIGLIN;
+  private static final net.minecraft.world.phys.shapes.VoxelShape SHAPE_DRAGON_OUTLINE;
+  protected net.minecraft.world.level.block.SkullBlock(net.minecraft.world.level.block.SkullBlock$Type, net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  protected net.minecraft.world.phys.shapes.VoxelShape getShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  protected net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  public net.minecraft.world.level.block.state.BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext);
+  protected net.minecraft.world.level.block.state.BlockState rotate(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.Rotation);
+  protected net.minecraft.world.level.block.state.BlockState mirror(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.Mirror);
+  protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition$Builder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.state.BlockState>);
+  static {};
+}

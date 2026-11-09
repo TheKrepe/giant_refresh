@@ -1,0 +1,4 @@
+Compiled from "GenerationStep.java"
+public class net.minecraft.world.level.levelgen.GenerationStep {
+  public net.minecraft.world.level.levelgen.GenerationStep();
+}

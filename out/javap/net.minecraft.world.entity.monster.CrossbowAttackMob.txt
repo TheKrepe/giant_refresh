@@ -1,0 +1,7 @@
+Compiled from "CrossbowAttackMob.java"
+public interface net.minecraft.world.entity.monster.CrossbowAttackMob extends net.minecraft.world.entity.monster.RangedAttackMob {
+  public abstract void setChargingCrossbow(boolean);
+  public abstract net.minecraft.world.entity.LivingEntity getTarget();
+  public abstract void onCrossbowAttackPerformed();
+  public default void performCrossbowAttack(net.minecraft.world.entity.LivingEntity, float);
+}
