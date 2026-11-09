@@ -19,7 +19,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 public class GiantHarnessModel extends EntityModel<GiantRenderState> {
     /** Goggle pivot (harness units) when worn over the eyes: the lenses cover the eye row (face row 4 of 8). */
     public static final float GOGGLES_DOWN_Y = -7.5F;
-    public static final float GOGGLES_UP_Y = -10.6F;
+    public static final float GOGGLES_UP_Y = -13.0F;
 
     private final ModelPart goggles;
 
