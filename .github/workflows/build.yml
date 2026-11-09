@@ -82,6 +82,31 @@ jobs:
           grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -80 || true
           grep -q "SMOKETEST.*PASS" server.log
 
+      - name: Render test (Fabric client, software GL)
+        id: client_render
+        if: steps.fabric_smoke.outcome == 'success'
+        continue-on-error: true
+        working-directory: fabric
+        env:
+          JAVA_TOOL_OPTIONS: -Dgiantrefresh.clientsmoketest=true
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq xvfb mesa-vulkan-drivers libgl1-mesa-dri imagemagick >/dev/null
+          mkdir -p run/saves
+          cp -r run/world run/saves/smoke
+          rm -f run/saves/smoke/session.lock
+          printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:6\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\n" > run/options.txt
+          timeout 1200 xvfb-run -a -s "-screen 0 1280x720x24" gradle runClient --no-daemon --args="--quickPlaySingleplayer smoke" > client.log 2>&1 || true
+          grep -E "CLIENTTEST|ERROR|Exception|Caused by|Mixin|mixin" client.log | grep -v JAVA_TOOL_OPTIONS | head -80 || true
+          ls -la run/screenshots || true
+          for f in run/screenshots/giant_test_*.png; do
+            [ -f "$f" ] || continue
+            convert "$f" -resize 1024x -quality 80 "$f.jpg"
+            echo "IMG_BEGIN $f"; base64 -w0 "$f.jpg"; echo; echo "IMG_END"
+          done
+          ls run/screenshots/giant_test_*.png
+
       - name: Upload server logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -90,6 +115,7 @@ jobs:
           path: |
             fabric/server.log
             neoforge/server.log
+            fabric/client.log
           if-no-files-found: ignore
 
       - name: Fail if a build or smoke test failed

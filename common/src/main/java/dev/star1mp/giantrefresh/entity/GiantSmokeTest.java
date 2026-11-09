@@ -20,12 +20,19 @@ import net.minecraft.world.phys.AABB;
  */
 public final class GiantSmokeTest {
     private static final boolean ENABLED = Boolean.getBoolean("giantrefresh.smoketest");
+    private static final boolean CLIENT_MODE = Boolean.getBoolean("giantrefresh.clientsmoketest");
     private static int ticks;
+    private static int clientTicks;
+    private static GiantEntity puncher;
     private static Zombie grower;
 
     private GiantSmokeTest() {}
 
     public static void tick(ServerLevel level) {
+        if (CLIENT_MODE && level.dimension() == Level.OVERWORLD) {
+            clientTick(level);
+            return;
+        }
         if (!ENABLED || level.dimension() != Level.OVERWORLD) {
             return;
         }
@@ -77,5 +84,55 @@ public final class GiantSmokeTest {
                     giants, vanilla, riders, scale, pass ? "PASS" : "FAIL");
             level.getServer().halt(false);
         }
+    }
+
+    /** Integrated-server half of the client render test: stage a scene in front of the player. */
+    private static void clientTick(ServerLevel level) {
+        if (level.players().isEmpty()) {
+            return;
+        }
+        clientTicks++;
+        net.minecraft.server.level.ServerPlayer player = level.players().get(0);
+        if (clientTicks == 20) {
+            player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+            int px = net.minecraft.util.Mth.floor(player.getX());
+            int pz = net.minecraft.util.Mth.floor(player.getZ());
+            for (int cx = (px >> 4) - 2; cx <= (px >> 4) + 3; cx++) {
+                for (int cz = (pz >> 4) - 1; cz <= (pz >> 4) + 4; cz++) {
+                    level.setChunkForced(cx, cz, true);
+                }
+            }
+            int py = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, px, pz);
+            player.teleportTo(level, px + 0.5, py + 1.0, pz + 0.5, java.util.Set.of(), 0.0F, -22.0F, false);
+            GiantEntity a = spawnAt(level, px, pz + 17, 14);
+            if (a != null) {
+                GiantRiders.spawnRiders(a, level, level.getCurrentDifficultyAt(a.blockPosition()));
+                a.setNoAi(true);
+            }
+            GiantEntity b = spawnAt(level, px + 13, pz + 22, 3);
+            if (b != null) {
+                b.setGiantSleeping(true);
+            }
+            puncher = spawnAt(level, px - 12, pz + 20, -1);
+            GiantRefresh.LOGGER.info("[CLIENTTEST] scene staged around {} {}", px, pz);
+        }
+        if (puncher != null && clientTicks > 40 && clientTicks % 50 == 0) {
+            puncher.startAttack(clientTicks % 100 == 0 ? GiantEntity.ATTACK_PUNCH : GiantEntity.ATTACK_STOMP);
+        }
+    }
+
+    private static GiantEntity spawnAt(ServerLevel level, int x, int z, int hat) {
+        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        GiantEntity g = GRContent.GIANT.get().create(level, EntitySpawnReason.COMMAND);
+        if (g == null) {
+            return null;
+        }
+        g.snapTo(x + 0.5, y, z + 0.5, 180.0F, 0.0F);
+        g.yHeadRot = 180.0F;
+        g.yBodyRot = 180.0F;
+        g.setHatColor(hat);
+        g.setPersistenceRequired();
+        level.addFreshEntity(g);
+        return g;
     }
 }
