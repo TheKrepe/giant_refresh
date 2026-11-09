@@ -170,8 +170,8 @@ def gen_assets_json():
             "particle": f"{NS}:block/giant_head_front",
             "north": f"{NS}:block/giant_head_front",
             "south": f"{NS}:block/giant_head_back",
-            "east": f"{NS}:block/giant_head_left",
-            "west": f"{NS}:block/giant_head_right",
+            "east": f"{NS}:block/giant_head_right",
+            "west": f"{NS}:block/giant_head_left",
             "up": f"{NS}:block/giant_head_top",
             "down": f"{NS}:block/giant_head_bottom"
         }

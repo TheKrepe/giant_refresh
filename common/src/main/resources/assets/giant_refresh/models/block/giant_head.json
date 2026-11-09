@@ -4,8 +4,8 @@
     "particle": "giant_refresh:block/giant_head_front",
     "north": "giant_refresh:block/giant_head_front",
     "south": "giant_refresh:block/giant_head_back",
-    "east": "giant_refresh:block/giant_head_left",
-    "west": "giant_refresh:block/giant_head_right",
+    "east": "giant_refresh:block/giant_head_right",
+    "west": "giant_refresh:block/giant_head_left",
     "up": "giant_refresh:block/giant_head_top",
     "down": "giant_refresh:block/giant_head_bottom"
   }

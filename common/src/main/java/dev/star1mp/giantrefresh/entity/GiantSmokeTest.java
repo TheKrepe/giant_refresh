@@ -24,6 +24,8 @@ public final class GiantSmokeTest {
     private static int ticks;
     private static int clientTicks;
     private static GiantEntity puncher;
+    private static int stageX;
+    private static int stageZ;
     private static Zombie grower;
 
     private GiantSmokeTest() {}
@@ -102,27 +104,39 @@ public final class GiantSmokeTest {
                     level.setChunkForced(cx, cz, true);
                 }
             }
-            int py = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, px, pz);
-            player.teleportTo(level, px + 0.5, py + 1.0, pz + 0.5, java.util.Set.of(), 0.0F, -22.0F, false);
-            GiantEntity a = spawnAt(level, px, pz + 17, 14);
+            int py = 160;
+            stageX = px;
+            stageZ = pz;
+            for (int x = px - 26; x <= px + 26; x++) {
+                for (int z = pz - 6; z <= pz + 40; z++) {
+                    level.setBlock(new BlockPos(x, py - 1, z), net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState(), 2);
+                }
+            }
+            player.teleportTo(level, px + 0.5, py, pz + 0.5, java.util.Set.of(), 0.0F, -24.0F, false);
+            GiantEntity a = spawnAt(level, px, py, pz + 17, 14);
             if (a != null) {
                 GiantRiders.spawnRiders(a, level, level.getCurrentDifficultyAt(a.blockPosition()));
                 a.setNoAi(true);
             }
-            GiantEntity b = spawnAt(level, px + 13, pz + 22, 3);
+            GiantEntity b = spawnAt(level, px + 13, py, pz + 22, 3);
             if (b != null) {
                 b.setGiantSleeping(true);
             }
-            puncher = spawnAt(level, px - 12, pz + 20, -1);
+            puncher = spawnAt(level, px - 12, py, pz + 20, -1);
             GiantRefresh.LOGGER.info("[CLIENTTEST] scene staged around {} {}", px, pz);
+        }
+        if (clientTicks == 760) {
+            player.teleportTo(level, stageX + 5.5, 171.0, stageZ + 9.5, java.util.Set.of(), 32.0F, 4.0F, false);
+        }
+        if (clientTicks == 880) {
+            player.teleportTo(level, stageX + 13.5, 163.0, stageZ + 12.5, java.util.Set.of(), 0.0F, 12.0F, false);
         }
         if (puncher != null && clientTicks > 40 && clientTicks % 50 == 0) {
             puncher.startAttack(clientTicks % 100 == 0 ? GiantEntity.ATTACK_PUNCH : GiantEntity.ATTACK_STOMP);
         }
     }
 
-    private static GiantEntity spawnAt(ServerLevel level, int x, int z, int hat) {
-        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+    private static GiantEntity spawnAt(ServerLevel level, int x, int y, int z, int hat) {
         GiantEntity g = GRContent.GIANT.get().create(level, EntitySpawnReason.COMMAND);
         if (g == null) {
             return null;
