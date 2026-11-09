@@ -30,10 +30,17 @@ public final class GiantSmokeTest {
             return;
         }
         ticks++;
+        if (ticks == 1) {
+            for (int cx = -2; cx <= 3; cx++) {
+                for (int cz = -2; cz <= 3; cz++) {
+                    level.setChunkForced(cx, cz, true);
+                }
+            }
+        }
         BlockPos base = new BlockPos(8, 0, 8);
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, base.getX(), base.getZ());
         BlockPos pos = new BlockPos(base.getX(), y, base.getZ());
-        if (ticks == 40) {
+        if (ticks == 100) {
             GiantRefresh.LOGGER.info("[SMOKETEST] spawning test entities at {}", pos);
             for (int i = 0; i < 3; i++) {
                 GiantEntity g = GRContent.GIANT.get().spawn(level, pos.offset(i * 8, 0, 0), EntitySpawnReason.SPAWN_ITEM_USE);
@@ -53,10 +60,10 @@ public final class GiantSmokeTest {
                 sleeper.setGiantSleeping(true);
             }
         }
-        if (ticks == 160 && grower != null) {
+        if (ticks == 220 && grower != null) {
             GiantRefresh.LOGGER.info("[SMOKETEST] zombie scale under Growth = {}", grower.getAttributeValue(Attributes.SCALE));
         }
-        if (ticks == 400) {
+        if (ticks == 500) {
             AABB area = new AABB(pos).inflate(96);
             int giants = level.getEntitiesOfClass(GiantEntity.class, area).size();
             int vanilla = level.getEntitiesOfClass(net.minecraft.world.entity.monster.Giant.class, area).size();
