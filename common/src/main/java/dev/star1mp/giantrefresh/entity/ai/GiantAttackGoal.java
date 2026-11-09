@@ -78,7 +78,9 @@ public class GiantAttackGoal extends Goal {
             if (horizontal > 3.0) {
                 if (target.getY() - giant.getY() > 3.0) {
                     // perched up high: walk to the foot of the perch
-                    giant.getNavigation().moveTo(target.getX(), giant.getY(), target.getZ(), 1.0);
+                    // (the perch itself is solid, so aim for a spot right next to it on our side)
+                    double back = horizontal > 0.01 ? 2.5 / horizontal : 0.0;
+                    giant.getNavigation().moveTo(target.getX() - dx * back, giant.getY(), target.getZ() - dz * back, 1.0);
                 } else {
                     giant.getNavigation().moveTo(target, 1.0);
                 }
@@ -96,7 +98,7 @@ public class GiantAttackGoal extends Goal {
         int attack = GiantEntity.ATTACK_NONE;
         if (dy > 3.0) {
             // out of reach of fists and feet: pluck it off its perch
-            if (grabbable && dy < 15.5 && horizontal < 5.5) {
+            if (grabbable && dy < 15.5 && horizontal < 6.5) {
                 attack = dy < 6.0 ? GiantEntity.ATTACK_GRAB_LOW : dy < 12.0 ? GiantEntity.ATTACK_GRAB : GiantEntity.ATTACK_GRAB_HIGH;
                 giant.getNavigation().stop();
                 giant.startAttack(attack);
