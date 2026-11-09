@@ -1,7 +1,5 @@
 package dev.star1mp.giantrefresh.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import dev.star1mp.giantrefresh.GiantRefresh;
 import dev.star1mp.giantrefresh.entity.GiantEntity;
 import dev.star1mp.giantrefresh.entity.anim.GiantPose;
@@ -60,16 +58,11 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
                 p.attackTime = t;
             }
             case "roar" -> p.roar = t;
-            case "death" -> {
-                p.death = t;
-                state.deathTime = t;
-            }
-            default -> {
-                if (parts[1].startsWith("gesture")) {
-                    p.gesture = Integer.parseInt(parts[1].substring(7));
-                    p.gestureTime = t;
-                }
-            }
+            case "wake" -> p.wake = t;
+            case "sleep" -> p.sleep = t;
+            case "aggro" -> p.aggro = t;
+            case "death" -> state.deathTime = t;
+            default -> {}
         }
     }
 
@@ -84,16 +77,5 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
     @Override
     public Identifier getTextureLocation(GiantRenderState state) {
         return TEXTURE;
-    }
-
-    /** Instead of the vanilla sideways flop, a dying Giant topples forward like a felled tree. */
-    @Override
-    protected void setupRotations(GiantRenderState state, PoseStack poseStack, float bodyRot, float scale) {
-        if (state.deathTime > 0.0F) {
-            poseStack.rotateDegrees(Axis.YP, 180.0F - bodyRot);
-            poseStack.rotateDegrees(Axis.XP, -GiantPose.deathFallDegrees(state.deathTime));
-            return;
-        }
-        super.setupRotations(state, poseStack, bodyRot, scale);
     }
 }

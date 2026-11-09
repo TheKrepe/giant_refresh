@@ -11,14 +11,14 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 
 /**
  * Happy Ghast harness geometry (same 16 vanilla harness textures) worn as a hat on the Giant's head.
- * Built in harness units (16 px cube) and drawn ×1.5 so it wraps the 24 px head.
+ * Built in harness units (16 px cube) and drawn ×0.5 so it wraps the 8 px zombie head.
  *
  * <p>Goggles: pushed up onto the forehead while nobody rides; pulled down over the eyes when the hat
  * carries a crew. The Giant's skin has its eyes painted exactly under the lenses.
  */
 public class GiantHarnessModel extends EntityModel<GiantRenderState> {
-    /** Goggle pivot (harness units) when worn over the eyes: lenses cover face rows 12-16 of 24. */
-    public static final float GOGGLES_DOWN_Y = -6.33F;
+    /** Goggle pivot (harness units) when worn over the eyes: the lenses cover the eye row (face row 4 of 8). */
+    public static final float GOGGLES_DOWN_Y = -7.5F;
     public static final float GOGGLES_UP_Y = -10.6F;
 
     private final ModelPart goggles;

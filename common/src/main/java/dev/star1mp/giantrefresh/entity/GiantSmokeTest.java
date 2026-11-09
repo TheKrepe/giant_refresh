@@ -130,9 +130,9 @@ public final class GiantSmokeTest {
             }
             // showcase rows with frozen animation poses (see GiantRenderer, test mode only)
             String[][] rows = {
-                    {"pose:walk:3", "pose:punch:19", "pose:punch:23"},
-                    {"pose:stomp:21", "pose:scoop:17", "pose:roar:14"},
-                    {"pose:gesture1:30", "pose:gesture4:24", "pose:death:14"},
+                    {"pose:walk:3", "pose:punch:18", "pose:punch:23"},
+                    {"pose:stomp:21", "pose:scoop:15", "pose:roar:14"},
+                    {"pose:aggro:1", "pose:wake:30", "pose:death:14"},
             };
             for (int r = 0; r < rows.length; r++) {
                 for (int i = 0; i < 3; i++) {

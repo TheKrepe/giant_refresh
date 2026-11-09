@@ -18,8 +18,8 @@ public class GiantHarnessLayer extends RenderLayer<GiantRenderState, GiantModel>
         }
     }
 
-    /** Harness cube is 16 px, the head is 24 px. */
-    private static final float HAT_SCALE = 1.5F;
+    /** Harness cube is 16 px, the zombie head is 8 px. */
+    private static final float HAT_SCALE = 0.5F;
 
     private final GiantHarnessModel harness;
 

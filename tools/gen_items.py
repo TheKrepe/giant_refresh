@@ -111,26 +111,14 @@ def growth_icon(vanilla, out):
 
 # ----------------------------------------------------------------------------- Giant Head block
 def head_block(skin_path, outdir):
-    """Block faces from the Giant skin's head, scaled 24 -> 16 by majority sampling."""
+    """Block faces straight from the Giant skin's head (16 texels per face on the 128x128 skin)."""
     skin = Image.open(skin_path).convert('RGBA')
-    faces = {'right': (0, 24), 'front': (24, 24), 'left': (48, 24), 'back': (72, 24), 'top': (24, 0), 'bottom': (48, 0)}
+    faces = {'right': (0, 16), 'front': (16, 16), 'left': (32, 16), 'back': (48, 16), 'top': (16, 0), 'bottom': (32, 0)}
     for name, (u, v) in faces.items():
-        face = skin.crop((u, v, u + 24, v + 24))
-        out = Image.new('RGBA', (16, 16))
-        fp = face.load()
-        op = out.load()
-        for y in range(16):
-            for x in range(16):
-                # pick the most "important" (darkest) pixel of each 1.5x1.5 cell so eyes/mouth survive
-                cells = [fp[min(23, int(x * 1.5 + dx)), min(23, int(y * 1.5 + dy))] for dx in (0, 1) for dy in (0, 1)]
-                cells.sort(key=lambda c: 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2])
-                dark = cells[0]
-                lum = 0.299 * dark[0] + 0.587 * dark[1] + 0.114 * dark[2]
-                op[x, y] = dark if lum < 45 or dark[0] > 150 else cells[1]
-        out.save(os.path.join(outdir, f'giant_head_{name}.png'))
-    icon = skin.crop((24, 24, 48, 48)).resize((120, 120), Image.NEAREST)
+        skin.crop((u, v, u + 16, v + 16)).save(os.path.join(outdir, f'giant_head_{name}.png'))
+    icon = skin.crop((16, 16, 32, 32)).resize((128, 128), Image.NEAREST)
     canvas = Image.new('RGBA', (128, 128))
-    canvas.alpha_composite(icon, (4, 4))
+    canvas.alpha_composite(icon)
     return canvas
 
 

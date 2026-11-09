@@ -5,50 +5,42 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 /**
- * Procedural animation of the Giant, shared by the client model and by the server/client rider
- * positioning (so riders on the hat follow the head exactly). Everything here is plain math:
- * no client classes, so it is safe on a dedicated server.
+ * Animation of the Giant, shared by the client model and by the server/client rider positioning
+ * (so riders on the hat follow the head exactly). Plain math only: safe on a dedicated server.
  *
- * <p>Units: model pixels of the unscaled model (the whole model is scaled ×2 when rendered),
- * angles in radians. Model space is the usual Minecraft one: +y is down, -z is the front.
+ * <p>The look is deliberately vanilla: the zombie model's proportions and the zombie's own
+ * animation (arms held out, stiff swinging legs, arm bob), plus a few big, readable poses for
+ * the telegraphed attacks, the roar, sleeping (sitting) and waking up.
+ *
+ * <p>Units: pixels of the unscaled model (the model is the zombie scaled ×6 like the vanilla
+ * Giant), angles in radians. Model space: +y is down, -z is the front.
  */
 public final class GiantPose {
     // ------------------------------------------------------------------ geometry (unscaled pixels)
-    public static final float MODEL_SCALE = 2.0F;
-    public static final float HIP_Y = -12.0F;
-    public static final float SEGMENT = 18.0F;
-    public static final float NECK_Y = -36.0F;
-    public static final float HEAD_SIZE = 24.0F;
-    public static final float SHOULDER_X = 18.0F;
-    public static final float SHOULDER_Y = -33.0F;
-    /** Top of the harness hat in head space. */
-    public static final float HAT_TOP = -24.6F;
-    /** Hip height when sitting: the hips rest 6 px above the ground. */
-    public static final float SIT_HIP_DROP = 30.0F;
+    public static final float MODEL_SCALE = 6.0F;
+    /** Hip pivot (legs and body). */
+    public static final float HIP_Y = 12.0F;
+    /** Neck, relative to the body pivot. */
+    public static final float NECK_Y = -12.0F;
+    public static final float SHOULDER_X = 5.0F;
+    /** Shoulder pivot, relative to the body pivot. */
+    public static final float SHOULDER_Y = -10.0F;
+    public static final float HIP_X = 1.9F;
+    /** Top of the harness hat in head space (16 px harness ×0.5, inflated 0.4). */
+    public static final float HAT_TOP = -8.2F;
+    /** How far the hips sink when the Giant sits down: the thighs rest on the ground. */
+    public static final float SIT_HIP_DROP = 10.0F;
 
     // ------------------------------------------------------------------ attack ids (mirror GiantEntity)
     public static final int PUNCH = 1;
     public static final int STOMP = 2;
     public static final int SCOOP = 3;
 
-    public static final int GESTURE_NONE = 0;
-    public static final int GESTURE_SCRATCH = 1;
-    public static final int GESTURE_LOOK = 2;
-    public static final int GESTURE_STRETCH = 3;
-    public static final int GESTURE_THUMP = 4;
-
     public static final int ROAR_LENGTH = 40;
     public static final int WAKE_LENGTH = 50;
 
-    public static int gestureLength(int gesture) {
-        return switch (gesture) {
-            case GESTURE_SCRATCH -> 70;
-            case GESTURE_LOOK -> 80;
-            case GESTURE_STRETCH -> 60;
-            case GESTURE_THUMP -> 56;
-            default -> 0;
-        };
-    }
+    private static final float ZOMBIE_ARMS = -Mth.PI / 2.25F;
+    private static final float ZOMBIE_ARMS_AGGRESSIVE = -Mth.PI / 1.5F;
 
     // ------------------------------------------------------------------ inputs
     public float age;
@@ -61,16 +53,10 @@ public final class GiantPose {
     public float attackTime;
     public float sleep;
     public float aggro;
-    public float seed;
-    /** 1 right after being hit, fading to 0. */
-    public float hurt;
     /** Ticks since the roar started, or -1. */
     public float roar = -1;
     /** Ticks since waking up, or -1. */
     public float wake = -1;
-    public int gesture;
-    public float gestureTime;
-    public float death;
 
     // ------------------------------------------------------------------ outputs
     public float hipDrop;
@@ -83,86 +69,54 @@ public final class GiantPose {
     public boolean eyesClosed;
 
     public static final class Limb {
-        public float rx, ry, rz, lower;
+        public float rx, ry, rz;
 
-        void set(float rx, float ry, float rz, float lower) {
+        void set(float rx, float ry, float rz) {
             this.rx = rx;
             this.ry = ry;
             this.rz = rz;
-            this.lower = lower;
         }
     }
 
     // ================================================================== animation
     public void compute() {
-        float s = Mth.clamp(walkSpeed * 1.3F, 0.0F, 1.0F);
+        hipDrop = 0.0F;
+        bodyRx = bodyRy = bodyRz = 0.0F;
+
+        // ---- vanilla humanoid head look
+        headRy = headYaw * Mth.DEG_TO_RAD;
+        headRx = headPitch * Mth.DEG_TO_RAD;
+        headRz = 0.0F;
+
+        // ---- vanilla humanoid legs: stiff swing
         float ph = walkPos * 0.6662F;
-        float breath = Mth.sin(age * 0.055F + seed);
+        float swing = Math.min(1.0F, 1.4F * walkSpeed);
+        rightLeg.set(Mth.cos(ph) * swing, 0.0F, 0.0F);
+        leftLeg.set(Mth.cos(ph + Mth.PI) * swing, 0.0F, 0.0F);
 
-        // ---- heavy, rolling walk
-        float thigh = Mth.cos(ph) * 0.55F * s;
-        rightLeg.set(thigh, 0.04F, 0.03F, Math.max(0.0F, Mth.sin(ph)) * 1.1F * s);
-        leftLeg.set(-thigh, -0.04F, -0.03F, Math.max(0.0F, -Mth.sin(ph)) * 1.1F * s);
+        // ---- vanilla zombie arms: held out in front, raised higher when hunting, with the arm bob
+        float arms = Mth.lerp(aggro, ZOMBIE_ARMS, ZOMBIE_ARMS_AGGRESSIVE);
+        rightArm.set(arms, -0.1F, 0.0F);
+        leftArm.set(arms, 0.1F, 0.0F);
+        float bobZ = Mth.cos(age * 0.09F) * 0.05F + 0.05F;
+        float bobX = Mth.sin(age * 0.067F) * 0.05F;
+        rightArm.rz += bobZ;
+        leftArm.rz -= bobZ;
+        rightArm.rx += bobX;
+        leftArm.rx -= bobX;
 
-        bodyRx = 0.06F + 0.06F * s + aggro * 0.14F + breath * 0.012F;
-        bodyRz = Mth.sin(ph) * 0.05F * s + Mth.sin(age * 0.031F + seed * 2.0F) * 0.012F;
-        bodyRy = Mth.cos(ph) * 0.09F * s;
-
-        float yaw = Mth.clamp(headYaw * Mth.DEG_TO_RAD, -0.8F, 0.8F);
-        headRy = yaw - bodyRy * 0.8F;
-        headRx = Mth.clamp(headPitch * Mth.DEG_TO_RAD, -0.5F, 0.5F) * 0.7F - bodyRx * 0.7F
-                + Mth.cos(ph * 2.0F) * 0.04F * s + breath * 0.012F;
-        headRz = -bodyRz * 0.6F + Mth.sin(age * 0.023F + seed) * 0.015F;
-
-        // heavy arms swing a little behind the legs (follow-through)
-        float swing = -Mth.cos(ph - 0.45F) * 0.45F * s;
-        float idleSway = Mth.sin(age * 0.04F + seed * 3.0F) * 0.03F;
-        rightArm.set(-0.08F + breath * 0.03F + swing + idleSway, 0.0F, 0.11F + breath * 0.015F,
-                -0.18F - Math.max(0.0F, -swing) * 0.6F);
-        leftArm.set(-0.08F - breath * 0.02F - swing - idleSway, 0.0F, -0.11F - breath * 0.015F,
-                -0.18F - Math.max(0.0F, swing) * 0.6F);
-
-        // ---- hunting: arms reach forward like a zombie, swaying
-        if (aggro > 0.0F) {
-            float a = aggro;
-            float reach = Mth.sin(age * 0.12F + seed) * 0.07F;
-            rightArm.rx = Mth.lerp(a, rightArm.rx, -1.25F + reach + swing * 0.25F);
-            leftArm.rx = Mth.lerp(a, leftArm.rx, -1.25F - reach - swing * 0.25F);
-            rightArm.ry = Mth.lerp(a, rightArm.ry, -0.1F);
-            leftArm.ry = Mth.lerp(a, leftArm.ry, 0.1F);
-            rightArm.lower = Mth.lerp(a, rightArm.lower, -0.3F);
-            leftArm.lower = Mth.lerp(a, leftArm.lower, -0.3F);
-        }
-
-        applyGesture();
         applyWake();
         applyRoar();
         applyAttack();
-        applyHurt();
+        applySleep();
 
-        hipDrop = SEGMENT * 2.0F - Math.max(legExtent(rightLeg), legExtent(leftLeg));
-
-        applySleep(breath);
-        applyDeath();
-
-        eyesClosed = sleep > 0.5F || isBlinking();
-    }
-
-    private boolean isBlinking() {
-        int t = (int) (age + seed * 37.0F);
-        return Math.floorMod(t, 97) < 3 || (roar >= 0 && roar < ROAR_LENGTH && roar > 6 && roar < 9);
-    }
-
-    private static float legExtent(Limb leg) {
-        return SEGMENT * Mth.cos(leg.rx) + SEGMENT * Mth.cos(leg.rx + leg.lower);
+        eyesClosed = sleep > 0.5F;
     }
 
     // ------------------------------------------------------------------ keyframe helper
     private static final float B = Float.NaN;
 
-    /**
-     * Smooth keyframe track. {@code kv} holds (time, value) pairs; a NaN value means "the base pose".
-     */
+    /** Smooth keyframe track. {@code kv} holds (time, value) pairs; a NaN value means "the base pose". */
     private static float track(float t, float base, float... kv) {
         if (t <= kv[0]) {
             return v(kv[1], base);
@@ -187,75 +141,65 @@ public final class GiantPose {
         float t = attackTime;
         switch (attack) {
             case PUNCH -> {
-                float armRx = track(t, rightArm.rx, 0, B, 20, -2.75F, 23, -0.7F, 28, -0.7F, 34, B);
-                float armRxL = track(t, leftArm.rx, 0, B, 20, -2.75F, 23, -0.7F, 28, -0.7F, 34, B);
-                float tremble = (t > 13 && t < 20) ? Mth.sin(t * 3.1F) * 0.06F : 0.0F;
-                rightArm.rx = armRx + tremble;
-                leftArm.rx = armRxL - tremble;
-                rightArm.lower = track(t, rightArm.lower, 0, B, 20, -1.35F, 23, 0.0F, 28, -0.1F, 34, B);
-                leftArm.lower = track(t, leftArm.lower, 0, B, 20, -1.35F, 23, 0.0F, 28, -0.1F, 34, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 20, 0.28F, 23, 0.1F, 34, B);
-                leftArm.rz = track(t, leftArm.rz, 0, B, 20, -0.28F, 23, -0.1F, 34, B);
-                rightArm.ry = track(t, rightArm.ry, 0, B, 20, 0.0F, 34, B);
-                leftArm.ry = track(t, leftArm.ry, 0, B, 20, 0.0F, 34, B);
-                bodyRx = track(t, bodyRx, 0, B, 20, -0.2F, 23, 0.45F, 28, 0.4F, 34, B);
-                headRx = track(t, headRx, 0, B, 20, -0.3F, 23, 0.3F, 34, B);
-                rightLeg.rx = track(t, rightLeg.rx, 0, B, 18, -0.15F, 23, -0.3F, 34, B);
-                leftLeg.rx = track(t, leftLeg.rx, 0, B, 18, -0.15F, 23, -0.3F, 34, B);
-                rightLeg.lower = track(t, rightLeg.lower, 0, B, 18, 0.3F, 23, 0.55F, 34, B);
-                leftLeg.lower = track(t, leftLeg.lower, 0, B, 18, 0.3F, 23, 0.55F, 34, B);
+                // both fists raised high over the head... and brought down like a hammer
+                float tremble = (t > 12 && t < 20) ? Mth.sin(t * 3.1F) * 0.05F : 0.0F;
+                rightArm.rx = track(t, rightArm.rx, 0, B, 18, -3.0F, 23, -0.75F, 28, -0.75F, 34, B) + tremble;
+                leftArm.rx = track(t, leftArm.rx, 0, B, 18, -3.0F, 23, -0.75F, 28, -0.75F, 34, B) - tremble;
+                rightArm.ry = track(t, rightArm.ry, 0, B, 18, 0.0F, 34, B);
+                leftArm.ry = track(t, leftArm.ry, 0, B, 18, 0.0F, 34, B);
+                rightArm.rz = track(t, rightArm.rz, 0, B, 18, 0.25F, 23, 0.15F, 34, B);
+                leftArm.rz = track(t, leftArm.rz, 0, B, 18, -0.25F, 23, -0.15F, 34, B);
+                bodyRx = track(t, bodyRx, 0, B, 18, -0.12F, 23, 0.3F, 28, 0.3F, 34, B);
+                headRx = track(t, headRx, 0, B, 18, -0.35F, 23, 0.25F, 34, B);
+                rightLeg.rx = track(t, rightLeg.rx, 0, B, 18, 0.0F, 23, -0.3F, 28, -0.3F, 34, B);
+                leftLeg.rx = track(t, leftLeg.rx, 0, B, 18, 0.0F, 23, 0.25F, 28, 0.25F, 34, B);
             }
             case STOMP -> {
-                rightLeg.rx = track(t, rightLeg.rx, 0, B, 22, -1.25F, 26, 0.05F, 30, 0.05F, 40, B);
-                rightLeg.lower = track(t, rightLeg.lower, 0, B, 22, 1.45F, 26, 0.05F, 40, B);
-                leftLeg.rx = track(t, leftLeg.rx, 0, B, 22, -0.1F, 26, -0.15F, 40, B);
-                leftLeg.lower = track(t, leftLeg.lower, 0, B, 22, 0.25F, 26, 0.35F, 32, 0.1F, 40, B);
-                bodyRx = track(t, bodyRx, 0, B, 22, -0.18F, 26, 0.28F, 32, 0.2F, 40, B);
-                bodyRz = track(t, bodyRz, 0, B, 22, -0.12F, 26, 0.02F, 40, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 22, 0.95F, 26, 0.5F, 40, B);
-                leftArm.rz = track(t, leftArm.rz, 0, B, 22, -0.95F, 26, -0.5F, 40, B);
-                rightArm.rx = track(t, rightArm.rx, 0, B, 22, -0.5F, 26, -0.2F, 40, B);
-                leftArm.rx = track(t, leftArm.rx, 0, B, 22, -0.5F, 26, -0.2F, 40, B);
-                rightArm.lower = track(t, rightArm.lower, 0, B, 22, -0.6F, 40, B);
-                leftArm.lower = track(t, leftArm.lower, 0, B, 22, -0.6F, 40, B);
-                headRx = track(t, headRx, 0, B, 22, -0.2F, 26, 0.35F, 40, B);
+                // one leg lifted high in front, arms out for balance, then slammed down
+                rightLeg.rx = track(t, rightLeg.rx, 0, B, 22, -1.25F, 26, 0.0F, 32, 0.0F, 40, B);
+                leftLeg.rx = track(t, leftLeg.rx, 0, B, 22, 0.15F, 26, 0.0F, 40, B);
+                bodyRx = track(t, bodyRx, 0, B, 22, -0.12F, 26, 0.18F, 32, 0.12F, 40, B);
+                bodyRz = track(t, bodyRz, 0, B, 22, 0.06F, 26, 0.0F, 40, B);
+                rightArm.rx = track(t, rightArm.rx, 0, B, 22, -0.6F, 26, -0.9F, 40, B);
+                leftArm.rx = track(t, leftArm.rx, 0, B, 22, -0.6F, 26, -0.9F, 40, B);
+                rightArm.rz = track(t, rightArm.rz, 0, B, 22, 0.75F, 26, 0.35F, 40, B);
+                leftArm.rz = track(t, leftArm.rz, 0, B, 22, -0.75F, 26, -0.35F, 40, B);
+                headRx = track(t, headRx, 0, B, 22, -0.15F, 26, 0.3F, 40, B);
             }
             case SCOOP -> {
-                rightLeg.rx = track(t, rightLeg.rx, 0, B, 12, -0.55F, 16, -0.2F, 28, B);
-                leftLeg.rx = track(t, leftLeg.rx, 0, B, 12, -0.55F, 16, -0.2F, 28, B);
-                rightLeg.lower = track(t, rightLeg.lower, 0, B, 12, 1.0F, 16, 0.3F, 28, B);
-                leftLeg.lower = track(t, leftLeg.lower, 0, B, 12, 1.0F, 16, 0.3F, 28, B);
-                bodyRx = track(t, bodyRx, 0, B, 12, 0.55F, 16, 0.15F, 28, B);
-                bodyRy = track(t, bodyRy, 0, B, 12, 0.35F, 16, -0.45F, 28, B);
-                rightArm.rx = track(t, rightArm.rx, 0, B, 12, 0.7F, 15, -1.0F, 18, -2.5F, 28, B);
-                rightArm.lower = track(t, rightArm.lower, 0, B, 12, -0.3F, 18, -0.7F, 28, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 12, 0.35F, 18, 0.15F, 28, B);
-                leftArm.rx = track(t, leftArm.rx, 0, B, 12, -0.6F, 28, B);
-                leftArm.rz = track(t, leftArm.rz, 0, B, 12, -0.35F, 28, B);
-                headRx = track(t, headRx, 0, B, 12, 0.2F, 18, -0.35F, 28, B);
+                // a wide underarm sweep: the right arm swings from behind, along the ground, up in front
+                rightArm.rx = track(t, rightArm.rx, 0, B, 12, 0.7F, 15, -0.9F, 18, -2.5F, 28, B);
+                rightArm.ry = track(t, rightArm.ry, 0, B, 12, 0.0F, 18, 0.2F, 28, B);
+                rightArm.rz = track(t, rightArm.rz, 0, B, 12, 0.25F, 18, 0.1F, 28, B);
+                bodyRx = track(t, bodyRx, 0, B, 12, 0.4F, 16, 0.15F, 28, B);
+                bodyRy = track(t, bodyRy, 0, B, 12, 0.3F, 16, -0.35F, 28, B);
+                rightLeg.rx = track(t, rightLeg.rx, 0, B, 12, -0.45F, 16, -0.3F, 28, B);
+                leftLeg.rx = track(t, leftLeg.rx, 0, B, 12, 0.3F, 16, 0.2F, 28, B);
+                headRx = track(t, headRx, 0, B, 12, 0.2F, 18, -0.3F, 28, B);
             }
             default -> {}
         }
     }
 
-    // ------------------------------------------------------------------ roar / wake / gestures / hurt
+    // ------------------------------------------------------------------ roar / wake
     private void applyRoar() {
         if (roar < 0 || roar > ROAR_LENGTH) {
             return;
         }
         float t = roar;
-        bodyRx = track(t, bodyRx, 0, B, 8, -0.28F, 30, -0.28F, 40, B);
-        rightArm.rx = track(t, rightArm.rx, 0, B, 8, -0.9F, 30, -0.95F, 40, B);
-        leftArm.rx = track(t, leftArm.rx, 0, B, 8, -0.9F, 30, -0.95F, 40, B);
-        rightArm.rz = track(t, rightArm.rz, 0, B, 8, 1.15F, 30, 1.2F, 40, B);
-        leftArm.rz = track(t, leftArm.rz, 0, B, 8, -1.15F, 30, -1.2F, 40, B);
-        rightArm.lower = track(t, rightArm.lower, 0, B, 8, -0.9F, 30, -1.0F, 40, B);
-        leftArm.lower = track(t, leftArm.lower, 0, B, 8, -0.9F, 30, -1.0F, 40, B);
-        headRx = track(t, headRx, 0, B, 8, -0.65F, 30, -0.6F, 40, B);
+        rightArm.rx = track(t, rightArm.rx, 0, B, 8, -2.75F, 30, -2.8F, 40, B);
+        leftArm.rx = track(t, leftArm.rx, 0, B, 8, -2.75F, 30, -2.8F, 40, B);
+        rightArm.ry = track(t, rightArm.ry, 0, B, 8, 0.0F, 40, B);
+        leftArm.ry = track(t, leftArm.ry, 0, B, 8, 0.0F, 40, B);
+        rightArm.rz = track(t, rightArm.rz, 0, B, 8, -0.4F, 30, -0.45F, 40, B);
+        leftArm.rz = track(t, leftArm.rz, 0, B, 8, 0.4F, 30, 0.45F, 40, B);
+        bodyRx = track(t, bodyRx, 0, B, 8, -0.15F, 30, -0.15F, 40, B);
+        headRx = track(t, headRx, 0, B, 8, -0.6F, 30, -0.55F, 40, B);
         if (t > 8 && t < 30) {
-            float shake = Mth.sin(t * 1.7F) * 0.07F;
+            float shake = Mth.sin(t * 1.7F) * 0.06F;
             headRy += shake;
-            bodyRz += shake * 0.3F;
+            rightArm.rx += shake;
+            leftArm.rx -= shake;
         }
     }
 
@@ -264,129 +208,40 @@ public final class GiantPose {
             return;
         }
         float t = wake;
-        rightArm.rx = track(t, rightArm.rx, 0, B, 14, B, 26, -2.9F, 38, -2.9F, 50, B);
-        leftArm.rx = track(t, leftArm.rx, 0, B, 14, B, 26, -2.9F, 38, -2.9F, 50, B);
-        rightArm.rz = track(t, rightArm.rz, 0, B, 14, B, 26, 0.35F, 38, 0.35F, 50, B);
-        leftArm.rz = track(t, leftArm.rz, 0, B, 14, B, 26, -0.35F, 38, -0.35F, 50, B);
-        rightArm.lower = track(t, rightArm.lower, 0, B, 14, B, 26, -0.2F, 50, B);
-        leftArm.lower = track(t, leftArm.lower, 0, B, 14, B, 26, -0.2F, 50, B);
-        bodyRx = track(t, bodyRx, 0, B, 14, B, 26, -0.25F, 38, -0.22F, 50, B);
-        headRx = track(t, headRx, 0, B, 14, B, 26, -0.55F, 38, -0.5F, 50, B);
+        rightArm.rx = track(t, rightArm.rx, 0, B, 14, B, 26, -2.95F, 38, -2.95F, 50, B);
+        leftArm.rx = track(t, leftArm.rx, 0, B, 14, B, 26, -2.95F, 38, -2.95F, 50, B);
+        rightArm.rz = track(t, rightArm.rz, 0, B, 14, B, 26, -0.3F, 38, -0.3F, 50, B);
+        leftArm.rz = track(t, leftArm.rz, 0, B, 14, B, 26, 0.3F, 38, 0.3F, 50, B);
+        bodyRx = track(t, bodyRx, 0, B, 14, B, 26, -0.15F, 38, -0.12F, 50, B);
+        headRx = track(t, headRx, 0, B, 14, B, 26, -0.5F, 38, -0.45F, 50, B);
     }
 
-    private void applyGesture() {
-        if (gesture == GESTURE_NONE) {
-            return;
-        }
-        float t = gestureTime;
-        switch (gesture) {
-            case GESTURE_SCRATCH -> {
-                float scratch = (t > 12 && t < 58) ? Mth.sin(t * 1.3F) * 0.22F : 0.0F;
-                rightArm.rx = track(t, rightArm.rx, 0, B, 12, -2.9F, 58, -2.9F, 70, B);
-                rightArm.ry = track(t, rightArm.ry, 0, B, 12, 0.0F, 58, 0.0F, 70, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 12, 0.1F, 58, 0.1F, 70, B);
-                rightArm.lower = track(t, rightArm.lower, 0, B, 12, -1.6F, 58, -1.6F, 70, B) + scratch;
-                headRz = track(t, headRz, 0, B, 12, 0.12F, 58, 0.12F, 70, B);
-                headRx = track(t, headRx, 0, B, 12, 0.12F, 58, 0.12F, 70, B);
-            }
-            case GESTURE_LOOK -> {
-                headRy = track(t, headRy, 0, B, 15, 0.85F, 35, 0.85F, 50, -0.85F, 68, -0.85F, 80, B);
-                bodyRy = track(t, bodyRy, 0, B, 15, 0.22F, 35, 0.22F, 50, -0.22F, 68, -0.22F, 80, B);
-            }
-            case GESTURE_STRETCH -> {
-                bodyRx = track(t, bodyRx, 0, B, 20, -0.22F, 40, -0.22F, 60, B);
-                rightArm.rx = track(t, rightArm.rx, 0, B, 20, 0.55F, 40, 0.55F, 60, B);
-                leftArm.rx = track(t, leftArm.rx, 0, B, 20, 0.55F, 40, 0.55F, 60, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 20, 0.3F, 40, 0.3F, 60, B);
-                leftArm.rz = track(t, leftArm.rz, 0, B, 20, -0.3F, 40, -0.3F, 60, B);
-                rightArm.lower = track(t, rightArm.lower, 0, B, 20, -0.3F, 60, B);
-                leftArm.lower = track(t, leftArm.lower, 0, B, 20, -0.3F, 60, B);
-                headRx = track(t, headRx, 0, B, 20, -0.4F, 40, -0.4F, 60, B);
-            }
-            case GESTURE_THUMP -> {
-                float beat = (t > 10 && t < 46) ? Mth.sin(t * 0.9F) * 0.35F : 0.0F;
-                rightArm.rx = track(t, rightArm.rx, 0, B, 10, -0.9F, 46, -0.9F, 56, B) + beat;
-                leftArm.rx = track(t, leftArm.rx, 0, B, 10, -0.9F, 46, -0.9F, 56, B) - beat;
-                rightArm.lower = track(t, rightArm.lower, 0, B, 10, -1.9F, 46, -1.9F, 56, B);
-                leftArm.lower = track(t, leftArm.lower, 0, B, 10, -1.9F, 46, -1.9F, 56, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 10, -0.45F, 46, -0.45F, 56, B);
-                leftArm.rz = track(t, leftArm.rz, 0, B, 10, 0.45F, 46, 0.45F, 56, B);
-                bodyRx = track(t, bodyRx, 0, B, 10, -0.1F, 46, -0.1F, 56, B);
-                headRx = track(t, headRx, 0, B, 10, -0.3F, 46, -0.3F, 56, B);
-            }
-            default -> {}
-        }
-    }
-
-    private void applyHurt() {
-        if (hurt <= 0.0F) {
-            return;
-        }
-        float h = hurt * hurt;
-        bodyRx -= 0.12F * h;
-        headRx -= 0.22F * h;
-        bodyRz += 0.06F * h * (seed > Mth.PI ? 1.0F : -1.0F);
-    }
-
-    // ------------------------------------------------------------------ sleep & death
-    private void applySleep(float breath) {
+    // ------------------------------------------------------------------ sleep: sitting like a riding mob
+    private void applySleep() {
         if (sleep <= 0.0F) {
             return;
         }
         float w = sleep * sleep * (3.0F - 2.0F * sleep);
-        float slow = Mth.sin(age * 0.05F + seed);
-        rightLeg.rx = Mth.lerp(w, rightLeg.rx, -2.15F);
-        leftLeg.rx = Mth.lerp(w, leftLeg.rx, -2.15F);
-        rightLeg.ry = Mth.lerp(w, rightLeg.ry, 0.2F);
-        leftLeg.ry = Mth.lerp(w, leftLeg.ry, -0.2F);
-        rightLeg.lower = Mth.lerp(w, rightLeg.lower, 1.75F);
-        leftLeg.lower = Mth.lerp(w, leftLeg.lower, 1.75F);
-        bodyRx = Mth.lerp(w, bodyRx, 0.22F + slow * 0.03F);
-        bodyRy = Mth.lerp(w, bodyRy, 0.0F);
-        bodyRz = Mth.lerp(w, bodyRz, 0.0F);
-        // arms folded over the raised knees, forearms resting on top of them
-        rightArm.rx = Mth.lerp(w, rightArm.rx, -0.62F + slow * 0.02F);
-        leftArm.rx = Mth.lerp(w, leftArm.rx, -0.62F + slow * 0.02F);
+        float breath = Mth.sin(age * 0.05F) * 0.02F;
+        // vanilla riding legs
+        rightLeg.rx = Mth.lerp(w, rightLeg.rx, -1.62F);
+        rightLeg.ry = Mth.lerp(w, rightLeg.ry, Mth.PI / 10.0F);
+        rightLeg.rz = Mth.lerp(w, rightLeg.rz, 0.07854F);
+        leftLeg.rx = Mth.lerp(w, leftLeg.rx, -1.62F);
+        leftLeg.ry = Mth.lerp(w, leftLeg.ry, -Mth.PI / 10.0F);
+        leftLeg.rz = Mth.lerp(w, leftLeg.rz, -0.07854F);
+        // slumped forward, arms resting on the thighs, head hanging
+        bodyRx = Mth.lerp(w, bodyRx, 0.2F + breath);
+        rightArm.rx = Mth.lerp(w, rightArm.rx, -0.75F + breath);
+        leftArm.rx = Mth.lerp(w, leftArm.rx, -0.75F + breath);
         rightArm.ry = Mth.lerp(w, rightArm.ry, 0.0F);
         leftArm.ry = Mth.lerp(w, leftArm.ry, 0.0F);
-        rightArm.rz = Mth.lerp(w, rightArm.rz, -0.2F);
-        leftArm.rz = Mth.lerp(w, leftArm.rz, 0.2F);
-        rightArm.lower = Mth.lerp(w, rightArm.lower, -1.2F);
-        leftArm.lower = Mth.lerp(w, leftArm.lower, -1.2F);
-        headRx = Mth.lerp(w, headRx, 0.5F + slow * 0.06F);
+        rightArm.rz = Mth.lerp(w, rightArm.rz, 0.05F);
+        leftArm.rz = Mth.lerp(w, leftArm.rz, -0.05F);
+        headRx = Mth.lerp(w, headRx, 0.45F + breath * 2.0F);
         headRy = Mth.lerp(w, headRy, 0.0F);
-        headRz = Mth.lerp(w, headRz, 0.08F);
+        headRz = Mth.lerp(w, headRz, 0.06F);
         hipDrop = Mth.lerp(w, hipDrop, SIT_HIP_DROP);
-    }
-
-    private void applyDeath() {
-        if (death <= 0.0F) {
-            return;
-        }
-        float k = Mth.clamp(death / 12.0F, 0.0F, 1.0F);
-        rightArm.rx = Mth.lerp(k, rightArm.rx, -2.3F);
-        leftArm.rx = Mth.lerp(k, leftArm.rx, -2.1F);
-        rightArm.rz = Mth.lerp(k, rightArm.rz, 0.4F);
-        leftArm.rz = Mth.lerp(k, leftArm.rz, -0.4F);
-        rightArm.lower = Mth.lerp(k, rightArm.lower, -0.2F);
-        leftArm.lower = Mth.lerp(k, leftArm.lower, -0.2F);
-        headRx = Mth.lerp(k, headRx, -0.5F);
-        rightLeg.rx = Mth.lerp(k, rightLeg.rx, 0.0F);
-        leftLeg.rx = Mth.lerp(k, leftLeg.rx, 0.0F);
-        rightLeg.lower = Mth.lerp(k, rightLeg.lower, 0.0F);
-        leftLeg.lower = Mth.lerp(k, leftLeg.lower, 0.0F);
-        hipDrop = Mth.lerp(k, hipDrop, 0.0F);
-    }
-
-    /** Forward fall angle (degrees) used by the renderer while dying. */
-    public static float deathFallDegrees(float deathTime) {
-        float t = Mth.clamp(deathTime / 22.0F, 0.0F, 1.0F);
-        float fall = t * t * 90.0F;
-        if (deathTime > 22.0F) {
-            float bounce = Mth.clamp((deathTime - 22.0F) / 6.0F, 0.0F, 1.0F);
-            fall -= Mth.sin(bounce * Mth.PI) * 4.0F;
-        }
-        return fall;
     }
 
     // ================================================================== forward kinematics

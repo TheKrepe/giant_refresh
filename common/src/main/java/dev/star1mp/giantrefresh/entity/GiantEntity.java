@@ -105,9 +105,9 @@ public class GiantEntity extends Monster {
     public static final float STRIDE = 2.6F;
     public static final int MAX_RIDERS = 4;
     /** Rider slots on top of the hat, in head-space pixels (x, z). */
-    private static final float[][] RIDER_SLOTS = {{-6.0F, -3.0F}, {6.0F, -3.0F}, {-6.0F, 6.5F}, {6.0F, 6.5F}};
+    private static final float[][] RIDER_SLOTS = {{-2.0F, -1.0F}, {2.0F, -1.0F}, {-2.0F, 2.2F}, {2.0F, 2.2F}};
     /** Death animation length in ticks (vanilla is 20). */
-    public static final int DEATH_TICKS = 40;
+    public static final int DEATH_TICKS = 26;
 
     // ------------------------------------------------------------------ server state
     private int attackTicks;
@@ -121,7 +121,6 @@ public class GiantEntity extends Monster {
     private int wakeTicks = -1;
     private float aggroAmount;
     private float aggroAmountO;
-    private final float animSeed;
     private final GiantPose riderPose = new GiantPose();
 
     // ------------------------------------------------------------------ client state
@@ -129,15 +128,11 @@ public class GiantEntity extends Monster {
     private int clientAttackTicks;
     private float sleepAmount;
     private float sleepAmountO;
-    private int gesture;
-    private int gestureTicks;
-    private int gestureCooldown = 200;
 
     public GiantEntity(EntityType<? extends GiantEntity> type, Level level) {
         super(type, level);
         this.xpReward = 80;
         this.setPathfindingMalus(PathType.LEAVES, 0.0F);
-        this.animSeed = (float) ((getUUID().getLeastSignificantBits() >>> 11) % 10000L) / 10000.0F * Mth.TWO_PI;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -316,21 +311,14 @@ public class GiantEntity extends Monster {
         if (client) {
             pose.attack = clientAttack;
             pose.attackTime = getClientAttackTime(partialTick);
-            pose.gesture = gesture;
-            pose.gestureTime = gesture == GiantPose.GESTURE_NONE ? 0.0F : gestureTicks + partialTick;
         } else {
             pose.attack = getAttackType();
             pose.attackTime = attackTicks + partialTick;
-            pose.gesture = GiantPose.GESTURE_NONE;
-            pose.gestureTime = 0.0F;
         }
         pose.sleep = getSleepAmount(partialTick);
         pose.aggro = Mth.lerp(partialTick, aggroAmountO, aggroAmount);
-        pose.seed = animSeed;
-        pose.hurt = hurtTime > 0 ? Math.max(0.0F, (hurtTime - partialTick) / 10.0F) : 0.0F;
         pose.roar = roarTicks < 0 ? -1.0F : roarTicks + partialTick;
         pose.wake = wakeTicks < 0 ? -1.0F : wakeTicks + partialTick;
-        pose.death = deathTime > 0 ? deathTime + partialTick : 0.0F;
     }
 
     public boolean isRoaring() {
@@ -438,26 +426,7 @@ public class GiantEntity extends Monster {
         level.broadcastEntityEvent(this, EVENT_ROAR);
     }
 
-    /** Client-only idle gestures: scratching the head, looking around, stretching, thumping the chest. */
-    private void tickGestures() {
-        if (gesture != GiantPose.GESTURE_NONE) {
-            if (++gestureTicks > GiantPose.gestureLength(gesture) || isAttacking() || isGiantSleeping() || aggroAmount > 0.3F) {
-                gesture = GiantPose.GESTURE_NONE;
-                gestureTicks = 0;
-                gestureCooldown = 160 + random.nextInt(400);
-            }
-            return;
-        }
-        boolean idle = !walkAnimation.isMoving() && !isAttacking() && !isGiantSleeping() && aggroAmount < 0.05F
-                && roarTicks < 0 && wakeTicks < 0 && deathTime == 0;
-        if (idle && --gestureCooldown <= 0) {
-            gesture = 1 + random.nextInt(4);
-            gestureTicks = 0;
-        }
-    }
-
     private void clientTick() {
-        tickGestures();
         int attack = getAttackType();
         if (attack != clientAttack) {
             clientAttack = attack;
@@ -784,10 +753,11 @@ public class GiantEntity extends Monster {
     protected void tickDeath() {
         deathTime++;
         if (level() instanceof ServerLevel server) {
-            if (deathTime == 23) {
+            if (deathTime == 14) {
+                // the vanilla death flop: the body hits the ground sideways
                 double yaw = Math.toRadians(yBodyRot);
-                double fx = -Math.sin(yaw);
-                double fz = Math.cos(yaw);
+                double fx = Math.cos(yaw);
+                double fz = Math.sin(yaw);
                 for (int i = 2; i <= 11; i++) {
                     double px = getX() + fx * i;
                     double pz = getZ() + fz * i;
