@@ -129,6 +129,10 @@ public final class GiantSmokeTest {
             puncher = spawnAt(level, px - 12, py, pz + 20, -1);
             GiantRefresh.LOGGER.info("[CLIENTTEST] scene staged around {} {}", px, pz);
         }
+        if (clientTicks >= 21 && !player.getAbilities().flying) {
+            player.getAbilities().flying = true;
+            player.onUpdateAbilities();
+        }
         if (clientTicks == 760) {
             player.teleportTo(level, stageX + 5.5, 171.0, stageZ + 9.5, java.util.Set.of(), 32.0F, 4.0F, false);
         }

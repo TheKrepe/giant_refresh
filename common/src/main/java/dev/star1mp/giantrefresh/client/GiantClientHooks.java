@@ -70,6 +70,15 @@ public final class GiantClientHooks {
         double seconds = (now - worldStart) / 1.0E9;
         double[] at = {35.0, 41.0, 47.0};
         if (shots < at.length && seconds > at[shots]) {
+            for (net.minecraft.world.entity.Entity e : mc.level.entitiesForRendering()) {
+                if (e instanceof dev.star1mp.giantrefresh.entity.GiantEntity g) {
+                    for (net.minecraft.world.entity.Entity p : g.getPassengers()) {
+                        dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] client rider {} dy={} sleep={} pose={} giantY={} riderY={}",
+                                p.getType().getDescriptionId(), p.getY() - g.getY(), g.getSleepAmount(1.0F), g.getPose(), g.getY(), p.getY());
+                    }
+                }
+            }
+            dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] camera player y={}", mc.player.getY());
             String name = "giant_test_" + shots + ".png";
             net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
                     msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name));
