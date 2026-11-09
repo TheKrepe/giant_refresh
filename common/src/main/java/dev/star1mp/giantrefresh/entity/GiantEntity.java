@@ -471,7 +471,7 @@ public class GiantEntity extends Monster {
         float damage = (float) getAttributeValue(Attributes.ATTACK_DAMAGE);
         for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, box, this::canHit)) {
             if (e.hurtServer(level, damageSources().mobAttack(this), damage)) {
-                e.knockback(2.2, -fwd.x, -fwd.z);
+                e.knockback(2.2, -fwd.x, -fwd.z, damageSources().mobAttack(this), damage);
                 e.addDeltaMovement(new Vec3(0, 0.45, 0));
                 e.needsSync = true;
             }
@@ -498,7 +498,7 @@ public class GiantEntity extends Monster {
             }
             double falloff = 1.0 - dist / (radius + 0.5);
             if (e.hurtServer(level, damageSources().mobAttack(this), Math.max(2.0F, base * (float) falloff))) {
-                e.knockback(0.6 + 1.4 * falloff, -dx, -dz);
+                e.knockback(0.6 + 1.4 * falloff, -dx, -dz, damageSources().mobAttack(this), base);
                 e.addDeltaMovement(new Vec3(0, 0.25 + 0.45 * falloff, 0));
                 e.needsSync = true;
             }
