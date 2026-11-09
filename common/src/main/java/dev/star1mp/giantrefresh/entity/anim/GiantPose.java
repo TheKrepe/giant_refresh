@@ -282,9 +282,10 @@ public final class GiantPose {
         switch (gesture) {
             case GESTURE_SCRATCH -> {
                 float scratch = (t > 12 && t < 58) ? Mth.sin(t * 1.3F) * 0.22F : 0.0F;
-                rightArm.rx = track(t, rightArm.rx, 0, B, 12, -2.6F, 58, -2.6F, 70, B);
-                rightArm.rz = track(t, rightArm.rz, 0, B, 12, -0.35F, 58, -0.35F, 70, B);
-                rightArm.lower = track(t, rightArm.lower, 0, B, 12, -1.7F, 58, -1.7F, 70, B) + scratch;
+                rightArm.rx = track(t, rightArm.rx, 0, B, 12, -2.9F, 58, -2.9F, 70, B);
+                rightArm.ry = track(t, rightArm.ry, 0, B, 12, 0.0F, 58, 0.0F, 70, B);
+                rightArm.rz = track(t, rightArm.rz, 0, B, 12, 0.1F, 58, 0.1F, 70, B);
+                rightArm.lower = track(t, rightArm.lower, 0, B, 12, -1.6F, 58, -1.6F, 70, B) + scratch;
                 headRz = track(t, headRz, 0, B, 12, 0.12F, 58, 0.12F, 70, B);
                 headRx = track(t, headRx, 0, B, 12, 0.12F, 58, 0.12F, 70, B);
             }
@@ -340,19 +341,19 @@ public final class GiantPose {
         leftLeg.ry = Mth.lerp(w, leftLeg.ry, -0.2F);
         rightLeg.lower = Mth.lerp(w, rightLeg.lower, 1.75F);
         leftLeg.lower = Mth.lerp(w, leftLeg.lower, 1.75F);
-        bodyRx = Mth.lerp(w, bodyRx, 0.42F + slow * 0.03F);
+        bodyRx = Mth.lerp(w, bodyRx, 0.22F + slow * 0.03F);
         bodyRy = Mth.lerp(w, bodyRy, 0.0F);
         bodyRz = Mth.lerp(w, bodyRz, 0.0F);
         // arms folded over the raised knees, forearms resting on top of them
-        rightArm.rx = Mth.lerp(w, rightArm.rx, -0.45F + slow * 0.02F);
-        leftArm.rx = Mth.lerp(w, leftArm.rx, -0.45F + slow * 0.02F);
+        rightArm.rx = Mth.lerp(w, rightArm.rx, -0.62F + slow * 0.02F);
+        leftArm.rx = Mth.lerp(w, leftArm.rx, -0.62F + slow * 0.02F);
         rightArm.ry = Mth.lerp(w, rightArm.ry, 0.0F);
         leftArm.ry = Mth.lerp(w, leftArm.ry, 0.0F);
         rightArm.rz = Mth.lerp(w, rightArm.rz, -0.2F);
         leftArm.rz = Mth.lerp(w, leftArm.rz, 0.2F);
-        rightArm.lower = Mth.lerp(w, rightArm.lower, -1.35F);
-        leftArm.lower = Mth.lerp(w, leftArm.lower, -1.35F);
-        headRx = Mth.lerp(w, headRx, 0.55F + slow * 0.06F);
+        rightArm.lower = Mth.lerp(w, rightArm.lower, -1.2F);
+        leftArm.lower = Mth.lerp(w, leftArm.lower, -1.2F);
+        headRx = Mth.lerp(w, headRx, 0.5F + slow * 0.06F);
         headRy = Mth.lerp(w, headRy, 0.0F);
         headRz = Mth.lerp(w, headRz, 0.08F);
         hipDrop = Mth.lerp(w, hipDrop, SIT_HIP_DROP);
