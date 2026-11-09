@@ -290,7 +290,9 @@ public class GiantEntity extends Monster {
     protected void positionRider(Entity passenger, Entity.MoveFunction moveFunction) {
         int index = getPassengers().indexOf(passenger);
         Vec3 pos = riderPosition(Math.max(0, index), 1.0F);
-        moveFunction.accept(passenger, pos.x, pos.y, pos.z);
+        // like vanilla: the rider's own seat offset, so a sitting rider rests on the hat instead of hovering
+        Vec3 seat = passenger.getVehicleAttachmentPoint(this);
+        moveFunction.accept(passenger, pos.x - seat.x, pos.y - seat.y, pos.z - seat.z);
     }
 
     /** World position of rider slot {@code index} standing on the harness hat (follows the animated head). */

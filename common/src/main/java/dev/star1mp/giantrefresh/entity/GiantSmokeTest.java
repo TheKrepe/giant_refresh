@@ -103,7 +103,7 @@ public final class GiantSmokeTest {
             int px = net.minecraft.util.Mth.floor(player.getX());
             int pz = net.minecraft.util.Mth.floor(player.getZ());
             for (int cx = (px >> 4) - 2; cx <= (px >> 4) + 3; cx++) {
-                for (int cz = (pz >> 4) - 1; cz <= (pz >> 4) + 8; cz++) {
+                for (int cz = (pz >> 4) - 1; cz <= (pz >> 4) + 10; cz++) {
                     level.setChunkForced(cx, cz, true);
                 }
             }
@@ -111,7 +111,7 @@ public final class GiantSmokeTest {
             stageX = px;
             stageZ = pz;
             for (int x = px - 26; x <= px + 26; x++) {
-                for (int z = pz - 6; z <= pz + 112; z++) {
+                for (int z = pz - 6; z <= pz + 140; z++) {
                     level.setBlock(new BlockPos(x, py - 1, z), net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState(), 2);
                 }
             }
@@ -125,6 +125,9 @@ public final class GiantSmokeTest {
                 b.setGiantSleeping(true);
             }
             puncher = buildGiant(level, px - 12, py, pz + 20, -1, false);
+            if (puncher != null) {
+                puncher.setNoAi(true);
+            }
             // showcase rows with frozen animation poses (see GiantRenderer, test mode only)
             String[][] rows = {
                     {"pose:walk:3", "pose:punch:19", "pose:punch:23"},
@@ -133,7 +136,7 @@ public final class GiantSmokeTest {
             };
             for (int r = 0; r < rows.length; r++) {
                 for (int i = 0; i < 3; i++) {
-                    GiantEntity g = buildGiant(level, px - 10 + i * 10, py, pz + 40 + r * 30, (r * 3 + i) % 16, false);
+                    GiantEntity g = buildGiant(level, px - 10 + i * 10, py, pz + 60 + r * 30, (r * 3 + i) % 16, false);
                     if (g != null) {
                         g.setNoAi(true);
                         g.setYRot(125.0F);
@@ -194,7 +197,7 @@ public final class GiantSmokeTest {
             case 1 -> { x += 5; y = 171; z += 9; yaw = 32; pitch = 4; }
             case 2 -> { x += 13 + 17; y = 164; z += 22; yaw = 90; pitch = 8; }
             case 3 -> { x += 13; y = 165; z += 12; yaw = 0; pitch = 14; }
-            case 4, 5, 6 -> { y = 166; z += 40 + (shot - 4) * 30 - 24; yaw = 0; pitch = 6; }
+            case 4, 5, 6 -> { y = 166; z += 60 + (shot - 4) * 30 - 17; yaw = 0; pitch = 10; }
             case 7 -> { y = 166; z += 17 + 18; yaw = 180; pitch = 6; }
             default -> {}
         }
