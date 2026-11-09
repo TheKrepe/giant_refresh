@@ -664,7 +664,7 @@ public class GiantEntity extends Monster {
         held.setPos(at);
         held.resetFallDistance();
         held.setDeltaMovement(motion);
-        held.hurtMarked = true;
+        held.syncVelocity = true;
         held.needsSync = true;
     }
 
