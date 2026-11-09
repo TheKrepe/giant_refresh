@@ -1,147 +1,142 @@
 package dev.star1mp.giantrefresh.client;
 
-import dev.star1mp.giantrefresh.entity.GiantEntity;
-import net.minecraft.client.model.HumanoidModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import dev.star1mp.giantrefresh.entity.anim.GiantPose;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
-import net.minecraft.util.Mth;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 
 /**
- * The classic humanoid body scaled ×6 (exactly like the vanilla Giant), with slow strides
- * and hand-written, clearly telegraphed attack poses.
+ * The Giant's own model (256×256 texture, scaled ×2): a heavy humanoid with elbows and knees,
+ * a torn shirt hem, ragged sleeves and trouser hems as separate overlay layers, and eyelids
+ * that blink. All motion comes from {@link GiantPose}.
  */
-public class GiantModel extends HumanoidModel<GiantRenderState> {
+public class GiantModel extends EntityModel<GiantRenderState> {
+    private final ModelPart body;
+    public final ModelPart head;
+    private final ModelPart rightEyelid;
+    private final ModelPart leftEyelid;
+    private final ModelPart rightArm;
+    private final ModelPart rightForearm;
+    private final ModelPart leftArm;
+    private final ModelPart leftForearm;
+    private final ModelPart rightLeg;
+    private final ModelPart rightShin;
+    private final ModelPart leftLeg;
+    private final ModelPart leftShin;
+
     public GiantModel(ModelPart root) {
         super(root);
+        this.body = root.getChild("body");
+        this.head = body.getChild("head");
+        this.rightEyelid = head.getChild("right_eyelid");
+        this.leftEyelid = head.getChild("left_eyelid");
+        this.rightArm = body.getChild("right_arm");
+        this.rightForearm = rightArm.getChild("right_forearm");
+        this.leftArm = body.getChild("left_arm");
+        this.leftForearm = leftArm.getChild("left_forearm");
+        this.rightLeg = root.getChild("right_leg");
+        this.rightShin = rightLeg.getChild("right_shin");
+        this.leftLeg = root.getChild("left_leg");
+        this.leftShin = leftLeg.getChild("left_shin");
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition mesh = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);
-        return LayerDefinition.create(mesh, 64, 64).apply(MeshTransformer.scaling(6.0F));
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition root = mesh.getRoot();
+        float seg = GiantPose.SEGMENT;
+
+        PartDefinition body = root.addOrReplaceChild("body",
+                CubeListBuilder.create().texOffs(96, 0).addBox(-12.0F, -36.0F, -6.0F, 24.0F, 36.0F, 12.0F),
+                PartPose.offset(0.0F, GiantPose.HIP_Y, 0.0F));
+        body.addOrReplaceChild("shirt",
+                CubeListBuilder.create().texOffs(168, 0).addBox(-12.0F, -36.0F, -6.0F, 24.0F, 36.0F, 12.0F, new CubeDeformation(0.75F)),
+                PartPose.ZERO);
+
+        PartDefinition head = body.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 0).addBox(-12.0F, -24.0F, -12.0F, 24.0F, 24.0F, 24.0F),
+                PartPose.offset(0.0F, GiantPose.NECK_Y, 0.0F));
+        head.addOrReplaceChild("right_eyelid",
+                CubeListBuilder.create().texOffs(192, 48).addBox(-3.0F, -2.0F, 0.0F, 6.0F, 4.0F, 0.0F),
+                PartPose.offset(-5.0F, -11.0F, -12.05F));
+        head.addOrReplaceChild("left_eyelid",
+                CubeListBuilder.create().texOffs(192, 56).addBox(-3.0F, -2.0F, 0.0F, 6.0F, 4.0F, 0.0F),
+                PartPose.offset(5.0F, -11.0F, -12.05F));
+
+        limb(body, "right_arm", "right_forearm", 0, 48, 96, 48, 0, 108, -GiantPose.SHOULDER_X, GiantPose.SHOULDER_Y, -3.0F, true);
+        limb(body, "left_arm", "left_forearm", 48, 48, 144, 48, 48, 108, GiantPose.SHOULDER_X, GiantPose.SHOULDER_Y, -3.0F, true);
+        limb(root, "right_leg", "right_shin", 0, 78, 96, 78, 96, 108, -6.0F, GiantPose.HIP_Y, 0.0F, false);
+        limb(root, "left_leg", "left_shin", 48, 78, 144, 78, 144, 108, 6.0F, GiantPose.HIP_Y, 0.0F, false);
+        return LayerDefinition.create(mesh, 256, 256).apply(MeshTransformer.scaling(GiantPose.MODEL_SCALE));
+    }
+
+    /**
+     * Two-segment limb. Arms get a sleeve overlay on the upper segment, legs a ragged
+     * trouser hem overlay on the lower one.
+     */
+    private static void limb(PartDefinition parent, String upperName, String lowerName,
+                             int upperU, int upperV, int lowerU, int lowerV, int overlayU, int overlayV,
+                             float x, float y, float top, boolean arm) {
+        float seg = GiantPose.SEGMENT;
+        PartDefinition upper = parent.addOrReplaceChild(upperName,
+                CubeListBuilder.create().texOffs(upperU, upperV).addBox(-6.0F, top, -6.0F, 12.0F, seg, 12.0F),
+                PartPose.offset(x, y, 0.0F));
+        PartDefinition lower = upper.addOrReplaceChild(lowerName,
+                CubeListBuilder.create().texOffs(lowerU, lowerV).addBox(-6.0F, 0.0F, -6.0F, 12.0F, seg, 12.0F),
+                PartPose.offset(0.0F, top + seg, 0.0F));
+        if (arm) {
+            upper.addOrReplaceChild(upperName + "_sleeve",
+                    CubeListBuilder.create().texOffs(overlayU, overlayV).addBox(-6.0F, top, -6.0F, 12.0F, seg, 12.0F, new CubeDeformation(0.5F)),
+                    PartPose.ZERO);
+        } else {
+            lower.addOrReplaceChild(lowerName + "_hem",
+                    CubeListBuilder.create().texOffs(overlayU, overlayV).addBox(-6.0F, 0.0F, -6.0F, 12.0F, seg, 12.0F, new CubeDeformation(0.5F)),
+                    PartPose.ZERO);
+        }
     }
 
     @Override
     public void setupAnim(GiantRenderState state) {
         super.setupAnim(state);
-        float age = state.ageInTicks;
+        GiantPose p = state.pose;
 
-        // Heavy, slightly forward-hanging arms; stretched forward like a zombie while hunting.
-        float swing = Mth.cos(state.walkAnimationPos * 0.6662F) * 0.5F * state.walkAnimationSpeed;
-        float breathe = Mth.sin(age * 0.05F) * 0.04F;
-        if (state.aggressive) {
-            rightArm.xRot = -1.35F + breathe + swing * 0.3F;
-            leftArm.xRot = -1.35F - breathe - swing * 0.3F;
-        } else {
-            rightArm.xRot = -0.18F + swing + breathe;
-            leftArm.xRot = -0.18F - swing - breathe;
-        }
-        rightArm.zRot = 0.08F + Mth.cos(age * 0.07F) * 0.03F;
-        leftArm.zRot = -0.08F - Mth.cos(age * 0.07F) * 0.03F;
-        rightArm.yRot = 0.0F;
-        leftArm.yRot = 0.0F;
+        body.y = GiantPose.HIP_Y + p.hipDrop;
+        body.xRot = p.bodyRx;
+        body.yRot = p.bodyRy;
+        body.zRot = p.bodyRz;
 
-        head.xRot = Mth.clamp(head.xRot, -0.26F, 0.26F);
+        head.xRot = p.headRx;
+        head.yRot = p.headRy;
+        head.zRot = p.headRz;
+        rightEyelid.visible = p.eyesClosed;
+        leftEyelid.visible = p.eyesClosed;
 
-        switch (state.attack) {
-            case GiantEntity.ATTACK_PUNCH -> animatePunch(state.attackTime);
-            case GiantEntity.ATTACK_STOMP -> animateStomp(state.attackTime);
-            case GiantEntity.ATTACK_SCOOP -> animateScoop(state.attackTime);
-            default -> {}
-        }
+        apply(rightArm, rightForearm, p.rightArm);
+        apply(leftArm, leftForearm, p.leftArm);
 
-        if (state.sleep > 0.0F) {
-            animateSleep(smooth(state.sleep), age);
-        }
+        rightLeg.y = GiantPose.HIP_Y + p.hipDrop;
+        leftLeg.y = GiantPose.HIP_Y + p.hipDrop;
+        apply(rightLeg, rightShin, p.rightLeg);
+        apply(leftLeg, leftShin, p.leftLeg);
     }
 
-    // ------------------------------------------------------------------ attacks
-    private static float smooth(float x) {
-        x = Mth.clamp(x, 0.0F, 1.0F);
-        return x * x * (3.0F - 2.0F * x);
+    private static void apply(ModelPart upper, ModelPart lower, GiantPose.Limb limb) {
+        upper.xRot = limb.rx;
+        upper.yRot = limb.ry;
+        upper.zRot = limb.rz;
+        lower.xRot = limb.lower;
     }
 
-    /** Both fists rise slowly over the head... then come crashing down. */
-    private void animatePunch(float t) {
-        int w = GiantEntity.impactTick(GiantEntity.ATTACK_PUNCH);
-        int len = GiantEntity.attackLength(GiantEntity.ATTACK_PUNCH);
-        float raised = -2.85F;
-        float slammed = -0.85F;
-        float angle;
-        if (t < w) {
-            angle = Mth.lerp(smooth(t / w), rightArm.xRot, raised);
-        } else if (t < w + 3) {
-            angle = Mth.lerp((t - w) / 3.0F, raised, slammed);
-        } else {
-            angle = Mth.lerp(smooth((t - w - 3) / (len - w - 3)), slammed, -0.18F);
-        }
-        float spread = t < w ? 0.22F * smooth(t / w) : 0.22F * (1.0F - smooth((t - w) / 6.0F));
-        rightArm.xRot = angle;
-        leftArm.xRot = angle;
-        rightArm.zRot = spread;
-        leftArm.zRot = -spread;
-        // tremble just before the hit — the cue to dodge
-        if (t > w - 6 && t < w) {
-            float shake = Mth.sin(t * 3.1F) * 0.05F;
-            rightArm.xRot += shake;
-            leftArm.xRot -= shake;
-        }
-    }
-
-    /** One leg lifts high, held for a moment, then slams the ground. */
-    private void animateStomp(float t) {
-        int w = GiantEntity.impactTick(GiantEntity.ATTACK_STOMP);
-        int len = GiantEntity.attackLength(GiantEntity.ATTACK_STOMP);
-        float lift;
-        if (t < w) {
-            lift = -1.25F * smooth(t / (w - 4.0F));
-        } else if (t < w + 2) {
-            lift = Mth.lerp((t - w) / 2.0F, -1.25F, 0.1F);
-        } else {
-            lift = Mth.lerp(smooth((t - w - 2) / (len - w - 2)), 0.1F, 0.0F);
-        }
-        rightLeg.xRot = lift;
-        leftLeg.xRot = -lift * 0.12F;
-        float balance = t < w ? smooth(t / w) : 1.0F - smooth((t - w) / 8.0F);
-        rightArm.zRot = 0.08F + 0.65F * balance;
-        leftArm.zRot = -0.08F - 0.65F * balance;
-        rightArm.xRot = Mth.lerp(balance, rightArm.xRot, -0.35F);
-        leftArm.xRot = Mth.lerp(balance, leftArm.xRot, -0.35F);
-    }
-
-    /** A low underarm sweep that flings small things into the air. */
-    private void animateScoop(float t) {
-        int w = GiantEntity.impactTick(GiantEntity.ATTACK_SCOOP);
-        int len = GiantEntity.attackLength(GiantEntity.ATTACK_SCOOP);
-        float angle;
-        if (t < w) {
-            angle = Mth.lerp(smooth(t / w), rightArm.xRot, 0.75F); // swing back
-        } else if (t < w + 3) {
-            angle = Mth.lerp((t - w) / 3.0F, 0.75F, -2.6F); // sweep up and forward
-        } else {
-            angle = Mth.lerp(smooth((t - w - 3) / (len - w - 3)), -2.6F, -0.18F);
-        }
-        rightArm.xRot = angle;
-        rightArm.zRot = 0.25F;
-        rightArm.yRot = t < w ? -0.35F * smooth(t / w) : -0.35F;
-    }
-
-    /** Sitting on the ground, head down, arms resting on the knees. */
-    private void animateSleep(float s, float age) {
-        float breath = Mth.sin(age * 0.06F) * 0.04F * s;
-        rightLeg.xRot = Mth.lerp(s, rightLeg.xRot, -1.41F);
-        rightLeg.yRot = Mth.lerp(s, rightLeg.yRot, 0.31F);
-        rightLeg.zRot = Mth.lerp(s, rightLeg.zRot, 0.08F);
-        leftLeg.xRot = Mth.lerp(s, leftLeg.xRot, -1.41F);
-        leftLeg.yRot = Mth.lerp(s, leftLeg.yRot, -0.31F);
-        leftLeg.zRot = Mth.lerp(s, leftLeg.zRot, -0.08F);
-        rightArm.xRot = Mth.lerp(s, rightArm.xRot, -0.62F) + breath;
-        leftArm.xRot = Mth.lerp(s, leftArm.xRot, -0.62F) + breath;
-        rightArm.zRot = Mth.lerp(s, rightArm.zRot, 0.12F);
-        leftArm.zRot = Mth.lerp(s, leftArm.zRot, -0.12F);
-        head.xRot = Mth.lerp(s, head.xRot, 0.5F) + breath;
-        head.yRot = Mth.lerp(s, head.yRot, 0.0F);
+    /** Moves the pose stack into head space (used by the harness hat layer). */
+    public void translateToHead(PoseStack poseStack) {
+        root().translateAndRotate(poseStack);
+        body.translateAndRotate(poseStack);
+        head.translateAndRotate(poseStack);
     }
 }

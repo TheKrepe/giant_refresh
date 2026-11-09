@@ -9,7 +9,10 @@ import dev.star1mp.giantrefresh.registry.RegEntry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -26,6 +29,7 @@ public class GiantRefreshNeoForge {
 
         modBus.addListener(GiantRefreshNeoForge::onRegister);
         modBus.addListener(GiantRefreshNeoForge::onAttributes);
+        modBus.addListener(GiantRefreshNeoForge::onCreativeTabs);
         NeoForge.EVENT_BUS.addListener(GiantRefreshNeoForge::onEntityJoin);
         NeoForge.EVENT_BUS.addListener(GiantRefreshNeoForge::onLevelTick);
     }
@@ -42,6 +46,11 @@ public class GiantRefreshNeoForge {
                 }
             });
         }
+    }
+
+    private static void onCreativeTabs(BuildCreativeModeTabContentsEvent event) {
+        GRContent.fillCreativeTab(event.getTabKey(), (anchor, stack) ->
+                event.insertAfter(new ItemStack(anchor), stack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS));
     }
 
     private static void onAttributes(EntityAttributeCreationEvent event) {

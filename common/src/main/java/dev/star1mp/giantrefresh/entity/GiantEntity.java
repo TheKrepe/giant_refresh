@@ -53,6 +53,8 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import dev.star1mp.giantrefresh.entity.anim.GiantPose;
+import org.joml.Vector3f;
 
 /**
  * The refreshed Giant: a slow, heavy, 12-block tall undead with telegraphed attacks,
@@ -70,6 +72,8 @@ public class GiantEntity extends Monster {
     public static final byte EVENT_STOMP = 102;
     public static final byte EVENT_PUNCH = 103;
     public static final byte EVENT_WAKE = 104;
+    public static final byte EVENT_ROAR = 105;
+    public static final byte EVENT_DEATH_THUD = 106;
 
     // ------------------------------------------------------------------ attacks
     public static final int ATTACK_NONE = 0;
@@ -99,32 +103,41 @@ public class GiantEntity extends Monster {
 
     /** Divides the walk-cycle so that a huge body takes slow, long strides. Shared with the renderer. */
     public static final float STRIDE = 2.6F;
-    /** Height of the neck pivot above the feet when standing (blocks). */
-    public static final double NECK_HEIGHT = 9.0;
-    /** Distance from the neck pivot to the top of the harness hat (blocks). */
-    public static final double HAT_TOP = 3.3;
-    /** How far the body sinks when the Giant sits down to sleep (blocks). */
-    public static final double SIT_DROP = 3.75;
     public static final int MAX_RIDERS = 4;
-
-    private static final double[][] RIDER_SLOTS = {{-0.8, -0.15}, {0.8, -0.15}, {-0.75, 0.8}, {0.75, 0.8}};
+    /** Rider slots on top of the hat, in head-space pixels (x, z). */
+    private static final float[][] RIDER_SLOTS = {{-6.0F, -3.0F}, {6.0F, -3.0F}, {-6.0F, 6.5F}, {6.0F, 6.5F}};
+    /** Death animation length in ticks (vanilla is 20). */
+    public static final int DEATH_TICKS = 40;
 
     // ------------------------------------------------------------------ server state
     private int attackTicks;
     private int attackCooldown;
     private int lastStepIndex = Integer.MIN_VALUE;
     private boolean nextStepRight;
+    private boolean hadTarget;
+
+    // ------------------------------------------------------------------ shared animation state (both sides)
+    private int roarTicks = -1;
+    private int wakeTicks = -1;
+    private float aggroAmount;
+    private float aggroAmountO;
+    private final float animSeed;
+    private final GiantPose riderPose = new GiantPose();
 
     // ------------------------------------------------------------------ client state
     private int clientAttack;
     private int clientAttackTicks;
     private float sleepAmount;
     private float sleepAmountO;
+    private int gesture;
+    private int gestureTicks;
+    private int gestureCooldown = 200;
 
     public GiantEntity(EntityType<? extends GiantEntity> type, Level level) {
         super(type, level);
         this.xpReward = 80;
         this.setPathfindingMalus(PathType.LEAVES, 0.0F);
+        this.animSeed = (float) ((getUUID().getLeastSignificantBits() >>> 11) % 10000L) / 10000.0F * Mth.TWO_PI;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -280,21 +293,46 @@ public class GiantEntity extends Monster {
         moveFunction.accept(passenger, pos.x, pos.y, pos.z);
     }
 
-    /** World position of rider slot {@code index} standing on the harness hat. */
+    /** World position of rider slot {@code index} standing on the harness hat (follows the animated head). */
     public Vec3 riderPosition(int index, float partialTick) {
-        double[] slot = RIDER_SLOTS[index % RIDER_SLOTS.length];
-        float sleep = getSleepAmount(partialTick);
-        double headPitch = 0.5 * sleep;
-        double top = NECK_HEIGHT - SIT_DROP * sleep + HAT_TOP * Math.cos(headPitch);
-        double forwardShift = HAT_TOP * Math.sin(headPitch);
-        double yaw = Math.toRadians(getYHeadRot());
-        double fx = -Math.sin(yaw);
-        double fz = Math.cos(yaw);
-        double rx = -Math.cos(yaw);
-        double rz = -Math.sin(yaw);
-        double lx = slot[0];
-        double lz = slot[1] + forwardShift;
-        return new Vec3(getX() + rx * lx + fx * lz, getY() + top, getZ() + rz * lx + fz * lz);
+        float[] slot = RIDER_SLOTS[index % RIDER_SLOTS.length];
+        fillPose(riderPose, partialTick);
+        riderPose.compute();
+        Vector3f off = riderPose.headPointOffset(Mth.rotLerp(partialTick, yBodyRotO, yBodyRot), slot[0], GiantPose.HAT_TOP, slot[1]);
+        return new Vec3(Mth.lerp(partialTick, xo, getX()) + off.x, Mth.lerp(partialTick, yo, getY()) + off.y,
+                Mth.lerp(partialTick, zo, getZ()) + off.z);
+    }
+
+    /** Fills the animation inputs for this Giant (used by the renderer and by rider placement). */
+    public void fillPose(GiantPose pose, float partialTick) {
+        boolean client = level().isClientSide();
+        pose.age = tickCount + partialTick;
+        pose.walkPos = walkAnimation.position(partialTick) / STRIDE;
+        pose.walkSpeed = walkAnimation.speed(partialTick);
+        pose.headYaw = Mth.wrapDegrees(Mth.rotLerp(partialTick, yHeadRotO, yHeadRot) - Mth.rotLerp(partialTick, yBodyRotO, yBodyRot));
+        pose.headPitch = getXRot(partialTick);
+        if (client) {
+            pose.attack = clientAttack;
+            pose.attackTime = getClientAttackTime(partialTick);
+            pose.gesture = gesture;
+            pose.gestureTime = gesture == GiantPose.GESTURE_NONE ? 0.0F : gestureTicks + partialTick;
+        } else {
+            pose.attack = getAttackType();
+            pose.attackTime = attackTicks + partialTick;
+            pose.gesture = GiantPose.GESTURE_NONE;
+            pose.gestureTime = 0.0F;
+        }
+        pose.sleep = getSleepAmount(partialTick);
+        pose.aggro = Mth.lerp(partialTick, aggroAmountO, aggroAmount);
+        pose.seed = animSeed;
+        pose.hurt = hurtTime > 0 ? Math.max(0.0F, (hurtTime - partialTick) / 10.0F) : 0.0F;
+        pose.roar = roarTicks < 0 ? -1.0F : roarTicks + partialTick;
+        pose.wake = wakeTicks < 0 ? -1.0F : wakeTicks + partialTick;
+        pose.death = deathTime > 0 ? deathTime + partialTick : 0.0F;
+    }
+
+    public boolean isRoaring() {
+        return roarTicks >= 0 && roarTicks < GiantPose.ROAR_LENGTH;
     }
 
     @Override
@@ -352,11 +390,18 @@ public class GiantEntity extends Monster {
     @Override
     public void tick() {
         super.tick();
+        tickSharedAnimation();
         if (level().isClientSide()) {
             clientTick();
             return;
         }
         ServerLevel server = (ServerLevel) level();
+        LivingEntity target = getTarget();
+        boolean hasTarget = target != null && target.isAlive();
+        if (hasTarget && !hadTarget && !isGiantSleeping() && !isAttacking() && isAlive()) {
+            roar(server);
+        }
+        hadTarget = hasTarget;
         if (isGiantSleeping()) {
             if (tickCount % 10 == 0) {
                 checkWakeUp(server);
@@ -372,7 +417,45 @@ public class GiantEntity extends Monster {
         }
     }
 
+    private void tickSharedAnimation() {
+        if (roarTicks >= 0 && ++roarTicks > GiantPose.ROAR_LENGTH) {
+            roarTicks = -1;
+        }
+        if (wakeTicks >= 0 && ++wakeTicks > GiantPose.WAKE_LENGTH) {
+            wakeTicks = -1;
+        }
+        aggroAmountO = aggroAmount;
+        float target = isAggressive() && !isGiantSleeping() ? 1.0F : 0.0F;
+        aggroAmount = aggroAmount < target ? Math.min(target, aggroAmount + 0.06F) : Math.max(target, aggroAmount - 0.04F);
+    }
+
+    private void roar(ServerLevel level) {
+        roarTicks = 0;
+        getNavigation().stop();
+        level.playSound(null, getX(), getY() + 9, getZ(), GRContent.GIANT_ROAR.get(), getSoundSource(), 4.0F, 0.85F + random.nextFloat() * 0.1F);
+        level.broadcastEntityEvent(this, EVENT_ROAR);
+    }
+
+    /** Client-only idle gestures: scratching the head, looking around, stretching, thumping the chest. */
+    private void tickGestures() {
+        if (gesture != GiantPose.GESTURE_NONE) {
+            if (++gestureTicks > GiantPose.gestureLength(gesture) || isAttacking() || isGiantSleeping() || aggroAmount > 0.3F) {
+                gesture = GiantPose.GESTURE_NONE;
+                gestureTicks = 0;
+                gestureCooldown = 160 + random.nextInt(400);
+            }
+            return;
+        }
+        boolean idle = !walkAnimation.isMoving() && !isAttacking() && !isGiantSleeping() && aggroAmount < 0.05F
+                && roarTicks < 0 && wakeTicks < 0 && deathTime == 0;
+        if (idle && --gestureCooldown <= 0) {
+            gesture = 1 + random.nextInt(4);
+            gestureTicks = 0;
+        }
+    }
+
     private void clientTick() {
+        tickGestures();
         int attack = getAttackType();
         if (attack != clientAttack) {
             clientAttack = attack;
@@ -664,6 +747,8 @@ public class GiantEntity extends Monster {
             return;
         }
         setGiantSleeping(false);
+        wakeTicks = 0;
+        hadTarget = true; // the wake-up stretch replaces the roar
         level.playSound(null, getX(), getY() + 8, getZ(), GRContent.GIANT_ROAR.get(), getSoundSource(), 4.0F, 0.75F);
         level.broadcastEntityEvent(this, EVENT_WAKE);
         if (cause instanceof LivingEntity living && living.isAlive() && !(living instanceof Player p && (p.isCreative() || p.isSpectator()))) {
@@ -692,6 +777,34 @@ public class GiantEntity extends Monster {
         }
     }
 
+    /** A slower death: the Giant topples forward like a felled tree and hits the ground. */
+    @Override
+    protected void tickDeath() {
+        deathTime++;
+        if (level() instanceof ServerLevel server) {
+            if (deathTime == 23) {
+                double yaw = Math.toRadians(yBodyRot);
+                double fx = -Math.sin(yaw);
+                double fz = Math.cos(yaw);
+                for (int i = 2; i <= 11; i++) {
+                    double px = getX() + fx * i;
+                    double pz = getZ() + fz * i;
+                    BlockState st = server.getBlockState(BlockPos.containing(px, getY() - 0.5, pz));
+                    if (!st.isAir()) {
+                        server.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, st), px, getY() + 0.2, pz, 14, 1.2, 0.1, 1.2, 0.15);
+                    }
+                }
+                server.sendParticles(ParticleTypes.POOF, getX() + fx * 7, getY() + 0.5, getZ() + fz * 7, 30, 3.0, 0.3, 3.0, 0.03);
+                server.playSound(null, getX() + fx * 6, getY(), getZ() + fz * 6, GRContent.GIANT_STOMP.get(), getSoundSource(), 4.0F, 0.6F);
+                server.broadcastEntityEvent(this, EVENT_DEATH_THUD);
+            }
+            if (deathTime >= DEATH_TICKS && !isRemoved()) {
+                server.broadcastEntityEvent(this, (byte) 60); // vanilla death poof
+                remove(Entity.RemovalReason.KILLED);
+            }
+        }
+    }
+
     @Override
     public boolean removeWhenFarAway(double distance) {
         return !isPersistenceRequired() && super.removeWhenFarAway(distance);
@@ -704,7 +817,15 @@ public class GiantEntity extends Monster {
             case EVENT_STEP_LEFT, EVENT_STEP_RIGHT -> GiantClientHooks.onImpact(this, 0.35F);
             case EVENT_PUNCH -> GiantClientHooks.onImpact(this, 0.6F);
             case EVENT_STOMP -> GiantClientHooks.onImpact(this, 1.0F);
-            case EVENT_WAKE -> GiantClientHooks.onImpact(this, 0.45F);
+            case EVENT_WAKE -> {
+                wakeTicks = 0;
+                GiantClientHooks.onImpact(this, 0.45F);
+            }
+            case EVENT_ROAR -> {
+                roarTicks = 0;
+                GiantClientHooks.onImpact(this, 0.3F);
+            }
+            case EVENT_DEATH_THUD -> GiantClientHooks.onImpact(this, 1.0F);
             default -> super.handleEntityEvent(id);
         }
     }

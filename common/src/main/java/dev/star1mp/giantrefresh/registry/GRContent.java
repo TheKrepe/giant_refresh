@@ -5,7 +5,6 @@ import dev.star1mp.giantrefresh.GiantRefresh;
 import dev.star1mp.giantrefresh.block.GiantHeadBlock;
 import dev.star1mp.giantrefresh.effect.GrowthEffect;
 import dev.star1mp.giantrefresh.entity.GiantEntity;
-import dev.star1mp.giantrefresh.platform.Platform;
 import dev.star1mp.giantrefresh.worldgen.GiantTrailFeature;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +15,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
@@ -33,7 +31,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -55,8 +52,7 @@ public final class GRContent {
             Registries.ITEM,
             Registries.MOB_EFFECT,
             Registries.POTION,
-            Registries.FEATURE_TYPE,
-            Registries.CREATIVE_MODE_TAB);
+            Registries.FEATURE_TYPE);
 
     // ---------------------------------------------------------------- sounds
     public static final RegEntry<SoundEvent> GIANT_AMBIENT = sound("entity.giant.ambient");
@@ -107,23 +103,32 @@ public final class GRContent {
     public static final RegEntry<MapCodec<? extends Feature>> GIANT_TRAIL_FEATURE = add(Registries.FEATURE_TYPE,
             "giant_trail", () -> GiantTrailFeature.CODEC);
 
-    // ---------------------------------------------------------------- creative tab
-    public static final RegEntry<CreativeModeTab> TAB = add(Registries.CREATIVE_MODE_TAB, "giant_refresh",
-            () -> Platform.get().creativeTabBuilder()
-                    .title(Component.translatable("itemGroup.giant_refresh"))
-                    .icon(() -> new ItemStack(GIANT_HEAD.get()))
-                    .displayItems((params, output) -> {
-                        output.accept(GIANT_SPAWN_EGG.get());
-                        output.accept(GIANT_TOOTH.get());
-                        output.accept(GIANT_HEAD.get());
-                        Holder<Potion> growth = BuiltInRegistries.POTION.wrapAsHolder(GROWTH_POTION.get());
-                        Holder<Potion> longGrowth = BuiltInRegistries.POTION.wrapAsHolder(LONG_GROWTH_POTION.get());
-                        for (Item potionItem : List.of(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.TIPPED_ARROW)) {
-                            output.accept(PotionContents.createItemStack(potionItem, growth));
-                            output.accept(PotionContents.createItemStack(potionItem, longGrowth));
-                        }
-                    })
-                    .build());
+    // ---------------------------------------------------------------- vanilla creative tabs
+    public static final ResourceKey<CreativeModeTab> TAB_SPAWN_EGGS = vanillaTab("spawn_eggs");
+    public static final ResourceKey<CreativeModeTab> TAB_INGREDIENTS = vanillaTab("ingredients");
+    public static final ResourceKey<CreativeModeTab> TAB_FUNCTIONAL_BLOCKS = vanillaTab("functional_blocks");
+
+    /**
+     * Where each mod item goes in the vanilla creative tabs (the Potions of Growth and the
+     * Arrows of Growth are added to Food &amp; Drinks / Combat automatically by vanilla).
+     */
+    public interface TabOutput {
+        void insertAfter(Item anchor, ItemStack stack);
+    }
+
+    public static void fillCreativeTab(ResourceKey<CreativeModeTab> tab, TabOutput out) {
+        if (tab.equals(TAB_SPAWN_EGGS)) {
+            out.insertAfter(Items.GHAST_SPAWN_EGG, new ItemStack(GIANT_SPAWN_EGG.get()));
+        } else if (tab.equals(TAB_INGREDIENTS)) {
+            out.insertAfter(Items.GHAST_TEAR, new ItemStack(GIANT_TOOTH.get()));
+        } else if (tab.equals(TAB_FUNCTIONAL_BLOCKS)) {
+            out.insertAfter(Items.PIGLIN_HEAD, new ItemStack(GIANT_HEAD.get()));
+        }
+    }
+
+    private static ResourceKey<CreativeModeTab> vanillaTab(String name) {
+        return ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.withDefaultNamespace(name));
+    }
 
     // ---------------------------------------------------------------- tags
     public static final TagKey<Block> GIANT_BREAKABLE = TagKey.create(Registries.BLOCK, GiantRefresh.id("giant_breakable"));

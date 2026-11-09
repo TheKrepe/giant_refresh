@@ -1,7 +1,6 @@
 package dev.star1mp.giantrefresh.platform;
 
 import java.nio.file.Path;
-import net.minecraft.world.item.CreativeModeTab;
 
 /**
  * The small set of things that genuinely differ per loader.
@@ -9,8 +8,6 @@ import net.minecraft.world.item.CreativeModeTab;
  */
 public interface Platform {
     Path configDir();
-
-    CreativeModeTab.Builder creativeTabBuilder();
 
     String loaderName();
 

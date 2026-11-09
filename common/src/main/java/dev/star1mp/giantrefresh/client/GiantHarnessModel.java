@@ -10,11 +10,17 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
 /**
- * Same geometry as the Happy Ghast harness (and it uses the same 16 vanilla harness textures),
- * shrunk onto the Giant's head as a hat. Goggles are up when nobody rides, and pulled down
- * over the eyes when the hat carries a crew — exactly like on a ridden Happy Ghast.
+ * Happy Ghast harness geometry (same 16 vanilla harness textures) worn as a hat on the Giant's head.
+ * Built in harness units (16 px cube) and drawn ×1.5 so it wraps the 24 px head.
+ *
+ * <p>Goggles: pushed up onto the hat while nobody rides; pulled down over the eyes when the hat
+ * carries a crew. The Giant's skin has its eyes painted exactly under the lenses.
  */
 public class GiantHarnessModel extends EntityModel<GiantRenderState> {
+    /** Goggle pivot (harness units) when worn over the eyes: lenses cover face rows 12-16 of 24. */
+    public static final float GOGGLES_DOWN_Y = -6.33F;
+    public static final float GOGGLES_UP_Y = -12.3F;
+
     private final ModelPart goggles;
 
     public GiantHarnessModel(ModelPart root) {
@@ -26,11 +32,11 @@ public class GiantHarnessModel extends EntityModel<GiantRenderState> {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
         root.addOrReplaceChild("harness",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+                CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.4F)),
+                PartPose.ZERO);
         root.addOrReplaceChild("goggles",
                 CubeListBuilder.create().texOffs(0, 32).addBox(-8.0F, -2.5F, -2.5F, 16.0F, 5.0F, 5.0F, new CubeDeformation(0.15F)),
-                PartPose.offset(0.0F, 14.0F, -5.5F));
+                PartPose.offset(0.0F, GOGGLES_DOWN_Y, -5.8F));
         return LayerDefinition.create(mesh, 64, 64);
     }
 
@@ -39,10 +45,12 @@ public class GiantHarnessModel extends EntityModel<GiantRenderState> {
         super.setupAnim(state);
         if (state.ridden) {
             goggles.xRot = 0.0F;
-            goggles.y = 14.0F;
+            goggles.y = GOGGLES_DOWN_Y;
+            goggles.z = -5.8F;
         } else {
-            goggles.xRot = -0.7854F;
-            goggles.y = 9.0F;
+            goggles.xRot = -0.8F;
+            goggles.y = GOGGLES_UP_Y;
+            goggles.z = -5.2F;
         }
     }
 }

@@ -15,7 +15,7 @@ public final class GiantClientHooks {
     private static long lastNanos = System.nanoTime();
 
     /** CI render test: {@code -Dgiantrefresh.clientsmoketest=true}. */
-    private static final boolean CLIENT_TEST = Boolean.getBoolean("giantrefresh.clientsmoketest");
+    public static final boolean CLIENT_TEST = Boolean.getBoolean("giantrefresh.clientsmoketest");
     private static long worldStart;
     private static int shots;
     private static boolean stopped;
@@ -68,7 +68,7 @@ public final class GiantClientHooks {
             worldStart = now;
         }
         double seconds = (now - worldStart) / 1.0E9;
-        double[] at = {35.0, 41.0, 47.0};
+        double[] at = {35.0, 41.0, 47.0, 53.0, 59.0, 65.0};
         if (shots < at.length && seconds > at[shots]) {
             for (net.minecraft.world.entity.Entity e : mc.level.entitiesForRendering()) {
                 if (e instanceof dev.star1mp.giantrefresh.entity.GiantEntity g) {
@@ -83,7 +83,7 @@ public final class GiantClientHooks {
             net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
                     msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name));
             shots++;
-        } else if (shots >= at.length && seconds > 52.0) {
+        } else if (shots >= at.length && seconds > 70.0) {
             dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] done, stopping client");
             stopped = true;
             mc.stop();

@@ -221,7 +221,6 @@ LANG_EN = {
     "item.minecraft.splash_potion.effect.growth": "Splash Potion of Growth",
     "item.minecraft.lingering_potion.effect.growth": "Lingering Potion of Growth",
     "item.minecraft.tipped_arrow.effect.growth": "Arrow of Growth",
-    "itemGroup.giant_refresh": "Giant Refresh",
     "subtitles.giant_refresh.entity.giant.ambient": "Giant groans",
     "subtitles.giant_refresh.entity.giant.hurt": "Giant hurts",
     "subtitles.giant_refresh.entity.giant.death": "Giant dies",
@@ -243,7 +242,6 @@ LANG_RU = {
     "item.minecraft.splash_potion.effect.growth": "Взрывное зелье увеличения",
     "item.minecraft.lingering_potion.effect.growth": "Оседающее зелье увеличения",
     "item.minecraft.tipped_arrow.effect.growth": "Стрела увеличения",
-    "itemGroup.giant_refresh": "Giant Refresh",
     "subtitles.giant_refresh.entity.giant.ambient": "Гигант стонет",
     "subtitles.giant_refresh.entity.giant.hurt": "Гигант ранен",
     "subtitles.giant_refresh.entity.giant.death": "Гигант умирает",
@@ -439,12 +437,7 @@ def main():
     gen_assets_json()
     write(f'assets/{NS}/lang/en_us.json', LANG_EN)
     write(f'assets/{NS}/lang/ru_ru.json', LANG_RU)
-    gen_tooth()
-    gen_effect_icon()
-    if vanilla:
-        skin = gen_giant_skin(vanilla)
-        gen_head_block(skin)
-        gen_spawn_egg(vanilla)
+    # textures: tools/gen_giant_texture.py and tools/gen_items.py
     print('done')
 
 

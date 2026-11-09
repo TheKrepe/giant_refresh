@@ -53,8 +53,11 @@ public class GiantAttackGoal extends Goal {
     @Override
     public void tick() {
         LivingEntity target = giant.getTarget();
-        if (giant.isAttacking()) {
+        if (giant.isAttacking() || giant.isRoaring()) {
             giant.getNavigation().stop();
+            if (target != null) {
+                giant.getLookControl().setLookAt(target, 10.0F, 20.0F);
+            }
             return;
         }
         if (target == null || !target.isAlive()) {

@@ -17,8 +17,12 @@ public final class GRConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static GRConfig instance = new GRConfig();
 
+    private static final int CURRENT_VERSION = 2;
+    /** Used to migrate old defaults; do not edit. */
+    public int configVersion = CURRENT_VERSION;
+
     // --- Giant stats ---
-    public double giantMaxHealth = 400.0;
+    public double giantMaxHealth = 200.0;
     public double giantPunchDamage = 15.0;
     public double giantStompDamage = 9.0;
     public double giantMovementSpeed = 0.2;
@@ -84,6 +88,13 @@ public final class GRConfig {
             GiantRefresh.LOGGER.warn("Could not read {}, using defaults: {}", file, e.toString());
         }
         instance = loaded != null ? loaded : new GRConfig();
+        if (instance.configVersion < 2) {
+            // 1.0.0 shipped with 400 HP; the Giant now has 200 HP by default.
+            if (instance.giantMaxHealth == 400.0) {
+                instance.giantMaxHealth = 200.0;
+            }
+        }
+        instance.configVersion = CURRENT_VERSION;
         instance.sanitize();
         try {
             Files.createDirectories(configDir);

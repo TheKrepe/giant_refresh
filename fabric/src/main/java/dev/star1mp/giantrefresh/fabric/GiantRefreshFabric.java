@@ -9,6 +9,7 @@ import dev.star1mp.giantrefresh.registry.RegEntry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -26,6 +27,11 @@ public class GiantRefreshFabric implements ModInitializer {
         registerAll();
 
         FabricDefaultAttributeRegistry.register(GRContent.GIANT.get(), GiantEntity.createAttributes());
+
+        for (var tab : java.util.List.of(GRContent.TAB_SPAWN_EGGS, GRContent.TAB_INGREDIENTS, GRContent.TAB_FUNCTIONAL_BLOCKS)) {
+            CreativeModeTabEvents.modifyOutputEvent(tab).register(output ->
+                    GRContent.fillCreativeTab(tab, (anchor, stack) -> output.insertAfter(anchor, stack)));
+        }
 
         ServerEntityEvents.ENTITY_LOAD.register(GiantEvents::onEntityJoin);
         ServerTickEvents.END_LEVEL_TICK.register(GiantEvents::onLevelTick);

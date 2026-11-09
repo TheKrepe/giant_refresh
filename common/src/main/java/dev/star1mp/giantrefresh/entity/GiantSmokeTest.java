@@ -103,7 +103,7 @@ public final class GiantSmokeTest {
             int px = net.minecraft.util.Mth.floor(player.getX());
             int pz = net.minecraft.util.Mth.floor(player.getZ());
             for (int cx = (px >> 4) - 2; cx <= (px >> 4) + 3; cx++) {
-                for (int cz = (pz >> 4) - 1; cz <= (pz >> 4) + 4; cz++) {
+                for (int cz = (pz >> 4) - 1; cz <= (pz >> 4) + 8; cz++) {
                     level.setChunkForced(cx, cz, true);
                 }
             }
@@ -111,7 +111,7 @@ public final class GiantSmokeTest {
             stageX = px;
             stageZ = pz;
             for (int x = px - 26; x <= px + 26; x++) {
-                for (int z = pz - 6; z <= pz + 40; z++) {
+                for (int z = pz - 6; z <= pz + 112; z++) {
                     level.setBlock(new BlockPos(x, py - 1, z), net.minecraft.world.level.block.Blocks.GRASS_BLOCK.defaultBlockState(), 2);
                 }
             }
@@ -125,6 +125,24 @@ public final class GiantSmokeTest {
                 b.setGiantSleeping(true);
             }
             puncher = buildGiant(level, px - 12, py, pz + 20, -1, false);
+            // showcase rows with frozen animation poses (see GiantRenderer, test mode only)
+            String[][] rows = {
+                    {"pose:walk:3", "pose:punch:19", "pose:punch:23"},
+                    {"pose:stomp:21", "pose:scoop:17", "pose:roar:14"},
+                    {"pose:gesture1:30", "pose:gesture4:24", "pose:death:14"},
+            };
+            for (int r = 0; r < rows.length; r++) {
+                for (int i = 0; i < 3; i++) {
+                    GiantEntity g = buildGiant(level, px - 10 + i * 10, py, pz + 40 + r * 30, (r * 3 + i) % 16, false);
+                    if (g != null) {
+                        g.setNoAi(true);
+                        g.setYRot(150.0F);
+                        g.yBodyRot = 150.0F;
+                        g.yHeadRot = 150.0F;
+                        g.setCustomName(net.minecraft.network.chat.Component.literal(rows[r][i]));
+                    }
+                }
+            }
             GiantRefresh.LOGGER.info("[CLIENTTEST] scene staged around {} {}", px, pz);
         }
         if (clientTicks >= 21 && !player.getAbilities().flying) {
@@ -136,6 +154,11 @@ public final class GiantSmokeTest {
         }
         if (clientTicks == 880) {
             player.teleportTo(level, stageX + 13.5, 163.0, stageZ + 12.5, java.util.Set.of(), 0.0F, 12.0F, false);
+        }
+        for (int r = 0; r < 3; r++) {
+            if (clientTicks == 1000 + r * 120) {
+                player.teleportTo(level, stageX + 0.5, 167.0, stageZ + 40 + r * 30 - 21.5, java.util.Set.of(), 0.0F, 14.0F, false);
+            }
         }
         if (puncher != null && clientTicks > 40 && clientTicks % 50 == 0) {
             puncher.startAttack(clientTicks % 100 == 0 ? GiantEntity.ATTACK_PUNCH : GiantEntity.ATTACK_STOMP);
