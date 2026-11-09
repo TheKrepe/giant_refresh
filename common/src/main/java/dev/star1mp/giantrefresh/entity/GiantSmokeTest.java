@@ -79,6 +79,10 @@ public final class GiantSmokeTest {
             int riders = 0;
             for (GiantEntity g : level.getEntitiesOfClass(GiantEntity.class, area)) {
                 riders += g.getPassengers().size();
+                for (net.minecraft.world.entity.Entity p : g.getPassengers()) {
+                    GiantRefresh.LOGGER.info("[SMOKETEST] rider {} offset dy={} dx={} dz={}", p.getType().getDescriptionId(),
+                            String.format("%.2f", p.getY() - g.getY()), String.format("%.2f", p.getX() - g.getX()), String.format("%.2f", p.getZ() - g.getZ()));
+                }
             }
             double scale = grower != null && grower.isAlive() ? grower.getAttributeValue(Attributes.SCALE) : -1;
             boolean pass = giants >= 4 && vanilla == 0;
