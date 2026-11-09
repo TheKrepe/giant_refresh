@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "giant_refresh:giant_head"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "giant_refresh:blocks/giant_head"
+}

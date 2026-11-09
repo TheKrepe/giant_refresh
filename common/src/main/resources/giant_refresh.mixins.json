@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.star1mp.giantrefresh.mixin",
+  "mixins": [
+    "LivingEntityMixin",
+    "MobAccessor",
+    "VillagerHostilesSensorMixin"
+  ],
+  "client": [
+    "client.CameraMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

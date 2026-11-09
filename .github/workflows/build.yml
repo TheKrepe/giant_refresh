@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+
+      - name: Build Fabric
+        id: fabric
+        continue-on-error: true
+        working-directory: fabric
+        run: gradle build --stacktrace --no-daemon
+
+      - name: Build NeoForge
+        id: neoforge
+        continue-on-error: true
+        working-directory: neoforge
+        run: gradle build --stacktrace --no-daemon
+
+      - name: Collect jars
+        run: |
+          mkdir -p dist
+          find fabric/build/libs neoforge/build/libs -maxdepth 1 -name '*.jar' ! -name '*-sources.jar' -exec cp {} dist/ \; 2>/dev/null || true
+          ls -la dist
+
+      - name: Upload mod jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: giant_refresh-${{ github.run_number }}
+          path: dist/*.jar
+          if-no-files-found: warn
+
+      - name: Fail if a loader failed
+        if: steps.fabric.outcome != 'success' || steps.neoforge.outcome != 'success'
+        run: |
+          echo "Fabric: ${{ steps.fabric.outcome }}  NeoForge: ${{ steps.neoforge.outcome }}"
+          exit 1
