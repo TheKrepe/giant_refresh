@@ -52,10 +52,9 @@ public final class GiantSmokeTest {
         if (ticks == 100) {
             GiantRefresh.LOGGER.info("[SMOKETEST] spawning test entities at {}", pos);
             for (int i = 0; i < 3; i++) {
-                GiantEntity g = GRContent.GIANT.get().spawn(level, pos.offset(i * 8, 0, 0), EntitySpawnReason.SPAWN_ITEM_USE);
+                BlockPos at = pos.offset(i * 8, 0, 0);
+                GiantEntity g = buildGiant(level, at.getX(), level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, at.getX(), at.getZ()), at.getZ(), i * 5, true);
                 if (g != null) {
-                    g.setHatColor(i * 5);
-                    GiantRiders.spawnRiders(g, level, level.getCurrentDifficultyAt(pos));
                     GiantRefresh.LOGGER.info("[SMOKETEST] giant {} riders={}", i, g.getPassengers().size());
                 }
             }
@@ -117,16 +116,15 @@ public final class GiantSmokeTest {
                 }
             }
             player.teleportTo(level, px + 0.5, py, pz + 0.5, java.util.Set.of(), 0.0F, -24.0F, false);
-            GiantEntity a = spawnAt(level, px, py, pz + 17, 14);
+            GiantEntity a = buildGiant(level, px, py, pz + 17, 14, true);
             if (a != null) {
-                GiantRiders.spawnRiders(a, level, level.getCurrentDifficultyAt(a.blockPosition()));
                 a.setNoAi(true);
             }
-            GiantEntity b = spawnAt(level, px + 13, py, pz + 22, 3);
+            GiantEntity b = buildGiant(level, px + 13, py, pz + 22, 3, false);
             if (b != null) {
                 b.setGiantSleeping(true);
             }
-            puncher = spawnAt(level, px - 12, py, pz + 20, -1);
+            puncher = buildGiant(level, px - 12, py, pz + 20, -1, false);
             GiantRefresh.LOGGER.info("[CLIENTTEST] scene staged around {} {}", px, pz);
         }
         if (clientTicks >= 21 && !player.getAbilities().flying) {
@@ -144,7 +142,8 @@ public final class GiantSmokeTest {
         }
     }
 
-    private static GiantEntity spawnAt(ServerLevel level, int x, int y, int z, int hat) {
+    /** Creates a Giant the same way natural spawning does, then forces hat colour / riders. */
+    private static GiantEntity buildGiant(ServerLevel level, int x, int y, int z, int hat, boolean riders) {
         GiantEntity g = GRContent.GIANT.get().create(level, EntitySpawnReason.COMMAND);
         if (g == null) {
             return null;
@@ -153,8 +152,11 @@ public final class GiantSmokeTest {
         g.yHeadRot = 180.0F;
         g.yBodyRot = 180.0F;
         g.setHatColor(hat);
+        if (riders && hat >= 0) {
+            GiantRiders.spawnRiders(g, level, level.getCurrentDifficultyAt(g.blockPosition()));
+        }
         g.setPersistenceRequired();
-        level.addFreshEntity(g);
+        level.addFreshEntityWithPassengers(g);
         return g;
     }
 }
