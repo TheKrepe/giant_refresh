@@ -1,0 +1,94 @@
+[
+  {
+    "name": "1.14.4",
+    "commit": {
+      "sha": "217a78b72afc4cedc73acbe72ccdd2354d364181",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/217a78b72afc4cedc73acbe72ccdd2354d364181"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.15",
+    "commit": {
+      "sha": "05f0ae083be7c829bc0295f01dccf20b5b618540",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/05f0ae083be7c829bc0295f01dccf20b5b618540"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.15.1",
+    "commit": {
+      "sha": "339f12733abfa212655c0e3988f150f1bf5b7a73",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/339f12733abfa212655c0e3988f150f1bf5b7a73"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.15.2",
+    "commit": {
+      "sha": "3a600e1c06bcc75652177766f92905e0b7997d76",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/3a600e1c06bcc75652177766f92905e0b7997d76"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.16",
+    "commit": {
+      "sha": "4ba385813c08a0650be205f62102535a7f99126e",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/4ba385813c08a0650be205f62102535a7f99126e"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.16.1",
+    "commit": {
+      "sha": "b0b348ba0d0a4b52b923618d7d18e354b1d24288",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/b0b348ba0d0a4b52b923618d7d18e354b1d24288"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.16.2",
+    "commit": {
+      "sha": "f26bcb5745635c670dbe4c6cbd89035520def7b0",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/f26bcb5745635c670dbe4c6cbd89035520def7b0"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.16.3",
+    "commit": {
+      "sha": "45419535a6c094d1d56a0b103ecf01595ad22625",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/45419535a6c094d1d56a0b103ecf01595ad22625"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.16.4",
+    "commit": {
+      "sha": "9d49c6b8cd4ab9e4e82d310841c8e3bacbeda239",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/9d49c6b8cd4ab9e4e82d310841c8e3bacbeda239"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.16.5",
+    "commit": {
+      "sha": "656fa9a909fbceed9325060f731bd8903c3205de",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/656fa9a909fbceed9325060f731bd8903c3205de"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.17",
+    "commit": {
+      "sha": "2734c955b05d22c7527a26c256bdf19d9657d303",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/2734c955b05d22c7527a26c256bdf19d9657d303"
+    },
+    "protected": false
+  },
+  {
+    "name": "1.17.1",
+    "commit": {
+      "sha": "0eaf29dd69756b9306d4cc0d40c9f5d1765f9b81",
+      "url": "https://api.github.com/repos/FabricMC/fabric-example-mod/commits/0eaf29dd69756b9306d4c
