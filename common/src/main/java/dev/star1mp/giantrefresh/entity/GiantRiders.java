@@ -20,6 +20,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.Unit;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
@@ -74,6 +80,7 @@ public final class GiantRiders {
             rider.snapTo(pos.x, pos.y, pos.z, giant.getYRot(), 0.0F);
             rider.finalizeSpawn(level, difficulty, EntitySpawnReason.JOCKEY, null);
             cleanUp(rider);
+            equipCrewHelmet(giant, rider);
             if (rider instanceof Drowned) {
                 rider.setItemSlot(EquipmentSlot.MAINHAND, GiantEntity.tridentStack());
             }
@@ -81,6 +88,23 @@ public final class GiantRiders {
                 rider.discard();
             }
         }
+    }
+
+    /**
+     * Crew members that burn in daylight get a leather cap in the colour of the hat. Without it
+     * they would catch fire the first morning — or at once on a Giant found sleeping in the day.
+     */
+    private static void equipCrewHelmet(GiantEntity giant, Mob rider) {
+        if (!(rider instanceof Zombie || rider instanceof AbstractSkeleton) || !rider.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+            return;
+        }
+        ItemStack cap = new ItemStack(Items.LEATHER_HELMET);
+        if (giant.hasHat()) {
+            cap.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.byId(giant.getHatColor()).getTextureDiffuseColor()));
+        }
+        cap.set(DataComponents.UNBREAKABLE, Unit.INSTANCE);
+        rider.setItemSlot(EquipmentSlot.HEAD, cap);
+        rider.setDropChance(EquipmentSlot.HEAD, 0.0F);
     }
 
     /** Zombie finalizeSpawn may roll a baby or a chicken jockey — riders must be plain adults. */

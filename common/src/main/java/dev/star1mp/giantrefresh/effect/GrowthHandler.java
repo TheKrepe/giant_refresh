@@ -56,6 +56,9 @@ public final class GrowthHandler {
         }
         double step = max / TRANSITION_TICKS;
         double next = current < target ? Math.min(target, current + step) : Math.max(target, current - step);
+        if (existing == null && instance != null && entity.tickCount <= 3) {
+            next = target; // just loaded (modifiers are not saved): restore the size at once instead of re-growing
+        }
         if (Math.abs(next - current) < 1.0E-6 && existing != null) {
             return;
         }

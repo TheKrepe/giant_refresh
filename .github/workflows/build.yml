@@ -24,6 +24,10 @@ jobs:
         with:
           gradle-version: '9.8.2'
 
+      - name: Check toolchain versions
+        continue-on-error: true
+        run: python3 .github/scripts/check_versions.py
+
       - name: Build Fabric
         id: fabric
         continue-on-error: true

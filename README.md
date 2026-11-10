@@ -1,3 +1,5 @@
+![Giant Refresh](common/src/main/resources/assets/giant_refresh/banner.png)
+
 # Giant Refresh
 
 **Author:** Star_1mp · **Minecraft:** 26.3 · **Loaders:** Fabric & NeoForge

@@ -98,6 +98,8 @@ public final class GiantSmokeTest {
                 perched.setPersistenceRequired();
                 grabber.setTarget(perched);
             }
+            // a villager next to awake Giants: loads (and so verifies) the villager-sensor mixin
+            EntityTypes.VILLAGER.spawn(level, pos.offset(-5, 0, 26), EntitySpawnReason.COMMAND);
             golem = EntityTypes.IRON_GOLEM.spawn(level, pos.offset(-20, 0, -10), EntitySpawnReason.COMMAND);
             GiantEntity sleeper = GRContent.GIANT.get().spawn(level, pos.offset(-12, 0, 0), EntitySpawnReason.SPAWN_ITEM_USE);
             if (sleeper != null) {
@@ -131,6 +133,8 @@ public final class GiantSmokeTest {
             for (GiantEntity g : level.getEntitiesOfClass(GiantEntity.class, area)) {
                 riders += g.getPassengers().size();
                 for (net.minecraft.world.entity.Entity p : g.getPassengers()) {
+                    GiantRefresh.LOGGER.info("[SMOKETEST] rider {} burning={} cap={}", p.getType().getDescriptionId(), p.isOnFire(),
+                            p instanceof net.minecraft.world.entity.LivingEntity le ? le.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).getHoverName().getString() : "-");
                     GiantRefresh.LOGGER.info("[SMOKETEST] rider {} offset dy={} dx={} dz={}", p.getType().getDescriptionId(),
                             String.format("%.2f", p.getY() - g.getY()), String.format("%.2f", p.getX() - g.getX()), String.format("%.2f", p.getZ() - g.getZ()));
                 }

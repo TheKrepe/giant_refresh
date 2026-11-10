@@ -19,6 +19,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -475,6 +476,7 @@ public class GiantEntity extends Monster {
         }
         if (tickCount % 10 == 0) {
             GiantRiders.tickRiders(this, server);
+            ejectStrayPassengers();
         }
         if (tickCount % 40 == 0 && GRConfig.get().villagersHideFromGiants) {
             sendVillagersHome(server);
@@ -650,6 +652,24 @@ public class GiantEntity extends Monster {
         Vec3 fwd = forward();
         releaseHeld(new Vec3(fwd.x * 0.9 * strength, -1.1 * strength, fwd.z * 0.9 * strength));
         level.playSound(null, held.getX(), held.getY(), held.getZ(), GRContent.GIANT_SWING.get(), getSoundSource(), 2.5F, 0.6F);
+    }
+
+    /**
+     * Only the hat crew (hostile mobs) and the creature in the fist belong on a Giant. After a reload
+     * a player or a caught animal can end up re-mounted without being "held": let them go.
+     */
+    private void ejectStrayPassengers() {
+        for (Entity passenger : List.copyOf(getPassengers())) {
+            if (!isHeld(passenger) && (passenger instanceof Player || !(passenger instanceof Enemy))) {
+                passenger.stopRiding();
+            }
+        }
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        releaseHeld(Vec3.ZERO); // the fist opens as the Giant falls
+        super.die(source);
     }
 
     /** Opens the fist; the held creature keeps its place and gets {@code motion}. */
@@ -875,8 +895,8 @@ public class GiantEntity extends Monster {
     }
 
     private void checkWakeUp(ServerLevel level) {
-        Player nearest = level.getNearestPlayer(this, 24.0);
-        if (nearest == null || nearest.isCreative() || nearest.isSpectator()) {
+        Player nearest = level.getNearestPlayer(getX(), getY(), getZ(), 24.0, EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+        if (nearest == null) {
             return;
         }
         double dist = Math.sqrt(distanceToSqr(nearest));
@@ -931,7 +951,7 @@ public class GiantEntity extends Monster {
         }
     }
 
-    /** A slower death: the Giant topples forward like a felled tree and hits the ground. */
+    /** The vanilla sideways death flop, a little longer, with a ground-shaking thud when the body lands. */
     @Override
     protected void tickDeath() {
         deathTime++;

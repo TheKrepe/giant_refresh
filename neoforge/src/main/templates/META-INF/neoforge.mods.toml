@@ -7,7 +7,8 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="Giant Refresh"
 authors="Star_1mp"
-logoFile="assets/giant_refresh/icon.png"
+logoFile="assets/giant_refresh/banner.png"
+logoBlur=false
 description='''
 Turns the forgotten Giant into a real inhabitant of the world: a rare, huge and dangerous mob with telegraphed attacks, a harness hat carrying hostile riders, footprint trails, sleeping Giants and the Potion of Growth.
 '''

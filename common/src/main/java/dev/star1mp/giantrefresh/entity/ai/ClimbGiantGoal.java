@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
  * Hostile spiders only: at night, or when they already have a target.
  */
 public class ClimbGiantGoal extends Goal {
-    private static final double CLIMB_SPEED = 0.22;
+    private static final double CLIMB_SPEED = 0.3;
     private static final int MAX_CLIMB_TICKS = 160;
 
     private final Spider spider;
@@ -77,7 +77,6 @@ public class ClimbGiantGoal extends Goal {
     @Override
     public void stop() {
         if (climbing) {
-            spider.setNoGravity(false);
             spider.resetFallDistance();
         }
         climbing = false;
@@ -108,7 +107,6 @@ public class ClimbGiantGoal extends Goal {
                 climbing = true;
                 ticks = 0;
                 spider.getNavigation().stop();
-                spider.setNoGravity(true);
             } else if (--repathDelay <= 0) {
                 repathDelay = 10;
                 spider.getNavigation().moveTo(giant, 1.2);
@@ -133,7 +131,6 @@ public class ClimbGiantGoal extends Goal {
         }
 
         if (y >= giant.getY() + giant.getBbHeight() * 0.72) {
-            spider.setNoGravity(false);
             climbing = false;
             if (!spider.startRiding(giant)) {
                 // no room on the head: let go and drop back down
