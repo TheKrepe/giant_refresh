@@ -52,6 +52,10 @@ SIDES = ('right', 'front', 'left', 'back')
 
 
 def main():
+    if '--force' not in sys.argv:
+        sys.exit('The mod now ships hand-drawn textures by Star_1mp; this generator would overwrite them. '
+                 'Pass --force to run it anyway.')
+    sys.argv = [a for a in sys.argv if a != '--force']
     src, out = sys.argv[1], sys.argv[2]
     rnd = random.Random(26_3)
     van = Image.open(src).convert('RGBA')
