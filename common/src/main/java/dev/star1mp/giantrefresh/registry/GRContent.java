@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -98,6 +99,12 @@ public final class GRContent {
             () -> new Potion("growth", new MobEffectInstance(growthHolder(), 3600)));
     public static final RegEntry<Potion> LONG_GROWTH_POTION = add(Registries.POTION, "long_growth",
             () -> new Potion("growth", new MobEffectInstance(growthHolder(), 9600)));
+    public static final RegEntry<MobEffect> SHRINKING = add(Registries.MOB_EFFECT, "shrinking",
+            () -> new GrowthEffect(MobEffectCategory.NEUTRAL, 0xB38EF3));
+    public static final RegEntry<Potion> SHRINKING_POTION = add(Registries.POTION, "shrinking",
+            () -> new Potion("shrinking", new MobEffectInstance(shrinkingHolder(), 3600)));
+    public static final RegEntry<Potion> LONG_SHRINKING_POTION = add(Registries.POTION, "long_shrinking",
+            () -> new Potion("shrinking", new MobEffectInstance(shrinkingHolder(), 9600)));
 
     // ---------------------------------------------------------------- worldgen
     public static final RegEntry<MapCodec<? extends Feature>> GIANT_TRAIL_FEATURE = add(Registries.FEATURE_TYPE,
@@ -138,6 +145,7 @@ public final class GRContent {
     public static final TagKey<EntityType<?>> GIANT_RIDERS = TagKey.create(Registries.ENTITY_TYPE, GiantRefresh.id("giant_riders"));
 
     private static Holder<MobEffect> growthHolder;
+    private static Holder<MobEffect> shrinkingHolder;
 
     private GRContent() {}
 
@@ -150,6 +158,13 @@ public final class GRContent {
             growthHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(GROWTH.get());
         }
         return growthHolder;
+    }
+
+    public static Holder<MobEffect> shrinkingHolder() {
+        if (shrinkingHolder == null) {
+            shrinkingHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(SHRINKING.get());
+        }
+        return shrinkingHolder;
     }
 
     public static List<RegEntry<?>> entries() {

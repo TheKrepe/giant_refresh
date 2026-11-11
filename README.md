@@ -52,11 +52,13 @@ and settle on its head — hat or no hat — then leap down on silk at anyone wh
 - **Giant Tooth** (rare) → brew *Awkward Potion + Giant Tooth* = **Potion of Growth**
   (redstone extends it, gunpowder / dragon's breath work as usual). You smoothly grow to about 5 blocks
   tall, move a bit slower but hit harder and reach further; you shrink back just as smoothly.
+  Add a **fermented spider eye** to get a **Potion of Shrinking** (half size, weaker hits; redstone,
+  gunpowder and dragon's breath work too). Neither potion — nor its splash, cloud or arrow — works on Giants.
 - **Giant Head** (rare, guaranteed from a charged creeper) — a huge decorative head block.
 
 ## Config
 `config/giant_refresh.json` — Giant stats, block breaking, footprints, spawn rates, hat/rider chances,
-mob behaviour (spiders, creepers, golems, villagers), trampled settlements, screen shake and Potion of Growth strength.
+mob behaviour (spiders, creepers, golems, villagers), trampled settlements, screen shake and Growth / Shrinking strength.
 
 ## Building
 Each loader is its own Gradle build sharing `common/`:

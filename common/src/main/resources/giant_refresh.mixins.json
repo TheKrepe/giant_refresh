@@ -9,7 +9,8 @@
     "VillagerHostilesSensorMixin"
   ],
   "client": [
-    "client.CameraMixin"
+    "client.CameraMixin",
+    "client.LivingEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

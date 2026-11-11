@@ -96,7 +96,13 @@ def gen_data():
     for short, item in kinds:
         brew(f'{short}_awkward_giant_tooth', item, 'minecraft:awkward', f'{NS}:giant_tooth', item, f'{NS}:growth')
         brew(f'{short}_growth_redstone', item, f'{NS}:growth', 'minecraft:redstone', item, f'{NS}:long_growth')
-    for p in ('growth', 'long_growth'):
+    # Potion of Shrinking: corrupt Growth with a fermented spider eye (in any container)
+    for short, item in kinds:
+        brew(f'{short}_growth_fermented_spider_eye', item, f'{NS}:growth', 'minecraft:fermented_spider_eye', item, f'{NS}:shrinking')
+        brew(f'{short}_long_growth_fermented_spider_eye', item, f'{NS}:long_growth', 'minecraft:fermented_spider_eye', item,
+             f'{NS}:long_shrinking')
+        brew(f'{short}_shrinking_redstone', item, f'{NS}:shrinking', 'minecraft:redstone', item, f'{NS}:long_shrinking')
+    for p in ('growth', 'long_growth', 'shrinking', 'long_shrinking'):
         brew(f'potion_{p}_gunpowder', 'minecraft:potion', f'{NS}:{p}', 'minecraft:gunpowder',
              'minecraft:splash_potion', f'{NS}:{p}')
         brew(f'splash_potion_{p}_dragon_breath', 'minecraft:splash_potion', f'{NS}:{p}', 'minecraft:dragon_breath',
@@ -221,6 +227,11 @@ LANG_EN = {
     "item.minecraft.splash_potion.effect.growth": "Splash Potion of Growth",
     "item.minecraft.lingering_potion.effect.growth": "Lingering Potion of Growth",
     "item.minecraft.tipped_arrow.effect.growth": "Arrow of Growth",
+    "effect.giant_refresh.shrinking": "Shrinking",
+    "item.minecraft.potion.effect.shrinking": "Potion of Shrinking",
+    "item.minecraft.splash_potion.effect.shrinking": "Splash Potion of Shrinking",
+    "item.minecraft.lingering_potion.effect.shrinking": "Lingering Potion of Shrinking",
+    "item.minecraft.tipped_arrow.effect.shrinking": "Arrow of Shrinking",
     "subtitles.giant_refresh.entity.giant.ambient": "Giant groans",
     "subtitles.giant_refresh.entity.giant.hurt": "Giant hurts",
     "subtitles.giant_refresh.entity.giant.death": "Giant dies",
@@ -242,6 +253,11 @@ LANG_RU = {
     "item.minecraft.splash_potion.effect.growth": "Взрывное зелье увеличения",
     "item.minecraft.lingering_potion.effect.growth": "Оседающее зелье увеличения",
     "item.minecraft.tipped_arrow.effect.growth": "Стрела увеличения",
+    "effect.giant_refresh.shrinking": "Уменьшение",
+    "item.minecraft.potion.effect.shrinking": "Зелье уменьшения",
+    "item.minecraft.splash_potion.effect.shrinking": "Взрывное зелье уменьшения",
+    "item.minecraft.lingering_potion.effect.shrinking": "Оседающее зелье уменьшения",
+    "item.minecraft.tipped_arrow.effect.shrinking": "Стрела уменьшения",
     "subtitles.giant_refresh.entity.giant.ambient": "Гигант стонет",
     "subtitles.giant_refresh.entity.giant.hurt": "Гигант ранен",
     "subtitles.giant_refresh.entity.giant.death": "Гигант умирает",

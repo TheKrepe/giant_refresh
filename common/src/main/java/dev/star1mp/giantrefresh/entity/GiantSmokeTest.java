@@ -26,7 +26,9 @@ public final class GiantSmokeTest {
     private static GiantEntity puncher;
     private static int stageX;
     private static int stageZ;
-    private static Zombie grower;
+    private static net.minecraft.world.entity.LivingEntity grower;
+    private static net.minecraft.world.entity.LivingEntity shrinker;
+    private static boolean giantImmune;
     private static GiantEntity climbTarget;
     private static net.minecraft.world.entity.monster.spider.Spider climber;
     private static net.minecraft.world.entity.animal.golem.IronGolem golem;
@@ -68,9 +70,13 @@ public final class GiantSmokeTest {
                 }
             }
             EntityTypes.GIANT.spawn(level, pos.offset(0, 0, 12), EntitySpawnReason.COMMAND);
-            grower = EntityTypes.ZOMBIE.spawn(level, pos.offset(0, 0, -10), EntitySpawnReason.COMMAND);
+            grower = EntityTypes.COW.spawn(level, pos.offset(0, 0, -10), EntitySpawnReason.COMMAND);
             if (grower != null) {
                 grower.addEffect(new MobEffectInstance(GRContent.growthHolder(), 200));
+            }
+            shrinker = EntityTypes.COW.spawn(level, pos.offset(4, 0, -10), EntitySpawnReason.COMMAND);
+            if (shrinker != null) {
+                shrinker.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 200));
             }
             // a hatless, frozen Giant for a spider to climb, and an iron golem that must pick a Giant as its target
             BlockPos cpos = pos.offset(0, 0, 34);
@@ -122,8 +128,15 @@ public final class GiantSmokeTest {
         if (golem != null && golem.getTarget() instanceof GiantEntity) {
             golemSawGiant = true;
         }
-        if (ticks == 220 && grower != null) {
-            GiantRefresh.LOGGER.info("[SMOKETEST] zombie scale under Growth = {}", grower.getAttributeValue(Attributes.SCALE));
+        if (grower != null && shrinker != null && ticks > 100 && ticks <= 400 && ticks % 10 == 0) {
+            GiantRefresh.LOGGER.info("[SMOKETEST] size t={} growth={} shrinking={}", ticks - 100,
+                    String.format("%.3f", grower.getAttributeValue(Attributes.SCALE)), String.format("%.3f", shrinker.getAttributeValue(Attributes.SCALE)));
+        }
+        if (ticks == 120 && climbTarget != null) {
+            climbTarget.addEffect(new MobEffectInstance(GRContent.growthHolder(), 200));
+            climbTarget.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 200));
+            giantImmune = !climbTarget.hasEffect(GRContent.growthHolder()) && !climbTarget.hasEffect(GRContent.shrinkingHolder());
+            GiantRefresh.LOGGER.info("[SMOKETEST] Giant ignores Growth/Shrinking: {}", giantImmune);
         }
         if (ticks == 500) {
             AABB area = new AABB(pos).inflate(96);
@@ -147,7 +160,7 @@ public final class GiantSmokeTest {
                     String.format("%.2f", pigMaxY), perched != null && perched.isAlive(),
                     perched != null && grabber != null ? String.format("%.2f", perched.getY() - grabber.getY()) : "-");
             double scale = grower != null && grower.isAlive() ? grower.getAttributeValue(Attributes.SCALE) : -1;
-            boolean pass = giants >= 4 && vanilla == 0;
+            boolean pass = giants >= 4 && vanilla == 0 && giantImmune;
             GiantRefresh.LOGGER.info("[SMOKETEST] giants={} vanillaGiants={} riders={} zombieScaleAfterEffect={} -> {}",
                     giants, vanilla, riders, scale, pass ? "PASS" : "FAIL");
             level.getServer().halt(false);

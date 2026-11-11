@@ -86,6 +86,11 @@ public final class GRConfig {
     public double growthScaleBonus = 1.75;
     public double growthSpeedPenalty = 0.15;
     public double growthDamageBonus = 0.30;
+    // --- Potion of Shrinking ---
+    /** Size under Shrinking, as a fraction of the normal size. */
+    public double shrinkingScale = 0.5;
+    /** Melee damage lost while fully shrunk. */
+    public double shrinkingDamagePenalty = 0.30;
 
     public static GRConfig get() {
         return instance;
@@ -144,6 +149,8 @@ public final class GRConfig {
         growthScaleBonus = clamp(growthScaleBonus, 0.1, 4);
         growthSpeedPenalty = clamp(growthSpeedPenalty, 0, 0.9);
         growthDamageBonus = clamp(growthDamageBonus, 0, 5);
+        shrinkingScale = clamp(shrinkingScale, 0.1, 0.95);
+        shrinkingDamagePenalty = clamp(shrinkingDamagePenalty, 0, 0.95);
     }
 
     private static double clamp(double v, double min, double max) {

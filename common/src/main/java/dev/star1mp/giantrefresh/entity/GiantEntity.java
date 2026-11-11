@@ -4,6 +4,8 @@ import dev.star1mp.giantrefresh.client.GiantClientHooks;
 import dev.star1mp.giantrefresh.config.GRConfig;
 import dev.star1mp.giantrefresh.entity.ai.GiantAttackGoal;
 import dev.star1mp.giantrefresh.registry.GRContent;
+import net.minecraft.world.effect.MobEffectInstance;
+import dev.star1mp.giantrefresh.effect.GrowthHandler;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -664,6 +666,15 @@ public class GiantEntity extends Monster {
                 passenger.stopRiding();
             }
         }
+    }
+
+    /** Growth and Shrinking potions, splashes, clouds and arrows have no effect on a Giant. */
+    @Override
+    public boolean canBeAffected(MobEffectInstance effect) {
+        if (GrowthHandler.isSizeEffect(effect.getEffect())) {
+            return false;
+        }
+        return super.canBeAffected(effect);
     }
 
     @Override
