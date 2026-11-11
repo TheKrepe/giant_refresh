@@ -71,7 +71,7 @@ jobs:
           JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
         run: |
           timeout 1200 gradle runServer --no-daemon > server.log 2>&1 || true
-          grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -80 || true
+          grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -300 || true
           grep -q "SMOKETEST.*PASS" server.log
 
       - name: Smoke test NeoForge server
@@ -83,7 +83,7 @@ jobs:
           JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
         run: |
           timeout 1200 gradle runServer --no-daemon > server.log 2>&1 || true
-          grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -80 || true
+          grep -E "SMOKETEST|Mixin|mixin|ERROR|Exception|Caused by" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -300 || true
           grep -q "SMOKETEST.*PASS" server.log
 
       - name: Render test (Fabric client, software GL)
