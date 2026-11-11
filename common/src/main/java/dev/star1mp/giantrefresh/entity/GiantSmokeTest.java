@@ -71,13 +71,9 @@ public final class GiantSmokeTest {
             }
             EntityTypes.GIANT.spawn(level, pos.offset(0, 0, 12), EntitySpawnReason.COMMAND);
             grower = EntityTypes.COW.spawn(level, pos.offset(0, 0, -10), EntitySpawnReason.COMMAND);
-            if (grower != null) {
-                grower.addEffect(new MobEffectInstance(GRContent.growthHolder(), 200));
-            }
+
             shrinker = EntityTypes.COW.spawn(level, pos.offset(4, 0, -10), EntitySpawnReason.COMMAND);
-            if (shrinker != null) {
-                shrinker.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 200));
-            }
+
             // a hatless, frozen Giant for a spider to climb, and an iron golem that must pick a Giant as its target
             BlockPos cpos = pos.offset(0, 0, 34);
             climbTarget = buildGiant(level, cpos.getX(), level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, cpos.getX(), cpos.getZ()), cpos.getZ(), -1, false);
@@ -128,8 +124,13 @@ public final class GiantSmokeTest {
         if (golem != null && golem.getTarget() instanceof GiantEntity) {
             golemSawGiant = true;
         }
-        if (grower != null && shrinker != null && ticks > 100 && ticks <= 400 && ticks % 10 == 0) {
-            GiantRefresh.LOGGER.info("[SMOKETEST] size t={} growth={} shrinking={}", ticks - 100,
+        if (ticks == 110 && grower != null && shrinker != null) {
+            // drunk a little after spawning (a just-loaded entity gets its size back at once instead)
+            grower.addEffect(new MobEffectInstance(GRContent.growthHolder(), 200));
+            shrinker.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 200));
+        }
+        if (grower != null && shrinker != null && ticks > 100 && ticks <= 400 && ticks % 5 == 0) {
+            GiantRefresh.LOGGER.info("[SMOKETEST] size t={} growth={} shrinking={}", ticks - 110,
                     String.format("%.3f", grower.getAttributeValue(Attributes.SCALE)), String.format("%.3f", shrinker.getAttributeValue(Attributes.SCALE)));
         }
         if (ticks == 120 && climbTarget != null) {
