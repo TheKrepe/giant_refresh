@@ -41,6 +41,20 @@ public final class GiantClientHooks {
     }
 
     /** Returns {yaw, pitch} offsets in degrees for this frame and decays the shake. */
+    private static String pendingShot;
+
+    /** Called at the end of GameRenderer.render: the main target now holds the finished frame. */
+    public static void afterFrame() {
+        if (pendingShot == null) {
+            return;
+        }
+        String name = pendingShot;
+        pendingShot = null;
+        Minecraft mc = Minecraft.getInstance();
+        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
+                msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name));
+    }
+
     public static float[] cameraShake() {
         if (CLIENT_TEST) {
             clientTestFrame();
@@ -88,14 +102,7 @@ public final class GiantClientHooks {
             }
             dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] camera player y={}", mc.player.getY());
             String name = "giant_test_" + shots + ".png";
-            //#if MC >= 26.1
-            net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
-                    msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name));
-            //#else
-            //$$ // the camera is set up mid-frame here, after the target was cleared: grab the finished frame instead
-            //$$ mc.execute(() -> net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
-            //$$         msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name)));
-            //#endif
+            pendingShot = name; // taken once the frame is finished, see afterFrame()
             shots++;
         } else if (shots >= at.length && seconds > 79.0) {
             dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] done, stopping client");

@@ -100,17 +100,12 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: |
           sudo apt-get update -qq >/dev/null
-          sudo apt-get install -y -qq xvfb xdotool mesa-vulkan-drivers libgl1-mesa-dri imagemagick >/dev/null
+          sudo apt-get install -y -qq xvfb mesa-vulkan-drivers libgl1-mesa-dri imagemagick >/dev/null
           mkdir -p run/saves
           cp -r run/world run/saves/smoke
           rm -f run/saves/smoke/session.lock
           printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:6\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\n" > run/options.txt
-          touch client.log
-          # vanilla baseline: press F2 (vanilla screenshot) right after the mod's second test shot
-          ( tail -F client.log 2>/dev/null | grep -m1 -q "screenshot giant_test_1" && sleep 1 && \
-            W=$(DISPLAY=:99 xdotool search --name "Minecraft" | head -1) && \
-            DISPLAY=:99 xdotool windowfocus "$W" key F2 && echo "pressed F2 in window $W" ) &
-          timeout 1200 xvfb-run -n 99 -s "-screen 0 1280x720x24" gradle runClient --no-daemon -Pgr_target=${{ matrix.target }} --args="--quickPlaySingleplayer smoke" > client.log 2>&1 || true
+          timeout 1200 xvfb-run -a -s "-screen 0 1280x720x24" gradle runClient --no-daemon -Pgr_target=${{ matrix.target }} --args="--quickPlaySingleplayer smoke" > client.log 2>&1 || true
           grep -E "CLIENTTEST|ERROR|Exception|Caused by|Mixin|mixin" client.log | grep -v JAVA_TOOL_OPTIONS | head -80 || true
           echo "== graphics"; grep -iE "opengl|llvmpipe|vulkan|backend|GLX|GL_|renderer|gpu|framebuffer" client.log | grep -v JAVA_TOOL_OPTIONS | head -30 || true
           echo "== warnings"; grep -E "/WARN\]" client.log | cut -c1-250 | sort | uniq -c | sort -rn | head -30 || true
