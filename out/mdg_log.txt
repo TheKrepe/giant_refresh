@@ -1,0 +1,41 @@
+Loaded 127 artifacts from /home/runner/work/giant_refresh/giant_refresh/W/mdg/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadManifest[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+ [1m[92m✓[23;0m Completed [4mdownloadManifest[23;0m in 0.26s
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+  ↓ https://piston-meta.mojang.com/v1/packages/0bbfbdb8272531060afbba5c671fe4ed3dd6f72f/26.1.2.json
+ [1m[92m✓[23;0m Completed [4mdownloadJson[23;0m in 0.05s
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+  ↓ https://piston-data.mojang.com/v1/objects/97ccd4c0ed3f81bbb7bfacddd1090b0c56f9bc51/server.jar
+  ↓ https://piston-data.mojang.com/v1/objects/4e618f09a0c649dde3fdf829df443ce0b8831e65/client.jar
+ [1m[92m✓[23;0m Completed [4mdownloadClient[23;0m in 0.53s
+ [1m[92m✓[23;0m Completed [4mdownloadServer[23;0m in 0.64s
+[1m*** Started working on [4mpreProcessJar[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.16:fatjar
+ [1m[92m✓[23;0m Completed [4mpreProcessJar[23;0m in 3.12s
+[1m*** Started working on [4mbinaryPatch[23;0m[23;0m
+  [33mWARNING: [23;0mnet.neoforged.installertools:binarypatcher:4.0.12:fatjar is not present in the artifact manifest
+  ↓ https://maven.neoforged.net/releases/net/neoforged/installertools/binarypatcher/4.0.12/binarypatcher-4.0.12-fatjar.jar
+ ↳ Running external tool net.neoforged.installertools:binarypatcher:4.0.12:fatjar
+ [1m[92m✓[23;0m Completed [4mbinaryPatch[23;0m in 3.41s
+[1m*** Started working on [4mcopyUnpatchedClasses[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mcopyUnpatchedClasses[23;0m in 2.63s
+[1m*** Started working on [4mapplyDevTransforms[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.12:fatjar
+ [1m[92m✓[23;0m Completed [4mapplyDevTransforms[23;0m in 2.80s
+Performing periodic cache maintenance on /home/runner/.gradle/caches/neoformruntime
+Cleaning intermediate results cache in /home/runner/.gradle/caches/neoformruntime/intermediate_results
+ Maximum age: 744h
+ Maximum cache size: 10 GiB
+ [0;2;3m22 files found[23;0m
+ [0;2;3m381 MiB overall size[23;0m
+ [0;2;3m0 expired keys found[23;0m
+[0;2;3m Deleted 11 outdated lock files
+Total runtime: 13.61s
+
+./build/moddev/artifacts/minecraft-patched-26.1.2.126.jar
+/home/runner/.gradle/caches/9.8.2/transforms/aea7f03167dd11a190662e6a499524ef/transformed/instrumented/instrumented-moddev-gradle-2.0.148.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/moddev-gradle/2.0.148/143f83a22af5a2aa0eca650b08dbae26800ebeba/moddev-gradle-2.0.148.jar
+merged jar: build/moddev/artifacts/minecraft-patched-26.1.2.126.jar
