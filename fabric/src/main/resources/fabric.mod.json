@@ -22,9 +22,9 @@
     "giant_refresh.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.20.1",
-    "minecraft": "~26.3",
-    "java": ">=25",
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${mc_range}",
+    "java": ">=${java_version}",
     "fabric-api": "*"
   },
   "custom": {
