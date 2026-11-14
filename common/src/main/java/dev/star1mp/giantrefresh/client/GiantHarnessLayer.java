@@ -1,7 +1,11 @@
 package dev.star1mp.giantrefresh.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+//#if MC >= 1.21.9
 import net.minecraft.client.renderer.SubmitNodeCollector;
+//#else
+//$$ import net.minecraft.client.renderer.MultiBufferSource;
+//#endif
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.Identifier;
@@ -29,7 +33,11 @@ public class GiantHarnessLayer extends RenderLayer<GiantRenderState, GiantModel>
     }
 
     @Override
+    //#if MC >= 1.21.9
     public void submit(PoseStack poseStack, SubmitNodeCollector collector, int light, GiantRenderState state, float yRot, float xRot) {
+    //#else
+    //$$ public void render(PoseStack poseStack, MultiBufferSource collector, int light, GiantRenderState state, float yRot, float xRot) {
+    //#endif
         if (state.hatColor < 0 || state.hatColor > 15 || state.isInvisible) {
             return;
         }
@@ -37,7 +45,11 @@ public class GiantHarnessLayer extends RenderLayer<GiantRenderState, GiantModel>
         getParentModel().translateToHead(poseStack);
         poseStack.scale(HAT_SCALE, HAT_SCALE, HAT_SCALE);
         harness.setupAnim(state);
+        //#if MC >= 1.21.9
         renderColoredCutoutModel(harness, TEXTURES[state.hatColor], poseStack, collector, light, state, -1, 1);
+        //#else
+        //$$ renderColoredCutoutModel(harness, TEXTURES[state.hatColor], poseStack, collector, light, state, -1);
+        //#endif
         poseStack.popPose();
     }
 }

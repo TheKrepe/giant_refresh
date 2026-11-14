@@ -25,12 +25,14 @@ jobs:
         with:
           gradle-version: '9.8.2'
       - name: Compile
+        shell: bash
         run: |
+          set +e
           DIR=${{ matrix.loader }}
           if [ "$DIR" = fabric ]; then DIR=$(grep '^fabric_build=' versions/${{ matrix.target }}.properties | cut -d= -f2); fi
           cd $DIR
           gradle build -x test --no-daemon -q -Pgr_target=${{ matrix.target }} > ../compile.log 2>&1; rc=$?
-          grep -E "error:|warning: \[removal\]|FAILURE|What went wrong|Could not|Exception" -A3 ../compile.log | head -400
+          grep -E "error:|FAILURE|What went wrong|Could not|Exception" -A3 ../compile.log | head -600
           echo "== tail"; tail -40 ../compile.log
           ls -la build/libs 2>/dev/null
           exit $rc
