@@ -1,0 +1,37 @@
+name: probe2
+on:
+  push:
+    branches: [probe2]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    strategy:
+      fail-fast: false
+      matrix:
+        mc: ['26.2', '26.1.2', '1.21.11', '1.21.10', '1.21.8']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            25
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+      - name: Run probe
+        run: bash tools/probe.sh ${{ matrix.mc }}
+      - name: Push results
+        run: |
+          git config user.name "probe-bot"
+          git config user.email "probe-bot@users.noreply.github.com"
+          B=probe-out-${{ matrix.mc }}
+          git checkout --orphan $B
+          git rm -rqf --cached . >/dev/null 2>&1 || true
+          git add -f out
+          git commit -qm "probe ${{ matrix.mc }} [skip ci]"
+          git push -f origin HEAD:$B
