@@ -107,6 +107,8 @@ jobs:
           printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:6\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\n" > run/options.txt
           timeout 1200 xvfb-run -a -s "-screen 0 1280x720x24" gradle runClient --no-daemon -Pgr_target=${{ matrix.target }} --args="--quickPlaySingleplayer smoke" > client.log 2>&1 || true
           grep -E "CLIENTTEST|ERROR|Exception|Caused by|Mixin|mixin" client.log | grep -v JAVA_TOOL_OPTIONS | head -80 || true
+          echo "== graphics"; grep -iE "opengl|llvmpipe|vulkan|backend|GLX|GL_|renderer|gpu|framebuffer" client.log | grep -v JAVA_TOOL_OPTIONS | head -30 || true
+          echo "== warnings"; grep -E "/WARN\]" client.log | cut -c1-250 | sort | uniq -c | sort -rn | head -30 || true
           for f in run/screenshots/giant_test_*.png; do
             [ -f "$f" ] || continue
             convert "$f" -resize 1024x -quality 80 "$f.jpg"
