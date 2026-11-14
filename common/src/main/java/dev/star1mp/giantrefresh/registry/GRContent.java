@@ -53,7 +53,11 @@ public final class GRContent {
             Registries.ITEM,
             Registries.MOB_EFFECT,
             Registries.POTION,
+            //#if MC >= 26.3
             Registries.FEATURE_TYPE);
+            //#else
+            //$$ Registries.FEATURE);
+            //#endif
 
     // ---------------------------------------------------------------- sounds
     public static final RegEntry<SoundEvent> GIANT_AMBIENT = sound("entity.giant.ambient");
@@ -74,7 +78,11 @@ public final class GRContent {
                     .instrument(NoteBlockInstrument.ZOMBIE)
                     .strength(1.5F)
                     .sound(SoundType.MUD)
+                    //#if MC >= 26.3
                     .pushReaction(PushReaction.POPPED)));
+                    //#else
+                    //$$ .pushReaction(PushReaction.DESTROY)));
+                    //#endif
 
     // ---------------------------------------------------------------- entities
     public static final RegEntry<EntityType<GiantEntity>> GIANT = add(Registries.ENTITY_TYPE, "giant",
@@ -82,7 +90,9 @@ public final class GRContent {
                     .sized(3.6F, 12.0F)
                     .eyeHeight(10.44F)
                     .clientTrackingRange(12)
+                    //#if MC >= 1.21.9
                     .notInPeaceful()
+                    //#endif
                     .build(key(Registries.ENTITY_TYPE, "giant")));
 
     // ---------------------------------------------------------------- items
@@ -91,7 +101,11 @@ public final class GRContent {
     public static final RegEntry<Item> GIANT_HEAD = item("giant_head",
             p -> new BlockItem(GIANT_HEAD_BLOCK.get(), p.rarity(Rarity.UNCOMMON).useBlockDescriptionPrefix()));
     public static final RegEntry<Item> GIANT_SPAWN_EGG = item("giant_spawn_egg",
+            //#if MC >= 1.21.9
             p -> new SpawnEggItem(p.spawnEgg(GIANT.get())));
+            //#else
+            //$$ p -> new SpawnEggItem(GIANT.get(), p));
+            //#endif
 
     // ---------------------------------------------------------------- effects & potions
     public static final RegEntry<MobEffect> GROWTH = add(Registries.MOB_EFFECT, "growth", GrowthEffect::new);
@@ -107,8 +121,13 @@ public final class GRContent {
             () -> new Potion("shrinking", new MobEffectInstance(shrinkingHolder(), 9600)));
 
     // ---------------------------------------------------------------- worldgen
+    //#if MC >= 26.3
     public static final RegEntry<MapCodec<? extends Feature>> GIANT_TRAIL_FEATURE = add(Registries.FEATURE_TYPE,
             "giant_trail", () -> GiantTrailFeature.CODEC);
+    //#else
+    //$$ public static final RegEntry<Feature<?>> GIANT_TRAIL_FEATURE = add(Registries.FEATURE,
+    //$$         "giant_trail", GiantTrailFeature.Type::new);
+    //#endif
 
     // ---------------------------------------------------------------- vanilla creative tabs
     public static final ResourceKey<CreativeModeTab> TAB_SPAWN_EGGS = vanillaTab("spawn_eggs");
@@ -132,6 +151,21 @@ public final class GRContent {
             out.insertAfter(Items.PIGLIN_HEAD, new ItemStack(GIANT_HEAD.get()));
         }
     }
+
+    //#if MC < 26.3
+    //$$ /** Brewing mixes; 26.3+ uses the data-driven recipes in data/giant_refresh/recipe/brewing instead. */
+    //$$ public static void registerBrewing(net.minecraft.world.item.alchemy.PotionBrewing.Builder builder) {
+    //$$     Holder<Potion> growth = BuiltInRegistries.POTION.wrapAsHolder(GROWTH_POTION.get());
+    //$$     Holder<Potion> longGrowth = BuiltInRegistries.POTION.wrapAsHolder(LONG_GROWTH_POTION.get());
+    //$$     Holder<Potion> shrinking = BuiltInRegistries.POTION.wrapAsHolder(SHRINKING_POTION.get());
+    //$$     Holder<Potion> longShrinking = BuiltInRegistries.POTION.wrapAsHolder(LONG_SHRINKING_POTION.get());
+    //$$     builder.addMix(net.minecraft.world.item.alchemy.Potions.AWKWARD, GIANT_TOOTH.get(), growth);
+    //$$     builder.addMix(growth, Items.REDSTONE, longGrowth);
+    //$$     builder.addMix(growth, Items.FERMENTED_SPIDER_EYE, shrinking);
+    //$$     builder.addMix(longGrowth, Items.FERMENTED_SPIDER_EYE, longShrinking);
+    //$$     builder.addMix(shrinking, Items.REDSTONE, longShrinking);
+    //$$ }
+    //#endif
 
     private static ResourceKey<CreativeModeTab> vanillaTab(String name) {
         return ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.withDefaultNamespace(name));

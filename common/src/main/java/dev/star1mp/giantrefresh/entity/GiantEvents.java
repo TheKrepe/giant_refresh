@@ -107,7 +107,11 @@ public final class GiantEvents {
         if (level.getGameTime() % cfg.spawnAttemptInterval != 0) {
             return;
         }
+        //#if MC >= 1.21.9
         if (!level.getGameRules().get(GameRules.SPAWN_MONSTERS)) {
+        //#else
+        //$$ if (!level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
+        //#endif
             return;
         }
         RandomSource random = level.getRandom();

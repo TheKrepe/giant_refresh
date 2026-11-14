@@ -2,14 +2,13 @@ plugins {
     id 'net.fabricmc.fabric-loom' version "${loom_version}"
 }
 
-version = "${mod_version}"
+apply from: '../gradle-common.gradle'
+
+version = "${mod_version}+mc${grProps.mc_label}"
 group = mod_group
 
 base {
-    archivesName = "giant_refresh-fabric-${minecraft_version}"
-}
-
-repositories {
+    archivesName = "giant_refresh-fabric"
 }
 
 loom {
@@ -22,35 +21,33 @@ loom {
 
 sourceSets {
     main {
-        java {
-            srcDir '../common/src/main/java'
-        }
-        resources {
-            srcDir '../common/src/main/resources'
-        }
+        java.srcDirs = ["${grGen}/common/java", "${grGen}/fabric/java"]
+        resources.srcDirs = ["${grGen}/common/resources", "${grGen}/fabric/resources"]
     }
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    minecraft "com.mojang:minecraft:${grProps.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${grProps.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${grProps.fabric_api_version}"
 }
 
 processResources {
-    def version = project.version
-    inputs.property "version", version
+    def props = [version: mod_version, mc_range: grProps.fabric_mc_range, loader_version: grProps.loader_version,
+                 java_version: grProps.java_version]
+    inputs.properties props
     filesMatching("fabric.mod.json") {
-        expand "version": version
+        expand props
     }
 }
 
+def jv = grProps.java_version as int
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 25
+    it.options.release = jv
     it.options.encoding = 'UTF-8'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.toVersion(jv)
+    targetCompatibility = JavaVersion.toVersion(jv)
 }

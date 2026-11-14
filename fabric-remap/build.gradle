@@ -1,0 +1,55 @@
+// Fabric build for the obfuscated Minecraft versions (1.21.x): Mojang mappings in dev, remapped jar.
+plugins {
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+}
+
+apply from: '../gradle-common.gradle'
+
+version = "${mod_version}+mc${grProps.mc_label}"
+group = mod_group
+
+base {
+    archivesName = "giant_refresh-fabric"
+}
+
+loom {
+    mods {
+        "giant_refresh" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ["${grGen}/common/java", "${grGen}/fabric/java"]
+        resources.srcDirs = ["${grGen}/common/resources", "${grGen}/fabric/resources"]
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${grProps.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${grProps.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${grProps.fabric_api_version}"
+}
+
+processResources {
+    def props = [version: mod_version, mc_range: grProps.fabric_mc_range, loader_version: grProps.loader_version,
+                 java_version: grProps.java_version]
+    inputs.properties props
+    filesMatching("fabric.mod.json") {
+        expand props
+    }
+}
+
+def jv = grProps.java_version as int
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = jv
+    it.options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion(jv)
+    targetCompatibility = JavaVersion.toVersion(jv)
+}

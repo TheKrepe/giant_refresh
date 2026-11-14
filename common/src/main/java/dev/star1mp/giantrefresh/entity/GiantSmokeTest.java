@@ -161,11 +161,64 @@ public final class GiantSmokeTest {
                     String.format("%.2f", pigMaxY), perched != null && perched.isAlive(),
                     perched != null && grabber != null ? String.format("%.2f", perched.getY() - grabber.getY()) : "-");
             double scale = grower != null && grower.isAlive() ? grower.getAttributeValue(Attributes.SCALE) : -1;
-            boolean pass = giants >= 4 && vanilla == 0 && giantImmune;
+            boolean content = contentCheck(level);
+            boolean pass = giants >= 4 && vanilla == 0 && giantImmune && content;
             GiantRefresh.LOGGER.info("[SMOKETEST] giants={} vanillaGiants={} riders={} zombieScaleAfterEffect={} -> {}",
                     giants, vanilla, riders, scale, pass ? "PASS" : "FAIL");
             level.getServer().halt(false);
         }
+    }
+
+    /** Data-pack content that must be identical on every supported version: worldgen, loot, brewing, tags. */
+    private static boolean contentCheck(ServerLevel level) {
+        var server = level.getServer();
+        var access = level.registryAccess();
+        var placed = access.lookupOrThrow(net.minecraft.core.registries.Registries.PLACED_FEATURE);
+        boolean footprints = placed.get(GRContent.key(net.minecraft.core.registries.Registries.PLACED_FEATURE, "giant_footprints")).isPresent();
+        boolean camp = placed.get(GRContent.key(net.minecraft.core.registries.Registries.PLACED_FEATURE, "giant_camp")).isPresent();
+        int habitat = access.lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).get(GRContent.GIANT_BIOMES)
+                .map(set -> set.size()).orElse(0);
+        var loot = server.reloadableRegistries();
+        boolean giantLoot = loot.getLootTable(GRContent.key(net.minecraft.core.registries.Registries.LOOT_TABLE, "entities/giant"))
+                != net.minecraft.world.level.storage.loot.LootTable.EMPTY;
+        boolean headLoot = loot.getLootTable(GRContent.key(net.minecraft.core.registries.Registries.LOOT_TABLE, "blocks/giant_head"))
+                != net.minecraft.world.level.storage.loot.LootTable.EMPTY;
+        int modRecipes = 0;
+        int brewingRecipes = 0;
+        for (var holder : server.getRecipeManager().getRecipes()) {
+            var id = holder.id().identifier();
+            if (id.getNamespace().equals(GiantRefresh.MOD_ID)) {
+                if (id.getPath().startsWith("brewing/")) {
+                    brewingRecipes++;
+                } else {
+                    modRecipes++;
+                }
+            }
+        }
+        var awkward = net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION,
+                net.minecraft.world.item.alchemy.Potions.AWKWARD);
+        var growthPotion = net.minecraft.core.registries.BuiltInRegistries.POTION.wrapAsHolder(GRContent.GROWTH_POTION.get());
+        var growthStack = net.minecraft.world.item.alchemy.PotionContents.createItemStack(net.minecraft.world.item.Items.POTION, growthPotion);
+        boolean brewGrowth;
+        boolean brewShrinking;
+        //#if MC >= 26.3
+        brewGrowth = brewingRecipes >= 23
+                && server.getRecipeManager().byKey(GRContent.key(net.minecraft.core.registries.Registries.RECIPE, "brewing/potion_awkward_giant_tooth")).isPresent();
+        brewShrinking = server.getRecipeManager().byKey(GRContent.key(net.minecraft.core.registries.Registries.RECIPE, "brewing/potion_growth_fermented_spider_eye")).isPresent();
+        //#else
+        //$$ var brewing = level.potionBrewing();
+        //$$ var shrinkingPotion = net.minecraft.core.registries.BuiltInRegistries.POTION.wrapAsHolder(GRContent.SHRINKING_POTION.get());
+        //$$ var out1 = brewing.mix(new net.minecraft.world.item.ItemStack(GRContent.GIANT_TOOTH.get()), awkward);
+        //$$ var out2 = brewing.mix(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.FERMENTED_SPIDER_EYE), growthStack);
+        //$$ brewGrowth = out1.getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS,
+        //$$         net.minecraft.world.item.alchemy.PotionContents.EMPTY).is(growthPotion);
+        //$$ brewShrinking = out2.getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS,
+        //$$         net.minecraft.world.item.alchemy.PotionContents.EMPTY).is(shrinkingPotion);
+        //#endif
+        boolean ok = footprints && camp && habitat > 0 && giantLoot && headLoot && brewGrowth && brewShrinking;
+        GiantRefresh.LOGGER.info("[SMOKETEST] content placedFeatures={}/{} habitatBiomes={} loot={}/{} recipes={} brewingRecipes={} brewGrowth={} brewShrinking={} -> {}",
+                footprints, camp, habitat, giantLoot, headLoot, modRecipes, brewingRecipes, brewGrowth, brewShrinking, ok ? "OK" : "MISSING");
+        return ok;
     }
 
     /** Integrated-server half of the client render test: stage a scene in front of the player. */

@@ -2,10 +2,23 @@
 
 # Giant Refresh
 
-**Author:** Star_1mp · **Minecraft:** 26.3 · **Loaders:** Fabric & NeoForge
+**Author:** Star_1mp · **Minecraft:** 1.21.6 – 26.3 · **Loaders:** Fabric & NeoForge
 
 Giant Refresh turns the forgotten, unused Giant into a real inhabitant of the world — a rare,
 huge and dangerous mob that still looks like something Mojang could have added.
+
+## Downloads
+One archive per Minecraft range; every archive holds both the Fabric and the NeoForge jar —
+put the one for your loader into `mods/`. The content is the same on every version.
+
+| Archive | Minecraft | Fabric jar (+ Fabric API) | NeoForge jar |
+|---|---|---|---|
+| `giant_refresh-1.0.0-mc26.3` | 26.3 | `giant_refresh-fabric-1.0.0+mc26.3.jar` | `giant_refresh-neoforge-1.0.0+mc26.3.jar` |
+| `giant_refresh-1.0.0-mc26.2` | 26.2 | `giant_refresh-fabric-1.0.0+mc26.2.jar` | `giant_refresh-neoforge-1.0.0+mc26.2.jar` |
+| `giant_refresh-1.0.0-mc26.1-26.1.2` | 26.1, 26.1.1, 26.1.2 | `giant_refresh-fabric-1.0.0+mc26.1-26.1.2.jar` | `giant_refresh-neoforge-1.0.0+mc26.1-26.1.2.jar` |
+| `giant_refresh-1.0.0-mc1.21.11` | 1.21.11 | `giant_refresh-fabric-1.0.0+mc1.21.11.jar` | `giant_refresh-neoforge-1.0.0+mc1.21.11.jar` |
+| `giant_refresh-1.0.0-mc1.21.9-1.21.10` | 1.21.9, 1.21.10 | `giant_refresh-fabric-1.0.0+mc1.21.9-1.21.10.jar` | `giant_refresh-neoforge-1.0.0+mc1.21.9-1.21.10.jar` |
+| `giant_refresh-1.0.0-mc1.21.6-1.21.8` | 1.21.6, 1.21.7, 1.21.8 | `giant_refresh-fabric-1.0.0+mc1.21.6-1.21.8.jar` | `giant_refresh-neoforge-1.0.0+mc1.21.6-1.21.8.jar` |
 
 ## The Giant
 - 12 blocks tall, 200 HP, slow and heavy. Every step thumps, kicks up dirt and lightly shakes the camera.
@@ -61,9 +74,14 @@ and settle on its head — hat or no hat — then leap down on silk at anyone wh
 mob behaviour (spiders, creepers, golems, villagers), trampled settlements, screen shake and Growth / Shrinking strength.
 
 ## Building
-Each loader is its own Gradle build sharing `common/`:
+The sources are written for the newest version (26.3); version differences are marked with
+`//#if MC >= x` blocks and per-version settings live in `versions/<target>.properties`
+(`tools/preprocess.py` writes the sources for a target to `build/gen/<target>`).
 ```
-cd fabric && gradle build      # -> fabric/build/libs
-cd neoforge && gradle build    # -> neoforge/build/libs
+cd fabric && gradle build -Pgr_target=26.3            # 26.x Fabric
+cd fabric-remap && gradle build -Pgr_target=1.21.11   # 1.21.x Fabric
+cd neoforge && gradle build -Pgr_target=1.21.9        # any target
 ```
-GitHub Actions builds both on every push and uploads them as one zip artifact.
+Targets: `26.3`, `26.2`, `26.1`, `1.21.11`, `1.21.9`, `1.21.6`. GitHub Actions builds every target,
+uploads one archive per target and runs the self test on real servers of every supported
+Minecraft version.
