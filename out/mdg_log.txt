@@ -1,0 +1,57 @@
+Loaded 127 artifacts from /home/runner/work/giant_refresh/giant_refresh/W/mdg/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+  ↓ https://piston-meta.mojang.com/v1/packages/812ee7fdfdf648bb872f7a1dca33718de4e786b4/1.21.11.json
+ [1m[92m✓[23;0m Completed [4mdownloadJson[23;0m in 0.66s
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+[1m*** Started working on [4mdownloadClientMappings[23;0m[23;0m
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+  ↓ https://piston-data.mojang.com/v1/objects/ba2df812c2d12e0219c489c4cd9a5e1f0760f5bd/client.jar
+  ↓ https://piston-data.mojang.com/v1/objects/64bb6d763bed0a9f1d632ec347938594144943ed/server.jar
+  ↓ https://piston-data.mojang.com/v1/objects/031a68bebf55d824f66d6573d8c752f0e1bf232a/client.txt
+ [1m[92m✓[23;0m Completed [4mdownloadClientMappings[23;0m in 0.51s
+[1m*** Started working on [4mmergeMappings[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.7:fatjar
+ [1m[92m✓[23;0m Completed [4mdownloadClient[23;0m in 0.96s
+ [1m[92m✓[23;0m Completed [4mdownloadServer[23;0m in 1.19s
+[1m*** Started working on [4mextractServer[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.7:fatjar
+ [1m[92m✓[23;0m Completed [4mextractServer[23;0m in 0.61s
+ [1m[92m✓[23;0m Completed [4mmergeMappings[23;0m in 2.93s
+[1m*** Started working on [4mstripServer[23;0m[23;0m
+[1m*** Started working on [4mstripClient[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mstripServer[23;0m in 3.00s
+ [1m[92m✓[23;0m Completed [4mstripClient[23;0m in 3.92s
+[1m*** Started working on [4mmerge[23;0m[23;0m
+ ↳ Running external tool net.neoforged:mergetool:2.0.7:fatjar
+ [1m[92m✓[23;0m Completed [4mmerge[23;0m in 4.05s
+[1m*** Started working on [4mrename[23;0m[23;0m
+ ↳ Running external tool net.neoforged:AutoRenamingTool:2.0.17:all
+ [1m[92m✓[23;0m Completed [4mrename[23;0m in 8.14s
+[1m*** Started working on [4mbinaryPatch[23;0m[23;0m
+  [33mWARNING: [23;0mnet.neoforged.installertools:binarypatcher:4.0.6:fatjar is not present in the artifact manifest
+  ↓ https://maven.neoforged.net/releases/net/neoforged/installertools/binarypatcher/4.0.6/binarypatcher-4.0.6-fatjar.jar
+ ↳ Running external tool net.neoforged.installertools:binarypatcher:4.0.6:fatjar
+ [1m[92m✓[23;0m Completed [4mbinaryPatch[23;0m in 3.10s
+[1m*** Started working on [4mcopyUnpatchedClasses[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mcopyUnpatchedClasses[23;0m in 2.37s
+[1m*** Started working on [4mapplyDevTransforms[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.12:fatjar
+ [1m[92m✓[23;0m Completed [4mapplyDevTransforms[23;0m in 2.50s
+[1m*** Started working on [4mbinaryWithNeoForge[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mbinaryWithNeoForge[23;0m in 7.35s
+Performing periodic cache maintenance on /home/runner/.gradle/caches/neoformruntime
+Cleaning intermediate results cache in /home/runner/.gradle/caches/neoformruntime/intermediate_results
+ Maximum age: 744h
+ Maximum cache size: 10 GiB
+ [0;2;3m36 files found[23;0m
+ [0;2;3m450 MiB overall size[23;0m
+ [0;2;3m0 expired keys found[23;0m
+[0;2;3m Deleted 11 outdated lock files
+Total runtime: 37.27s
+
+./build/moddev/artifacts/neoforge-21.11.48-client-extra-aka-minecraft-resources.jar
+./build/moddev/artifacts/neoforge-21.11.48.jar
+/home/runner/.gradle/caches/9.8.2/transforms/aea7f03167dd11a190662e6a499524ef/transformed/instrumented/instrumented-moddev-gradle-2.0.148.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/moddev-gradle/2.0.148/143f83a22af5a2aa0eca650b08dbae26800ebeba/moddev-gradle-2.0.148.jar
+merged jar: build/moddev/artifacts/neoforge-21.11.48.jar
