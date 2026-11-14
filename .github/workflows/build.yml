@@ -13,7 +13,7 @@ jobs:
   versions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check loader / toolchain versions for every target
         run: python3 .github/scripts/check_versions.py | tee versions.txt
       - name: Summary
@@ -29,8 +29,8 @@ jobs:
         target: ['26.3', '26.2', '26.1', '1.21.11', '1.21.9', '1.21.6']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: |
@@ -152,8 +152,8 @@ jobs:
           - { target: '1.21.6',  mc: '1.21.8',  java: '21' }
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}

@@ -41,9 +41,11 @@ fi
 
 grep -E "\[SMOKETEST\]|Mixin|mixin|ERROR|Exception|Caused by|giant_refresh" server.log | grep -vE "JAVA_TOOL_OPTIONS" | head -200
 # data-pack / registry problems for our namespace must not appear at all
-if grep -E "ERROR|WARN" server.log | grep -qiE "giant_refresh|giantrefresh"; then
+# (the checkout path itself contains "giant_refresh", so it is cut out first)
+sed "s#$(dirname "$PWD")##g" server.log | grep -E "/(ERROR|WARN)\]" | grep -iE "giant_refresh|giantrefresh|Giant Refresh" > ours.txt
+if [ -s ours.txt ]; then
   echo "[PROD] FAIL: errors or warnings mentioning giant_refresh"
-  grep -E "ERROR|WARN" server.log | grep -iE "giant_refresh|giantrefresh" | head -40
+  head -40 ours.txt
   exit 1
 fi
 grep -q "\[SMOKETEST\].*-> PASS" server.log && echo "[PROD] PASS $LOADER $MC" || { echo "[PROD] FAIL $LOADER $MC"; tail -60 server.log; exit 1; }
