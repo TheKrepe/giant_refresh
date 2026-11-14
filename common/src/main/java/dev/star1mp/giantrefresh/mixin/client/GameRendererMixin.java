@@ -1,7 +1,9 @@
 package dev.star1mp.giantrefresh.mixin.client;
 
 import dev.star1mp.giantrefresh.client.GiantClientHooks;
-import net.minecraft.client.DeltaTracker;
+//#if MC < 26.3
+//$$ import net.minecraft.client.DeltaTracker;
+//#endif
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
     @Inject(method = "render", at = @At("TAIL"))
-    private void giantrefresh$afterFrame(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci) {
+    //#if MC >= 26.3
+    private void giantrefresh$afterFrame(CallbackInfo ci) {
+    //#else
+    //$$ private void giantrefresh$afterFrame(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci) {
+    //#endif
         if (GiantClientHooks.CLIENT_TEST) {
             GiantClientHooks.afterFrame();
         }
