@@ -9,7 +9,11 @@ import dev.star1mp.giantrefresh.registry.RegEntry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+//#if MC >= 26.1
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+//#else
+//$$ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+//#endif
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -29,12 +33,26 @@ public class GiantRefreshFabric implements ModInitializer {
         FabricDefaultAttributeRegistry.register(GRContent.GIANT.get(), GiantEntity.createAttributes());
 
         for (var tab : java.util.List.of(GRContent.TAB_SPAWN_EGGS, GRContent.TAB_INGREDIENTS, GRContent.TAB_FUNCTIONAL_BLOCKS)) {
+            //#if MC >= 26.1
             CreativeModeTabEvents.modifyOutputEvent(tab).register(output ->
                     GRContent.fillCreativeTab(tab, (anchor, stack) -> output.insertAfter(anchor, stack)));
+            //#else
+            //$$ ItemGroupEvents.modifyEntriesEvent(tab).register(entries ->
+            //$$         GRContent.fillCreativeTab(tab, (anchor, stack) -> entries.addAfter(anchor, stack)));
+            //#endif
         }
+        //#if MC < 26.1
+        //$$ net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder.BUILD.register(GRContent::registerBrewing);
+        //#elif MC < 26.3
+        //$$ net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder.BUILD.register(GRContent::registerBrewing);
+        //#endif
 
         ServerEntityEvents.ENTITY_LOAD.register(GiantEvents::onEntityJoin);
+        //#if MC >= 26.1
         ServerTickEvents.END_LEVEL_TICK.register(GiantEvents::onLevelTick);
+        //#else
+        //$$ ServerTickEvents.END_WORLD_TICK.register(GiantEvents::onLevelTick);
+        //#endif
 
         BiomeModifications.addFeature(BiomeSelectors.tag(GRContent.GIANT_BIOMES), GenerationStep.Decoration.VEGETAL_DECORATION,
                 GRContent.key(Registries.PLACED_FEATURE, "giant_footprints"));

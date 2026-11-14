@@ -32,6 +32,9 @@ public class GiantRefreshNeoForge {
         modBus.addListener(GiantRefreshNeoForge::onCreativeTabs);
         NeoForge.EVENT_BUS.addListener(GiantRefreshNeoForge::onEntityJoin);
         NeoForge.EVENT_BUS.addListener(GiantRefreshNeoForge::onLevelTick);
+        //#if MC < 26.3
+        //$$ NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent e) -> GRContent.registerBrewing(e.getBuilder()));
+        //#endif
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})

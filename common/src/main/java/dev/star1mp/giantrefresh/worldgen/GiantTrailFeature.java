@@ -25,7 +25,24 @@ import net.minecraft.world.phys.AABB;
  * A line of huge footprints. Along the trail the prints get fresher and closer together;
  * a "camp" trail may end with a Giant sleeping next to its lair.
  */
+//#if MC >= 26.3
 public record GiantTrailFeature(int minPrints, int maxPrints, float giantChance, float freshness) implements Feature {
+//#else
+//$$ public record GiantTrailFeature(int minPrints, int maxPrints, float giantChance, float freshness)
+//$$         implements net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration {
+//$$     /** Before 26.3 a feature is a Feature&lt;Config&gt; type plus a config; this record is the config. */
+//$$     public static final class Type extends Feature<GiantTrailFeature> {
+//$$         public Type() {
+//$$             super(CODEC.codec());
+//$$         }
+//$$
+//$$         @Override
+//$$         public boolean place(net.minecraft.world.level.levelgen.feature.FeaturePlaceContext<GiantTrailFeature> ctx) {
+//$$             return ctx.config().place(ctx.level(), ctx.chunkGenerator(), ctx.random(), ctx.origin());
+//$$         }
+//$$     }
+//$$
+//#endif
     public static final MapCodec<GiantTrailFeature> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.intRange(2, 12).fieldOf("min_prints").forGetter(GiantTrailFeature::minPrints),
             Codec.intRange(2, 12).fieldOf("max_prints").forGetter(GiantTrailFeature::maxPrints),
@@ -42,12 +59,14 @@ public record GiantTrailFeature(int minPrints, int maxPrints, float giantChance,
             {0, 1, 0},
     };
 
+    //#if MC >= 26.3
     @Override
     public MapCodec<? extends Feature> codec() {
         return CODEC;
     }
 
     @Override
+    //#endif
     public boolean place(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BlockPos origin) {
         if (!GRConfig.get().worldgenTrails) {
             return false;

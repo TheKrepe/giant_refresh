@@ -14,6 +14,15 @@ public class GiantHeadBlock extends HorizontalDirectionalBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, net.minecraft.core.Direction.NORTH));
     }
 
+    //#if MC < 26.3
+    //$$ public static final com.mojang.serialization.MapCodec<GiantHeadBlock> CODEC = simpleCodec(GiantHeadBlock::new);
+    //$$
+    //$$ @Override
+    //$$ protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
+    //$$     return CODEC;
+    //$$ }
+    //#endif
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
