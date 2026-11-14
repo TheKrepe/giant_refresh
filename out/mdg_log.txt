@@ -1,0 +1,59 @@
+Loaded 138 artifacts from /home/runner/work/giant_refresh/giant_refresh/W/mdg/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+  ↓ https://piston-meta.mojang.com/v1/packages/1dcba28d18f2f8d1ac8611bf1c4d6273e8891f4c/1.21.10.json
+ [1m[92m✓[23;0m Completed [4mdownloadJson[23;0m in 0.52s
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+[1m*** Started working on [4mdownloadClientMappings[23;0m[23;0m
+  ↓ https://piston-data.mojang.com/v1/objects/95495a7f485eedd84ce928cef5e223b757d2f764/server.jar
+  ↓ https://piston-data.mojang.com/v1/objects/7e62354a697f95cf5e7d5981face0583676a9ef7/client.txt
+  ↓ https://piston-data.mojang.com/v1/objects/d3bdf582a7fa723ce199f3665588dcfe6bf9aca8/client.jar
+ [1m[92m✓[23;0m Completed [4mdownloadClientMappings[23;0m in 0.41s
+[1m*** Started working on [4mmergeMappings[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:3.0.13:fatjar
+ [1m[92m✓[23;0m Completed [4mdownloadClient[23;0m in 0.76s
+ [1m[92m✓[23;0m Completed [4mdownloadServer[23;0m in 0.99s
+[1m*** Started working on [4mextractServer[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:3.0.13:fatjar
+ [1m[92m✓[23;0m Completed [4mextractServer[23;0m in 0.72s
+ [1m[92m✓[23;0m Completed [4mmergeMappings[23;0m in 2.54s
+[1m*** Started working on [4mstripServer[23;0m[23;0m
+[1m*** Started working on [4mstripClient[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mstripServer[23;0m in 2.21s
+ [1m[92m✓[23;0m Completed [4mstripClient[23;0m in 3.05s
+[1m*** Started working on [4mmerge[23;0m[23;0m
+ ↳ Running external tool net.neoforged:mergetool:2.0.7:fatjar
+ [1m[92m✓[23;0m Completed [4mmerge[23;0m in 2.73s
+[1m*** Started working on [4mrename[23;0m[23;0m
+  [33mWARNING: [23;0morg.ow2.asm:asm:9.6 is not present in the artifact manifest
+  ↓ https://libraries.minecraft.net/org/ow2/asm/asm/9.6/asm-9.6.jar
+ ↳ Running external tool net.neoforged:AutoRenamingTool:2.0.15:all
+ [1m[92m✓[23;0m Completed [4mrename[23;0m in 5.55s
+[1m*** Started working on [4mbinaryPatch[23;0m[23;0m
+  [33mWARNING: [23;0mnet.neoforged.installertools:binarypatcher:4.0.6:fatjar is not present in the artifact manifest
+  ↓ https://maven.neoforged.net/releases/net/neoforged/installertools/binarypatcher/4.0.6/binarypatcher-4.0.6-fatjar.jar
+ ↳ Running external tool net.neoforged.installertools:binarypatcher:4.0.6:fatjar
+ [1m[92m✓[23;0m Completed [4mbinaryPatch[23;0m in 2.45s
+[1m*** Started working on [4mcopyUnpatchedClasses[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mcopyUnpatchedClasses[23;0m in 1.81s
+[1m*** Started working on [4mapplyDevTransforms[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.12:fatjar
+ [1m[92m✓[23;0m Completed [4mapplyDevTransforms[23;0m in 2.02s
+[1m*** Started working on [4mbinaryWithNeoForge[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mbinaryWithNeoForge[23;0m in 4.73s
+Performing periodic cache maintenance on /home/runner/.gradle/caches/neoformruntime
+Cleaning intermediate results cache in /home/runner/.gradle/caches/neoformruntime/intermediate_results
+ Maximum age: 744h
+ Maximum cache size: 10 GiB
+ [0;2;3m36 files found[23;0m
+ [0;2;3m445 MiB overall size[23;0m
+ [0;2;3m0 expired keys found[23;0m
+[0;2;3m Deleted 11 outdated lock files
+Total runtime: 26.71s
+
+./build/moddev/artifacts/neoforge-21.10.64.jar
+./build/moddev/artifacts/neoforge-21.10.64-client-extra-aka-minecraft-resources.jar
+/home/runner/.gradle/caches/9.8.2/transforms/aea7f03167dd11a190662e6a499524ef/transformed/instrumented/instrumented-moddev-gradle-2.0.148.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/moddev-gradle/2.0.148/143f83a22af5a2aa0eca650b08dbae26800ebeba/moddev-gradle-2.0.148.jar
+merged jar: build/moddev/artifacts/neoforge-21.10.64.jar
