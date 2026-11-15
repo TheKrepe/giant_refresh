@@ -219,8 +219,8 @@ public final class Trailer {
             Vec3 f = at(-14, -13);
             Actor farmer = villager("farmer", f, 180);
             farmer.lookAt(f.add(0, 0.2, -3));
-            on(1.0, () -> farmer.lookAt(g.e, 10));
             Actor g = hero(at(-44, -100), -90, true);
+            on(1.0, () -> farmer.lookAt(g.e, 10));
             on(0.0, () -> g.walkTo(at(-4, -100), 1.0));
             Vec3 far = at(-20, 8, -110);
             thump(0.7, far, 1.0, null, 0);
