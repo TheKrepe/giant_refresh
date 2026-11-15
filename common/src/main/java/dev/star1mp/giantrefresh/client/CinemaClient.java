@@ -92,8 +92,8 @@ public final class CinemaClient {
         if (t < 0) {
             return;
         }
-        int total = (int) Math.round(Cinema.shot.duration * Cinema.FPS);
-        double step = 20.0 / Cinema.FPS;
+        int total = (int) Math.round(Cinema.shot.duration / Cinema.shot.timeScale * Cinema.FPS);
+        double step = 20.0 / Cinema.FPS * Cinema.shot.timeScale;
         if (t + 1e-6 < nextFrame * step) {
             return;
         }

@@ -27,6 +27,8 @@ public abstract class Shot {
     public int siteZ;
     public boolean village;
     public long dayTime = 6000;
+    /** Game seconds per film second (0.5 = slow motion). */
+    public double timeScale = 1.0;
     public final Cam cam = new Cam();
     public BlockPos origin;
     public ServerLevel level;
@@ -147,6 +149,70 @@ public abstract class Shot {
         Actor a = new Actor(e);
         actors.add(a);
         return a;
+    }
+
+    /** Any entity by summon command (for NBT such as villager professions); found again by a tag. */
+    protected Actor summon(String id, Vec3 at, float yaw, String nbt) {
+        String tag = "cine_s" + actors.size();
+        String extra = nbt == null || nbt.isEmpty() ? "" : nbt + ",";
+        Cinema.command(level.getServer(), String.format(java.util.Locale.ROOT, "summon %s %.3f %.3f %.3f {%sRotation:[%.1ff,0f],Tags:[\"%s\"]}",
+                id, at.x, at.y, at.z, extra, yaw, tag));
+        List<Entity> found = level.getEntities((Entity) null, new AABB(at, at).inflate(3), e -> e.entityTags().contains(tag));
+        if (found.isEmpty()) {
+            dev.star1mp.giantrefresh.GiantRefresh.LOGGER.warn("[CINEMA] summon failed: {} {}", id, nbt);
+            return null;
+        }
+        Entity e = found.get(0);
+        if (e instanceof LivingEntity l) {
+            l.yHeadRot = yaw;
+            l.yBodyRot = yaw;
+        }
+        Actor a = new Actor(e);
+        actors.add(a);
+        return a;
+    }
+
+    private final List<double[]> thumps = new ArrayList<>();
+    {
+        cam.shake(t -> {
+            double s = 0;
+            for (double[] th : thumps) {
+                double d = t - th[0];
+                if (d >= 0 && d < 1.2) {
+                    s += th[1] * Math.exp(-d * 5.0);
+                }
+            }
+            return s;
+        });
+    }
+
+    /** A camera jolt at a time (seconds) with strength in degrees. */
+    protected void jolt(double sec, double strength) { thumps.add(new double[] {sec, strength}); }
+
+    protected void particles(net.minecraft.core.particles.ParticleOptions p, Vec3 at, int count, double spread, double speed) {
+        level.sendParticles(p, at.x, at.y, at.z, count, spread, spread * 0.4, spread, speed);
+    }
+
+    protected void dust(Vec3 at, int count, double spread) {
+        particles(new net.minecraft.core.particles.BlockParticleOption(net.minecraft.core.particles.ParticleTypes.BLOCK,
+                net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState()), at, count, spread, 0.15);
+        particles(net.minecraft.core.particles.ParticleTypes.POOF, at, count / 3, spread, 0.03);
+    }
+
+    protected void sound(net.minecraft.sounds.SoundEvent ev, Vec3 at, float vol, float pitch) {
+        level.playSound(null, at.x, at.y, at.z, ev, net.minecraft.sounds.SoundSource.HOSTILE, vol, pitch);
+    }
+
+    protected void sound(net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> ev, Vec3 at, float vol, float pitch) {
+        level.playSound(null, at.x, at.y, at.z, ev, net.minecraft.sounds.SoundSource.NEUTRAL, vol, pitch);
+    }
+
+    /** Opens or closes the door whose lower half is at p. */
+    protected void door(BlockPos p, boolean open) {
+        var st = level.getBlockState(p);
+        if (st.getBlock() instanceof net.minecraft.world.level.block.DoorBlock d) {
+            d.setOpen(null, level, st, p, open);
+        }
     }
 
     /** Camera target that follows an entity (smoothly interpolated on the client). */

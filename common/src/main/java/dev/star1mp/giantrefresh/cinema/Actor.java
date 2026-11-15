@@ -32,7 +32,7 @@ public final class Actor {
 
     /** Walk (Mobs: with their own move control; mannequins: forward input) to a point. */
     public Actor walkTo(Vec3 p, double speed) { mark = p; this.speed = speed; return this; }
-    public Actor stop() { mark = null; if (e instanceof LivingEntity l) l.zza = 0; return this; }
+    public Actor stop() { mark = null; back = 0; if (e instanceof LivingEntity l) l.zza = 0; return this; }
     public Actor lookAt(Vec3 p) { look = () -> p; return this; }
     public Actor lookAt(Entity other, double dy) { look = () -> other.position().add(0, dy, 0); return this; }
     public Actor lookAt(Supplier<Vec3> p) { look = p; return this; }
@@ -44,6 +44,9 @@ public final class Actor {
         return this;
     }
     public boolean arrived() { return mark == null; }
+    private float back;
+    /** Step backwards (mannequins) while keeping the current facing. */
+    public Actor backUp(float speed) { back = speed; return this; }
 
     void tick(ServerLevel level) {
         if (!e.isAlive()) {
@@ -66,6 +69,9 @@ public final class Actor {
                 l.zza = (float) Math.min(1.0, speed);
                 l.setSprinting(run);
             }
+        }
+        if (back != 0 && mark == null && e instanceof LivingEntity l && !(e instanceof Mob)) {
+            l.zza = -back;
         }
         if (faceYaw != null && mark == null && e instanceof LivingEntity l) {
             l.setYRot(faceYaw);

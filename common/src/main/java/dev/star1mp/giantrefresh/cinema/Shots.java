@@ -15,7 +15,13 @@ public final class Shots {
             case "scout" -> Scout::new;
             case "sites" -> Sites::new;
             case "mech" -> Mech::new;
-            default -> throw new IllegalArgumentException("unknown shot " + name);
+            default -> () -> {
+                Shot t = Trailer.create(name);
+                if (t == null) {
+                    throw new IllegalArgumentException("unknown shot " + name);
+                }
+                return t;
+            };
         };
         return s.get();
     }

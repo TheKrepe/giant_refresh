@@ -14,6 +14,7 @@ public final class Cam {
     public static final class Key {
         final double t;
         final Vec3 pos;
+        DoubleFunction<Vec3> posF;
         float yaw;
         float pitch;
         DoubleFunction<Vec3> look; // overrides yaw/pitch
@@ -56,6 +57,17 @@ public final class Cam {
         return at(t, pos, x -> lookAt);
     }
 
+    /** A key whose position moves (follows an actor) and that looks at a moving point. */
+    public Key follow(double t, DoubleFunction<Vec3> pos, DoubleFunction<Vec3> look) {
+        Key k = new Key(t, Vec3.ZERO);
+        k.posF = pos;
+        k.look = look;
+        keys.add(k);
+        return k;
+    }
+
+    private static Vec3 p(Key k, double t) { return k.posF != null ? k.posF.apply(t) : k.pos; }
+
     public Cam handheld(double degrees) { handheld = degrees; return this; }
     public Cam shake(DoubleFunction<Double> s) { shake = s; return this; }
     public Cam roll(DoubleFunction<Float> r) { roll = r; return this; }
@@ -80,7 +92,7 @@ public final class Cam {
         }
         Key p0 = keys.get(Math.max(0, i - 1));
         Key p3 = keys.get(Math.min(keys.size() - 1, i + 2));
-        Vec3 pos = catmull(p0.pos, a.pos, b.pos, p3.pos, e);
+        Vec3 pos = catmull(p(p0, t), p(a, t), p(b, t), p(p3, t), e);
         float yawA = yawOf(a, pos, t);
         float yawB = yawOf(b, pos, t);
         float pitA = pitchOf(a, pos, t);
