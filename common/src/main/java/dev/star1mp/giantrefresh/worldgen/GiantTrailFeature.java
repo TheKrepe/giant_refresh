@@ -278,6 +278,16 @@ public record GiantTrailFeature(int minPrints, int maxPrints, float giantChance,
     }
 
     /** CI render test: a stepped-on hut and a second, plain one next to it. */
+    /** Trailer sets: one footprint. */
+    public static boolean cinemaFoot(WorldGenLevel level, RandomSource random, double cx, double cz, double dirX, double dirZ, boolean right, double fresh) {
+        return new GiantTrailFeature(4, 8, 0.0F, 1.0F).stampFoot(level, random, cx, cz, dirX, dirZ, -dirZ, dirX, right, fresh);
+    }
+
+    /** Trailer sets: one trampled hut. */
+    public static void cinemaRuin(WorldGenLevel level, RandomSource random, double cx, double cz, double dirX, double dirZ, boolean main) {
+        new GiantTrailFeature(4, 8, 0.0F, 1.0F).placeRuin(level, random, cx, cz, dirX, dirZ, -dirZ, dirX, main);
+    }
+
     public static void placeTestRuins(WorldGenLevel level, RandomSource random, int x, int z) {
         GiantTrailFeature feature = new GiantTrailFeature(4, 8, 0.0F, 0.8F);
         feature.placeRuin(level, random, x + 0.5, z + 0.5, 0.0, 1.0, -1.0, 0.0, true);

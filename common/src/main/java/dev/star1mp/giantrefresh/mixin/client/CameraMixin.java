@@ -17,6 +17,9 @@ public abstract class CameraMixin {
     @Shadow
     protected abstract void setRotation(float yRot, float xRot);
 
+    @Shadow
+    protected abstract void setPosition(net.minecraft.world.phys.Vec3 pos);
+
     //#if MC >= 1.21.11
     @Shadow
     public abstract float xRot();
@@ -45,6 +48,14 @@ public abstract class CameraMixin {
     //$$ @Inject(method = "setup", at = @At("TAIL"))
     //$$ private void giantrefresh$shake(net.minecraft.world.level.BlockGetter level, net.minecraft.world.entity.Entity entity, boolean detached, boolean mirror, float partialTick, CallbackInfo ci) {
     //#endif
+        if (dev.star1mp.giantrefresh.cinema.Cinema.ENABLED) {
+            dev.star1mp.giantrefresh.cinema.Cam.Pose p = dev.star1mp.giantrefresh.client.CinemaClient.camera(deltaTracker);
+            if (p != null) {
+                setPosition(p.pos());
+                setRotation(p.yaw(), p.pitch());
+                return;
+            }
+        }
         float[] shake = GiantClientHooks.cameraShake();
         if (shake != null) {
             setRotation(yRot() + shake[0], xRot() + shake[1]);

@@ -1,0 +1,136 @@
+name: Showcase screenshots
+
+on:
+  push:
+    branches: [showcase]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Minecraft target (versions/*.properties)
+        default: '26.2'
+      shaders:
+        description: Use Iris + shader pack
+        default: 'true'
+      only:
+        description: Only scenes whose name is listed (empty = all)
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  showcase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      TARGET: ${{ inputs.target || '26.2' }}
+      SHADERS: ${{ inputs.shaders || 'true' }}
+      ONLY: ${{ inputs.only || '' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            25
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+
+      - name: Target info
+        id: meta
+        run: |
+          P=versions/$TARGET.properties
+          echo "dir=$(grep '^fabric_build=' $P | cut -d= -f2)" >> $GITHUB_OUTPUT
+          echo "mc=$(grep '^minecraft_version=' $P | cut -d= -f2)" >> $GITHUB_OUTPUT
+          [ -f .github/showcase.env ] && cat .github/showcase.env >> $GITHUB_ENV || true
+
+      - name: Rendering mods (Sodium, Iris, shader pack)
+        if: env.SHADERS == 'true'
+        working-directory: ${{ steps.meta.outputs.dir }}
+        run: |
+          mkdir -p run/mods run/shaderpacks run/config
+          MC=${{ steps.meta.outputs.mc }}
+          get() { # project loader [stable] -> "version url filename" of the newest file for MC
+            curl -fsS -H 'User-Agent: giant-refresh-ci' "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%22$MC%22%5D" \
+              | python3 -c "
+          import json,sys
+          v=json.load(sys.stdin)
+          if '$3'=='stable':
+              v=[x for x in v if x['version_type']=='release'] or v
+          f=[x for x in v[0]['files'] if x['primary']] or v[0]['files']
+          print(v[0]['version_number'],f[0]['url'],f[0]['filename'])" 2>/dev/null
+          }
+          ok=1
+          for p in sodium iris; do
+            r=$(get $p fabric stable); if [ -z "$r" ]; then echo "no $p for $MC"; ok=0; continue; fi
+            echo "$p: ${r%% *}"; set -- $r; curl -fsSL -o run/mods/$3 "$2"
+          done
+          SP=${SHADERPACK:-complementary-reimagined}
+          r=$(get $SP iris); [ -z "$r" ] && r=$(curl -fsS -H 'User-Agent: giant-refresh-ci' "https://api.modrinth.com/v2/project/$SP/version" | python3 -c "import json,sys;v=json.load(sys.stdin);f=v[0]['files'][0];print(v[0]['version_number'],f['url'],f['filename'])")
+          echo "shader pack: $r"; set -- $r; curl -fsSL -o "run/shaderpacks/$3" "$2"
+          printf "enableShaders=true\nshaderPack=%s\n" "$3" > run/config/iris.properties
+          if [ $ok = 0 ]; then rm -rf run/mods/* run/config/iris.properties; echo "SHADERS=false" >> $GITHUB_ENV; fi
+          ls -la run/mods run/shaderpacks
+
+      - name: World (dev server run)
+        working-directory: ${{ steps.meta.outputs.dir }}
+        env:
+          JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
+        run: |
+          mkdir -p run; echo "eula=true" > run/eula.txt
+          printf "level-seed=giantrefresh\nview-distance=8\nsimulation-distance=6\nspawn-protection=0\nonline-mode=false\nsync-chunk-writes=false\n" > run/server.properties
+          mkdir -p ../servermods; mv run/mods/* ../servermods/ 2>/dev/null || true
+          timeout 1200 gradle runServer --no-daemon -Pgr_target=$TARGET > server.log 2>&1 || true
+          mv ../servermods/* run/mods/ 2>/dev/null || true
+          grep -E "SMOKETEST.*(PASS|FAIL)" server.log || { tail -80 server.log; exit 1; }
+
+      - name: Render the showcase
+        working-directory: ${{ steps.meta.outputs.dir }}
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          GALLIUM_DRIVER: llvmpipe
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq xvfb mesa-vulkan-drivers libgl1-mesa-dri imagemagick >/dev/null
+          WAIT=25; [ "$SHADERS" = true ] && WAIT=${SHADER_WAIT:-90}
+          [ -z "$ONLY" ] && [ -f ../.github/showcase.only ] && ONLY=$(cat ../.github/showcase.only)
+          echo "scenes: ${ONLY:-all}"
+          export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.showcase=true -Dgiantrefresh.showcase.wait=$WAIT -Dgiantrefresh.showcase.only=$ONLY"
+          mkdir -p run/saves; rm -rf run/saves/show; cp -r run/world run/saves/show; rm -f run/saves/show/session.lock
+          printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:${RENDER_DISTANCE:-12}\nsimulationDistance:6\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\nguiScale:2\nentityShadows:true\ngraphicsMode:1\nfov:0.0\nparticles:0\n" > run/options.txt
+          run_client() { # $1 = Xvfb screen args; returns 0 if the game got into the world
+            : > client.log
+            ( timeout 7200 xvfb-run -a -s "$1" gradle runClient --no-daemon -Pgr_target=$TARGET \
+                --args="--width 1920 --height 1080 --quickPlaySingleplayer show" > client.log 2>&1 ) &
+            PID=$!
+            for i in $(seq 1 120); do
+              sleep 5
+              if grep -qE "Failed to create backend|FATAL ERROR|Exception in thread \"Render thread\"" client.log; then
+                echo "variant failed: $1"; grep -E "Failed to create backend|BackendCreation" client.log | head -3
+                pkill -f runClient; pkill -f java; wait $PID 2>/dev/null; return 1
+              fi
+              grep -q "SHOWCASE\] scene" client.log && break
+              kill -0 $PID 2>/dev/null || return 1
+            done
+            echo "client running with: $1"; wait $PID; return 0
+          }
+          run_client "-screen 0 1920x1080x24 +extension GLX +render -noreset" \
+            || run_client "-screen 0 1920x1080x32 +extension GLX +render -noreset" \
+            || { export MESA_GL_VERSION_OVERRIDE=4.6 MESA_GLSL_VERSION_OVERRIDE=460; run_client "-screen 0 1920x1080x24 +extension GLX +render -noreset"; } \
+            || { echo "== without Iris"; mkdir -p ../noiris; mv run/mods/iris* ../noiris/; run_client "-screen 0 1920x1080x24"; } || true
+          grep -E "SHOWCASE|CLIENTTEST\] screenshot|ERROR|Exception|Caused by|iris|Iris|sodium|Sodium|OpenGL|llvmpipe" client.log | grep -v JAVA_TOOL_OPTIONS | cut -c1-300 | head -150 || true
+          ls -la run/screenshots/
+
+      - name: Publish screenshots to the showcase-out branch
+        if: always()
+        working-directory: ${{ steps.meta.outputs.dir }}
+        run: |
+          mkdir -p /tmp/out && cp run/screenshots/showcase_*.png /tmp/out/ 2>/dev/null || true
+          cp client.log /tmp/out/client.log 2>/dev/null || true
+          cd /tmp/out
+          echo "$TARGET shaders=$SHADERS run ${{ github.run_id }}" > info.txt
+          git init -q -b showcase-out && git add -A
+          git -c user.name=ci -c user.email=ci@localhost commit -qm "showcase $TARGET shaders=$SHADERS run ${{ github.run_id }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" showcase-out

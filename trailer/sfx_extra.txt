@@ -1,0 +1,16 @@
+random/explode1 random/explode2 random/explode3 random/explode4
+item/elytra/elytra_loop
+mob/zombie/say1 mob/zombie/say2 mob/zombie/say3 mob/zombie/hurt1 mob/zombie/death
+mob/irongolem/hit1 mob/irongolem/hit2 mob/irongolem/throw mob/irongolem/walk1 mob/irongolem/walk2
+random/door_close random/door_open block/wooden_door/close1 block/wooden_door/close2 block/wooden_door/open1
+random/drink random/pop random/burp
+mob/spider/say1 mob/spider/say2 mob/spider/step1 mob/spider/step2
+mob/chicken/say1 mob/chicken/say2 mob/chicken/hurt1
+mob/villager/idle1 mob/villager/idle2 mob/villager/haggle1 mob/villager/no1
+random/bow random/bowhit1 random/bowhit2
+block/campfire/crackle1 block/campfire/crackle2 block/campfire/crackle3
+step/grass1 step/grass2 step/grass3 step/grass4 step/gravel1 step/gravel2 step/wood1 step/wood2
+dig/grass1 dig/gravel1 dig/stone1
+mob/enderdragon/growl1 mob/ravager/roar1 mob/ravager/stun1 mob/warden/sonic_boom1 mob/warden/heartbeat_1
+ambient/cave/cave1 ambient/cave/cave13
+random/levelup random/orb

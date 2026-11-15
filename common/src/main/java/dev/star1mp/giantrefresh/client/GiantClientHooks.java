@@ -21,7 +21,110 @@ public final class GiantClientHooks {
     private static boolean stopped;
     private static int cameraSet;
 
+    /** Promo screenshots: {@code -Dgiantrefresh.showcase=true} (see GiantShowcase). */
+    public static final boolean SHOWCASE = dev.star1mp.giantrefresh.entity.GiantShowcase.ENABLED;
+    private static final float SHOWCASE_RENDER_SECONDS = Float.parseFloat(System.getProperty("giantrefresh.showcase.wait", "20"));
+    private static int scScene = -1;
+    private static int scPhase;
+    private static long scTime;
+    private static boolean scShotDone;
+
     private GiantClientHooks() {}
+
+    private static void hideHud(Minecraft mc) {
+        //#if MC >= 26.2
+        if (!mc.gui.hud.isHidden()) {
+            mc.gui.hud.toggle();
+        }
+        //#else
+        //$$ mc.options.hideGui = true;
+        //#endif
+    }
+
+    /** Promo screenshot director, called every frame (render thread). */
+    private static void showcaseFrame() {
+        Minecraft mc = Minecraft.getInstance();
+        var server = mc.getSingleplayerServer();
+        if (stopped || mc.player == null || mc.level == null || server == null) {
+            return;
+        }
+        hideHud(mc);
+        long now = System.nanoTime();
+        double since = (now - scTime) / 1.0E9;
+        var scenes = dev.star1mp.giantrefresh.entity.GiantShowcase.SCENES;
+        if (scScene < 0) {
+            if (worldStart == 0) {
+                worldStart = now;
+                mc.options.fov().set(70);
+            }
+            if ((now - worldStart) / 1.0E9 < 15.0) {
+                return;
+            }
+            nextScene(server, -1);
+            return;
+        }
+        if (scScene >= scenes.length) {
+            if (since > 5.0) {
+                dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[SHOWCASE] done");
+                stopped = true;
+                mc.stop();
+            }
+            return;
+        }
+        final int scene = scScene;
+        switch (scPhase) {
+            case 0 -> { // chunks generate around the site
+                if (since > 12.0) {
+                    scPhase = 1;
+                    scTime = now;
+                    server.execute(() -> dev.star1mp.giantrefresh.entity.GiantShowcase.stage(server, scene));
+                }
+            }
+            case 1 -> { // the scene plays until it freezes
+                if (dev.star1mp.giantrefresh.entity.GiantShowcase.ready == scene) {
+                    scPhase = 2;
+                    scTime = now;
+                } else if (since > 300.0) {
+                    dev.star1mp.giantrefresh.GiantRefresh.LOGGER.warn("[SHOWCASE] scene {} never froze", scene);
+                    nextScene(server, scene);
+                }
+            }
+            case 2 -> { // camera in place: let the chunks (and shaders) settle
+                if (since > SHOWCASE_RENDER_SECONDS) {
+                    scPhase = 3;
+                    scShotDone = false;
+                    String name = "showcase_" + (scene + 1) + "_" + scenes[scene] + ".png";
+                    pendingShot = name;
+                    shotListener = () -> scShotDone = true;
+                }
+            }
+            default -> {
+                if (scShotDone) {
+                    nextScene(server, scene);
+                }
+            }
+        }
+    }
+
+    private static void nextScene(net.minecraft.server.MinecraftServer server, int from) {
+        int next = from + 1;
+        var scenes = dev.star1mp.giantrefresh.entity.GiantShowcase.SCENES;
+        while (next < scenes.length && !dev.star1mp.giantrefresh.entity.GiantShowcase.wanted(next)) {
+            next++;
+        }
+        scScene = next;
+        scPhase = 0;
+        scTime = System.nanoTime();
+        if (next < scenes.length) {
+            final int scene = next;
+            server.execute(() -> {
+                dev.star1mp.giantrefresh.entity.GiantShowcase.setCurrent(scene);
+                dev.star1mp.giantrefresh.entity.GiantShowcase.prepare(server, scene);
+            });
+        }
+    }
+
+    private static volatile Runnable shotListener;
 
     public static void onImpact(Entity source, float strength) {
         GRConfig cfg = GRConfig.get();
@@ -51,11 +154,20 @@ public final class GiantClientHooks {
         String name = pendingShot;
         pendingShot = null;
         Minecraft mc = Minecraft.getInstance();
-        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1,
-                msg -> dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name));
+        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), 1, msg -> {
+            dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CLIENTTEST] screenshot {}", name);
+            Runnable l = shotListener;
+            shotListener = null;
+            if (l != null) {
+                l.run();
+            }
+        });
     }
 
     public static float[] cameraShake() {
+        if (SHOWCASE) {
+            showcaseFrame();
+        }
         if (CLIENT_TEST) {
             clientTestFrame();
         }
