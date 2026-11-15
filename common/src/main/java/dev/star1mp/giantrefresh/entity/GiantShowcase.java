@@ -179,13 +179,14 @@ public final class GiantShowcase {
                 if (golem instanceof Mob m) {
                     m.setNoAi(true);
                 }
-                for (int i = 0; i < 4; i++) {
-                    LivingEntity v = spawn(EntityTypes.VILLAGER, level, x - 7 + i * 4.5, z - 12 - (i % 2) * 3, 180.0F + (i - 2) * 25.0F);
+                double[][] flee = {{-7.5, -6.0, 200.0}, {-5.0, -9.5, 170.0}, {6.5, -7.0, 160.0}, {9.0, -3.5, 140.0}};
+                for (double[] f : flee) {
+                    LivingEntity v = spawn(EntityTypes.VILLAGER, level, x + f[0], z + f[1], (float) f[2]);
                     if (v instanceof Mob m) {
                         m.setNoAi(true);
                     }
                 }
-                camera = lookAt(level, x - 6.0, y + 2.0, z - 14.0, x, y + 6.5, z);
+                camera = lookAt(level, x - 3.0, y + 2.2, z - 15.0, x, y + 6.0, z);
                 until = () -> untilTicks > 20;
             }
             case "trail" -> {
@@ -210,14 +211,14 @@ public final class GiantShowcase {
                     spawned.add(trailGiant);
                 }
                 // above and behind the old end of the trail, looking along it
-                double bx = cx - trailDirX * 30.0;
-                double bz = cz - trailDirZ * 30.0;
-                camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 16.0, bz, cx + trailDirX * 6.0, y, cz + trailDirZ * 6.0);
+                double bx = cx - trailDirX * 24.0;
+                double bz = cz - trailDirZ * 24.0;
+                camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 11.0, bz, cx + trailDirX * 6.0, y, cz + trailDirZ * 6.0);
                 until = () -> untilTicks > 20;
             }
             case "camp" -> {
                 // dusk at the end of the trail: the Giant sleeps, a zombie keeps watch
-                command(server, "time set 12800");
+                command(server, "time set 11200");
                 if (trailGiant != null) {
                     double gx = trailGiant.getX();
                     double gz = trailGiant.getZ();
@@ -225,7 +226,7 @@ public final class GiantShowcase {
                     double side = -trailDirZ;
                     double sideZ = trailDirX;
                     zombie(level, gx + side * 5.0 - trailDirX * 3.0, gz + sideZ * 5.0 - trailDirZ * 3.0, 0.0F);
-                    camera = lookAt(level, gx - trailDirX * 11.0 + side * 7.0, gy + 2.5, gz - trailDirZ * 11.0 + sideZ * 7.0, gx, gy + 3.5, gz);
+                    camera = lookAt(level, gx - 12.0, gy + 2.5, gz + 3.0, gx, gy + 3.5, gz);
                 } else {
                     camera = lookAt(level, x - 10, y + 6, z - 10, x, y, z);
                 }
@@ -233,12 +234,12 @@ public final class GiantShowcase {
             }
             case "spiders" -> {
                 // moonlit night: spiders crawl up a Giant, one already sits on its head
-                command(server, "time set 13600");
+                command(server, "time set 12700");
                 GiantEntity g = giant(level, x, z, 160.0F, -1, false);
                 g.setNoAi(true);
                 g.setCustomName(net.minecraft.network.chat.Component.literal("pose:walk:2"));
                 List<dev.star1mp.giantrefresh.entity.ai.ClimbGiantGoal> goals = new ArrayList<>();
-                double[][] at = {{-6, 3}, {5, 6}, {-2, 8}, {7, -2}};
+                double[][] at = {{-3, 4}, {3, 4.5}, {-1, 6}, {4.5, 2}, {-4.5, 1.5}};
                 for (double[] p : at) {
                     LivingEntity s = spawn(EntityTypes.SPIDER, level, x + p[0], z + p[1], 0.0F);
                     if (s instanceof net.minecraft.world.entity.monster.spider.Spider spider) {
@@ -255,7 +256,7 @@ public final class GiantShowcase {
                     if (untilTicks == 5) {
                         goals.forEach(goal -> goal.forceClimb(g));
                     }
-                    return untilTicks > 70;
+                    return untilTicks > 38;
                 };
                 camera = lookAt(level, x - 3.0, y + 3.0, z + 13.0, x, y + 7.5, z);
             }
@@ -279,16 +280,17 @@ public final class GiantShowcase {
                 }
                 item(level, x + 1.3, z - 0.6, new ItemStack(GRContent.GIANT_TOOTH.get()));
                 item(level, x - 1.2, z - 0.9, PotionContents.createItemStack(Items.POTION, shrinking));
-                LivingEntity big = zombie(level, x + 4.0, z + 7.0, 200.0F);
-                LivingEntity normal = zombie(level, x - 1.0, z + 6.0, 170.0F);
-                LivingEntity small = zombie(level, x - 3.5, z + 4.0, 150.0F);
+                LivingEntity big = zombie(level, x + 3.5, z + 7.0, 190.0F);
+                LivingEntity normal = zombie(level, x - 0.5, z + 6.0, 175.0F);
+                LivingEntity small = zombie(level, x - 3.0, z + 5.5, 160.0F);
+                clearPlants(level, x, z, 9);
                 if (big != null) {
                     big.addEffect(new MobEffectInstance(GRContent.growthHolder(), -1, 0, false, false));
                 }
                 if (small != null) {
                     small.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), -1, 0, false, false));
                 }
-                camera = lookAt(level, x - 1.6, stand.getY() + 1.1, z - 3.8, x + 0.6, stand.getY() + 1.8, z + 4.0);
+                camera = lookAt(level, x - 1.2, stand.getY() + 1.3, z - 4.2, x + 0.4, stand.getY() + 2.2, z + 5.0);
                 until = () -> untilTicks > 90;
             }
             case "ruins" -> {
@@ -305,7 +307,7 @@ public final class GiantShowcase {
         }
         if (camera != null) {
             if (!SCENES[scene].equals("trail")) {
-                clearTrees(level, Mth.floor(camera[5]), Mth.floor(camera[7]), 11);
+                clearTrees(level, Mth.floor(camera[5]), Mth.floor(camera[7]), 18);
             }
             clearView(level, camera, camera[5], camera[6], camera[7], 2.5);
         }
@@ -364,6 +366,23 @@ public final class GiantShowcase {
                         if (st.is(net.minecraft.tags.BlockTags.LEAVES) || st.is(net.minecraft.tags.BlockTags.LOGS) || plant) {
                             level.setBlock(m, Blocks.AIR.defaultBlockState(), 2);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    /** Removes grass and flowers around a spot. */
+    private static void clearPlants(ServerLevel level, int x, int z, int radius) {
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (int ox = -radius; ox <= radius; ox++) {
+            for (int oz = -radius; oz <= radius; oz++) {
+                for (int oy = 0; oy <= 2; oy++) {
+                    m.set(x + ox, ground(level, x + ox, z + oz) + oy, z + oz);
+                    BlockState st = level.getBlockState(m);
+                    if (!st.isAir() && st.getCollisionShape(level, m).isEmpty() && st.getFluidState().isEmpty()
+                            && !st.is(Blocks.BREWING_STAND)) {
+                        level.setBlock(m, Blocks.AIR.defaultBlockState(), 2);
                     }
                 }
             }
@@ -435,7 +454,7 @@ public final class GiantShowcase {
                     score += 100; // water
                 }
                 if (level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) != surface) {
-                    score += 1; // tree
+                    score += 4; // tree
                 }
                 min = Math.min(min, floor);
                 max = Math.max(max, floor);
@@ -461,7 +480,7 @@ public final class GiantShowcase {
     }
 
     private static boolean nice(Holder<Biome> biome) {
-        return biome.is(Biomes.PLAINS) || biome.is(Biomes.SUNFLOWER_PLAINS) || biome.is(Biomes.MEADOW) || biome.is(Biomes.FLOWER_FOREST);
+        return biome.is(Biomes.PLAINS) || biome.is(Biomes.SUNFLOWER_PLAINS) || biome.is(Biomes.MEADOW);
     }
 
     private static int ground(ServerLevel level, int x, int z) {
