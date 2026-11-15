@@ -54,8 +54,9 @@ public final class World {
     }
 
     public int ground(double dx, double dz) {
-        int x = c.getX() + (int) Math.floor(dx);
-        int z = c.getZ() + (int) Math.floor(dz);
+        // the same cell at() stands in (it adds the half-block centre offset)
+        int x = c.getX() + (int) Math.floor(dx + 0.5);
+        int z = c.getZ() + (int) Math.floor(dz + 0.5);
         level.getChunk(x >> 4, z >> 4);
         return level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
     }

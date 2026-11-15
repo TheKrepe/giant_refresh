@@ -551,15 +551,15 @@ public final class Trailer {
                 Vec3 d = new Vec3(door.getX() + 0.5, door.getY(), door.getZ() + 0.5);
                 Vec3 toF = fountain.subtract(d).multiply(1, 0, 1).normalize();
                 Vec3 fd = d.subtract(fountain).multiply(1, 0, 1).normalize();
-                Vec3 st = at(fd.x * 4.5 + (i - 1) * 0.8, fd.z * 4.5 + 1.0);
+                Vec3 st = at(fd.x * 3.6 + (i - 1) * 0.8, fd.z * 3.6 + 1.0);
                 if (firstDoor == null) {
                     firstDoor = d;
                 }
                 Actor v = villager(prof[i], st, 0);
                 v.lookAt(g.e, 9);
-                double delay = 0.3 + i * 0.35;
+                double delay = 0.25 + i * 0.4;
                 on(delay - 0.2, () -> door(door, true));
-                on(delay, () -> v.walkTo(d, 1.4));
+                on(delay, () -> v.walkTo(d, 1.0));
                 final boolean[] gone = {false};
                 during(delay + 0.3, 4.0, t -> {
                     if (!gone[0] && (v.arrived() || v.e.position().distanceToSqr(d) < 1.0)) {

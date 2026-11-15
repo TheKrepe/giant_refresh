@@ -131,14 +131,14 @@ public abstract class Shot {
         String tag = "cine_" + actors.size();
         String model = skin.equals("alex") || skin.equals("ari") || skin.equals("efe") || skin.equals("makena") || skin.equals("sunny") ? "slim" : "wide";
         Cinema.command(level.getServer(), String.format(java.util.Locale.ROOT,
-                "summon minecraft:mannequin %.3f %.3f %.3f {Rotation:[%.1ff,0f],hide_description:1b,profile:{texture:\"minecraft:entity/player/%s/%s\",model:\"%s\"},Tags:[\"%s\"]}",
+                "summon minecraft:mannequin %.3f %.3f %.3f {Rotation:[%.1ff,0f],Invulnerable:1b,hide_description:1b,profile:{texture:\"minecraft:entity/player/%s/%s\",model:\"%s\"},Tags:[\"%s\"]}",
                 at.x, at.y, at.z, yaw, model, skin, model, tag));
         List<Entity> found = level.getEntities((Entity) null, new AABB(at, at).inflate(2), e -> e.entityTags().contains(tag));
         Entity e;
         if (found.isEmpty()) {
             dev.star1mp.giantrefresh.GiantRefresh.LOGGER.warn("[CINEMA] mannequin with skin failed, plain one");
             Cinema.command(level.getServer(), String.format(java.util.Locale.ROOT,
-                    "summon minecraft:mannequin %.3f %.3f %.3f {Rotation:[%.1ff,0f],hide_description:1b,Tags:[\"%s\"]}", at.x, at.y, at.z, yaw, tag));
+                    "summon minecraft:mannequin %.3f %.3f %.3f {Rotation:[%.1ff,0f],Invulnerable:1b,hide_description:1b,Tags:[\"%s\"]}", at.x, at.y, at.z, yaw, tag));
             found = level.getEntities((Entity) null, new AABB(at, at).inflate(2), x -> x.entityTags().contains(tag));
         }
         e = found.get(0);
