@@ -162,8 +162,11 @@ public final class GiantShowcase {
                     m.setNoAi(true);
                 }
                 until = () -> {
-                    if (untilTicks == 5 && victim != null) {
-                        g.showcaseGrab(victim, GiantEntity.ATTACK_GRAB);
+                    if (untilTicks == 5) {
+                        g.startAttack(GiantEntity.ATTACK_GRAB);
+                    }
+                    if (victim != null && g.getHeld() == null && g.getAttackTicks() > dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_CATCH) {
+                        g.showcaseGrab(victim); // the fist closes on the villager whether or not it was in reach
                     }
                     return untilTicks > 5 && g.getAttackTicks() >= dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_THROW - 5;
                 };
@@ -236,43 +239,36 @@ public final class GiantShowcase {
                 until = () -> untilTicks > 100;
             }
             case "spiders" -> {
-                // moonlit night: spiders crawl up a Giant, one already sits on its head
+                // dusk: spiders cling to a Giant on their way up, one already sits on its head
                 command(server, "time set 12300");
-                GiantEntity g = giant(level, x, z, 160.0F, -1, false);
+                GiantEntity g = giant(level, x, z, 15.0F, -1, false);
                 g.setNoAi(true);
                 g.setCustomName(net.minecraft.network.chat.Component.literal("pose:walk:2"));
-                List<dev.star1mp.giantrefresh.entity.ai.ClimbGiantGoal> goals = new ArrayList<>();
-                double[][] at = {{-3, 4}, {3, 4.5}, {-1, 6}, {4.5, 2}, {-4.5, 1.5}};
-                for (double[] p : at) {
-                    LivingEntity s = spawn(EntityTypes.SPIDER, level, x + p[0], z + p[1], 0.0F);
-                    if (s instanceof net.minecraft.world.entity.monster.spider.Spider spider) {
-                        var goal = new dev.star1mp.giantrefresh.entity.ai.ClimbGiantGoal(spider);
-                        ((dev.star1mp.giantrefresh.mixin.MobAccessor) spider).giantrefresh$goalSelector().addGoal(0, goal);
-                        goals.add(goal);
+                double reach = g.getBbWidth() / 2.0 + 0.55;
+                double gy = g.getY();
+                // angle around the Giant (0 = the side facing the camera), height above its feet
+                double[][] on = {{-0.5, 2.2}, {0.35, 4.6}, {-0.15, 7.1}, {0.8, 9.0}, {-1.2, 5.6}};
+                double face = Math.toRadians(15.0);
+                for (double[] o : on) {
+                    double a = face + o[0];
+                    double sx = x + 0.5 - Math.sin(a) * reach;
+                    double sz = z + 0.5 + Math.cos(a) * reach;
+                    LivingEntity s = spawn(EntityTypes.SPIDER, level, sx, sz, 0.0F);
+                    if (s instanceof Mob m) {
+                        m.setNoAi(true);
+                        m.setNoGravity(true);
+                        float yaw = (float) Math.toDegrees(a) + 180.0F;
+                        m.snapTo(sx, gy + o[1], sz, yaw, -60.0F);
+                        m.yBodyRot = yaw;
+                        m.yHeadRot = yaw;
                     }
                 }
                 LivingEntity top = spawn(EntityTypes.SPIDER, level, x, z, 0.0F);
                 if (top != null) {
                     top.startRiding(g);
                 }
-                until = () -> {
-                    if (untilTicks == 5) {
-                        goals.forEach(goal -> goal.forceClimb(g));
-                    }
-                    if (untilTicks % 10 == 0) {
-                        StringBuilder b = new StringBuilder();
-                        for (Entity e : spawned) {
-                            if (e instanceof net.minecraft.world.entity.monster.spider.Spider) {
-                                b.append(String.format(" %.1f/%.1f", e.getY() - g.getY(), Math.sqrt(e.distanceToSqr(g.getX(), e.getY(), g.getZ()))));
-                            }
-                        }
-                        GiantRefresh.LOGGER.info("[SHOWCASE] spiders dy/dist:{}", b);
-                    }
-                    long up = spawned.stream().filter(e -> e instanceof net.minecraft.world.entity.monster.spider.Spider
-                            && e.getVehicle() == null && e.getY() - g.getY() > 4.0).count();
-                    return untilTicks > 140 || up >= 2;
-                };
-                camera = lookAt(level, x - 3.0, y + 3.0, z + 13.0, x, y + 7.5, z);
+                until = () -> untilTicks > 20;
+                camera = lookAt(level, x - 3.0, y + 2.0, z + 13.0, x, y + 6.5, z);
             }
             case "potions" -> {
                 // Growth and Shrinking: a brewing stand in front, a giant-sized and a tiny zombie behind
@@ -463,9 +459,6 @@ public final class GiantShowcase {
                 }
                 if (level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) != surface) {
                     score += 4; // tree
-                }
-                if (floor <= level.getSeaLevel() + 1) {
-                    score += 20; // too close to the water line
                 }
                 min = Math.min(min, floor);
                 max = Math.max(max, floor);
