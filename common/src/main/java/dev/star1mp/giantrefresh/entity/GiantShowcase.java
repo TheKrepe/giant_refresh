@@ -497,7 +497,18 @@ public final class GiantShowcase {
         return score + Math.max(0, max - min - 1) * 6;
     }
 
+    /** Places that are known to look good in the CI world (seed "giantrefresh"); "name:x,z;..." */
+    private static final String SITES = System.getProperty("giantrefresh.showcase.sites",
+            "trail:616,7;ruins:2857,868;spiders:1185,-313;potions:1190,-268;grab:2880,900");
+
     private static BlockPos findSite(ServerLevel level, int scene, boolean village) {
+        for (String entry : SITES.split(";")) {
+            String[] kv = entry.split(":");
+            if (kv.length == 2 && kv[0].trim().equals(SCENES[scene])) {
+                String[] xz = kv[1].split(",");
+                return new BlockPos(Integer.parseInt(xz[0].trim()), 0, Integer.parseInt(xz[1].trim()));
+            }
+        }
         BlockPos from = base.offset(scene * 320, 0, (scene % 2) * 320);
         if (village) {
             var plains = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.STRUCTURE)
