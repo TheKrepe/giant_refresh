@@ -14,6 +14,7 @@ public final class Shots {
             case "test" -> Test::new;
             case "scout" -> Scout::new;
             case "sites" -> Sites::new;
+            case "mech" -> Mech::new;
             default -> throw new IllegalArgumentException("unknown shot " + name);
         };
         return s.get();
@@ -83,7 +84,7 @@ public final class Shots {
 
     /** Looks down on candidate places for the big set, one after another. */
     static final class Sites extends Shot {
-        static final int[][] P = {{-116, -173}, {64, -400}, {1185, -313}, {2857, 868}, {-600, 300}, {300, 1200}, {-1500, -200}, {1500, 900}, {-200, 1600}, {900, -1300}};
+        static final int[][] P = {{-130, -190}, {-50, -190}, {-130, -110}, {-210, -190}, {-130, -270}, {-50, -110}};
 
         Sites() {
             siteX = 0;
@@ -95,13 +96,57 @@ public final class Shots {
         protected void build() {
             for (int i = 0; i < P.length; i++) {
                 int[] p = P[i];
+                level.getChunk(p[0] >> 4, p[1] >> 4);
                 int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, p[0], p[1]);
                 var biome = level.getBiome(new net.minecraft.core.BlockPos(p[0], y, p[1])).unwrapKey().map(k -> k.identifier().getPath()).orElse("?");
                 dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CINEMA] site {} = {} {} y {} {}", i, p[0], p[1], y, biome);
-                net.minecraft.world.phys.Vec3 at = new net.minecraft.world.phys.Vec3(p[0] + 0.5, y + 140, p[1] + 0.5);
+                net.minecraft.world.phys.Vec3 at = new net.minecraft.world.phys.Vec3(p[0] + 0.5, y + 110, p[1] + 0.5);
                 cam.at(i * 2.0, at, 0.0F, 89.9F).fov(90).linear();
                 cam.at(i * 2.0 + 1.99, at, 0.0F, 89.9F).fov(90).linear();
             }
+        }
+    }
+
+    /** Mechanics test: drinking and growing, flinging, sleeping/waking, grab and throw, death fall, golem swing. */
+    static final class Mech extends Shot {
+        Mech() {
+            siteX = -130;
+            siteZ = -190;
+            duration = 9.0;
+            dayTime = 5000;
+        }
+
+        @Override
+        protected void build() {
+            int y = origin.getY();
+            Sets.flatten(level, origin.getX() - 30, origin.getZ() - 30, origin.getX() + 30, origin.getZ() + 30, y, 25);
+            Actor steve = person("steve", g(-4, -6), 180);
+            steve.e.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, net.minecraft.world.item.alchemy.PotionContents.createItemStack(
+                    net.minecraft.world.item.Items.POTION, net.minecraft.core.registries.BuiltInRegistries.POTION.wrapAsHolder(GRContent.GROWTH_POTION.get())));
+            Actor alex = person("alex", g(4, -6), 180);
+            Actor sleeper = giant(g(-12, 6), 180, 3, false);
+            giantOf(sleeper).setGiantSleeping(true);
+            Actor grabber = giant(g(2, 8), 180, 9, false);
+            Actor victim = person("steve", g(2, 5), 0);
+            Actor dier = giant(g(14, 6), 180, -1, false);
+            Actor golem = spawn(EntityTypes.IRON_GOLEM, g(10, -2), 0);
+            on(0.5, () -> steve.living().startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND));
+            on(2.5, () -> steve.living().addEffect(new net.minecraft.world.effect.MobEffectInstance(GRContent.growthHolder(), -1, 0, false, false)));
+            on(1.0, () -> giantOf(grabber).startAttack(GiantEntity.ATTACK_GRAB));
+            during(1.0, 2.6, t -> {
+                GiantEntity g = giantOf(grabber);
+                if (g.getHeld() == null && g.getAttackTicks() > dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_CATCH) {
+                    g.showcaseGrab(victim.living(), GiantEntity.ATTACK_GRAB, g.getAttackTicks());
+                }
+            });
+            on(2.0, () -> giantOf(sleeper).wakeUp(level, null));
+            on(2.0, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
+            on(4.0, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
+            on(3.0, () -> alex.e.setDeltaMovement(0.7, 0.9, 0.2));
+            on(5.0, () -> roar(this, sleeper));
+            on(5.5, () -> giantOf(dier).kill(level));
+            cam.at(0, o(0, 9, -30), o(0, 5, 2)).fov(70);
+            cam.at(9, o(0, 9, -28), o(0, 5, 2)).fov(70);
         }
     }
 }
