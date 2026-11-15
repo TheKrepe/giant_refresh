@@ -96,7 +96,10 @@ public final class Actor {
             mobTick(mob);
         }
         if (!e.isPassenger()) {
-            level.getChunkSource().broadcast(e, ClientboundEntityPositionSyncPacket.of(e));
+            ClientboundEntityPositionSyncPacket pk = ClientboundEntityPositionSyncPacket.of(e);
+            for (net.minecraft.server.level.ServerPlayer p : level.players()) {
+                p.connection.send(pk);
+            }
         }
     }
 

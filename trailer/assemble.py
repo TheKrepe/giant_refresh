@@ -87,35 +87,177 @@ def card_frames(kind, dur, folder):
             im = Image.blend(Image.new('RGBA', (W, H), (0, 0, 0, 255)), im, max(0, fade))
             im.convert('RGB').save(os.path.join(folder, f'{i:05d}.png'))
     else:
-        bg = ImageEnhance.Brightness(still('s01_dawn', 6.0).filter(ImageFilter.GaussianBlur(W / 120))).enhance(0.32)
-        icon = Image.open(os.path.join(HERE, 'star_1mp_icon.png')).convert('RGBA')
-        isz = int(H * 0.30)
-        icon = icon.resize((isz, isz), Image.NEAREST)
-        cx = aw // 2
-        lay = text_layer(aw, ah, [
-            ('GIANT', cx + 34, 30, 3, GREEN), ('REFRESH', cx + 34, 56, 2, CYAN),
-            ('AVAILABLE NOW ON', cx + 34, 84, 1, WHITE),
-            ('MODRINTH', cx + 34, 98, 2, GOLD),
-            ('CURSEFORGE', cx + 34, 118, 2, GOLD),
-            ('FABRIC & NEOFORGE', cx + 34, 142, 1, GREY),
-            ('MINECRAFT 1.21.6 – 26.3', cx + 34, 154, 1, GREY),
-            ('BY STAR_1MP', int((W / 2 - W * 0.36 + isz / 2) / px), int((H * 0.30 + isz) / px) + 6, 1, WHITE),
-        ])
-        L = Image.fromarray(lay, 'RGBA').resize((W, H), Image.NEAREST)
-        for i in range(n):
-            t = i / FPS
-            im = bg.copy().convert('RGBA')
-            im.alpha_composite(L)
-            ix = int(W / 2 - W * 0.36)
-            iy = int(H * 0.30)
-            im.alpha_composite(icon, (ix, iy))
-            a = min(1.0, t / 0.6, (dur - t) / 1.2)
-            im = Image.blend(Image.new('RGBA', (W, H), (0, 0, 0, 255)), im, max(0.0, a))
-            im.convert('RGB').save(os.path.join(folder, f'{i:05d}.png'))
+        endcard_frames(dur, folder)
     seg = os.path.join(WORK, f'seg_{kind}.mp4')
     run('ffmpeg', '-y', '-loglevel', 'error', '-framerate', str(FPS), '-i', os.path.join(folder, '%05d.png'),
         '-c:v', 'libx264', '-crf', '16', '-pix_fmt', 'yuv420p', seg)
     return seg
+
+
+# ===================================================================== end card
+ASSETS = os.path.join(HERE, '..', 'common', 'src', 'main', 'resources', 'assets', 'giant_refresh', 'textures')
+
+
+def tex(rel):
+    return Image.open(os.path.join(ASSETS, rel)).convert('RGBA')
+
+
+def iso_block(top, left, right, size=16):
+    """An inventory-style isometric cube (like a block in a hotbar) from three 16x16 faces."""
+    S = 64
+    import numpy as _np
+    out = _np.zeros((S, S, 4), _np.uint8)
+    T, L, R = [_np.asarray(x.resize((16, 16), Image.NEAREST)) for x in (top, left, right)]
+    cx = S / 2
+    for y in range(S):
+        for x in range(S):
+            px, py = x + 0.5, y + 0.5
+            # top face: rhombus (cx,0) (S,S/4) (cx,S/2) (0,S/4)
+            tu = ((px - cx) / (S / 2) + (py) / (S / 4)) / 2
+            tv = ((py) / (S / 4) - (px - cx) / (S / 2)) / 2
+            if 0 <= tu < 1 and 0 <= tv < 1 and py < S / 2:
+                out[y, x] = T[int(tv * 16), int(tu * 16)]
+                continue
+            if px < cx:
+                fx = (px) / cx
+                fy = (py - S / 4 - (fx) * S / 4) / (S / 2)
+                if 0 <= fx < 1 and 0 <= fy < 1:
+                    c = L[int(fy * 16), int(fx * 16)].astype(float)
+                    c[:3] *= 0.8
+                    out[y, x] = c.astype(_np.uint8)
+            else:
+                fx = (px - cx) / cx
+                fy = (py - S / 2 + fx * S / 4) / (S / 2)
+                if 0 <= fx < 1 and 0 <= fy < 1:
+                    c = R[int(fy * 16), int(fx * 16)].astype(float)
+                    c[:3] *= 0.62
+                    out[y, x] = c.astype(_np.uint8)
+    return Image.fromarray(out, 'RGBA').resize((size, size), Image.NEAREST)
+
+
+def ease_out(u):
+    u = min(1.0, max(0.0, u))
+    return 1 - (1 - u) ** 3
+
+
+def button(w, h, fill, edge, label, tpal):
+    """A chunky pixel button (art pixels): bevel, darker base edge, label."""
+    lay = np.zeros((h, w, 4), np.uint8)
+    lay[1:h - 1, :] = fill + (255,)
+    lay[:, 1:w - 1] = fill + (255,)
+    lay[h - 3:h - 1, 1:w - 1] = edge + (255,)
+    lay[h - 1, 2:w - 2] = edge + (255,)
+    hi = tuple(min(255, c + 60) for c in fill)
+    lay[1, 2:w - 2] = hi + (255,)
+    lay[0, 0] = lay[0, w - 1] = lay[h - 1, 0] = lay[h - 1, w - 1] = (0, 0, 0, 0)
+    tw = F.width(label, 2)
+    F.stamp(lay, label, (w - tw) // 2, (h - 3 - 14) // 2, 2, tpal[0], tpal[1], tpal[2], shadow=None, hi=False)
+    return lay
+
+
+def slot(icon):
+    """A vanilla inventory slot (22 art px) with an icon in it."""
+    lay = np.zeros((22, 22, 4), np.uint8)
+    lay[:, :] = hx('8b8b8b') + (235,)
+    lay[0, :] = lay[:, 0] = hx('373737') + (255,)
+    lay[21, :] = lay[:, 21] = hx('ffffff') + (255,)
+    lay[0, 21] = lay[21, 0] = hx('8b8b8b') + (255,)
+    im = Image.fromarray(lay, 'RGBA')
+    ic = icon if icon.size == (16, 16) else icon.resize((16, 16), Image.NEAREST)
+    im.alpha_composite(ic, (3, 3))
+    return np.asarray(im)
+
+
+def endcard_frames(dur, folder):
+    px = W // 480
+    aw, ah = W // px, H // px
+    n = int(round(dur * FPS))
+    # background: the living hero shot, graded like the film
+    bgdir = os.path.join(WORK, 'endbg')
+    os.makedirs(bgdir, exist_ok=True)
+    src = os.path.join(SHOTS, 's23_hero.mp4')
+    bgs = []
+    if os.path.exists(src):
+        for f in glob.glob(os.path.join(bgdir, '*.png')):
+            os.remove(f)
+        run('ffmpeg', '-y', '-loglevel', 'error', '-ss', '0.4', '-i', src, '-t', f'{dur:.3f}', '-vf',
+            f"scale={W}:{H}:flags=lanczos,{GRADE}", '-r', str(FPS), os.path.join(bgdir, '%05d.png'))
+        bgs = sorted(glob.glob(os.path.join(bgdir, '*.png')))
+    fallback = ImageEnhance.Brightness(still('s01_dawn', 6.0).filter(ImageFilter.GaussianBlur(W / 120))).enhance(0.5)
+    # darkness behind the text column
+    xs = np.linspace(0, 1, W)[None, :]
+    ys = np.linspace(0, 1, H)[:, None]
+    shade = np.clip(0.86 - xs * 1.25, 0, 1) * 0.92 + np.clip((ys - 0.72) * 1.6, 0, 1) * 0.35
+    shade = np.clip(shade, 0, 0.9)
+    dark = Image.fromarray(np.dstack([np.zeros((H, W, 3), np.uint8), (shade * 255).astype(np.uint8)]), 'RGBA')
+
+    x0 = 28
+    MOD = (hx('1bd96a'), hx('0d7a3c'))
+    CF = (hx('f16436'), hx('9c3416'))
+    els = []  # (art layer, art x, art y, appear time)
+
+    def text_el(s_, sc, pal, y, t0, gap=1, x=x0):
+        w_ = F.width(s_, sc, gap) + 6
+        lay = np.zeros((7 * sc + 6, w_, 4), np.uint8)
+        F.stamp(lay, s_, 2, 2, sc, pal[0], pal[1], pal[2], shadow=pal[3], gap=gap)
+        els.append((lay, x - 2, y - 2, t0))
+
+    text_el('GIANT', 5, GREEN, 26, 0.35)
+    text_el('REFRESH', 4, CYAN, 66, 0.47)
+    bar = np.zeros((3, 64, 4), np.uint8)
+    bar[:, :] = hx('e9b115') + (255,)
+    bar[0, :] = hx('fff489') + (255,)
+    els.append((bar, x0, 101, 0.62))
+    text_el('AVAILABLE NOW', 1, WHITE, 111, 0.74, gap=2)
+    els.append((button(112, 24, MOD[0], MOD[1], 'MODRINTH', (hx('ffffff'), hx('e9fff2'), hx('0b3d20'))), x0, 123, 0.88))
+    els.append((button(136, 24, CF[0], CF[1], 'CURSEFORGE', (hx('ffffff'), hx('fff0ea'), hx('5a1c08'))), x0 + 120, 123, 0.98))
+    icons = [tex('item/giant_spawn_egg.png'), tex('item/giant_tooth.png'), tex('mob_effect/growth.png'), tex('mob_effect/shrinking.png'),
+             iso_block(tex('block/giant_head_top.png'), tex('block/giant_head_front.png'), tex('block/giant_head_right.png'))]
+    for i, ic in enumerate(icons):
+        els.append((slot(ic), x0 + i * 24, 160, 1.15 + i * 0.07))
+    text_el('FABRIC & NEOFORGE', 1, GREY, 192, 1.55)
+    text_el('MINECRAFT 1.21.6 – 26.3', 1, GREY, 203, 1.62)
+    icon = Image.open(os.path.join(HERE, 'star_1mp_icon.png')).convert('RGBA').resize((34, 34), Image.NEAREST)
+    els.append((np.asarray(icon), x0, 224, 1.85))
+    text_el('MADE BY', 1, GREY, 229, 1.95, x=x0 + 42)
+    text_el('STAR_1MP', 2, WHITE, 240, 2.02, x=x0 + 42)
+
+    big = [(Image.fromarray(np.ascontiguousarray(l), 'RGBA').resize((l.shape[1] * px, l.shape[0] * px), Image.NEAREST), x * px, y * px, t0)
+           for l, x, y, t0 in els]
+    btn = [(i, b) for i, b in enumerate(big) if els[i][0].shape[:2] in ((24, 112), (24, 136))]
+    for i in range(n):
+        t = i / FPS
+        if bgs:
+            im = Image.open(bgs[min(i, len(bgs) - 1)]).convert('RGBA')
+        else:
+            im = fallback.convert('RGBA')
+        im.alpha_composite(dark)
+        for k, (L, x, y, t0) in enumerate(big):
+            u = ease_out((t - t0) / 0.55)
+            if u <= 0:
+                continue
+            L2 = L
+            if u < 1:
+                a = np.asarray(L).copy()
+                a[..., 3] = (a[..., 3] * u).astype(np.uint8)
+                L2 = Image.fromarray(a, 'RGBA')
+            im.alpha_composite(L2, (int(x - (1 - u) * 14 * px), y))
+        # a light sweep across the two buttons now and then
+        for ts in (2.4, 5.4):
+            if ts <= t < ts + 0.7:
+                for k, (L, x, y, t0) in btn:
+                    a = np.asarray(L)
+                    hgt, wid = a.shape[:2]
+                    pos = (t - ts) / 0.7 * (wid + hgt) - hgt
+                    yy, xx = np.mgrid[0:hgt, 0:wid]
+                    band = np.clip(1 - np.abs(xx + yy * 0.6 - pos) / (6 * px), 0, 1) * (a[..., 3] > 0)
+                    glow = np.zeros_like(a)
+                    glow[..., :3] = 255
+                    glow[..., 3] = (band * 90).astype(np.uint8)
+                    im.alpha_composite(Image.fromarray(glow, 'RGBA'), (x, y))
+        fade = min(1.0, t / 0.5, (dur - t) / 1.3)
+        im = Image.blend(Image.new('RGBA', (W, H), (0, 0, 0, 255)), im, max(0.0, fade))
+        im.convert('RGB').save(os.path.join(folder, f'{i:05d}.png'))
 
 
 # ===================================================================== picture
