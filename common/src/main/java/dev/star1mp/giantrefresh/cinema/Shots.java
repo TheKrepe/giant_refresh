@@ -12,6 +12,7 @@ public final class Shots {
     public static Shot create(String name) {
         Supplier<Shot> s = switch (name) {
             case "test" -> Test::new;
+            case "scout" -> Scout::new;
             default -> throw new IllegalArgumentException("unknown shot " + name);
         };
         return s.get();
@@ -48,6 +49,34 @@ public final class Shots {
             cam.at(3, o(2, 1.2, -6), track(steve, 1.5)).fov(60);
             cam.at(5, o(4, 2.0, -7), track(giant, 8)).fov(55);
             cam.at(8, o(5, 3.0, -9), track(giant, 8)).fov(50);
+        }
+    }
+
+    /** Places the village templates in a row and looks at them from above (layout study). */
+    static final class Scout extends Shot {
+        static final String[] T = {"plains_small_house_1", "plains_small_house_3", "plains_small_house_5", "plains_small_house_7",
+                "plains_medium_house_1", "plains_medium_house_2", "plains_big_house_1", "plains_small_farm_1", "plains_large_farm_1",
+                "plains_butcher_shop_1", "plains_library_1", "plains_animal_pen_1"};
+
+        Scout() {
+            siteX = 616;
+            siteZ = 7;
+            duration = 0.5;
+        }
+
+        @Override
+        protected void build() {
+            int y = origin.getY();
+            Sets.flatten(level, origin.getX() - 70, origin.getZ() - 40, origin.getX() + 70, origin.getZ() + 40, y, 30);
+            for (int i = 0; i < T.length; i++) {
+                int col = i % 6;
+                int row = i / 6;
+                Sets.template(level, "minecraft:village/plains/houses/" + T[i],
+                        b(-66 + col * 22, 0, -30 + row * 30), net.minecraft.world.level.block.Rotation.NONE);
+            }
+            Sets.template(level, "minecraft:village/plains/town_centers/plains_fountain_01", b(-10, 0, 20), net.minecraft.world.level.block.Rotation.NONE);
+            Sets.template(level, "minecraft:village/plains/town_centers/plains_meeting_point_1", b(20, 0, 20), net.minecraft.world.level.block.Rotation.NONE);
+            cam.at(0, o(0, 95, 5), 0.0F, 89.9F).fov(80);
         }
     }
 }
