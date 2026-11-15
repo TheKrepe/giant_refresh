@@ -20,7 +20,7 @@ public final class Actor {
     private boolean run;
 
     /** Moved by the script itself (villagers: their brain would walk them off set). */
-    private final boolean kinematic;
+    private boolean kinematic;
 
     Actor(Entity e) {
         this.e = e;
@@ -39,7 +39,7 @@ public final class Actor {
 
     /** Walk (Mobs: with their own move control; mannequins: forward input) to a point. */
     public Actor walkTo(Vec3 p, double speed) { mark = p; this.speed = speed; return this; }
-    public Actor stop() { mark = null; back = 0; if (e instanceof LivingEntity l) l.zza = 0; return this; }
+    public Actor stop() { mark = null; back = 0; if (e instanceof LivingEntity l) l.zza = 0; if (!(e instanceof Mob)) kinematic = false; return this; }
     public Actor lookAt(Vec3 p) { look = () -> p; return this; }
     public Actor lookAt(Entity other, double dy) { look = () -> other.position().add(0, dy, 0); return this; }
     public Actor lookAt(Supplier<Vec3> p) { look = p; return this; }
@@ -50,6 +50,8 @@ public final class Actor {
         e.setPose(on ? Pose.CROUCHING : Pose.STANDING);
         return this;
     }
+    /** Move along the ground by script (reliable paths for mannequins; no physics until stop()). */
+    public Actor rail() { kinematic = true; return this; }
     public boolean arrived() { return mark == null; }
     private float back;
     /** Step backwards (mannequins) while keeping the current facing. */
@@ -65,6 +67,9 @@ public final class Actor {
             if (dist < 0.35) {
                 stop();
             } else if (kinematic && e instanceof LivingEntity l) {
+                if (!(e instanceof Mob)) {
+                    l.setSprinting(run);
+                }
                 double step = Math.min(dist, speed * 4.3 / 20.0);
                 double nx = e.getX() + d.x / dist * step;
                 double nz = e.getZ() + d.z / dist * step;

@@ -197,8 +197,8 @@ public final class Trailer {
             }
             villager("farmer", at(-14, -13), 40).lookAt(c0);
             Vec3 far = at(-20, 8, -110);
-            thump(1.1, far, 1.2, c0.add(0, 0.1, 0), 10);
-            thump(2.6, far, 1.8, c0.add(0, 0.1, 0), 18);
+            thump(1.1, far, 1.2, c0.add(0.5, 0.1, -2.5), 3);
+            thump(2.6, far, 1.8, c0.add(0.5, 0.1, -2.5), 5);
             on(2.6, () -> {
                 for (int i = 0; i < hens.size(); i++) {
                     hens.get(i).e.setDeltaMovement((i - 1.5) * 0.12, 0.42, -0.05 * i);
@@ -219,15 +219,16 @@ public final class Trailer {
             Vec3 f = at(-14, -13);
             Actor farmer = villager("farmer", f, 180);
             farmer.lookAt(f.add(0, 0.2, -3));
-            Actor g = hero(at(-44, -100), -90, true);
+            Actor g = hero(at(-46, -78), -90, true);
             on(1.0, () -> farmer.lookAt(g.e, 10));
-            on(0.0, () -> g.walkTo(at(-4, -100), 1.0));
-            Vec3 far = at(-20, 8, -110);
+            on(0.0, () -> g.walkTo(at(-6, -78), 0.8));
+            Vec3 far = at(-30, 8, -78);
             thump(0.7, far, 1.0, null, 0);
-            thump(3.2, far, 2.6, f.add(1, 0.1, 1), 14);
-            cam.at(0, f.add(1.1, 1.95, 2.6), f.add(0, 1.6, -8)).fov(50);
-            cam.at(2.2, f.add(1.1, 2.0, 2.5), track(g, 8)).fov(44);
-            cam.at(5.0, f.add(1.0, 2.05, 2.4), track(g, 9)).fov(34);
+            thump(3.2, far, 2.6, f.add(1, 0.1, 1), 4);
+            DoubleFunction<Vec3> gp = track(g, 7);
+            cam.at(0, f.add(1.7, 2.1, 2.5), f.add(-1.5, 2.2, -10)).fov(50);
+            cam.at(2.0, f.add(1.7, 2.15, 2.45), gp).fov(46);
+            cam.at(5.0, f.add(1.6, 2.2, 2.4), gp).fov(32);
         }
     }
 
@@ -258,14 +259,12 @@ public final class Trailer {
         void scene() {
             double[] a = w.prints.get(3);
             double[] b = w.prints.get(8);
-            Actor steve = steve(at(a[0] + 0.8, a[1] + 2), 180);
-            on(0.0, () -> steve.walkTo(at(b[0], b[1]), 0.42));
-            DoubleFunction<Vec3> s = track(steve, 0);
-            double gy = at(a[0], a[1] - 3).y;
-            DoubleFunction<Vec3> camPos = t -> { Vec3 p = s.apply(t); return new Vec3(p.x + 1.5, gy + 2.4, p.z + 4.6); };
-            DoubleFunction<Vec3> camLook = t -> { Vec3 p = s.apply(t); return new Vec3(p.x - 0.2, gy + 0.9, p.z - 6); };
-            cam.follow(0, camPos, camLook).fov(60);
-            cam.follow(5.5, camPos, camLook).fov(60);
+            Actor steve = steve(at(a[0] + 0.8, a[1] + 2), 180).rail();
+            on(0.0, () -> steve.walkTo(at(b[0] + 0.6, b[1]), 0.45));
+            DoubleFunction<Vec3> s = plus(track(steve, 0), 0, 1.1, -2.5);
+            w.clearPlants((int) a[0] - 4, (int) b[1] - 2, (int) a[0] + 6, (int) a[1] + 10);
+            cam.at(0, at(a[0] + 2.4, 2.4, a[1] + 7.5), s).fov(58);
+            cam.at(5.5, at(a[0] + 2.0, 2.6, a[1] - 3.0), s).fov(56);
         }
     }
 
@@ -432,7 +431,7 @@ public final class Trailer {
             giant = hero(camp(0, 9), 0, true);
             w.clearPlants(World.CAMP_X - 4, World.CAMP_Z + 10, World.CAMP_X + 5, World.CAMP_Z + 40);
             Actor steve = steve(camp(0.5, 15), 0);
-            steve.sprint(true).walkTo(camp(1.0, 36), 1.0);
+            steve.rail().sprint(true).walkTo(camp(1.0, 36), 1.3);
             on(0.2, () -> giantOf(giant).startAttack(GiantEntity.ATTACK_STOMP));
             double impact = 0.2 + 26 / 20.0;
             jolt(impact, 3.0);
@@ -551,7 +550,8 @@ public final class Trailer {
                 BlockPos door = doors.get(i);
                 Vec3 d = new Vec3(door.getX() + 0.5, door.getY(), door.getZ() + 0.5);
                 Vec3 toF = fountain.subtract(d).multiply(1, 0, 1).normalize();
-                Vec3 st = at(d.x - w.c.getX() - 0.5 + toF.x * 5.5, d.z - w.c.getZ() - 0.5 + toF.z * 5.5);
+                Vec3 fd = d.subtract(fountain).multiply(1, 0, 1).normalize();
+                Vec3 st = at(fd.x * 4.5 + (i - 1) * 0.8, fd.z * 4.5 + 1.0);
                 if (firstDoor == null) {
                     firstDoor = d;
                 }
@@ -559,16 +559,19 @@ public final class Trailer {
                 v.lookAt(g.e, 9);
                 double delay = 0.3 + i * 0.35;
                 on(delay - 0.2, () -> door(door, true));
-                on(delay, () -> v.walkTo(d, 1.25));
-                on(delay + 1.35, () -> {
-                    v.e.discard();
-                    door(door, false);
+                on(delay, () -> v.walkTo(d, 1.4));
+                final boolean[] gone = {false};
+                during(delay + 0.3, 4.0, t -> {
+                    if (!gone[0] && (v.arrived() || v.e.position().distanceToSqr(d) < 1.0)) {
+                        gone[0] = true;
+                        v.e.discard();
+                        door(door, false);
+                    }
                 });
             }
-            Vec3 aim = firstDoor == null ? at(0, 2, -6) : firstDoor.add(0, 1.2, 0);
-            Vec3 mid = fountain.add(aim.subtract(fountain).scale(0.5));
-            cam.at(0, at(1.5, 2.6, 7.5), mid.add(0, 1, 0)).fov(64);
-            cam.at(4, at(1.0, 2.4, 6.8), mid.add(0, 1.4, 0)).fov(62);
+            dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CINEMA] s17 doors " + doors.subList(0, Math.min(5, doors.size())) + " fountain " + fountain);
+            cam.at(0, at(-2.5, 3.4, 10.5), fountain.add(0, 0.8, -1)).fov(70);
+            cam.at(4, at(-2.0, 3.0, 9.8), fountain.add(0, 1.0, -1)).fov(68);
         }
 
         BlockPos nearestDoor(Vec3 from) {
@@ -628,12 +631,12 @@ public final class Trailer {
                 steve.living().removeEffect(GRContent.growthHolder());
                 steve.living().addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), -1, 0, false, false));
             });
-            on(3.6, () -> steve.sprint(true).walkTo(at(0.2, -50), 1.0));
+            on(3.6, () -> steve.rail().sprint(true).walkTo(at(3.4, -50), 1.4));
             on(3.7, () -> giantOf(g).startAttack(GiantEntity.ATTACK_STOMP));
             jolt(3.7 + 1.3, 2.2);
-            cam.at(0, at(1.5, 1.6, -45), track(steve, 2.5)).fov(66);
-            cam.at(3.5, at(1.4, 0.9, -45.5), track(steve, 0.6)).fov(66);
-            cam.at(6.5, at(1.2, 0.5, -47), track(steve, 0.4)).fov(66);
+            cam.at(0, at(7.5, 2.4, -31.5), plus(track(steve, 0), -1.5, 2.6, -2)).fov(62);
+            cam.at(3.3, at(7.0, 1.4, -32.5), plus(track(steve, 0), -1.2, 1.0, -2)).fov(62);
+            cam.at(6.5, at(7.5, 1.0, -44), plus(track(steve, 0), 0, 0.5, 0)).fov(64);
         }
     }
 
@@ -653,7 +656,17 @@ public final class Trailer {
             steve.lookAt(g.e, 3);
             on(0.3, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
             on(0.4, () -> steve.living().swing(InteractionHand.MAIN_HAND, true));
-            on(0.5, () -> giantOf(g).kill(level));
+            on(0.5, () -> {
+                int k = 0;
+                for (Entity r : riders(g)) {
+                    r.stopRiding();
+                    Vec3 p = at(3.5 + k * 1.5, -46.5 - k);
+                    r.setPos(p.x, p.y, p.z);
+                    r.setDeltaMovement(Vec3.ZERO);
+                    k++;
+                }
+                giantOf(g).kill(level);
+            });
             on(0.5 + 26 / 20.0, () -> dust(g.e.position().add(4, 0.2, 0), 60, 4.0));
             jolt(0.5 + 26 / 20.0, 3.2);
             cam.at(0, at(-9, 1.4, -33), at(0, 6, -42)).fov(62);
