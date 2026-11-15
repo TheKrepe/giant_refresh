@@ -1,1 +1,2 @@
-{"t":1.9071,"event":"minecraft:entity.chicken.ambient","file":"minecraft:mob/chicken/say2","src":"neutral","vol":0.800,"pitch":1.111,"x":-138.63,"y":68.00,"z":-199.50,"att":"LINEAR","rel":false,"dist":16,"cx":-146.58,"cy":69.39,"cz":-199.95}
+{"t":2.0812,"event":"minecraft:entity.chicken.ambient","file":"minecraft:mob/chicken/say2","src":"neutral","vol":0.800,"pitch":1.047,"x":-139.50,"y":68.00,"z":-198.75,"att":"LINEAR","rel":false,"dist":16,"cx":-146.51,"cy":69.39,"cz":-200.00}
+{"t":2.8302,"event":"minecraft:entity.villager.ambient","file":"minecraft:mob/villager/idle2","src":"neutral","vol":1.000,"pitch":0.890,"x":-143.50,"y":68.00,"z":-202.50,"att":"LINEAR","rel":false,"dist":16,"cx":-146.24,"cy":69.42,"cz":-200.21}
