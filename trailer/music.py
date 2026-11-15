@@ -302,7 +302,8 @@ def compose(c, out):
             s.note(HARP, t + k * 0.2, 1.0, p + 12, 45)
         t += 2.0
         i += 1
-    t = ec + 0.6
+    # the horn theme of the title carries over the first seconds of the end card; the flute answers after it
+    t = max(ec + 0.6, ti + 5.2)
     for name, d in mel[:6]:
         if t + d > fin:
             break

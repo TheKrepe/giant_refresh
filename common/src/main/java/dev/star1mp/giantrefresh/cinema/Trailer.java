@@ -499,32 +499,43 @@ public final class Trailer {
         }
     }
 
-    /** The Giant reaches down and snatches Steve. */
+    /** The Giant reaches down and snatches Steve: he stumbles back right under the closing fist. */
     static final class S15 extends T {
-        S15() { super(3.4, 12340); }
+        S15() { super(2.6, 12340); }
 
         @Override
         void scene() {
-            Actor g = hero(at(0, -52), 0, true);
-            Actor steve = steve(at(0.3, -48.5), 0);
-            steve.sprint(true).walkTo(at(1, -30), 1.0);
-            on(0.0, () -> g.walkTo(at(0.3, -44), 1.0));
-            on(0.5, () -> {
-                g.stop();
-                giantOf(g).setTarget(steve.living());
-                giantOf(g).startAttack(GiantEntity.ATTACK_GRAB);
+            Actor g = hero(at(0, -50), 0, true);
+            GiantEntity gi = giantOf(g);
+            double startAt = 0.4;
+            double catchAt = startAt + GiantPose.GRAB_CATCH / 20.0;
+            Vec3 hand = gi.cinemaHandAt(GiantEntity.ATTACK_GRAB, GiantPose.GRAB_CATCH);
+            Vec3 under = at(hand.x - w.c.getX() - 0.5, hand.z - w.c.getZ() - 0.5);
+            dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CINEMA] s15 fist at catch {} ground {}", hand, under.y);
+            Actor steve = steve(under.add(0, 0, -1.4), 180);
+            steve.lookAt(g.e, 10);
+            on(0.15, () -> steve.backUp(0.36f));
+            on(startAt, () -> {
+                gi.setTarget(steve.living());
+                gi.startAttack(GiantEntity.ATTACK_GRAB);
             });
-            during(0.5, 3.4, t -> {
-                GiantEntity gi = giantOf(g);
-                if (gi.getHeld() == null && gi.getAttackTicks() > GiantPose.GRAB_CATCH) {
+            // the last moment: he flinches upward into the fist, so the catch carries on as one motion
+            double dh = hand.y - (under.y + 0.9);
+            on(catchAt - 0.2, () -> {
+                steve.stop();
+                Vec3 to = hand.subtract(steve.e.position());
+                double vy = dh > 0.2 ? Math.sqrt(2 * 0.08 * dh) + 0.05 : 0.1;
+                steve.e.setDeltaMovement(to.x * 0.12, vy, to.z * 0.12);
+            });
+            during(catchAt + 0.1, 2.6, t -> {
+                if (gi.getHeld() == null && steve.e.getVehicle() == null) {
                     gi.showcaseGrab(steve.living(), GiantEntity.ATTACK_GRAB, gi.getAttackTicks());
-                    steve.stop();
                 }
             });
             DoubleFunction<Vec3> sp = plus(track(steve, 0), 0, 1.0, 0);
-            cam.at(0, at(5.0, 1.2, -40.5), sp).fov(56);
-            cam.at(1.4, at(5.2, 1.1, -41.0), sp).fov(58);
-            cam.at(3.4, at(6.0, 0.9, -42.0), sp).fov(64);
+            cam.at(0, under.add(5.2, 1.2, 3.0), sp).fov(54);
+            cam.at(1.2, under.add(5.0, 1.15, 2.6), sp).fov(56);
+            cam.at(2.6, under.add(5.4, 1.0, 2.4), sp).fov(62);
         }
     }
 
@@ -670,10 +681,8 @@ public final class Trailer {
             Actor g = hero(at(0, -42), 0, false);
             Actor golem = spawn(EntityTypes.IRON_GOLEM, at(-5.0, -37.8), 200);
             golem.lookAt(g.e, 5);
-            Actor steve = steve(at(-2.2, -36.6), 190);
-            steve.lookAt(g.e, 4);
+
             on(0.15, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
-            on(0.2, () -> steve.living().swing(InteractionHand.MAIN_HAND, true));
             on(0.35, () -> {
                 giantOf(g).kill(level);
             });

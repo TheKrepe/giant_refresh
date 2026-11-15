@@ -343,10 +343,11 @@ public final class World {
         for (int dz = 2; dz <= 4; dz++) {
             for (int dy = FLOOR + 1; dy <= FLOOR + 2; dy++) {
                 level.setBlock(new BlockPos(bx + 6, y + dy, bz + dz), Blocks.GLASS_PANE.defaultBlockState()
-                        .setValue(net.minecraft.world.level.block.IronBarsBlock.NORTH, dz > 2).setValue(net.minecraft.world.level.block.IronBarsBlock.SOUTH, dz < 4), 2);
+                        .setValue(net.minecraft.world.level.block.IronBarsBlock.NORTH, true).setValue(net.minecraft.world.level.block.IronBarsBlock.SOUTH, true), 2);
             }
         }
-        level.setBlock(new BlockPos(bx + 3, y + FLOOR + 1, bz), Blocks.GLASS_PANE.defaultBlockState(), 2);
+        level.setBlock(new BlockPos(bx + 3, y + FLOOR + 1, bz), Blocks.GLASS_PANE.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.IronBarsBlock.EAST, true).setValue(net.minecraft.world.level.block.IronBarsBlock.WEST, true), 2);
         // ladder up
         for (int dy = 0; dy < FLOOR; dy++) {
             level.setBlock(new BlockPos(bx + 1, y + dy, bz + 5), Blocks.LADDER.defaultBlockState().setValue(net.minecraft.world.level.block.LadderBlock.FACING, Direction.NORTH), 2);

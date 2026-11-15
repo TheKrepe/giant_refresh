@@ -211,12 +211,8 @@ def endcard_frames(dur, folder):
     text_el('AVAILABLE NOW', 1, WHITE, 111, 0.74, gap=2)
     els.append((button(112, 24, MOD[0], MOD[1], 'MODRINTH', (hx('ffffff'), hx('e9fff2'), hx('0b3d20'))), x0, 123, 0.88))
     els.append((button(136, 24, CF[0], CF[1], 'CURSEFORGE', (hx('ffffff'), hx('fff0ea'), hx('5a1c08'))), x0 + 120, 123, 0.98))
-    icons = [tex('item/giant_spawn_egg.png'), tex('item/giant_tooth.png'), tex('mob_effect/growth.png'), tex('mob_effect/shrinking.png'),
-             iso_block(tex('block/giant_head_top.png'), tex('block/giant_head_front.png'), tex('block/giant_head_right.png'))]
-    for i, ic in enumerate(icons):
-        els.append((slot(ic), x0 + i * 24, 160, 1.15 + i * 0.07))
-    text_el('FABRIC & NEOFORGE', 1, GREY, 192, 1.55)
-    text_el('MINECRAFT 1.21.6 – 26.3', 1, GREY, 203, 1.62)
+    text_el('FABRIC & NEOFORGE', 1, GREY, 162, 1.2)
+    text_el('MINECRAFT 1.21.6 – 26.3', 1, GREY, 173, 1.28)
     icon = Image.open(os.path.join(HERE, 'star_1mp_icon.png')).convert('RGBA').resize((34, 34), Image.NEAREST)
     els.append((np.asarray(icon), x0, 224, 1.85))
     text_el('MADE BY', 1, GREY, 229, 1.95, x=x0 + 42)

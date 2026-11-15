@@ -634,6 +634,18 @@ public class GiantEntity extends Monster {
         return canHit(e) && !e.isPassenger() && !e.isVehicle() && e.getBbHeight() < 3.2F && e.getBbWidth() < 2.0F;
     }
 
+    /** Trailer only: where the right fist will be after {@code ticks} of {@code attack} if the Giant stands still. */
+    public Vec3 cinemaHandAt(int attack, int ticks) {
+        byte a0 = entityData.get(DATA_ATTACK);
+        int t0 = attackTicks;
+        entityData.set(DATA_ATTACK, (byte) attack);
+        attackTicks = ticks;
+        Vec3 h = handPosition(1.0F);
+        entityData.set(DATA_ATTACK, a0);
+        attackTicks = t0;
+        return h;
+    }
+
     /** Promo screenshots only (GiantShowcase): the fist has just closed on {@code e}. */
     public void showcaseGrab(LivingEntity e, int attack, int ticks) {
         entityData.set(DATA_ATTACK, (byte) attack);

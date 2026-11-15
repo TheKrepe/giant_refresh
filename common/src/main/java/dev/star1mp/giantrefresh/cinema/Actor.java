@@ -89,6 +89,10 @@ public final class Actor {
             return;
         }
         age++;
+        if (age == 1 && scripted() && !e.isPassenger() && !e.isNoGravity()) {
+            // stand on the real ground where the script put us (marks are often given at another spot's height)
+            e.setPos(e.getX(), surface(level, e.getX(), e.getZ(), e.getY() + 0.5), e.getZ());
+        }
         if (e instanceof LivingEntity l && scripted()) {
             move(level, l);
             head(l);
@@ -220,7 +224,7 @@ public final class Actor {
     }
 
     /** Height of the walkable top at x/z near the given feet height (paths, slabs, farmland included). */
-    private static double surface(ServerLevel level, double x, double z, double feet) {
+    static double surface(ServerLevel level, double x, double z, double feet) {
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
         int bx = Mth.floor(x);
         int bz = Mth.floor(z);

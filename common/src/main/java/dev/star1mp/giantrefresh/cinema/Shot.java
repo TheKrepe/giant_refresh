@@ -128,6 +128,7 @@ public abstract class Shot {
 
     /** A player-like actor (mannequin) with a default skin: "steve", "alex", ... */
     protected Actor person(String skin, Vec3 at, float yaw) {
+        at = new Vec3(at.x, Actor.surface(level, at.x, at.z, at.y + 0.5), at.z);
         String tag = "cine_" + actors.size();
         String model = skin.equals("alex") || skin.equals("ari") || skin.equals("efe") || skin.equals("makena") || skin.equals("sunny") ? "slim" : "wide";
         Cinema.command(level.getServer(), String.format(java.util.Locale.ROOT,
