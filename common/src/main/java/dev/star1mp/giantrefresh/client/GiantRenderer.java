@@ -24,7 +24,7 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
     public void extractRenderState(GiantEntity giant, GiantRenderState state, float partialTick) {
         super.extractRenderState(giant, state, partialTick);
         giant.fillPose(state.pose, partialTick);
-        if (GiantClientHooks.CLIENT_TEST && giant.hasCustomName()) {
+        if ((GiantClientHooks.CLIENT_TEST || GiantClientHooks.SHOWCASE) && giant.hasCustomName()) {
             applyTestPose(state, giant.getCustomName().getString());
         }
         state.pose.compute();
@@ -72,7 +72,7 @@ public class GiantRenderer extends MobRenderer<GiantEntity, GiantRenderState, Gi
 
     @Override
     protected boolean shouldShowName(GiantEntity entity, double distanceSq) {
-        if (GiantClientHooks.CLIENT_TEST && entity.hasCustomName() && entity.getCustomName().getString().startsWith("pose:")) {
+        if ((GiantClientHooks.CLIENT_TEST || GiantClientHooks.SHOWCASE) && entity.hasCustomName() && entity.getCustomName().getString().startsWith("pose:")) {
             return false;
         }
         return super.shouldShowName(entity, distanceSq);

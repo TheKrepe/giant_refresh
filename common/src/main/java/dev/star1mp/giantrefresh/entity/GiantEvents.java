@@ -73,6 +73,9 @@ public final class GiantEvents {
         }
         tickNaturalSpawning(level);
         GiantSmokeTest.tick(level);
+        if (GiantShowcase.ENABLED) {
+            GiantShowcase.tick(level);
+        }
     }
 
     private static void convertVanillaGiant(ServerLevel level, Entity old) {
