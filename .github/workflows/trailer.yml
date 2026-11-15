@@ -3,6 +3,7 @@ name: Trailer shots
 on:
   push:
     branches: [trailer]
+    paths-ignore: ['trailer/**', '.github/workflows/trailer-post.yml']
   workflow_dispatch:
 
 permissions:
