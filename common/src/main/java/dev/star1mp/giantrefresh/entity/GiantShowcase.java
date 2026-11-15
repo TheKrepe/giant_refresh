@@ -76,6 +76,7 @@ public final class GiantShowcase {
             return;
         }
         untilTicks++;
+        noFire();
         boolean done;
         try {
             done = until.getAsBoolean();
@@ -85,6 +86,7 @@ public final class GiantShowcase {
         }
         if (done || untilTicks > 400) {
             until = null;
+            noFire();
             command(level.getServer(), "tick freeze");
             placeCamera(level);
         }
@@ -142,13 +144,13 @@ public final class GiantShowcase {
         switch (SCENES[scene]) {
             case "hero" -> {
                 // golden hour, low camera looking up at a Giant with a crewed harness hat
-                command(server, "time set 12300");
+                command(server, "time set 11900");
                 GiantEntity g = giant(level, x, z, 200.0F, 14, true);
                 g.setNoAi(true);
                 g.setCustomName(net.minecraft.network.chat.Component.literal("pose:roar:12"));
                 zombie(level, x - 6, z - 5, 20.0F);
                 zombie(level, x + 5, z - 7, -15.0F);
-                camera = lookAt(level, x - 5.5, y + 1.3, z - 15.5, x, y + 8.5, z);
+                camera = lookAt(level, x - 4.5, y + 1.0, z - 13.0, x, y + 8.0, z);
                 until = () -> untilTicks > 20;
             }
             case "grab" -> {
@@ -159,15 +161,13 @@ public final class GiantShowcase {
                 if (victim instanceof Mob m) {
                     m.setNoAi(true);
                 }
-                g.setTarget(victim);
-                untilTicks = 0;
                 until = () -> {
-                    if (untilTicks == 10) {
-                        g.startAttack(GiantEntity.ATTACK_GRAB);
+                    if (untilTicks == 5 && victim != null) {
+                        g.showcaseGrab(victim, GiantEntity.ATTACK_GRAB);
                     }
-                    return g.getHeld() != null && g.getAttackTicks() >= dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_THROW - 4;
+                    return untilTicks > 5 && g.getAttackTicks() >= dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_THROW - 5;
                 };
-                camera = lookAt(level, x + 13.0, y + 7.0, z + 6.0, x, y + 11.0, z + 1.0);
+                camera = lookAt(level, x + 11.0, y + 4.0, z + 7.0, x, y + 10.0, z + 1.0);
             }
             case "village" -> {
                 // in a village: the Giant raises both fists over an iron golem, villagers run
@@ -185,7 +185,7 @@ public final class GiantShowcase {
                         m.setNoAi(true);
                     }
                 }
-                camera = lookAt(level, x - 9.0, y + 3.0, z - 19.0, x, y + 6.5, z);
+                camera = lookAt(level, x - 6.0, y + 2.0, z - 14.0, x, y + 6.5, z);
                 until = () -> untilTicks > 20;
             }
             case "trail" -> {
@@ -212,7 +212,7 @@ public final class GiantShowcase {
                 // above and behind the old end of the trail, looking along it
                 double bx = cx - trailDirX * 30.0;
                 double bz = cz - trailDirZ * 30.0;
-                camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 22.0, bz, cx + trailDirX * 6.0, y, cz + trailDirZ * 6.0);
+                camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 16.0, bz, cx + trailDirX * 6.0, y, cz + trailDirZ * 6.0);
                 until = () -> untilTicks > 20;
             }
             case "camp" -> {
@@ -233,7 +233,7 @@ public final class GiantShowcase {
             }
             case "spiders" -> {
                 // moonlit night: spiders crawl up a Giant, one already sits on its head
-                command(server, "time set 18000");
+                command(server, "time set 13600");
                 GiantEntity g = giant(level, x, z, 160.0F, -1, false);
                 g.setNoAi(true);
                 g.setCustomName(net.minecraft.network.chat.Component.literal("pose:walk:2"));
@@ -257,7 +257,7 @@ public final class GiantShowcase {
                     }
                     return untilTicks > 70;
                 };
-                camera = lookAt(level, x - 4.0, y + 4.0, z + 17.0, x, y + 7.5, z);
+                camera = lookAt(level, x - 3.0, y + 3.0, z + 13.0, x, y + 7.5, z);
             }
             case "potions" -> {
                 // Growth and Shrinking: a brewing stand in front, a giant-sized and a tiny zombie behind
@@ -303,6 +303,12 @@ public final class GiantShowcase {
             }
             default -> until = () -> true;
         }
+        if (camera != null) {
+            if (!SCENES[scene].equals("trail")) {
+                clearTrees(level, Mth.floor(camera[5]), Mth.floor(camera[7]), 11);
+            }
+            clearView(level, camera, camera[5], camera[6], camera[7], 2.5);
+        }
     }
 
     private static void placeCamera(ServerLevel level) {
@@ -323,16 +329,135 @@ public final class GiantShowcase {
 
     // ------------------------------------------------------------------ helpers
 
+    private static void noFire() {
+        for (Entity e : spawned) {
+            e.clearFire();
+            e.setSharedFlagOnFire(false);
+            for (Entity p : e.getPassengers()) {
+                p.clearFire();
+                p.setSharedFlagOnFire(false);
+            }
+        }
+    }
+
+    /** Removes trees and tall plants that would block the view from the camera to {@code to}. */
+    private static void clearView(ServerLevel level, double[] cam, double tx, double ty, double tz, double radius) {
+        double fx = cam[0];
+        double fy = cam[1] + 1.62;
+        double fz = cam[2];
+        double len = Math.sqrt((tx - fx) * (tx - fx) + (ty - fy) * (ty - fy) + (tz - fz) * (tz - fz));
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (double d = 0; d <= len; d += 0.5) {
+            double px = fx + (tx - fx) * d / len;
+            double py = fy + (ty - fy) * d / len;
+            double pz = fz + (tz - fz) * d / len;
+            int r = (int) Math.ceil(radius);
+            for (int ox = -r; ox <= r; ox++) {
+                for (int oy = -r; oy <= r; oy++) {
+                    for (int oz = -r; oz <= r; oz++) {
+                        if (ox * ox + oy * oy + oz * oz > radius * radius) {
+                            continue;
+                        }
+                        m.set(Mth.floor(px) + ox, Mth.floor(py) + oy, Mth.floor(pz) + oz);
+                        BlockState st = level.getBlockState(m);
+                        boolean plant = d < 6.0 && !st.isAir() && st.getCollisionShape(level, m).isEmpty() && st.getFluidState().isEmpty();
+                        if (st.is(net.minecraft.tags.BlockTags.LEAVES) || st.is(net.minecraft.tags.BlockTags.LOGS) || plant) {
+                            level.setBlock(m, Blocks.AIR.defaultBlockState(), 2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /** Clears trees around a spot (the subject of a shot). */
+    private static void clearTrees(ServerLevel level, int x, int z, int radius) {
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (int ox = -radius; ox <= radius; ox++) {
+            for (int oz = -radius; oz <= radius; oz++) {
+                if (ox * ox + oz * oz > radius * radius) {
+                    continue;
+                }
+                int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x + ox, z + oz);
+                int low = ground(level, x + ox, z + oz) - 8;
+                for (int y = top; y >= low; y--) {
+                    m.set(x + ox, y, z + oz);
+                    BlockState st = level.getBlockState(m);
+                    if (st.is(net.minecraft.tags.BlockTags.LEAVES) || st.is(net.minecraft.tags.BlockTags.LOGS)) {
+                        level.setBlock(m, Blocks.AIR.defaultBlockState(), 2);
+                    }
+                }
+            }
+        }
+    }
+
+    /** A dry, fairly flat spot of at least 36x36 blocks near {@code from}, in a pleasant biome. */
+    private static BlockPos findLand(ServerLevel level, BlockPos from) {
+        var found = level.findClosestBiome3d(GiantShowcase::nice, from, 2400, 32, 64);
+        BlockPos start = found != null ? found.getFirst() : from;
+        BlockPos best = start;
+        int bestScore = Integer.MAX_VALUE;
+        for (int ring = 0; ring <= 6; ring++) {
+            for (int i = -ring; i <= ring; i++) {
+                for (int j = -ring; j <= ring; j++) {
+                    if (Math.max(Math.abs(i), Math.abs(j)) != ring) {
+                        continue;
+                    }
+                    int cx = start.getX() + i * 24;
+                    int cz = start.getZ() + j * 24;
+                    int score = landScore(level, cx, cz);
+                    if (score < bestScore) {
+                        bestScore = score;
+                        best = new BlockPos(cx, 0, cz);
+                    }
+                }
+            }
+            if (bestScore <= 2) {
+                break;
+            }
+        }
+        GiantRefresh.LOGGER.info("[SHOWCASE] land at {} {} (score {})", best.getX(), best.getZ(), bestScore);
+        return best;
+    }
+
+    /** Lower is better; anything with water near it scores very high. */
+    private static int landScore(ServerLevel level, int cx, int cz) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int score = 0;
+        for (int dx = -18; dx <= 18; dx += 6) {
+            for (int dz = -18; dz <= 18; dz += 6) {
+                int x = cx + dx;
+                int z = cz + dz;
+                int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+                int floor = level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z);
+                if (surface != floor) {
+                    score += 100; // water
+                }
+                if (level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) != surface) {
+                    score += 1; // tree
+                }
+                min = Math.min(min, floor);
+                max = Math.max(max, floor);
+            }
+        }
+        return score + Math.max(0, max - min - 3) * 3;
+    }
+
     private static BlockPos findSite(ServerLevel level, int scene, boolean village) {
         BlockPos from = base.offset(scene * 320, 0, (scene % 2) * 320);
         if (village) {
-            BlockPos v = level.findNearestMapStructure(net.minecraft.tags.StructureTags.VILLAGE, from, 60, false);
-            if (v != null) {
-                return v;
+            var plains = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.STRUCTURE)
+                    .get(net.minecraft.world.level.levelgen.structure.BuiltinStructures.VILLAGE_PLAINS);
+            if (plains.isPresent()) {
+                var v = level.getChunkSource().getGenerator().findNearestMapStructure(level,
+                        net.minecraft.core.HolderSet.direct(plains.get()), from, 80, false);
+                if (v != null) {
+                    return v.getFirst();
+                }
             }
         }
-        var found = level.findClosestBiome3d(GiantShowcase::nice, from, 2400, 32, 64);
-        return found != null ? found.getFirst() : from;
+        return findLand(level, from);
     }
 
     private static boolean nice(Holder<Biome> biome) {
@@ -350,7 +475,7 @@ public final class GiantShowcase {
         float yaw = (float) (Mth.atan2(dz, dx) * Mth.RAD_TO_DEG) - 90.0F;
         float pitch = (float) -(Mth.atan2(dy, Math.sqrt(dx * dx + dz * dz)) * Mth.RAD_TO_DEG);
         // eye height of the camera is added by the teleport
-        return new double[] {x, y - 1.62, z, yaw, pitch};
+        return new double[] {x, y - 1.62, z, yaw, pitch, tx, ty, tz};
     }
 
     private static GiantEntity giant(ServerLevel level, double x, double z, float yaw, int hat, boolean riders) {
@@ -363,7 +488,6 @@ public final class GiantShowcase {
             GiantRiders.spawnRiders(g, level, level.getCurrentDifficultyAt(g.blockPosition()));
             for (Entity p : g.getPassengers()) {
                 if (p instanceof Mob mob) {
-                    mob.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
                     mob.setPersistenceRequired();
                     spawned.add(mob);
                 }

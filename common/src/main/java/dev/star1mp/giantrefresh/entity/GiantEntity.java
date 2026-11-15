@@ -634,6 +634,16 @@ public class GiantEntity extends Monster {
         return canHit(e) && !e.isPassenger() && !e.isVehicle() && e.getBbHeight() < 3.2F && e.getBbWidth() < 2.0F;
     }
 
+    /** Promo screenshots only (GiantShowcase): the fist has just closed on {@code e}. */
+    public void showcaseGrab(LivingEntity e, int attack) {
+        entityData.set(DATA_ATTACK, (byte) attack);
+        attackTicks = GiantPose.GRAB_CATCH;
+        entityData.set(DATA_HELD, e.getId());
+        if (!e.startRiding(this, true, true)) {
+            entityData.set(DATA_HELD, -1);
+        }
+    }
+
     public LivingEntity getHeld() {
         int id = entityData.get(DATA_HELD);
         if (id < 0) {
