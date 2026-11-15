@@ -365,7 +365,11 @@ public final class Trailer {
             steve.crouch(true);
             on(0.0, () -> steve.walkTo(camp(-2.5, 12.5), 0.42));
             DoubleFunction<Vec3> s = track(steve, 0);
-            double ly = camp(-2.5, 16).y + 0.75;
+            double ly = 0;
+            for (double z = 8; z <= 21; z += 1) {
+                ly = Math.max(ly, Math.max(camp(-2.5, z).y, camp(0.5, z).y));
+            }
+            ly += 0.8;
             cam.follow(0, level(s, 3.0, ly, 1.6), level(s, -0.6, ly + 0.15, -4)).fov(55);
             cam.follow(6, level(s, 2.6, ly + 0.05, 1.2), t -> camp(0, 0).add(0, 5, 0)).fov(52);
         }
