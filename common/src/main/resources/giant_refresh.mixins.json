@@ -11,7 +11,8 @@
   "client": [
     "client.CameraMixin",
     "client.GameRendererMixin",
-    "client.LivingEntityRendererMixin"
+    "client.LivingEntityRendererMixin",
+    "client.SoundManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

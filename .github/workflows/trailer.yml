@@ -1,0 +1,107 @@
+name: Trailer shots
+
+on:
+  push:
+    branches: [trailer]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      shots: ${{ steps.p.outputs.shots }}
+      res: ${{ steps.p.outputs.res }}
+    steps:
+      - uses: actions/checkout@v5
+      - id: p
+        run: |
+          # .github/trailer.shots: one shot per line; first line may be "res WxH"
+          RES=960x540; SHOTS=()
+          while read -r l; do
+            [ -z "$l" ] && continue
+            case "$l" in res\ *) RES=${l#res };; \#*) ;; *) SHOTS+=("\"$l\"");; esac
+          done < .github/trailer.shots
+          echo "shots=[$(IFS=,; echo "${SHOTS[*]}")]" >> $GITHUB_OUTPUT
+          echo "res=$RES" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
+  shot:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix:
+        shot: ${{ fromJson(needs.plan.outputs.shots) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      TARGET: '26.2'
+      SHOT: ${{ matrix.shot }}
+      RES: ${{ needs.plan.outputs.res }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            25
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+      - name: World
+        working-directory: fabric
+        env:
+          JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
+        run: |
+          mkdir -p run; echo "eula=true" > run/eula.txt
+          printf "level-seed=giantrefresh\nview-distance=8\nsimulation-distance=6\nspawn-protection=0\nonline-mode=false\nsync-chunk-writes=false\n" > run/server.properties
+          timeout 1200 gradle runServer --no-daemon -Pgr_target=$TARGET > server.log 2>&1 || true
+          grep -E "SMOKETEST.*(PASS|FAIL)" server.log || { tail -60 server.log; exit 1; }
+      - name: Record
+        working-directory: fabric
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq xvfb mesa-vulkan-drivers libgl1-mesa-dri ffmpeg >/dev/null
+          W=${RES%x*}; H=${RES#*x}
+          mkdir -p run/saves; rm -rf run/saves/cine; cp -r run/world run/saves/cine; rm -f run/saves/cine/session.lock
+          rm -rf run/screenshots; rm -f run/cine_*
+          printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:12\nsimulationDistance:8\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\nguiScale:2\nentityShadows:true\ngraphicsMode:1\nparticles:0\nbobView:false\nshowSubtitles:false\nreducedDebugInfo:true\n" > run/options.txt
+          export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.cinema=$SHOT -Dgiantrefresh.cinema.rate=${RATE:-1} -Dgiantrefresh.cinema.warmup=${WARMUP:-30}"
+          start=$(date +%s)
+          timeout 16000 xvfb-run -a -s "-screen 0 ${W}x${H}x24 +extension GLX +render -noreset" gradle runClient --no-daemon -Pgr_target=$TARGET \
+            --args="--width $W --height $H --quickPlaySingleplayer cine" > client.log 2>&1 || true
+          echo "client took $(( $(date +%s) - start )) s"
+          grep -E "CINEMA|Exception|Caused by|ERROR" client.log | grep -v JAVA_TOOL_OPTIONS | cut -c1-300 | head -80 || true
+          ls run/screenshots | head -3; ls run/screenshots | wc -l
+      - name: Encode
+        working-directory: fabric/run
+        run: |
+          mkdir -p seq out
+          # cine_frames.txt: "<frame> <file> <t>" - frames that were skipped reuse the previous picture
+          while read -r n f t; do
+            src=$(printf "screenshots/cine_%05d.png" "$f"); [ -f "$src" ] || continue
+            ln -f "$src" "$(printf "seq/%05d.png" "$n")"
+          done < cine_frames.txt
+          ffmpeg -y -loglevel error -framerate 24 -i seq/%05d.png -c:v libx264 -crf 15 -preset slow -pix_fmt yuv420p out/$SHOT.mp4
+          cp cine_frames.txt out/$SHOT.frames.txt
+          cp cine_sounds.jsonl out/$SHOT.sounds.jsonl 2>/dev/null || true
+          grep -E "CINEMA" ../client.log | cut -c1-300 > out/$SHOT.log || true
+          ls -la out
+      - name: Publish
+        if: always()
+        run: |
+          mkdir -p /tmp/pub && cp fabric/run/out/* /tmp/pub/ 2>/dev/null || true
+          tail -c 3000000 fabric/client.log > /tmp/pub/$SHOT.client.log 2>/dev/null || true
+          cd /tmp && rm -rf repo && git clone -q --depth 1 --branch trailer-out "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" repo 2>/dev/null \
+            || { mkdir repo && cd repo && git init -q -b trailer-out && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" && cd ..; }
+          cd repo; mkdir -p shots; cp /tmp/pub/* shots/ 2>/dev/null || true
+          git add -A; git -c user.name=ci -c user.email=ci@localhost commit -qm "shot $SHOT run ${{ github.run_id }}" || exit 0
+          for i in 1 2 3 4 5 6; do
+            git push -q origin trailer-out && break
+            git pull -q --rebase origin trailer-out || true; sleep $((RANDOM % 10 + 3))
+          done
