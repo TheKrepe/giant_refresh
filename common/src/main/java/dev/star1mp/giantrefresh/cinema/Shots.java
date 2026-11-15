@@ -13,6 +13,7 @@ public final class Shots {
         Supplier<Shot> s = switch (name) {
             case "test" -> Test::new;
             case "scout" -> Scout::new;
+            case "sites" -> Sites::new;
             default -> throw new IllegalArgumentException("unknown shot " + name);
         };
         return s.get();
@@ -77,6 +78,30 @@ public final class Shots {
             Sets.template(level, "minecraft:village/plains/town_centers/plains_fountain_01", b(-10, 0, 20), net.minecraft.world.level.block.Rotation.NONE);
             Sets.template(level, "minecraft:village/plains/town_centers/plains_meeting_point_1", b(20, 0, 20), net.minecraft.world.level.block.Rotation.NONE);
             cam.at(0, o(0, 95, 5), 0.0F, 89.9F).fov(80);
+        }
+    }
+
+    /** Looks down on candidate places for the big set, one after another. */
+    static final class Sites extends Shot {
+        static final int[][] P = {{-116, -173}, {64, -400}, {1185, -313}, {2857, 868}, {-600, 300}, {300, 1200}, {-1500, -200}, {1500, 900}, {-200, 1600}, {900, -1300}};
+
+        Sites() {
+            siteX = 0;
+            siteZ = 0;
+            duration = P.length * 2.0;
+        }
+
+        @Override
+        protected void build() {
+            for (int i = 0; i < P.length; i++) {
+                int[] p = P[i];
+                int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, p[0], p[1]);
+                var biome = level.getBiome(new net.minecraft.core.BlockPos(p[0], y, p[1])).unwrapKey().map(k -> k.identifier().getPath()).orElse("?");
+                dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CINEMA] site {} = {} {} y {} {}", i, p[0], p[1], y, biome);
+                net.minecraft.world.phys.Vec3 at = new net.minecraft.world.phys.Vec3(p[0] + 0.5, y + 140, p[1] + 0.5);
+                cam.at(i * 2.0, at, 0.0F, 89.9F).fov(90).linear();
+                cam.at(i * 2.0 + 1.99, at, 0.0F, 89.9F).fov(90).linear();
+            }
         }
     }
 }
