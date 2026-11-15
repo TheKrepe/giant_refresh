@@ -19,7 +19,10 @@ public abstract class GameRendererMixin {
     //#else
     //$$ private void giantrefresh$afterFrame(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci) {
     //#endif
-        if (GiantClientHooks.CLIENT_TEST) {
+        if (dev.star1mp.giantrefresh.cinema.Cinema.ENABLED) {
+            dev.star1mp.giantrefresh.client.CinemaClient.afterFrame();
+        }
+        if (GiantClientHooks.CLIENT_TEST || GiantClientHooks.SHOWCASE) {
             GiantClientHooks.afterFrame();
         }
     }

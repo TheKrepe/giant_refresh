@@ -73,6 +73,12 @@ public final class GiantEvents {
         }
         tickNaturalSpawning(level);
         GiantSmokeTest.tick(level);
+        if (dev.star1mp.giantrefresh.cinema.Cinema.ENABLED) {
+            dev.star1mp.giantrefresh.cinema.Cinema.serverTick(level);
+        }
+        if (GiantShowcase.ENABLED) {
+            GiantShowcase.tick(level);
+        }
     }
 
     private static void convertVanillaGiant(ServerLevel level, Entity old) {
