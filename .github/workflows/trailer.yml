@@ -105,5 +105,5 @@ jobs:
           for i in $(seq 1 30); do
             git push -q origin trailer-out && { echo pushed; break; }
             sleep $((RANDOM % 15 + 2))
-            git fetch -q origin trailer-out && git rebase -q origin/trailer-out || { git rebase --abort; git reset -q --soft origin/trailer-out; git commit -qm "shot $SHOT (rebased)"; }
+            git fetch -q origin trailer-out && git rebase -q origin/trailer-out || git rebase --abort
           done
