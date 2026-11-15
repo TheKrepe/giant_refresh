@@ -116,16 +116,6 @@ jobs:
           done
           ls run/screenshots/giant_test_*.png
 
-      - name: Upload logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: logs-${{ matrix.target }}
-          path: |
-            ${{ steps.meta.outputs.fabric_dir }}/server.log
-            ${{ steps.meta.outputs.fabric_dir }}/client.log
-          if-no-files-found: ignore
-
       - name: Fail if a build or test failed
         if: steps.fabric.outcome != 'success' || steps.neoforge.outcome != 'success' || steps.fabric_smoke.outcome != 'success' || steps.client_render.outcome != 'success'
         run: |
@@ -177,13 +167,6 @@ jobs:
         id: neoforge
         continue-on-error: true
         run: bash .github/scripts/prod_test.sh neoforge ${{ matrix.mc }} $(ls jars/giant_refresh-neoforge-*.jar)
-      - name: Upload logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: prod-logs-${{ matrix.mc }}
-          path: prod-*/server.log
-          if-no-files-found: ignore
       - name: Result
         run: |
           echo "| ${{ matrix.mc }} | Fabric: ${{ steps.fabric.outcome }} | NeoForge: ${{ steps.neoforge.outcome }} |" >> $GITHUB_STEP_SUMMARY

@@ -28,6 +28,9 @@ public final class GiantSmokeTest {
     private static int stageZ;
     private static net.minecraft.world.entity.LivingEntity grower;
     private static net.minecraft.world.entity.LivingEntity shrinker;
+    private static net.minecraft.world.entity.LivingEntity mixer;
+    private static double mixedBoth = -1;
+    private static double mixedAfter = -1;
     private static boolean giantImmune;
     private static GiantEntity climbTarget;
     private static net.minecraft.world.entity.monster.spider.Spider climber;
@@ -73,6 +76,7 @@ public final class GiantSmokeTest {
             grower = EntityTypes.COW.spawn(level, pos.offset(0, 0, -10), EntitySpawnReason.COMMAND);
 
             shrinker = EntityTypes.COW.spawn(level, pos.offset(4, 0, -10), EntitySpawnReason.COMMAND);
+            mixer = EntityTypes.COW.spawn(level, pos.offset(8, 0, -10), EntitySpawnReason.COMMAND);
 
             // a hatless, frozen Giant for a spider to climb, and an iron golem that must pick a Giant as its target
             BlockPos cpos = pos.offset(0, 0, 34);
@@ -128,6 +132,17 @@ public final class GiantSmokeTest {
             // drunk a little after spawning (a just-loaded entity gets its size back at once instead)
             grower.addEffect(new MobEffectInstance(GRContent.growthHolder(), 200));
             shrinker.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 200));
+            if (mixer != null) {
+                // both at once: normal size; Growth lasts longer, so it grows once Shrinking runs out
+                mixer.addEffect(new MobEffectInstance(GRContent.growthHolder(), 400));
+                mixer.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 120));
+            }
+        }
+        if (mixer != null && mixer.isAlive() && ticks == 200) {
+            mixedBoth = mixer.getAttributeValue(Attributes.SCALE);
+        }
+        if (mixer != null && mixer.isAlive() && ticks == 420) {
+            mixedAfter = mixer.getAttributeValue(Attributes.SCALE);
         }
         if (grower != null && shrinker != null && ticks > 100 && ticks <= 400 && ticks % 5 == 0) {
             GiantRefresh.LOGGER.info("[SMOKETEST] size t={} growth={} shrinking={}", ticks - 110,
@@ -162,7 +177,10 @@ public final class GiantSmokeTest {
                     perched != null && grabber != null ? String.format("%.2f", perched.getY() - grabber.getY()) : "-");
             double scale = grower != null && grower.isAlive() ? grower.getAttributeValue(Attributes.SCALE) : -1;
             boolean content = contentCheck(level);
-            boolean pass = giants >= 4 && vanilla == 0 && giantImmune && content;
+            boolean bothCancel = Math.abs(mixedBoth - 1.0) < 0.05 && mixedAfter > 2.0;
+            GiantRefresh.LOGGER.info("[SMOKETEST] Growth+Shrinking together: scale={} (normal 1.0), after Shrinking ended: {} -> {}",
+                    String.format("%.3f", mixedBoth), String.format("%.3f", mixedAfter), bothCancel ? "OK" : "WRONG");
+            boolean pass = giants >= 4 && vanilla == 0 && giantImmune && content && bothCancel;
             GiantRefresh.LOGGER.info("[SMOKETEST] giants={} vanillaGiants={} riders={} zombieScaleAfterEffect={} -> {}",
                     giants, vanilla, riders, scale, pass ? "PASS" : "FAIL");
             level.getServer().halt(false);

@@ -60,7 +60,11 @@ public final class GrowthHandler {
         GRConfig cfg = GRConfig.get();
         double growMax = cfg.growthScaleBonus;
         double shrinkMax = 1.0 - cfg.shrinkingScale;
-        double target = growMax * fade(growth) - shrinkMax * fade(shrink);
+        // both effects at once cancel each other out (normal size); when one of them runs out,
+        // the other one takes over again
+        double g = fade(growth);
+        double sh = fade(shrink);
+        double target = growMax * g * (1.0 - sh) - shrinkMax * sh * (1.0 - g);
         double current = existing != null ? existing.amount() : 0.0;
 
         double next;
