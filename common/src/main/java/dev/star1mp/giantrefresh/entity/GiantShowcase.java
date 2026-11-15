@@ -274,7 +274,8 @@ public final class GiantShowcase {
             case "potions" -> {
                 // Growth and Shrinking: a brewing stand in front, a giant-sized and a tiny zombie behind
                 command(server, "time set 2500");
-                BlockPos stand = new BlockPos(x, ground(level, x, z), z);
+                flatten(level, x, y, z + 2, 12);
+                BlockPos stand = new BlockPos(x, y, z);
                 level.setBlock(stand.below(), Blocks.POLISHED_ANDESITE.defaultBlockState(), 3);
                 BlockState bs = Blocks.BREWING_STAND.defaultBlockState();
                 for (int i = 0; i < 3; i++) {
@@ -408,6 +409,27 @@ public final class GiantShowcase {
             }
         }
         return true;
+    }
+
+    /** Makes a round, flat grass area at height {@code y} (the first air block). */
+    private static void flatten(ServerLevel level, int cx, int y, int cz, int radius) {
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (int ox = -radius; ox <= radius; ox++) {
+            for (int oz = -radius; oz <= radius; oz++) {
+                if (ox * ox + oz * oz > radius * radius) {
+                    continue;
+                }
+                for (int yy = y - 4; yy <= y + 8; yy++) {
+                    m.set(cx + ox, yy, cz + oz);
+                    BlockState st = yy < y - 1 ? Blocks.DIRT.defaultBlockState()
+                            : yy == y - 1 ? Blocks.GRASS_BLOCK.defaultBlockState() : Blocks.AIR.defaultBlockState();
+                    if (yy < y - 1 && !level.getBlockState(m).isAir() && level.getFluidState(m).isEmpty()) {
+                        continue; // keep the natural ground below
+                    }
+                    level.setBlock(m, st, 2);
+                }
+            }
+        }
     }
 
     /** Removes grass and flowers around a spot. */
