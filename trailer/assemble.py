@@ -271,8 +271,9 @@ def sound(total):
     env = np.convolve(env, np.ones(win) / win, mode='same')
     duck = 1.0 - np.clip(env * 1.6, 0, 0.45)
     mix = music * (0.8 * duck)[:, None] + sfx
-    peak = np.abs(mix).max() or 1.0
-    mix = np.tanh(mix / peak * 1.2) / math.tanh(1.2) * 0.89
+    # normalise on the loud body, not the single highest peak; tanh rounds the few hits above it
+    peak = float(np.percentile(np.abs(mix), 99.97)) or 1.0
+    mix = np.tanh(mix / peak * 1.25) / math.tanh(1.25) * 0.89
     fade = int(1.5 * SR)
     mix[-fade:] *= np.linspace(1, 0, fade)[:, None]
     out = os.path.join(WORK, 'mix.wav')
