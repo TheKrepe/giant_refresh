@@ -76,7 +76,14 @@ public final class GiantSmokeTest {
             grower = EntityTypes.COW.spawn(level, pos.offset(0, 0, -10), EntitySpawnReason.COMMAND);
 
             shrinker = EntityTypes.COW.spawn(level, pos.offset(4, 0, -10), EntitySpawnReason.COMMAND);
-            mixer = EntityTypes.COW.spawn(level, pos.offset(8, 0, -10), EntitySpawnReason.COMMAND);
+            // far from the Giants, so nobody grabs or kills it before it is measured
+            mixer = EntityTypes.COW.spawn(level, pos.offset(-40, 0, -40), EntitySpawnReason.COMMAND);
+            if (mixer != null) {
+                mixer.setInvulnerable(true);
+                if (mixer instanceof net.minecraft.world.entity.Mob mob) {
+                    mob.setNoAi(true);
+                }
+            }
 
             // a hatless, frozen Giant for a spider to climb, and an iron golem that must pick a Giant as its target
             BlockPos cpos = pos.offset(0, 0, 34);
