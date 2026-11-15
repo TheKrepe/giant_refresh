@@ -68,6 +68,22 @@ public final class CinemaClient {
         double t = time(mc);
         lastT = t;
         Cam.Pose p = Cinema.shot.cam.pose(Math.max(0, t) / 20.0);
+        // never inside a solid block: lift the lens out
+        if (mc.level != null) {
+            Vec3 pos = p.pos();
+            net.minecraft.core.BlockPos.MutableBlockPos m = new net.minecraft.core.BlockPos.MutableBlockPos();
+            for (int i = 0; i < 12; i++) {
+                m.set(Math.floor(pos.x), Math.floor(pos.y - 0.15), Math.floor(pos.z));
+                var st = mc.level.getBlockState(m);
+                if (st.isAir() || st.getCollisionShape(mc.level, m).isEmpty() || !st.isCollisionShapeFullBlock(mc.level, m)) {
+                    break;
+                }
+                pos = new Vec3(pos.x, Math.floor(pos.y - 0.15) + 1.2, pos.z);
+            }
+            if (pos != p.pos()) {
+                p = new Cam.Pose(pos, p.yaw(), p.pitch(), p.fov(), p.roll());
+            }
+        }
         int fov = Math.round(p.fov());
         if (mc.options.fov().get() != fov) {
             mc.options.fov().set(fov);

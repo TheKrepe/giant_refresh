@@ -19,8 +19,15 @@ public final class Actor {
     private Float faceYaw;
     private boolean run;
 
+    /** Moved by the script itself (villagers: their brain would walk them off set). */
+    private final boolean kinematic;
+
     Actor(Entity e) {
         this.e = e;
+        this.kinematic = e instanceof Mob m && (m.isNoAi() || e instanceof net.minecraft.world.entity.npc.villager.AbstractVillager);
+        if (e instanceof net.minecraft.world.entity.npc.villager.AbstractVillager v) {
+            v.setNoAi(true);
+        }
         if (e instanceof Mob mob) {
             ((MobAccessor) mob).giantrefresh$goalSelector().removeAllGoals(g -> true);
             ((MobAccessor) mob).giantrefresh$targetSelector().removeAllGoals(g -> true);
@@ -57,6 +64,18 @@ public final class Actor {
             double dist = Math.sqrt(d.x * d.x + d.z * d.z);
             if (dist < 0.35) {
                 stop();
+            } else if (kinematic && e instanceof LivingEntity l) {
+                double step = Math.min(dist, speed * 4.3 / 20.0);
+                double nx = e.getX() + d.x / dist * step;
+                double nz = e.getZ() + d.z / dist * step;
+                int ny = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mth.floor(nx), Mth.floor(nz));
+                float yaw = (float) (Mth.atan2(d.z, d.x) * Mth.RAD_TO_DEG) - 90.0F;
+                e.setPos(nx, ny, nz);
+                l.setYRot(yaw);
+                l.yBodyRot = yaw;
+                if (look == null) {
+                    l.yHeadRot = yaw;
+                }
             } else if (e instanceof Mob mob) {
                 mob.getMoveControl().setWantedPosition(mark.x, mark.y, mark.z, speed);
             } else if (e instanceof LivingEntity l) {

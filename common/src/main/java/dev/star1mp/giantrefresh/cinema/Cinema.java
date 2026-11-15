@@ -98,8 +98,29 @@ public final class Cinema {
 
     private static void moveCamera(ServerLevel level, ServerPlayer player, double sec) {
         Vec3 p = shot.cam.pose(sec).pos();
+        clearPlants(level, p, 1.8);
         if (player.position().distanceToSqr(p) > 4) {
             player.teleportTo(level, p.x, p.y - 1.62, p.z, java.util.Set.of(), player.getYRot(), player.getXRot(), false);
+        }
+    }
+
+    /** Grass and flowers right in front of the lens would fill the frame: remove them. */
+    private static void clearPlants(ServerLevel level, Vec3 p, double r) {
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        int ri = (int) Math.ceil(r);
+        for (int dx = -ri; dx <= ri; dx++) {
+            for (int dy = -2; dy <= 1; dy++) {
+                for (int dz = -ri; dz <= ri; dz++) {
+                    m.set(Math.floor(p.x) + dx, Math.floor(p.y) + dy, Math.floor(p.z) + dz);
+                    var st = level.getBlockState(m);
+                    if (!st.isAir() && st.getFluidState().isEmpty() && st.getCollisionShape(level, m).isEmpty()
+                            && (st.is(net.minecraft.tags.BlockTags.FLOWERS) || st.is(net.minecraft.world.level.block.Blocks.SHORT_GRASS)
+                            || st.is(net.minecraft.world.level.block.Blocks.TALL_GRASS) || st.is(net.minecraft.world.level.block.Blocks.FERN)
+                            || st.is(net.minecraft.world.level.block.Blocks.LARGE_FERN))) {
+                        level.setBlock(m, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2);
+                    }
+                }
+            }
         }
     }
 

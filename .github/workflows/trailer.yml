@@ -102,7 +102,8 @@ jobs:
           cd repo; git config user.name ci; git config user.email ci@localhost
           mkdir -p shots; cp /tmp/pub/* shots/ 2>/dev/null || true
           git add -A; git commit -qm "shot $SHOT run ${{ github.run_id }}" || exit 0
-          for i in 1 2 3 4 5 6; do
-            git push -q origin trailer-out && break
-            git pull -q --rebase origin trailer-out || true; sleep $((RANDOM % 10 + 3))
+          for i in $(seq 1 30); do
+            git push -q origin trailer-out && { echo pushed; break; }
+            sleep $((RANDOM % 15 + 2))
+            git fetch -q origin trailer-out && git rebase -q origin/trailer-out || { git rebase --abort; git reset -q --soft origin/trailer-out; git commit -qm "shot $SHOT (rebased)"; }
           done

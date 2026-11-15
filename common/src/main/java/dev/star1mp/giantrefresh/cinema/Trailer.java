@@ -91,7 +91,7 @@ public final class Trailer {
         Actor steve(Vec3 p, float yaw) { return person("steve", p, yaw); }
 
         Actor villager(String prof, Vec3 p, float yaw) {
-            Actor a = summon("minecraft:villager", p, yaw, "VillagerData:{profession:\"minecraft:" + prof + "\",type:\"minecraft:plains\",level:2},NoAI:0b");
+            Actor a = summon("minecraft:villager", p, yaw, "VillagerData:{profession:\"minecraft:" + prof + "\",type:\"minecraft:plains\",level:2},NoAI:1b");
             return a;
         }
 
@@ -161,8 +161,8 @@ public final class Trailer {
                 chicken(at(-9 + i * 1.3, -9.5 + (i % 2)), i * 70);
             }
             during(0, 7, t -> cmd("time set " + (23250 + (int) (t * 45))));
-            cam.at(0, at(-38, 17, 9), at(10, 2, -3)).fov(55);
-            cam.at(7, at(-30, 9, 5), at(8, 3, -3)).fov(55);
+            cam.at(0, at(-40, 18, -16), at(10, 2, -2)).fov(55);
+            cam.at(7, at(-31, 9.5, -11), at(8, 3, -2)).fov(55);
         }
     }
 
@@ -240,8 +240,8 @@ public final class Trailer {
         void scene() {
             double[] p = w.prints.get(1);
             Vec3 c0 = at(p[0], p[1]);
-            Actor steve = steve(c0.add(2.5, 0, 4.5), 150);
-            on(0.3, () -> steve.walkTo(c0.add(0.1, 0, 0.3), 0.35));
+            Actor steve = steve(c0.add(1.4, 0, 2.6), 150);
+            on(0.2, () -> steve.walkTo(c0.add(0.1, 0, 0.3), 0.3));
             on(2.6, () -> steve.lookAt(c0.add(0, 0, -0.6)));
             on(4.4, () -> steve.lookAt(at(w.prints.get(6)[0], 1.5, w.prints.get(6)[1])));
             cam.at(0, c0.add(-0.6, 5.5, 3.5), c0.add(0.2, 0, -0.2)).fov(60);
@@ -261,8 +261,8 @@ public final class Trailer {
             Actor steve = steve(at(a[0] + 0.8, a[1] + 2), 180);
             on(0.0, () -> steve.walkTo(at(b[0], b[1]), 0.42));
             DoubleFunction<Vec3> s = track(steve, 0);
-            cam.follow(0, plus(s, 1.3, 1.1, 3.6), plus(s, -0.3, 1.2, -7)).fov(58);
-            cam.follow(5.5, plus(s, 1.0, 1.0, 3.2), plus(s, -0.2, 1.3, -8)).fov(58);
+            cam.follow(0, plus(s, 1.4, 2.2, 4.4), plus(s, -0.3, 1.2, -7)).fov(58);
+            cam.follow(5.5, plus(s, 1.1, 2.0, 4.0), plus(s, -0.2, 1.3, -8)).fov(58);
         }
     }
 
@@ -289,25 +289,25 @@ public final class Trailer {
                 steve.living().swing(InteractionHand.MAIN_HAND, true);
             });
             on(5.9, () -> steve.crouch(false).lookAt(() -> steve.e.position().add(0.6, 0.9, -1.2)));
-            cam.at(0, r.add(-1.8, 1.5, -2.6), track(steve, 1.6)).fov(55);
-            cam.at(7, r.add(-1.2, 1.4, -1.6), track(steve, 1.4)).fov(50);
+            cam.at(0, r.add(4.5, 2.4, 5.5), track(steve, 1.4)).fov(55);
+            cam.at(7, r.add(3.5, 2.1, 3.8), track(steve, 1.0)).fov(50);
         }
     }
 
     /** Late afternoon: from a knoll Steve watches a Giant pass beyond the river. */
     static final class S08 extends T {
-        S08() { super(7.0, 11900); }
+        S08() { super(7.0, 11700); }
 
         @Override
         void scene() {
-            Vec3 s = at(-34, -62);
+            Vec3 s = at(-22, -60);
             Actor steve = steve(s, 90);
             steve.crouch(true);
-            Actor g = hero(at(-96, -34), 180, true);
-            on(0.0, () -> g.walkTo(at(-96, -92), 1.0));
+            Actor g = hero(at(-54, -38), 180, true);
+            on(0.0, () -> g.walkTo(at(-54, -96), 1.0));
             steve.lookAt(g.e, 9);
-            cam.at(0, s.add(2.6, 1.0, 1.4), at(-96, 10, -58)).fov(48);
-            cam.at(7, s.add(2.4, 1.1, 0.8), at(-96, 10, -66)).fov(44);
+            cam.at(0, s.add(3.2, 1.3, 2.2), at(-54, 8, -50)).fov(50);
+            cam.at(7, s.add(3.0, 1.4, 1.6), at(-54, 8, -60)).fov(46);
         }
     }
 
@@ -342,7 +342,7 @@ public final class Trailer {
 
     /** Sunset: Steve creeps through the tall grass towards the camp. */
     static final class S09 extends Camp {
-        S09() { super(6.0, 12250); }
+        S09() { super(6.0, 11500); }
 
         @Override
         void scene() {
@@ -358,12 +358,12 @@ public final class Trailer {
 
     /** The reveal: a slow push towards the sleeping Giant, spiders crawling on it. */
     static final class S10 extends Camp {
-        S10() { super(7.0, 12300); }
+        S10() { super(7.0, 11550); }
 
         @Override
         void scene() {
             sleeper(true);
-            Actor steve = steve(camp(-3.5, 11.5), 160);
+            Actor steve = steve(camp(-6.0, 9.5), 160);
             steve.crouch(true);
             steve.lookAt(giant.e, 6);
             cam.at(0, camp(-9.5, 13.5).add(0, 2.2, 0), camp(0, 0).add(0, 5.0, 0)).fov(55);
@@ -373,7 +373,7 @@ public final class Trailer {
 
     /** A spider drops right in front of Steve; he jumps back and runs. */
     static final class S11 extends Camp {
-        S11() { super(3.5, 12350); }
+        S11() { super(3.5, 11600); }
 
         @Override
         void scene() {
@@ -399,7 +399,7 @@ public final class Trailer {
 
     /** The Giant opens its eyes, stretches, and roars. */
     static final class S12 extends Camp {
-        S12() { super(6.5, 12400); }
+        S12() { super(6.5, 11650); }
 
         @Override
         void scene() {
@@ -422,7 +422,7 @@ public final class Trailer {
     // ================================================================== ACT 4 - the chase
     /** Steve sprints at the camera; behind him the Giant stomps and the shock wave throws him. */
     static final class S13 extends Camp {
-        S13() { super(4.0, 12450); }
+        S13() { super(4.0, 11700); }
 
         @Override
         void scene() {
@@ -445,7 +445,7 @@ public final class Trailer {
 
     /** From the Giant's hat: the skeletons shoot down at the tiny running Steve. */
     static final class S14 extends T {
-        S14() { super(3.5, 12500); }
+        S14() { super(3.5, 11750); }
 
         @Override
         void scene() {
@@ -474,14 +474,14 @@ public final class Trailer {
             }
             DoubleFunction<Vec3> gh = track(g, 0);
             DoubleFunction<Vec3> s = track(steve, 0);
-            cam.follow(0, plus(gh, -1.8, 13.6, -2.2), plus(s, 0, 0.5, 0)).fov(60);
-            cam.follow(3.5, plus(gh, -1.6, 13.4, -2.0), plus(s, 0, 0.5, 0)).fov(56);
+            cam.follow(0, plus(gh, -2.6, 14.6, -2.6), plus(s, 0, 0.5, 0)).fov(62);
+            cam.follow(3.5, plus(gh, -2.4, 14.4, -2.4), plus(s, 0, 0.5, 0)).fov(58);
         }
     }
 
     /** The Giant reaches down and snatches Steve. */
     static final class S15 extends T {
-        S15() { super(3.4, 12550); }
+        S15() { super(3.4, 11800); }
 
         @Override
         void scene() {
@@ -509,7 +509,7 @@ public final class Trailer {
 
     /** The village's iron golem charges in and slams the Giant; the Giant flings Steve away. */
     static final class S16 extends T {
-        S16() { super(4.0, 12600); }
+        S16() { super(4.0, 11850); }
 
         @Override
         void scene() {
@@ -532,7 +532,7 @@ public final class Trailer {
 
     /** In the square: villagers run inside and slam their doors. */
     static final class S17 extends T {
-        S17() { super(4.0, 12650); }
+        S17() { super(4.0, 11900); }
 
         @Override
         void scene() {
@@ -576,7 +576,7 @@ public final class Trailer {
 
     /** Steve drinks the Growth potion and grows to five blocks - the Giant is still twelve. */
     static final class S18 extends T {
-        S18() { super(7.0, 12700); }
+        S18() { super(7.0, 11950); }
 
         @Override
         void scene() {
@@ -600,7 +600,7 @@ public final class Trailer {
 
     /** "Plan B": Shrinking. Tiny Steve dashes between the Giant's legs; the stomp misses. */
     static final class S19 extends T {
-        S19() { super(6.5, 12750); }
+        S19() { super(6.5, 12000); }
 
         @Override
         void scene() {
@@ -628,7 +628,7 @@ public final class Trailer {
     /** The golem and Steve bring the Giant down - it topples in slow motion. */
     static final class S20 extends T {
         S20() {
-            super(4.0, 12800);
+            super(4.0, 12050);
             timeScale = 0.55;
         }
 
@@ -674,8 +674,8 @@ public final class Trailer {
             Actor steve = steve(w.room(2.4, 0, 2.2), 180);
             steve.lookAt(w.room(1.5, 0.8, 0.4));
             Vec3 win = w.room(5.5, 0, 2.5);
-            Actor g = giant(new Vec3(win.x + 3.0, w.y, win.z - 14), 0, 4, false);
-            on(0.2, () -> g.walkTo(new Vec3(win.x + 3.0, w.y, win.z), 1.0));
+            Actor g = giant(new Vec3(win.x + 2.6, w.y, win.z - 14), 0, 4, false);
+            on(0.2, () -> g.walkTo(new Vec3(win.x + 2.6, w.y, win.z), 1.0));
             during(3.6, 7, t -> g.face(90).lookAt(steve.e, 1.5));
             thump(1.0, win.add(4, -6, -8), 1.4, null, 0);
             thump(2.2, win.add(4, -6, -3), 2.0, null, 0);
