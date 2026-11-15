@@ -18,9 +18,6 @@ public abstract class CameraMixin {
     protected abstract void setRotation(float yRot, float xRot);
 
     @Shadow
-    protected abstract void setRotation(float yRot, float xRot, float roll);
-
-    @Shadow
     protected abstract void setPosition(net.minecraft.world.phys.Vec3 pos);
 
     //#if MC >= 1.21.11
@@ -55,7 +52,7 @@ public abstract class CameraMixin {
             dev.star1mp.giantrefresh.cinema.Cam.Pose p = dev.star1mp.giantrefresh.client.CinemaClient.camera(deltaTracker);
             if (p != null) {
                 setPosition(p.pos());
-                setRotation(p.yaw(), p.pitch(), p.roll());
+                setRotation(p.yaw(), p.pitch());
                 return;
             }
         }
