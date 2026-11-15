@@ -98,8 +98,26 @@ jobs:
           export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.showcase=true -Dgiantrefresh.showcase.wait=$WAIT -Dgiantrefresh.showcase.only=$ONLY"
           mkdir -p run/saves; rm -rf run/saves/show; cp -r run/world run/saves/show; rm -f run/saves/show/session.lock
           printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:${RENDER_DISTANCE:-12}\nsimulationDistance:6\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\nguiScale:2\nentityShadows:true\ngraphicsMode:1\nfov:0.0\nparticles:0\n" > run/options.txt
-          timeout 7200 xvfb-run -a -s "-screen 0 1920x1080x24" gradle runClient --no-daemon -Pgr_target=$TARGET \
-            --args="--width 1920 --height 1080 --quickPlaySingleplayer show" > client.log 2>&1 || true
+          run_client() { # $1 = Xvfb screen args; returns 0 if the game got into the world
+            : > client.log
+            ( timeout 7200 xvfb-run -a -s "$1" gradle runClient --no-daemon -Pgr_target=$TARGET \
+                --args="--width 1920 --height 1080 --quickPlaySingleplayer show" > client.log 2>&1 ) &
+            PID=$!
+            for i in $(seq 1 120); do
+              sleep 5
+              if grep -qE "Failed to create backend|FATAL ERROR|Exception in thread \"Render thread\"" client.log; then
+                echo "variant failed: $1"; grep -E "Failed to create backend|BackendCreation" client.log | head -3
+                pkill -f runClient; pkill -f java; wait $PID 2>/dev/null; return 1
+              fi
+              grep -q "SHOWCASE\] scene" client.log && break
+              kill -0 $PID 2>/dev/null || return 1
+            done
+            echo "client running with: $1"; wait $PID; return 0
+          }
+          run_client "-screen 0 1920x1080x24 +extension GLX +render -noreset" \
+            || run_client "-screen 0 1920x1080x32 +extension GLX +render -noreset" \
+            || { export MESA_GL_VERSION_OVERRIDE=4.6 MESA_GLSL_VERSION_OVERRIDE=460; run_client "-screen 0 1920x1080x24 +extension GLX +render -noreset"; } \
+            || { echo "== without Iris"; mkdir -p ../noiris; mv run/mods/iris* ../noiris/; run_client "-screen 0 1920x1080x24"; } || true
           grep -E "SHOWCASE|CLIENTTEST\] screenshot|ERROR|Exception|Caused by|iris|Iris|sodium|Sodium|OpenGL|llvmpipe" client.log | grep -v JAVA_TOOL_OPTIONS | cut -c1-300 | head -150 || true
           ls -la run/screenshots/
 
