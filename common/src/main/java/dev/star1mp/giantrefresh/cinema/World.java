@@ -71,6 +71,7 @@ public final class World {
             }
         }
         village();
+        clearTrees(-62, -112, -12, -20);
         trail();
         ruins();
         camp();
@@ -109,6 +110,43 @@ public final class World {
                         break;
                     }
                     level.setBlock(m, yy == want - 1 ? Blocks.GRASS_BLOCK.defaultBlockState() : Blocks.DIRT.defaultBlockState(), 2 | 16);
+                }
+            }
+        }
+    }
+
+    /** Removes trees (logs and leaves) in a rectangle, so the Giant can be seen walking there. */
+    private void clearTrees(int x1, int z1, int x2, int z2) {
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (int dx = x1; dx <= x2; dx++) {
+            for (int dz = z1; dz <= z2; dz++) {
+                int x = c.getX() + dx;
+                int z = c.getZ() + dz;
+                int top = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
+                int g = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+                for (int yy = top; yy >= g - 12; yy--) {
+                    BlockState st = level.getBlockState(m.set(x, yy, z));
+                    if (st.is(net.minecraft.tags.BlockTags.LEAVES) || st.is(net.minecraft.tags.BlockTags.LOGS)) {
+                        level.setBlock(m, Blocks.AIR.defaultBlockState(), 2 | 16);
+                    }
+                }
+            }
+        }
+    }
+
+    /** Removes grass and flowers in a rectangle (a clear run for the actors). */
+    public void clearPlants(int x1, int z1, int x2, int z2) {
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (int dx = x1; dx <= x2; dx++) {
+            for (int dz = z1; dz <= z2; dz++) {
+                int x = c.getX() + dx;
+                int z = c.getZ() + dz;
+                int g = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+                for (int yy = g; yy <= g + 1; yy++) {
+                    BlockState st = level.getBlockState(m.set(x, yy, z));
+                    if (!st.isAir() && st.getFluidState().isEmpty() && st.getCollisionShape(level, m).isEmpty()) {
+                        level.setBlock(m, Blocks.AIR.defaultBlockState(), 2);
+                    }
                 }
             }
         }
