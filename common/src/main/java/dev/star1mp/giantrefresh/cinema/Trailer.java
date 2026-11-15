@@ -509,7 +509,7 @@ public final class Trailer {
             GiantEntity gi = giantOf(g);
             double startAt = 0.4;
             double catchAt = startAt + GiantPose.GRAB_CATCH / 20.0;
-            Vec3 hand = gi.cinemaHandAt(GiantEntity.ATTACK_GRAB, GiantPose.GRAB_CATCH);
+            Vec3 hand = gi.cinemaHandAt(GiantEntity.ATTACK_GRAB_LOW, GiantPose.GRAB_CATCH);
             Vec3 under = at(hand.x - w.c.getX() - 0.5, hand.z - w.c.getZ() - 0.5);
             dev.star1mp.giantrefresh.GiantRefresh.LOGGER.info("[CINEMA] s15 fist at catch {} ground {}", hand, under.y);
             Actor steve = steve(under.add(0, 0, -1.4), 180);
@@ -517,7 +517,7 @@ public final class Trailer {
             on(0.15, () -> steve.backUp(0.36f));
             on(startAt, () -> {
                 gi.setTarget(steve.living());
-                gi.startAttack(GiantEntity.ATTACK_GRAB);
+                gi.startAttack(GiantEntity.ATTACK_GRAB_LOW);
             });
             // the last moment: he flinches upward into the fist, so the catch carries on as one motion
             double dh = hand.y - (under.y + 0.9);
@@ -529,7 +529,7 @@ public final class Trailer {
             });
             during(catchAt + 0.1, 2.6, t -> {
                 if (gi.getHeld() == null && steve.e.getVehicle() == null) {
-                    gi.showcaseGrab(steve.living(), GiantEntity.ATTACK_GRAB, gi.getAttackTicks());
+                    gi.showcaseGrab(steve.living(), GiantEntity.ATTACK_GRAB_LOW, gi.getAttackTicks());
                 }
             });
             DoubleFunction<Vec3> sp = plus(track(steve, 0), 0, 1.0, 0);
@@ -547,7 +547,7 @@ public final class Trailer {
         void scene() {
             Actor g = hero(at(0, -44), 0, true);
             Actor steve = steve(at(0, -40), 0);
-            on(0.0, () -> giantOf(g).showcaseGrab(steve.living(), GiantEntity.ATTACK_GRAB, 22));
+            on(0.0, () -> giantOf(g).showcaseGrab(steve.living(), GiantEntity.ATTACK_GRAB_LOW, 22));
             Actor golem = spawn(EntityTypes.IRON_GOLEM, at(9, -33), 130);
             golem.walkTo(at(2.2, -41.5), 1.2);
             on(0.75, () -> {
