@@ -214,7 +214,7 @@ public final class GiantShowcase {
                 double bx = cx - trailDirX * 24.0;
                 double bz = cz - trailDirZ * 24.0;
                 camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 11.0, bz, cx + trailDirX * 6.0, y, cz + trailDirZ * 6.0);
-                until = () -> untilTicks > 20;
+                until = () -> untilTicks > 100;
             }
             case "camp" -> {
                 // dusk at the end of the trail: the Giant sleeps, a zombie keeps watch
@@ -230,11 +230,11 @@ public final class GiantShowcase {
                 } else {
                     camera = lookAt(level, x - 10, y + 6, z - 10, x, y, z);
                 }
-                until = () -> untilTicks > 20;
+                until = () -> untilTicks > 100;
             }
             case "spiders" -> {
                 // moonlit night: spiders crawl up a Giant, one already sits on its head
-                command(server, "time set 12700");
+                command(server, "time set 12300");
                 GiantEntity g = giant(level, x, z, 160.0F, -1, false);
                 g.setNoAi(true);
                 g.setCustomName(net.minecraft.network.chat.Component.literal("pose:walk:2"));
@@ -256,7 +256,17 @@ public final class GiantShowcase {
                     if (untilTicks == 5) {
                         goals.forEach(goal -> goal.forceClimb(g));
                     }
-                    return untilTicks > 38;
+                    if (untilTicks % 10 == 0) {
+                        StringBuilder b = new StringBuilder();
+                        for (Entity e : spawned) {
+                            if (e instanceof net.minecraft.world.entity.monster.spider.Spider) {
+                                b.append(String.format(" %.1f/%.1f", e.getY() - g.getY(), Math.sqrt(e.distanceToSqr(g.getX(), e.getY(), g.getZ()))));
+                            }
+                        }
+                        GiantRefresh.LOGGER.info("[SHOWCASE] spiders dy/dist:{}", b);
+                    }
+                    long up = spawned.stream().filter(e -> e instanceof net.minecraft.world.entity.monster.spider.Spider && e.getY() - g.getY() > 2.5).count();
+                    return untilTicks > 140 || (untilTicks > 20 && up >= 3);
                 };
                 camera = lookAt(level, x - 3.0, y + 3.0, z + 13.0, x, y + 7.5, z);
             }
@@ -310,6 +320,7 @@ public final class GiantShowcase {
                 clearTrees(level, Mth.floor(camera[5]), Mth.floor(camera[7]), 18);
             }
             clearView(level, camera, camera[5], camera[6], camera[7], 2.5);
+            clearPlants(level, Mth.floor(camera[0]), Mth.floor(camera[2]), 4);
         }
     }
 
@@ -410,29 +421,22 @@ public final class GiantShowcase {
         }
     }
 
-    /** A dry, fairly flat spot of at least 36x36 blocks near {@code from}, in a pleasant biome. */
+    /** A dry, flat, open spot of about 36x36 blocks near {@code from}, in a pleasant biome. */
     private static BlockPos findLand(ServerLevel level, BlockPos from) {
-        var found = level.findClosestBiome3d(GiantShowcase::nice, from, 2400, 32, 64);
+        var found = level.findClosestBiome3d(GiantShowcase::nice, new BlockPos(from.getX(), 72, from.getZ()), 2400, 32, 64);
         BlockPos start = found != null ? found.getFirst() : from;
         BlockPos best = start;
         int bestScore = Integer.MAX_VALUE;
-        for (int ring = 0; ring <= 6; ring++) {
-            for (int i = -ring; i <= ring; i++) {
-                for (int j = -ring; j <= ring; j++) {
-                    if (Math.max(Math.abs(i), Math.abs(j)) != ring) {
-                        continue;
-                    }
-                    int cx = start.getX() + i * 24;
-                    int cz = start.getZ() + j * 24;
-                    int score = landScore(level, cx, cz);
-                    if (score < bestScore) {
-                        bestScore = score;
-                        best = new BlockPos(cx, 0, cz);
-                    }
+        for (int i = -4; i <= 4; i++) {
+            for (int j = -4; j <= 4; j++) {
+                int cx = start.getX() + i * 28;
+                int cz = start.getZ() + j * 28;
+                int y = ground(level, cx, cz);
+                int score = landScore(level, cx, cz) + (nice(level.getBiome(new BlockPos(cx, y, cz))) ? 0 : 60) + (Math.abs(i) + Math.abs(j));
+                if (score < bestScore) {
+                    bestScore = score;
+                    best = new BlockPos(cx, 0, cz);
                 }
-            }
-            if (bestScore <= 2) {
-                break;
             }
         }
         GiantRefresh.LOGGER.info("[SHOWCASE] land at {} {} (score {})", best.getX(), best.getZ(), bestScore);
@@ -444,8 +448,8 @@ public final class GiantShowcase {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         int score = 0;
-        for (int dx = -18; dx <= 18; dx += 6) {
-            for (int dz = -18; dz <= 18; dz += 6) {
+        for (int dx = -20; dx <= 20; dx += 8) {
+            for (int dz = -20; dz <= 20; dz += 8) {
                 int x = cx + dx;
                 int z = cz + dz;
                 int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
@@ -460,7 +464,7 @@ public final class GiantShowcase {
                 max = Math.max(max, floor);
             }
         }
-        return score + Math.max(0, max - min - 3) * 3;
+        return score + Math.max(0, max - min - 1) * 6;
     }
 
     private static BlockPos findSite(ServerLevel level, int scene, boolean village) {

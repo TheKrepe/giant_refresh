@@ -84,7 +84,7 @@ public final class GiantClientHooks {
                 if (dev.star1mp.giantrefresh.entity.GiantShowcase.ready == scene) {
                     scPhase = 2;
                     scTime = now;
-                } else if (since > 60.0) {
+                } else if (since > 300.0) {
                     dev.star1mp.giantrefresh.GiantRefresh.LOGGER.warn("[SHOWCASE] scene {} never froze", scene);
                     nextScene(server, scene);
                 }
