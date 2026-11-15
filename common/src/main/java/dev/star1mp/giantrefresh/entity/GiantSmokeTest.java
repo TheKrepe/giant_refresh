@@ -79,7 +79,6 @@ public final class GiantSmokeTest {
             // far from the Giants, so nobody grabs or kills it before it is measured
             mixer = EntityTypes.COW.spawn(level, pos.offset(-40, 0, -40), EntitySpawnReason.COMMAND);
             if (mixer != null) {
-                mixer.setInvulnerable(true);
                 if (mixer instanceof net.minecraft.world.entity.Mob mob) {
                     mob.setNoAi(true);
                 }
