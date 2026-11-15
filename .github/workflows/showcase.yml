@@ -7,7 +7,7 @@ on:
     inputs:
       target:
         description: Minecraft target (versions/*.properties)
-        default: '26.3'
+        default: '26.2'
       shaders:
         description: Use Iris + shader pack
         default: 'true'
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
-      TARGET: ${{ inputs.target || '26.3' }}
+      TARGET: ${{ inputs.target || '26.2' }}
       SHADERS: ${{ inputs.shaders || 'true' }}
       ONLY: ${{ inputs.only || '' }}
     steps:
