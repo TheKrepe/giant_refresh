@@ -135,7 +135,7 @@ public final class GiantSmokeTest {
             if (mixer != null) {
                 // both at once: normal size; Growth lasts longer, so it grows once Shrinking runs out
                 mixer.addEffect(new MobEffectInstance(GRContent.growthHolder(), 400));
-                mixer.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 120));
+                mixer.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), 200));
             }
         }
         if (mixer != null && mixer.isAlive() && ticks == 200) {
