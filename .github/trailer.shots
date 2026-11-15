@@ -1,4 +1,4 @@
-res 960x540
+res 1920x1080
 s01_dawn
 s02_farmer
 s03_thump
@@ -21,3 +21,4 @@ s19_shrink
 s20_fall
 s21_trophy
 s22_eye
+s23_hero

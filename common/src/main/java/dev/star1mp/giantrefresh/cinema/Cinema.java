@@ -80,7 +80,7 @@ public final class Cinema {
                 moveCamera(level, player, 0);
                 if (++wait > 60 && clientReady) {
                     command(server, "tick rate " + TICK_RATE);
-                    startTick = level.getGameTime() + 1;
+                    startTick = level.getGameTime() + 8; // the client must already run at the slow rate
                     phase = 3;
                     GiantRefresh.LOGGER.info("[CINEMA] recording from game time {}", startTick);
                 }

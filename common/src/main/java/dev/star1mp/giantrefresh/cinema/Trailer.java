@@ -33,7 +33,7 @@ public final class Trailer {
 
     public static final String[] ORDER = {"s01_dawn", "s02_farmer", "s03_thump", "s04_lookup", "s05_footprint", "s06_follow",
             "s07_ruins", "s08_silhouette", "s09_sneak", "s10_sleeper", "s11_spider", "s12_wake", "s13_stomp", "s14_arrows",
-            "s15_grab", "s16_golem", "s17_hide", "s18_growth", "s19_shrink", "s20_fall", "s21_trophy", "s22_eye"};
+            "s15_grab", "s16_golem", "s17_hide", "s18_growth", "s19_shrink", "s20_fall", "s21_trophy", "s22_eye", "s23_hero"};
 
     public static Shot create(String name) {
         Supplier<Shot> s = switch (name) {
@@ -59,6 +59,7 @@ public final class Trailer {
             case "s20_fall" -> S20::new;
             case "s21_trophy" -> S21::new;
             case "s22_eye" -> S22::new;
+            case "s23_hero" -> S23::new;
             default -> null;
         };
         return s == null ? null : s.get();
@@ -161,8 +162,8 @@ public final class Trailer {
                 chicken(at(-9 + i * 1.3, -9.5 + (i % 2)), i * 70);
             }
             during(0, 7, t -> cmd("time set " + (23250 + (int) (t * 45))));
-            cam.at(0, at(-40, 18, -24), at(10, 2, -2)).fov(55);
-            cam.at(7, at(-30, 10, -19), at(8, 3, -2)).fov(55);
+            cam.at(0, at(-38, 16.5, -23), at(9, 2.4, -2)).fov(55).linear();
+            cam.at(7, at(-33.5, 13.0, -20.8), at(8, 2.8, -2)).fov(54).linear();
         }
     }
 
@@ -504,9 +505,10 @@ public final class Trailer {
                     steve.stop();
                 }
             });
-            DoubleFunction<Vec3> gp = track(g, 0);
-            cam.at(0, at(10, 1.4, -42), plus(gp, 0, 5.0, 2.5)).fov(64);
-            cam.at(3.4, at(10.5, 1.2, -43), plus(gp, 0, 8.5, 1.5)).fov(66);
+            DoubleFunction<Vec3> sp = plus(track(steve, 0), 0, 1.0, 0);
+            cam.at(0, at(5.0, 1.2, -40.5), sp).fov(56);
+            cam.at(1.4, at(5.2, 1.1, -41.0), sp).fov(58);
+            cam.at(3.4, at(6.0, 0.9, -42.0), sp).fov(64);
         }
     }
 
@@ -526,7 +528,7 @@ public final class Trailer {
                 sound(SoundEvents.IRON_GOLEM_ATTACK, golem.e.position(), 1.5F, 1.0F);
             });
             on(0.85, () -> giantOf(g).hurtServer(level, level.damageSources().mobAttack((LivingEntity) golem.e), 4.0F));
-            jolt(0.85, 1.0);
+            jolt(0.92, 1.2);
             golem.lookAt(g.e, 5);
             cam.at(0, at(13, 1.6, -30), at(3, 6, -42)).fov(62);
             cam.at(4, at(12, 1.8, -31), at(1, 7, -42)).fov(62);
@@ -649,28 +651,27 @@ public final class Trailer {
 
         @Override
         void scene() {
-            Actor g = hero(at(0, -42), 0, true);
-            Actor golem = spawn(EntityTypes.IRON_GOLEM, at(2.4, -39.5), 160);
+            Actor g = hero(at(0, -42), 0, false);
+            Actor golem = spawn(EntityTypes.IRON_GOLEM, at(-5.0, -37.8), 200);
             golem.lookAt(g.e, 5);
-            Actor steve = steve(at(-2.5, -39.0), 200);
-            steve.lookAt(g.e, 3);
+            Actor steve = steve(at(-2.2, -36.6), 190);
+            steve.lookAt(g.e, 4);
             on(0.3, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
             on(0.4, () -> steve.living().swing(InteractionHand.MAIN_HAND, true));
             on(0.5, () -> {
-                int k = 0;
-                for (Entity r : riders(g)) {
-                    r.stopRiding();
-                    Vec3 p = at(3.5 + k * 1.5, -46.5 - k);
-                    r.setPos(p.x, p.y, p.z);
-                    r.setDeltaMovement(Vec3.ZERO);
-                    k++;
-                }
                 giantOf(g).kill(level);
             });
-            on(0.5 + 26 / 20.0, () -> dust(g.e.position().add(4, 0.2, 0), 60, 4.0));
-            jolt(0.5 + 26 / 20.0, 3.2);
-            cam.at(0, at(-9, 1.4, -33), at(0, 6, -42)).fov(62);
-            cam.at(4, at(-10, 1.7, -34), at(1, 3, -42)).fov(64);
+            // the body hits the ground on death tick 14 (see GiantEntity#tickDeath), falling east
+            double impact = 0.5 + 14 / 20.0;
+            on(impact, () -> {
+                for (int i = 3; i <= 11; i += 2) {
+                    dust(at(i, 0.2, -42), 14, 1.6);
+                }
+            });
+            jolt(impact, 3.4);
+            cam.at(0, at(-3.0, 1.0, -26.5), at(3.0, 5.5, -42)).fov(66);
+            cam.at(1.0, at(-2.9, 0.95, -27.2), at(3.6, 4.5, -42)).fov(66);
+            cam.at(4, at(-2.6, 0.9, -28.5), at(5.0, 1.6, -42)).fov(64);
         }
     }
 
@@ -687,6 +688,23 @@ public final class Trailer {
             on(4.2, () -> steve.lookAt(() -> steve.e.position().add(0.5, 0.9, -1.2)));
             cam.at(0, w.room(4.6, 1.5, 4.4), w.room(1.6, 0.8, 0.5)).fov(62);
             cam.at(6.5, w.room(4.2, 1.6, 3.6), w.room(2.0, 1.1, 1.0)).fov(58);
+        }
+    }
+
+    /** Behind the end card: the Giant against the sunset, the lens drifting slowly round it. */
+    static final class S23 extends T {
+        S23() { super(9.0, 12300); }
+
+        @Override
+        void scene() {
+            Vec3 gp = at(-31, -60);
+            Actor g = hero(gp, -100, true);
+            g.lookAt(at(-6, 9, -52));
+            during(0, 9, t -> g.lookAt(at(-6, 9 + Math.sin(t * 0.7) * 1.2, -52 + t * 0.4)));
+            w.clearPlants(-14, -60, -4, -46);
+            // looking west into the sun; the Giant stands in the right third of the frame
+            cam.at(0, at(-9.0, 1.3, -50.0), gp.add(0, 7.5, 7.5)).fov(52).linear();
+            cam.at(9, at(-10.5, 1.9, -55.5), gp.add(0, 7.0, 5.5)).fov(50).linear();
         }
     }
 
