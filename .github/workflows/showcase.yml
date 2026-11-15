@@ -78,7 +78,7 @@ jobs:
           mkdir -p ../servermods; mv run/mods/* ../servermods/ 2>/dev/null || true
           timeout 1200 gradle runServer --no-daemon -Pgr_target=$TARGET > server.log 2>&1 || true
           mv ../servermods/* run/mods/ 2>/dev/null || true
-          grep -E "SMOKETEST.*(PASS|FAIL)" server.log
+          grep -E "SMOKETEST.*(PASS|FAIL)" server.log || { tail -80 server.log; exit 1; }
 
       - name: Render the showcase
         working-directory: ${{ steps.meta.outputs.dir }}
@@ -104,6 +104,7 @@ jobs:
           mkdir -p /tmp/out && cp run/screenshots/showcase_*.png /tmp/out/ 2>/dev/null || true
           cp client.log /tmp/out/client.log 2>/dev/null || true
           cd /tmp/out
+          echo "$TARGET shaders=$SHADERS run ${{ github.run_id }}" > info.txt
           git init -q -b showcase-out && git add -A
           git -c user.name=ci -c user.email=ci@localhost commit -qm "showcase $TARGET shaders=$SHADERS run ${{ github.run_id }}"
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" showcase-out
