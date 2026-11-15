@@ -25,7 +25,7 @@ EDL = [
     ('s17_hide', 0, 4.0),
     ('s18_growth', 0, 7.0),
     ('s19_shrink', 0, 6.5),
-    ('s20_fall', 0, 7.27),
+    ('s20_fall', 0, 8.0),
     ('black', 0, 1.4),
     ('s21_trophy', 0, 6.5),
     ('s22_eye', 0, 6.6),
@@ -40,11 +40,11 @@ EVENTS = {
     's11_spider': {'spider': [0.7]},
     's12_wake': {'wake': [0.8], 'roar': [3.6]},
     's13_stomp': {'hit': [1.5]},
-    's16_golem': {'hit': [0.85]},
+    's16_golem': {'hit': [0.92]},
     's17_hide': {'door': [2.6, 2.85, 3.1, 3.35]},
     's18_growth': {'grow': [2.0], 'peak': [4.5], 'bwomp': [5.7]},
     's19_shrink': {'shrink': [1.9], 'run': [3.6], 'stomp': [5.0]},
-    's20_fall': {'fall': [(0.5 + 0.7) / 0.55]},
+    's20_fall': {'fall': [(0.35 + 0.7) / 0.3]},
     's22_eye': {'thump': [1.0, 2.2]},
 }
 

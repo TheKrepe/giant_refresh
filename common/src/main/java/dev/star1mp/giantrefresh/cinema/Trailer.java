@@ -143,6 +143,11 @@ public final class Trailer {
         DoubleFunction<Vec3> fixed(Vec3 p) { return t -> p; }
 
         DoubleFunction<Vec3> plus(DoubleFunction<Vec3> f, double x, double y, double z) { return t -> f.apply(t).add(x, y, z); }
+
+        /** Follows f horizontally but stays at a fixed height (the lens never dips into hollows with the actor). */
+        DoubleFunction<Vec3> level(DoubleFunction<Vec3> f, double x, double y, double z) {
+            return t -> { Vec3 p = f.apply(t); return new Vec3(p.x + x, y, p.z + z); };
+        }
     }
 
     // ================================================================== ACT 1 - the village at dawn
@@ -260,12 +265,18 @@ public final class Trailer {
         void scene() {
             double[] a = w.prints.get(3);
             double[] b = w.prints.get(8);
-            Actor steve = steve(at(a[0] + 0.8, a[1] + 2), 180).rail();
-            on(0.0, () -> steve.walkTo(at(b[0] + 0.6, b[1]), 0.45));
-            DoubleFunction<Vec3> s = plus(track(steve, 0), 0, 1.1, -2.5);
-            w.clearPlants((int) a[0] - 4, (int) b[1] - 2, (int) a[0] + 6, (int) a[1] + 10);
-            cam.at(0, at(a[0] + 2.4, 2.4, a[1] + 7.5), s).fov(58);
-            cam.at(5.5, at(a[0] + 2.0, 2.6, a[1] - 3.0), s).fov(56);
+            double side = World.TRAIL_X + 4.0;
+            Actor steve = steve(at(side, a[1] + 2), 180);
+            on(0.0, () -> steve.walkTo(at(side - 0.4, b[1]), 0.45));
+            // he keeps glancing down at the prints beside him
+            steve.lookAt(() -> steve.e.position().add(-2.6, 0.2, -2.0));
+            on(2.4, () -> steve.lookAt(() -> steve.e.position().add(-0.6, 1.4, -8)));
+            on(3.9, () -> steve.lookAt(() -> steve.e.position().add(-2.4, 0.2, -1.6)));
+            w.clearPlants((int) side - 3, (int) b[1] - 2, (int) side + 5, (int) a[1] + 10);
+            double ly = at(side, a[1]).y + 2.3;
+            DoubleFunction<Vec3> s = level(track(steve, 0), -0.3, ly - 1.0, -3.0);
+            cam.at(0, new Vec3(at(side + 1.6, a[1] + 7.0).x, ly, at(side, a[1] + 7.0).z), s).fov(58);
+            cam.at(5.5, new Vec3(at(side + 1.4, 0).x, ly + 0.2, at(side, a[1] - 3.5).z), s).fov(56);
         }
     }
 
@@ -292,8 +303,8 @@ public final class Trailer {
                 steve.living().swing(InteractionHand.MAIN_HAND, true);
             });
             on(5.9, () -> steve.crouch(false).lookAt(() -> steve.e.position().add(0.6, 0.9, -1.2)));
-            cam.at(0, r.add(3.4, 2.1, 4.2), track(steve, 1.3)).fov(55);
-            cam.at(7, r.add(2.6, 1.8, 3.0), track(steve, 0.9)).fov(50);
+            cam.at(0, r.add(6.5, 2.7, 8.0), track(steve, 1.3)).fov(52);
+            cam.at(7, r.add(5.2, 2.4, 6.4), track(steve, 0.9)).fov(46);
         }
     }
 
@@ -354,8 +365,9 @@ public final class Trailer {
             steve.crouch(true);
             on(0.0, () -> steve.walkTo(camp(-2.5, 12.5), 0.42));
             DoubleFunction<Vec3> s = track(steve, 0);
-            cam.follow(0, plus(s, 3.0, 0.55, 1.6), plus(s, -0.6, 0.7, -4)).fov(55);
-            cam.follow(6, plus(s, 2.6, 0.6, 1.2), t -> camp(0, 0).add(0, 5, 0)).fov(52);
+            double ly = camp(-2.5, 16).y + 0.75;
+            cam.follow(0, level(s, 3.0, ly, 1.6), level(s, -0.6, ly + 0.15, -4)).fov(55);
+            cam.follow(6, level(s, 2.6, ly + 0.05, 1.2), t -> camp(0, 0).add(0, 5, 0)).fov(52);
         }
     }
 
@@ -431,14 +443,14 @@ public final class Trailer {
         void scene() {
             giant = hero(camp(0, 9), 0, true);
             w.clearPlants(World.CAMP_X - 4, World.CAMP_Z + 10, World.CAMP_X + 5, World.CAMP_Z + 40);
-            Actor steve = steve(camp(0.5, 15), 0);
-            steve.rail().sprint(true).walkTo(camp(1.0, 36), 1.3);
+            Actor steve = steve(camp(0.5, 13), 0);
+            steve.sprint(true).walkTo(camp(1.0, 36), 1.0);
             on(0.2, () -> giantOf(giant).startAttack(GiantEntity.ATTACK_STOMP));
             double impact = 0.2 + 26 / 20.0;
             jolt(impact, 3.0);
             on(impact, () -> {
                 steve.stop();
-                steve.e.setDeltaMovement(0.05, 0.62, 0.75);
+                steve.e.setDeltaMovement(0.04, 0.55, 0.38);
                 dust(steve.e.position(), 30, 2.0);
             });
             DoubleFunction<Vec3> s = track(steve, 0);
@@ -645,8 +657,8 @@ public final class Trailer {
     /** The golem and Steve bring the Giant down - it topples in slow motion. */
     static final class S20 extends T {
         S20() {
-            super(4.0, 12450);
-            timeScale = 0.55;
+            super(2.4, 12450);
+            timeScale = 0.3;
         }
 
         @Override
@@ -656,22 +668,22 @@ public final class Trailer {
             golem.lookAt(g.e, 5);
             Actor steve = steve(at(-2.2, -36.6), 190);
             steve.lookAt(g.e, 4);
-            on(0.3, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
-            on(0.4, () -> steve.living().swing(InteractionHand.MAIN_HAND, true));
-            on(0.5, () -> {
+            on(0.15, () -> level.broadcastEntityEvent(golem.e, (byte) 4));
+            on(0.2, () -> steve.living().swing(InteractionHand.MAIN_HAND, true));
+            on(0.35, () -> {
                 giantOf(g).kill(level);
             });
             // the body hits the ground on death tick 14 (see GiantEntity#tickDeath), falling east
-            double impact = 0.5 + 14 / 20.0;
+            double impact = 0.35 + 14 / 20.0;
             on(impact, () -> {
                 for (int i = 3; i <= 11; i += 2) {
                     dust(at(i, 0.2, -42), 14, 1.6);
                 }
             });
             jolt(impact, 3.4);
-            cam.at(0, at(-3.0, 1.0, -26.5), at(3.0, 5.5, -42)).fov(66);
-            cam.at(1.0, at(-2.9, 0.95, -27.2), at(3.6, 4.5, -42)).fov(66);
-            cam.at(4, at(-2.6, 0.9, -28.5), at(5.0, 1.6, -42)).fov(64);
+            cam.at(0, at(-2.0, 1.1, -30.5), at(2.0, 6.5, -42)).fov(70);
+            cam.at(1.0, at(-1.9, 1.0, -31.0), at(3.2, 4.5, -42)).fov(70);
+            cam.at(2.4, at(-1.7, 0.9, -31.6), at(4.5, 1.8, -42)).fov(68);
         }
     }
 
@@ -703,8 +715,8 @@ public final class Trailer {
             during(0, 9, t -> g.lookAt(at(-6, 9 + Math.sin(t * 0.7) * 1.2, -52 + t * 0.4)));
             w.clearPlants(-14, -60, -4, -46);
             // looking west into the sun; the Giant stands in the right third of the frame
-            cam.at(0, at(-9.0, 1.3, -50.0), gp.add(0, 7.5, 7.5)).fov(52).linear();
-            cam.at(9, at(-10.5, 1.9, -55.5), gp.add(0, 7.0, 5.5)).fov(50).linear();
+            cam.at(0, at(-9.0, 1.3, -50.0), gp.add(0, 7.0, 14.5)).fov(52).linear();
+            cam.at(9, at(-10.5, 1.9, -55.5), gp.add(0, 6.5, 12.5)).fov(50).linear();
         }
     }
 

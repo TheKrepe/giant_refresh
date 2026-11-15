@@ -146,7 +146,7 @@ public final class Actor {
             double nz = e.getZ() + Math.cos(rad) * v;
             double y = e.getY();
             double top = surface(level, nx, nz, y);
-            if (top - y > 1.3) {
+            if (top - y > 1.6) {
                 v = 0; // a wall: stand
                 nx = e.getX();
                 nz = e.getZ();
