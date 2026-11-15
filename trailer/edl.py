@@ -41,7 +41,7 @@ EVENTS = {
     's12_wake': {'wake': [0.8], 'roar': [3.6]},
     's13_stomp': {'hit': [1.5]},
     's16_golem': {'hit': [0.92]},
-    's17_hide': {'door': [2.6, 2.85, 3.1, 3.35]},
+    's17_hide': {'door': [3.09, 3.34]},
     's18_growth': {'grow': [2.0], 'peak': [4.5], 'bwomp': [5.7]},
     's19_shrink': {'shrink': [1.9], 'run': [3.6], 'stomp': [5.0]},
     's20_fall': {'fall': [(0.35 + 0.7) / 0.3]},
