@@ -635,7 +635,9 @@ public class GiantEntity extends Monster {
     }
 
     /** Promo screenshots only (GiantShowcase): the fist has just closed on {@code e}. */
-    public void showcaseGrab(LivingEntity e) {
+    public void showcaseGrab(LivingEntity e, int attack, int ticks) {
+        entityData.set(DATA_ATTACK, (byte) attack);
+        attackTicks = ticks;
         entityData.set(DATA_HELD, e.getId());
         if (!e.startRiding(this, true, true)) {
             entityData.set(DATA_HELD, -1);

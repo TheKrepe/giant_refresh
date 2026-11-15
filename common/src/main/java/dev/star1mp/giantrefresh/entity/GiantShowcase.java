@@ -161,16 +161,17 @@ public final class GiantShowcase {
                 if (victim instanceof Mob m) {
                     m.setNoAi(true);
                 }
+                g.setNoAi(true);
+                int hold = dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_THROW - 5;
                 until = () -> {
-                    if (untilTicks == 5) {
-                        g.startAttack(GiantEntity.ATTACK_GRAB);
+                    if (untilTicks == 2 && victim != null) {
+                        // the attack state is set with the fist already closed; the client plays the
+                        // animation from the start, so freeze once it has caught up
+                        g.showcaseGrab(victim, GiantEntity.ATTACK_GRAB, hold);
                     }
-                    if (victim != null && g.getHeld() == null && g.getAttackTicks() > dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_CATCH) {
-                        g.showcaseGrab(victim); // the fist closes on the villager whether or not it was in reach
-                    }
-                    return untilTicks > 5 && g.getAttackTicks() >= dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_THROW - 5;
+                    return untilTicks >= 2 + hold;
                 };
-                camera = lookAt(level, x + 13.0, y + 2.5, z + 11.0, x, y + 9.5, z + 0.5);
+                camera = lookAt(level, x + 9.0, y + 3.0, z + 14.0, x, y + 9.5, z + 1.0);
             }
             case "village" -> {
                 // in a village: the Giant raises both fists over an iron golem, villagers run

@@ -95,6 +95,8 @@ jobs:
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq xvfb mesa-vulkan-drivers libgl1-mesa-dri imagemagick >/dev/null
           WAIT=25; [ "$SHADERS" = true ] && WAIT=${SHADER_WAIT:-90}
+          [ -z "$ONLY" ] && [ -f ../.github/showcase.only ] && ONLY=$(cat ../.github/showcase.only)
+          echo "scenes: ${ONLY:-all}"
           export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.showcase=true -Dgiantrefresh.showcase.wait=$WAIT -Dgiantrefresh.showcase.only=$ONLY"
           mkdir -p run/saves; rm -rf run/saves/show; cp -r run/world run/saves/show; rm -f run/saves/show/session.lock
           printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:${RENDER_DISTANCE:-12}\nsimulationDistance:6\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\nguiScale:2\nentityShadows:true\ngraphicsMode:1\nfov:0.0\nparticles:0\n" > run/options.txt
