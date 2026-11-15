@@ -167,7 +167,7 @@ public final class GiantShowcase {
                     }
                     return untilTicks > 5 && g.getAttackTicks() >= dev.star1mp.giantrefresh.entity.anim.GiantPose.GRAB_THROW - 5;
                 };
-                camera = lookAt(level, x + 11.0, y + 4.0, z + 7.0, x, y + 10.0, z + 1.0);
+                camera = lookAt(level, x + 13.0, y + 2.5, z + 11.0, x, y + 9.5, z + 0.5);
             }
             case "village" -> {
                 // in a village: the Giant raises both fists over an iron golem, villagers run
@@ -226,7 +226,10 @@ public final class GiantShowcase {
                     double side = -trailDirZ;
                     double sideZ = trailDirX;
                     zombie(level, gx + side * 5.0 - trailDirX * 3.0, gz + sideZ * 5.0 - trailDirZ * 3.0, 0.0F);
-                    camera = lookAt(level, gx - 12.0, gy + 2.5, gz + 3.0, gx, gy + 3.5, gz);
+                    double yaw = Math.toRadians(trailGiant.getYRot());
+                    double fx = -Math.sin(yaw);
+                    double fz = Math.cos(yaw);
+                    camera = lookAt(level, gx + fx * 11.0 - fz * 5.0, gy + 2.0, gz + fz * 11.0 + fx * 5.0, gx, gy + 3.5, gz);
                 } else {
                     camera = lookAt(level, x - 10, y + 6, z - 10, x, y, z);
                 }
@@ -265,8 +268,9 @@ public final class GiantShowcase {
                         }
                         GiantRefresh.LOGGER.info("[SHOWCASE] spiders dy/dist:{}", b);
                     }
-                    long up = spawned.stream().filter(e -> e instanceof net.minecraft.world.entity.monster.spider.Spider && e.getY() - g.getY() > 2.5).count();
-                    return untilTicks > 140 || (untilTicks > 20 && up >= 3);
+                    long up = spawned.stream().filter(e -> e instanceof net.minecraft.world.entity.monster.spider.Spider
+                            && e.getVehicle() == null && e.getY() - g.getY() > 4.0).count();
+                    return untilTicks > 140 || up >= 2;
                 };
                 camera = lookAt(level, x - 3.0, y + 3.0, z + 13.0, x, y + 7.5, z);
             }
@@ -448,8 +452,8 @@ public final class GiantShowcase {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         int score = 0;
-        for (int dx = -20; dx <= 20; dx += 8) {
-            for (int dz = -20; dz <= 20; dz += 8) {
+        for (int dx = -20; dx <= 20; dx += 5) {
+            for (int dz = -20; dz <= 20; dz += 5) {
                 int x = cx + dx;
                 int z = cz + dz;
                 int surface = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
@@ -459,6 +463,9 @@ public final class GiantShowcase {
                 }
                 if (level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) != surface) {
                     score += 4; // tree
+                }
+                if (floor <= level.getSeaLevel() + 1) {
+                    score += 20; // too close to the water line
                 }
                 min = Math.min(min, floor);
                 max = Math.max(max, floor);
