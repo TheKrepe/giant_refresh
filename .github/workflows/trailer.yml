@@ -99,8 +99,9 @@ jobs:
           tail -c 3000000 fabric/client.log > /tmp/pub/$SHOT.client.log 2>/dev/null || true
           cd /tmp && rm -rf repo && git clone -q --depth 1 --branch trailer-out "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" repo 2>/dev/null \
             || { mkdir repo && cd repo && git init -q -b trailer-out && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" && cd ..; }
-          cd repo; mkdir -p shots; cp /tmp/pub/* shots/ 2>/dev/null || true
-          git add -A; git -c user.name=ci -c user.email=ci@localhost commit -qm "shot $SHOT run ${{ github.run_id }}" || exit 0
+          cd repo; git config user.name ci; git config user.email ci@localhost
+          mkdir -p shots; cp /tmp/pub/* shots/ 2>/dev/null || true
+          git add -A; git commit -qm "shot $SHOT run ${{ github.run_id }}" || exit 0
           for i in 1 2 3 4 5 6; do
             git push -q origin trailer-out && break
             git pull -q --rebase origin trailer-out || true; sleep $((RANDOM % 10 + 3))

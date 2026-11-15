@@ -321,20 +321,20 @@ public final class World {
                 .setValue(net.minecraft.world.level.block.BrewingStandBlock.HAS_BOTTLE[0], true)
                 .setValue(net.minecraft.world.level.block.BrewingStandBlock.HAS_BOTTLE[2], true), 3);
         level.setBlock(new BlockPos(bx + 5, fy, bz + 1), Blocks.BARREL.defaultBlockState(), 3);
-        level.setBlock(new BlockPos(bx + 5, fy, bz + 5), Blocks.RED_BED.defaultBlockState()
+        level.setBlock(new BlockPos(bx + 5, fy, bz + 5), Blocks.BED.red().defaultBlockState()
                 .setValue(net.minecraft.world.level.block.BedBlock.FACING, Direction.WEST)
                 .setValue(net.minecraft.world.level.block.BedBlock.PART, net.minecraft.world.level.block.state.properties.BedPart.HEAD), 3);
-        level.setBlock(new BlockPos(bx + 4, fy, bz + 5), Blocks.RED_BED.defaultBlockState()
+        level.setBlock(new BlockPos(bx + 4, fy, bz + 5), Blocks.BED.red().defaultBlockState()
                 .setValue(net.minecraft.world.level.block.BedBlock.FACING, Direction.WEST)
                 .setValue(net.minecraft.world.level.block.BedBlock.PART, net.minecraft.world.level.block.state.properties.BedPart.FOOT), 3);
         level.setBlock(new BlockPos(bx + 3, fy + 3, bz + 3), Blocks.LANTERN.defaultBlockState()
                 .setValue(net.minecraft.world.level.block.LanternBlock.HANGING, true), 3);
         level.setBlock(new BlockPos(bx + 3, fy + 4, bz + 3), Blocks.OAK_FENCE.defaultBlockState(), 3);
         level.setBlock(new BlockPos(bx + 1, fy, bz + 1), Blocks.CARTOGRAPHY_TABLE.defaultBlockState(), 3);
-        level.setBlock(new BlockPos(bx + 2, fy, bz + 3), Blocks.RED_CARPET.defaultBlockState(), 3);
-        level.setBlock(new BlockPos(bx + 3, fy, bz + 3), Blocks.RED_CARPET.defaultBlockState(), 3);
-        level.setBlock(new BlockPos(bx + 2, fy, bz + 4), Blocks.RED_CARPET.defaultBlockState(), 3);
-        level.setBlock(new BlockPos(bx + 3, fy, bz + 4), Blocks.RED_CARPET.defaultBlockState(), 3);
+        level.setBlock(new BlockPos(bx + 2, fy, bz + 3), Blocks.CARPET.red().defaultBlockState(), 3);
+        level.setBlock(new BlockPos(bx + 3, fy, bz + 3), Blocks.CARPET.red().defaultBlockState(), 3);
+        level.setBlock(new BlockPos(bx + 2, fy, bz + 4), Blocks.CARPET.red().defaultBlockState(), 3);
+        level.setBlock(new BlockPos(bx + 3, fy, bz + 4), Blocks.CARPET.red().defaultBlockState(), 3);
         // ground around the tower
         level.setBlock(new BlockPos(bx - 1, y, bz + 1), Blocks.TORCH.defaultBlockState(), 2);
     }
