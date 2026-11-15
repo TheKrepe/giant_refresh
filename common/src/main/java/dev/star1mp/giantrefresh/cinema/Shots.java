@@ -121,7 +121,7 @@ public final class Shots {
             int y = origin.getY();
             Sets.flatten(level, origin.getX() - 30, origin.getZ() - 30, origin.getX() + 30, origin.getZ() + 30, y, 25);
             Actor steve = person("steve", g(-4, -6), 180);
-            steve.e.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, net.minecraft.world.item.alchemy.PotionContents.createItemStack(
+            steve.living().setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, net.minecraft.world.item.alchemy.PotionContents.createItemStack(
                     net.minecraft.world.item.Items.POTION, net.minecraft.core.registries.BuiltInRegistries.POTION.wrapAsHolder(GRContent.GROWTH_POTION.get())));
             Actor alex = person("alex", g(4, -6), 180);
             Actor sleeper = giant(g(-12, 6), 180, 3, false);
