@@ -215,9 +215,9 @@ public final class GiantShowcase {
                     spawned.add(trailGiant);
                 }
                 // above and behind the old end of the trail, looking along it
-                double bx = cx - trailDirX * 34.0;
-                double bz = cz - trailDirZ * 34.0;
-                camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 13.0, bz, cx - trailDirX * 4.0, y, cz - trailDirZ * 4.0);
+                double bx = cx - trailDirX * 24.0;
+                double bz = cz - trailDirZ * 24.0;
+                camera = lookAt(level, bx, ground(level, (int) bx, (int) bz) + 11.0, bz, cx + trailDirX * 6.0, y, cz + trailDirZ * 6.0);
                 until = () -> untilTicks > 100;
             }
             case "camp" -> {
@@ -461,7 +461,7 @@ public final class GiantShowcase {
                 if (level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) != surface) {
                     score += 4; // tree
                 }
-                if (floor <= level.getSeaLevel()) {
+                if (floor <= 63) {
                     score += 20; // level with the water: there is a lake or the sea right next to it
                 }
                 min = Math.min(min, floor);
