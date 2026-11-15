@@ -52,13 +52,19 @@ jobs:
         run: |
           mkdir -p run/mods run/shaderpacks run/config
           MC=${{ steps.meta.outputs.mc }}
-          get() { # project loader -> url of the newest file for MC
+          get() { # project loader [stable] -> "version url filename" of the newest file for MC
             curl -fsS -H 'User-Agent: giant-refresh-ci' "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%22$MC%22%5D" \
-              | python3 -c "import json,sys;v=json.load(sys.stdin);f=[x for x in v[0]['files'] if x['primary']] or v[0]['files'];print(v[0]['version_number'],f[0]['url'],f[0]['filename'])" 2>/dev/null
+              | python3 -c "
+          import json,sys
+          v=json.load(sys.stdin)
+          if '$3'=='stable':
+              v=[x for x in v if x['version_type']=='release'] or v
+          f=[x for x in v[0]['files'] if x['primary']] or v[0]['files']
+          print(v[0]['version_number'],f[0]['url'],f[0]['filename'])" 2>/dev/null
           }
           ok=1
           for p in sodium iris; do
-            r=$(get $p fabric); if [ -z "$r" ]; then echo "no $p for $MC"; ok=0; continue; fi
+            r=$(get $p fabric stable); if [ -z "$r" ]; then echo "no $p for $MC"; ok=0; continue; fi
             echo "$p: ${r%% *}"; set -- $r; curl -fsSL -o run/mods/$3 "$2"
           done
           SP=${SHADERPACK:-complementary-reimagined}
