@@ -291,9 +291,9 @@ public final class GiantShowcase {
                 }
                 item(level, x + 1.3, z - 0.6, new ItemStack(GRContent.GIANT_TOOTH.get()));
                 item(level, x - 1.2, z - 0.9, PotionContents.createItemStack(Items.POTION, shrinking));
-                LivingEntity big = zombie(level, x + 3.5, z + 7.0, 190.0F);
-                LivingEntity normal = zombie(level, x - 0.5, z + 6.0, 175.0F);
-                LivingEntity small = zombie(level, x - 3.0, z + 5.5, 160.0F);
+                LivingEntity big = zombie(level, x + 4.0, z + 6.0, 195.0F);
+                LivingEntity normal = zombie(level, x + 0.3, z + 5.5, 180.0F);
+                LivingEntity small = zombie(level, x - 2.2, z + 5.0, 165.0F);
                 clearPlants(level, x, z, 9);
                 if (big != null) {
                     big.addEffect(new MobEffectInstance(GRContent.growthHolder(), -1, 0, false, false));
@@ -301,7 +301,7 @@ public final class GiantShowcase {
                 if (small != null) {
                     small.addEffect(new MobEffectInstance(GRContent.shrinkingHolder(), -1, 0, false, false));
                 }
-                camera = lookAt(level, x - 1.2, stand.getY() + 1.3, z - 4.2, x + 0.4, stand.getY() + 2.2, z + 5.0);
+                camera = lookAt(level, x - 1.0, stand.getY() + 1.6, z - 6.0, x + 0.8, stand.getY() + 2.4, z + 5.0);
                 until = () -> untilTicks > 90;
             }
             case "ruins" -> {
@@ -317,6 +317,7 @@ public final class GiantShowcase {
             default -> until = () -> true;
         }
         if (camera != null) {
+            raiseCamera(level);
             if (!SCENES[scene].equals("trail")) {
                 clearTrees(level, Mth.floor(camera[5]), Mth.floor(camera[7]), 18);
             }
@@ -382,6 +383,31 @@ public final class GiantShowcase {
                 }
             }
         }
+    }
+
+    /** Lifts the camera until the ground no longer hides what it looks at. */
+    private static void raiseCamera(ServerLevel level) {
+        double eye = camera[1] + 1.62;
+        double minEye = ground(level, Mth.floor(camera[0]), Mth.floor(camera[2])) + 1.2;
+        eye = Math.max(eye, minEye);
+        for (int i = 0; i < 14 && !lineClear(level, camera[0], eye, camera[2], camera[5], camera[6], camera[7]); i++) {
+            eye += 1.0;
+        }
+        camera = lookAt(level, camera[0], eye, camera[2], camera[5], camera[6], camera[7]);
+    }
+
+    private static boolean lineClear(ServerLevel level, double x, double y, double z, double tx, double ty, double tz) {
+        double len = Math.sqrt((tx - x) * (tx - x) + (ty - y) * (ty - y) + (tz - z) * (tz - z));
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (double d = 0.5; d < len * 0.85; d += 0.4) {
+            m.set(Mth.floor(x + (tx - x) * d / len), Mth.floor(y + (ty - y) * d / len), Mth.floor(z + (tz - z) * d / len));
+            BlockState st = level.getBlockState(m);
+            if (!st.getCollisionShape(level, m).isEmpty() && !st.is(net.minecraft.tags.BlockTags.LEAVES)
+                    && !st.is(net.minecraft.tags.BlockTags.LOGS)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** Removes grass and flowers around a spot. */
