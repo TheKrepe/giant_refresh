@@ -1,0 +1,4 @@
+{"t":0.3907,"event":"giant_refresh:entity.giant.swing","file":"minecraft:mob/ravager/bite2","src":"hostile","vol":1.800,"pitch":0.365,"x":-129.50,"y":68.00,"z":-239.50,"att":"LINEAR","rel":false,"dist":32,"cx":-125.93,"cy":69.19,"cz":-233.36}
+{"t":1.2232,"event":"giant_refresh:entity.giant.swing","file":"minecraft:mob/ravager/bite1","src":"hostile","vol":1.800,"pitch":0.600,"x":-131.00,"y":71.13,"z":-236.25,"att":"LINEAR","rel":false,"dist":32,"cx":-126.08,"cy":69.15,"cz":-233.68}
+{"t":1.9449,"event":"giant_refresh:entity.giant.ambient","file":"minecraft:mob/zombie/say1","src":"hostile","vol":3.000,"pitch":0.435,"x":-129.50,"y":68.00,"z":-239.50,"att":"LINEAR","rel":false,"dist":32,"cx":-125.87,"cy":69.06,"cz":-233.82}
+{"t":2.1943,"event":"giant_refresh:entity.giant.swing","file":"minecraft:mob/ravager/bite1","src":"hostile","vol":2.250,"pitch":0.300,"x":-130.88,"y":76.50,"z":-234.88,"att":"LINEAR","rel":false,"dist":32,"cx":-125.75,"cy":69.02,"cz":-233.86}
