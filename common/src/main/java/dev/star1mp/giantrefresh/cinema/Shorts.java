@@ -26,7 +26,7 @@ final class Shorts extends Trailer.T {
     private final int number;
     private Vec3 center;
     private static final double[] LENGTH = {18, 23, 21, 25, 22};
-    private static final long[] SUN = {2750, 1800, 12075, 4100, 10500};
+    private static final long[] SUN = {2750, 1800, 12450, 4100, 10500};
 
     Shorts(int number) {
         super(LENGTH[number - 1], SUN[number - 1]);
@@ -89,7 +89,7 @@ final class Shorts extends Trailer.T {
             });
         }
         Vec3 perch=foot.add(0,top,0);
-        on(3.44,()->{steve.e.setInvisible(false);hand(steve,new ItemStack(Items.DIRT));steve.lookAt(perch.add(-1,1.55,3.65));});
+        on(3.44,()->{steve.e.setInvisible(false);hand(steve,new ItemStack(Items.DIRT));steve.lookAt(perch.add(1.2,1.6,-3.55));});
         on(5.65,()->hand(steve,new ItemStack(Items.BREAD)));
         on(6.75,()->steve.living().startUsingItem(InteractionHand.MAIN_HAND));
         on(8.85,()->steve.lookAt(g,10));
@@ -99,7 +99,7 @@ final class Shorts extends Trailer.T {
         DoubleFunction<Vec3> pov=t->foot.add(.12,initial+2.08+Math.min(6,Math.floor(t/.61))+Math.max(0,Math.sin(2*Math.PI*t/.61))*.25,-.22);
         cam.follow(0,pov,fixed(foot.add(-.35,0,-.6))).fov(77);
         cam.follow(3.45,pov,fixed(foot.add(-.35,0,-.6))).fov(77);
-        pair(3.452,6.38,perch.add(-1.22,1.76,3.28),track(steve,1.12),47);
+        pair(3.452,6.38,perch.add(1.20,1.74,-3.10),track(steve,1.37),41);
         cam.at(6.38,perch.add(.66,1.83,-4.45),track(steve,1.2)).fov(54);
         cam.at(9.50,perch.add(6,1.85,-11),perch.add(-.85,.95,1.5)).fov(57);
         cam.at(9.748,perch.add(6,1.85,-11),perch.add(-.85,.95,1.5)).fov(57);
@@ -145,6 +145,8 @@ final class Shorts extends Trailer.T {
         Actor bones=summon("minecraft:skeleton",center.add(0,12,0),0,"NoAI:1b");
         Actor zombie=summon("minecraft:zombie",center.add(0,12,0),0,"NoAI:1b");
         hand(bones,new ItemStack(Items.BOW));
+        bones.living().setItemSlot(EquipmentSlot.HEAD,new ItemStack(Items.CHAINMAIL_HELMET));
+        zombie.living().setItemSlot(EquipmentSlot.HEAD,new ItemStack(Items.IRON_HELMET));
         bones.e.startRiding(giant.e,true,true);zombie.e.startRiding(giant.e,true,true);
         Actor spider=summon("minecraft:spider",atMark(.1,8.8,1.75),0,"NoAI:1b,NoGravity:1b");
         Actor steve=steve(atMark(.45,0,9.3),180);
@@ -205,7 +207,8 @@ final class Shorts extends Trailer.T {
             place(tile.add(0,-1,0), (Math.abs(across)<2 ? Blocks.DIRT_PATH : Blocks.GRASS_BLOCK).defaultBlockState());
             for(int h=0;h<5;h++)place(tile.add(0,h,0),Blocks.AIR.defaultBlockState());
         }
-        Vec3 floor=new Vec3(stand.x,Actor.surface(level,stand.x,stand.z,d.y),stand.z);BlockPos standPos=cell(floor.add(0,.04,0));
+        Vec3 floor=new Vec3(stand.x,d.y,stand.z);BlockPos standPos=cell(floor.add(0,.10,0));
+        level.setBlock(standPos.below(),Blocks.COBBLESTONE.defaultBlockState(),3);
         Actor steve=steve(front.add(right.scale(-.75)),0);
         steve.lookAt(front.add(out.scale(5)).add(0,1.6,0));
         Actor alex=person("alex",d.add(right.scale(-3.2)).add(out.scale(1.20)),0);
@@ -221,16 +224,18 @@ final class Shorts extends Trailer.T {
         on(8.36,()->{
             steve.living().stopUsingItem();hand(steve,new ItemStack(Items.GLASS_BOTTLE));steve.living().addEffect(new MobEffectInstance(GRContent.growthHolder(),-1,0,false,false));
         });
-        on(11.05,()->{steve.lookAt(d.add(0,1.5,0));steve.walkTo(d.add(out.scale(1.03)).add(right.scale(.7)),.36);});
+        on(11.05,()->{steve.lookAt(d.add(0,1.5,0));steve.walkTo(d.add(out.scale(1.73)).add(right.scale(.6)),.36);});
         on(14.05,()->{alex.walkTo(d.add(right.scale(-1.0)).add(out),.59);alex.lookAt(d.add(0,1.1,0));});
         on(16.76,()->{alex.living().swing(InteractionHand.MAIN_HAND);level.setBlock(dp.above(),Blocks.AIR.defaultBlockState(),2);level.setBlock(dp,Blocks.AIR.defaultBlockState(),2);hand(alex,new ItemStack(Items.OAK_DOOR));});
-        on(17.64,()->steve.walkTo(d.add(out.scale(.50)),.28));on(19.05,()->{steve.stop().lookAt(alex.e,1.55);alex.lookAt(steve.e,4);});
+        on(17.64,()->steve.walkTo(d.add(out.scale(1.35)),.28));on(19.05,()->{steve.stop().lookAt(alex.e,1.55);alex.lookAt(steve.e,4);});
         on(20.97,()->{hand(alex,ItemStack.EMPTY);level.setBlock(dp,down,2);level.setBlock(dp.above(),up,3);alex.living().swing(InteractionHand.MAIN_HAND);});
         pair(0,3.22,d.add(out.scale(6.7)).add(right.scale(-1.65)).add(0,1.72,0),front.add(right.scale(-.35)).add(0,1.13,0),60);
         pair(3.22,6.35,floor.add(out.scale(2.45)).add(right.scale(1.70)).add(0,1.30,0),floor.add(right.scale(-.52)).add(0,.83,0),53);
         pair(6.35,8.46,front.add(out.scale(3.2)).add(right.scale(.9)).add(0,1.66,0),track(steve,1.28),46);
         Vec3 wide=d.add(out.scale(9.35)).add(right.scale(-3.5)).add(0,2.10,0);
-        pair(8.46,22.50,wide,d.add(out.scale(.77)).add(0,2.22,0),54);
+        pair(8.46,14.18,wide,d.add(out.scale(.77)).add(0,2.22,0),54);
+        pair(14.18,17.14,d.add(out.scale(5.7)).add(right.scale(-2.45)).add(0,1.71,0),d.add(right.scale(-.48)).add(0,1.27,0),60);
+        pair(17.14,22.50,wide,d.add(out.scale(.9)).add(0,2.22,0),54);
         pair(22.50,25.05,wide.add(right.scale(.8)),d.add(0,2.6,0),58);
     }
 
