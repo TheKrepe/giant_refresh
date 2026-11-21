@@ -1,10 +1,9 @@
-[11:38:27] [Server thread/INFO] (Giant Refresh) [CINEMA] shot 'short1' at -130 -190
-[11:38:49] [Server thread/INFO] (Giant Refresh) [CINEMA] built, origin BlockPos{x=-130, y=68, z=-190}
-[11:39:01] [Server thread/INFO] (Giant Refresh) [CINEMA] recording from game time 1050
-[11:41:08] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:08] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:08] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:09] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:09] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:10] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:10] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[11:48:39] [Server thread/INFO] (Giant Refresh) [CINEMA] shot 'short1' at -130 -190
+[11:49:01] [Server thread/INFO] (Giant Refresh) [CINEMA] built, origin BlockPos{x=-130, y=68, z=-190}
+[11:49:13] [Server thread/INFO] (Giant Refresh) [CINEMA] recording from game time 926
+[11:51:19] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[11:51:19] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[11:51:20] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[11:51:21] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[11:51:21] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[11:51:21] [Render thread/INFO] (Giant Refresh) [CINEMA] done
