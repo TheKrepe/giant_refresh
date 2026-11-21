@@ -66,9 +66,9 @@ public final class Actor {
     public Actor walkTo(Vec3 p, double speed) { mark = p; this.speed = speed; back = 0; return this; }
     /** Stops at once (for a hit or a throw: physics takes over). */
     public Actor stop() { mark = null; back = 0; v = 0; if (e instanceof LivingEntity l) l.zza = 0; return this; }
-    public Actor lookAt(Vec3 p) { look = () -> p; return this; }
-    public Actor lookAt(Entity other, double dy) { look = () -> other.position().add(0, dy, 0); return this; }
-    public Actor lookAt(Supplier<Vec3> p) { look = p; return this; }
+    public Actor lookAt(Vec3 p) { faceYaw = null; look = () -> p; return this; }
+    public Actor lookAt(Entity other, double dy) { faceYaw = null; look = () -> other.position().add(0, dy, 0); return this; }
+    public Actor lookAt(Supplier<Vec3> p) { faceYaw = null; look = p; return this; }
     public Actor face(float yaw) { faceYaw = yaw; look = null; return this; }
     public Actor sprint(boolean on) { run = on; return this; }
     public Actor crouch(boolean on) {
@@ -94,7 +94,8 @@ public final class Actor {
             e.setPos(e.getX(), surface(level, e.getX(), e.getZ(), e.getY() + 0.5), e.getZ());
         }
         if (e instanceof LivingEntity l && scripted()) {
-            move(level, l);
+            if (!e.isPassenger()) move(level, l);
+            else if (Double.isNaN(bodyYaw)) bodyYaw = l.yBodyRot;
             head(l);
         } else if (e instanceof Mob mob) {
             mobTick(mob);
@@ -181,8 +182,8 @@ public final class Actor {
                 bodyYaw += Mth.clamp(Mth.wrapDegrees(faceYaw - bodyYaw) * 0.2, -7, 7);
             } else if (!Double.isNaN(headYaw)) {
                 double diff = Mth.wrapDegrees(headYaw - bodyYaw);
-                if (Math.abs(diff) > 40) {
-                    bodyYaw += Mth.clamp((diff - Math.signum(diff) * 40) * 0.3, -6, 6);
+                if (Math.abs(diff) > 18) {
+                    bodyYaw += Mth.clamp((diff - Math.signum(diff) * 18) * 0.3, -6, 6);
                 }
             }
             heading = bodyYaw;

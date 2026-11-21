@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shot: ['short1','short3','short4']
+        shot: ['short1','short2','short3','short4','short5']
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -70,7 +70,7 @@ jobs:
           ffmpeg -y -loglevel error -framerate 24 -i seq/%05d.png -c:v libx264 -crf 15 -preset slow -pix_fmt yuv420p out/$SHOT.mp4
           cp cine_frames.txt out/$SHOT.frames.txt
           cp cine_sounds.jsonl out/$SHOT.sounds.jsonl 2>/dev/null || true
-          grep -E "CINEMA" ../client.log | cut -c1-300 > out/$SHOT.log || true
+          grep -E "CINEMA|BLOCKING" ../client.log | cut -c1-300 > out/$SHOT.log || true
           test "$(awk '{print $2}' cine_frames.txt | sort -u | wc -l)" -gt 12
           if [[ "$SHOT" == short* ]]; then
             /usr/bin/python3 "${GITHUB_WORKSPACE}/promo-production/export.py" "$SHOT" "$PWD/out"
