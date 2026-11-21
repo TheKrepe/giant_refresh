@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "giant_refresh:item/giant_spawn_egg"
-  }
-}

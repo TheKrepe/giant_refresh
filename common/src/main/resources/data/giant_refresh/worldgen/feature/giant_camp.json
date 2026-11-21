@@ -1,7 +1,0 @@
-{
-  "type": "giant_refresh:giant_trail",
-  "min_prints": 6,
-  "max_prints": 9,
-  "giant_chance": 1.0,
-  "freshness": 1.0
-}

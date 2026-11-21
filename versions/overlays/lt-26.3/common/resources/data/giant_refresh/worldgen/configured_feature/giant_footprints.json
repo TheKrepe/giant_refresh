@@ -1,9 +1,0 @@
-{
-  "type": "giant_refresh:giant_trail",
-  "config": {
-    "min_prints": 4,
-    "max_prints": 7,
-    "giant_chance": 0.0,
-    "freshness": 0.35
-  }
-}
