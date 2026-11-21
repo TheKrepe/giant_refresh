@@ -26,7 +26,7 @@ final class Shorts extends Trailer.T {
     private final int number;
     private Vec3 center;
     private static final double[] LENGTH = {18, 23, 21, 25, 22};
-    private static final long[] SUN = {2750, 22500, 13150, 4100, 10500};
+    private static final long[] SUN = {2750, 1800, 12075, 4100, 10500};
 
     Shorts(int number) {
         super(LENGTH[number - 1], SUN[number - 1]);
@@ -72,6 +72,8 @@ final class Shorts extends Trailer.T {
         for(int i=0;i<initial;i++)place(foot.add(0,i,0),Blocks.DIRT.defaultBlockState());
         Actor steve=steve(foot.add(0,initial,0),180);
         hand(steve,new ItemStack(Items.DIRT));
+        steve.e.setInvisible(true);
+        hand(steve,ItemStack.EMPTY);
         steve.lookAt(foot.add(.3,-1,.1));
         Actor zombie=summon("minecraft:zombie",foot.add(-1.25,0,-.85),-30,"NoAI:1b");
         zombie.living().setItemSlot(EquipmentSlot.HEAD,new ItemStack(Items.LEATHER_HELMET));
@@ -87,7 +89,7 @@ final class Shorts extends Trailer.T {
             });
         }
         Vec3 perch=foot.add(0,top,0);
-        on(3.58,()->steve.lookAt(zombie.e,1));
+        on(3.44,()->{steve.e.setInvisible(false);hand(steve,new ItemStack(Items.DIRT));steve.lookAt(perch.add(-1,1.55,3.65));});
         on(5.65,()->hand(steve,new ItemStack(Items.BREAD)));
         on(6.75,()->steve.living().startUsingItem(InteractionHand.MAIN_HAND));
         on(8.85,()->steve.lookAt(g,10));
@@ -97,7 +99,7 @@ final class Shorts extends Trailer.T {
         DoubleFunction<Vec3> pov=t->foot.add(.12,initial+2.08+Math.min(6,Math.floor(t/.61))+Math.max(0,Math.sin(2*Math.PI*t/.61))*.25,-.22);
         cam.follow(0,pov,fixed(foot.add(-.35,0,-.6))).fov(77);
         cam.follow(3.45,pov,fixed(foot.add(-.35,0,-.6))).fov(77);
-        pair(3.452,6.38,perch.add(1.30,1.77,-3.45),track(steve,1.12),47);
+        pair(3.452,6.38,perch.add(-1.22,1.76,3.28),track(steve,1.12),47);
         cam.at(6.38,perch.add(.66,1.83,-4.45),track(steve,1.2)).fov(54);
         cam.at(9.50,perch.add(6,1.85,-11),perch.add(-.85,.95,1.5)).fov(57);
         cam.at(9.748,perch.add(6,1.85,-11),perch.add(-.85,.95,1.5)).fov(57);
@@ -108,12 +110,14 @@ final class Shorts extends Trailer.T {
 
     private void camp() {
         center=at(World.CAMP_X,World.CAMP_Z);
+        int gx=cell(center).getX(), gz=cell(center).getZ();
+        Sets.flatten(level,gx-6,gz+4,gx+8,gz+16,cell(center).getY(),9);
         Actor giant=giant(center,3,-1,false).face(3);
         GiantEntity g=giantOf(giant);g.setGiantSleeping(true);
         Vec3 edge=center.add(0,0,7);
         Actor alex=person("alex",edge.add(-3,0,1),-88);
         Actor steve=steve(edge.add(-3.3,0,2.3),-90);
-        Vec3 trace=center.add(-3.8,0,8.4);
+        Vec3 trace=center.add(-5.7,0,7.0);
         dev.star1mp.giantrefresh.worldgen.GiantTrailFeature.cinemaFoot(level,net.minecraft.util.RandomSource.create(77),trace.x,trace.z,0,-1,true,.98);
         alex.lookAt(trace);
         on(2.1,()->alex.lookAt(g,5));
@@ -125,9 +129,9 @@ final class Shorts extends Trailer.T {
         on(18.25,()->giant.walkTo(center.add(0,0,4.75),1));
         thump(19.43,center,1.4,center.add(.75,0,1.8),16);
         pair(0,2.32,trace.add(1.25,4.0,2.1),trace.add(.3,.12,.20),50);
-        Vec3 ruins=at(World.RUIN_X,World.RUIN_Z);
-        cam.at(2.32,ruins.add(3.6,1.26,6.7),ruins.add(.2,1.15,.1)).fov(58);
-        cam.at(4.995,ruins.add(2.6,2.05,5.5),ruins.add(.2,1.24,.1)).fov(56);
+        Vec3 ruins=edge.add(-3.1,0,1.05);
+        cam.at(2.32,ruins.add(2.45,1.48,4.1),ruins.add(.2,1.15,.1)).fov(58);
+        cam.at(4.995,ruins.add(1.85,1.64,3.85),ruins.add(.2,1.24,.1)).fov(56);
         cam.at(5.0,center.add(-3.5,1.55,16),center.add(-1.25,3.38,3.8)).fov(58);
         cam.at(10.38,center.add(-1.6,1.80,15.4),center.add(-.4,3.40,3.8)).fov(58);
         pair(10.39,15.95,edge.add(-.55,1.77,8.70),edge.add(-.72,1.1,.78),60);
@@ -195,16 +199,25 @@ final class Shorts extends Trailer.T {
         Vec3 bc=new Vec3((box.minX()+box.maxX()+1)*.5,d.y,(box.minZ()+box.maxZ()+1)*.5);
         Vec3 nn=d.subtract(bc);Vec3 out=Math.abs(nn.x)>Math.abs(nn.z)?new Vec3(Math.signum(nn.x),0,0):new Vec3(0,0,Math.signum(nn.z));
         Vec3 right=new Vec3(-out.z,0,out.x);
-        Vec3 front=d.add(out.scale(2.25)),stand=front.add(right.scale(1.12));
+        Vec3 front=d.add(out.scale(2.8)),stand=front.add(right.scale(1.30));
+        for(int along=2;along<=8;along++) for(int across=-4;across<=4;across++){
+            Vec3 tile=d.add(out.scale(along)).add(right.scale(across));
+            place(tile.add(0,-1,0), (Math.abs(across)<2 ? Blocks.DIRT_PATH : Blocks.GRASS_BLOCK).defaultBlockState());
+            for(int h=0;h<5;h++)place(tile.add(0,h,0),Blocks.AIR.defaultBlockState());
+        }
         Vec3 floor=new Vec3(stand.x,Actor.surface(level,stand.x,stand.z,d.y),stand.z);BlockPos standPos=cell(floor.add(0,.04,0));
-        Actor steve=steve(d.add(out.scale(-.72)),0);
+        Actor steve=steve(front.add(right.scale(-.75)),0);
+        steve.lookAt(front.add(out.scale(5)).add(0,1.6,0));
         Actor alex=person("alex",d.add(right.scale(-3.2)).add(out.scale(1.20)),0);
         var down=level.getBlockState(dp);var up=level.getBlockState(dp.above());
-        on(.08,()->door(dp,true));on(.27,()->steve.walkTo(front,.62));on(2.48,()->door(dp,false));
-        on(2.78,()->{level.setBlock(standPos,Blocks.BREWING_STAND.defaultBlockState(),3);steve.lookAt(floor.add(0,.5,0));hand(steve,new ItemStack(GRContent.GIANT_TOOTH.get()));});
+        on(.10,()->door(dp,true));on(.7,()->steve.walkTo(front,.44));on(2.1,()->door(dp,false));
+        on(2.78,()->{cmd("setblock "+standPos.getX()+" "+standPos.getY()+" "+standPos.getZ()+" minecraft:brewing_stand[has_bottle_0=true,has_bottle_1=true]");steve.lookAt(floor.add(0,.5,0));hand(steve,new ItemStack(GRContent.GIANT_TOOTH.get()));});
+        final net.minecraft.world.entity.item.ItemEntity[] tooth={null};
+        on(3.6,()->{Vec3 fp=floor.add(0,1.03,0);tooth[0]=new net.minecraft.world.entity.item.ItemEntity(level,fp.x,fp.y,fp.z,new ItemStack(GRContent.GIANT_TOOTH.get()),0,0,0);tooth[0].setNoGravity(true);tooth[0].setDeltaMovement(Vec3.ZERO);level.addFreshEntity(tooth[0]);});
+        on(5.25,()->{if(tooth[0]!=null)tooth[0].discard();});
         on(4.62,()->{steve.living().swing(InteractionHand.MAIN_HAND);hand(steve,ItemStack.EMPTY);});
         for(double t:new double[]{5.12,5.48,5.84})on(t,()->particles(ParticleTypes.BUBBLE,floor.add(0,.83,0),10,.13,.025));
-        on(6.38,()->hand(steve,growthPotion()));on(7.02,()->steve.living().startUsingItem(InteractionHand.MAIN_HAND));
+        on(6.37,()->{hand(steve,growthPotion());steve.lookAt(front.add(out.scale(4)).add(0,1.65,0));});on(7.02,()->steve.living().startUsingItem(InteractionHand.MAIN_HAND));
         on(8.36,()->{
             steve.living().stopUsingItem();hand(steve,new ItemStack(Items.GLASS_BOTTLE));steve.living().addEffect(new MobEffectInstance(GRContent.growthHolder(),-1,0,false,false));
         });
@@ -213,7 +226,7 @@ final class Shorts extends Trailer.T {
         on(16.76,()->{alex.living().swing(InteractionHand.MAIN_HAND);level.setBlock(dp.above(),Blocks.AIR.defaultBlockState(),2);level.setBlock(dp,Blocks.AIR.defaultBlockState(),2);hand(alex,new ItemStack(Items.OAK_DOOR));});
         on(17.64,()->steve.walkTo(d.add(out.scale(.50)),.28));on(19.05,()->{steve.stop().lookAt(alex.e,1.55);alex.lookAt(steve.e,4);});
         on(20.97,()->{hand(alex,ItemStack.EMPTY);level.setBlock(dp,down,2);level.setBlock(dp.above(),up,3);alex.living().swing(InteractionHand.MAIN_HAND);});
-        pair(0,3.22,d.add(out.scale(6.7)).add(right.scale(-1.65)).add(0,1.72,0),d.add(0,1.39,0),54);
+        pair(0,3.22,d.add(out.scale(6.7)).add(right.scale(-1.65)).add(0,1.72,0),front.add(right.scale(-.35)).add(0,1.13,0),60);
         pair(3.22,6.35,floor.add(out.scale(2.45)).add(right.scale(1.70)).add(0,1.30,0),floor.add(right.scale(-.52)).add(0,.83,0),53);
         pair(6.35,8.46,front.add(out.scale(3.2)).add(right.scale(.9)).add(0,1.66,0),track(steve,1.28),46);
         Vec3 wide=d.add(out.scale(9.35)).add(right.scale(-3.5)).add(0,2.10,0);
@@ -237,6 +250,7 @@ final class Shorts extends Trailer.T {
         Actor giant=giant(atMark(-11,0,-2.4),-90,-1,false);
         on(2.24,()->farmer.lookAt(steve.e,1.56));on(3.55,()->steve.living().swing(InteractionHand.MAIN_HAND));
         on(4.98,()->giant.walkTo(atMark(13,0,-2.1),1.18));
+        during(5.01,15.55,t->{double k=Math.max(0,Math.min(1,(t-5.01)/10.54)); Vec3 p=atMark(-10+23*k,0,-2.26);giant.e.setPos(p.x,p.y,p.z);});
         on(6.78,()->{farmer.lookAt(giant.e,9);steve.lookAt(giant.e,9);});
         thump(7.52,atMark(-2,0,-2),.96,atMark(-2,.2,-1.5),17);
         on(9.12,()->{level.destroyBlock(cell(atMark(0,0,-4)),false);dust(atMark(0,.55,-3.85),13,.50);});
