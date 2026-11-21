@@ -144,6 +144,8 @@ final class Shorts extends Trailer.T {
         on(3.1,()->steve.lookAt(g,5));
         on(4.3,()->alex.lookAt(edge.add(2,1,-.75)));
         on(5.0,()->alex.crouch(true).walkTo(edge.add(1.12,0,-.55),.25));
+        on(6.75,()->steve.crouch(true).walkTo(edge.add(-1.3,0,.70),.28).lookAt(alex.e,1.4));
+        on(9.45,()->steve.stop().crouch(false).lookAt(alex.e,1.36));
         on(10.2,()->{alex.stop().lookAt(steve.e,1.6);steve.lookAt(alex.e,1.4);});
         on(10.82,()->alex.living().swing(InteractionHand.MAIN_HAND));
         on(12.55,()->steve.crouch(true).lookAt(alex.e,1.1));
@@ -164,7 +166,7 @@ final class Shorts extends Trailer.T {
         cam.at(4.995,ruins.add(1.85,1.64,3.85),ruins.add(.2,1.24,.1)).fov(56);
         cam.at(5.0,center.add(-3.5,1.55,16),center.add(-1.25,3.38,3.8)).fov(58);
         cam.at(10.38,center.add(-1.6,1.80,15.4),center.add(-.4,3.40,3.8)).fov(58);
-        pair(10.39,13.63,edge.add(-.78,1.54,8.45),edge.add(-1.05,1.06,.8),62);
+        pair(10.39,13.63,edge.add(-.20,1.50,7.8),edge.add(-.17,1.08,.12),58);
         cam.at(13.65,edge.add(-2.9,1.25,5.8),track(steve,1.02)).fov(64);
         cam.at(15.948,edge.add(2.35,1.40,6.6),track(steve,1.12)).fov(63);
         cam.at(15.95,edge.add(2.70,1.2,6.5),center.add(.5,3.20,1.25)).fov(61);
@@ -336,7 +338,7 @@ final class Shorts extends Trailer.T {
         pair(6.2,10.2,atMark(-.85,1.10,7.30),atMark(-.60,2.55,-.9),65);
         cam.at(10.2,atMark(4.25,2.75,13.7),atMark(.3,4.5,-1.4)).fov(62);
         cam.at(14.70,atMark(5.60,2.68,12.2),atMark(4.2,4.2,-1.25)).fov(62);
-        pair(14.71,17.85,atMark(4.75,1.55,3.1),atMark(1.12,.73,1.52),49);
+        pair(14.71,17.85,atMark(-1.4,1.63,5.55),atMark(1.08,.78,1.65),50);
         pair(17.85,19.5,atMark(.9,1.70,8.55),atMark(-.3,.95,2.93),64);
         pair(19.5,22.05,atMark(4.70,2.95,10.4),atMark(-.9,1.95,-1.5),61);
     }

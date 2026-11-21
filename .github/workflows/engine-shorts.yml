@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shot: ['short1','short2','short3','short4','short5']
+        shot: ['short2','short5']
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -94,6 +94,11 @@ jobs:
           pattern: take-*
           path: promo-production/takes
           merge-multiple: true
+      - name: Finish all five films with the reviewed timing and sound
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg python3-pil
+          /usr/bin/python3 promo-production/master.py
       - name: Store the takes and bilingual edits on the production branch for review
         run: |
           git config user.name "Giant Refresh media"
