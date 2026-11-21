@@ -1,12 +1,56 @@
-[11:38:22] [Server thread/INFO] (Giant Refresh) [CINEMA] shot 'short2' at -130 -190
-[11:38:39] [Server thread/INFO] (Giant Refresh) [CINEMA] built, origin BlockPos{x=-130, y=68, z=-190}
-[11:38:51] [Server thread/INFO] (Giant Refresh) [CINEMA] recording from game time 994
-[11:41:31] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:31] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:32] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:32] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:32] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:33] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:33] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:33] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:33] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:48:27] [Server thread/INFO] (Giant Refresh) [CINEMA] shot 'short2' at -130 -190
+[12:48:49] [Server thread/INFO] (Giant Refresh) [CINEMA] built, origin BlockPos{x=-130, y=68, z=-190}
+[12:49:01] [Server thread/INFO] (Giant Refresh) [CINEMA] recording from game time 1034
+[12:49:04] [Server thread/INFO] (Giant Refresh) [BLOCKING] 0.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:07] [Server thread/INFO] (Giant Refresh) [BLOCKING] 0.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:10] [Server thread/INFO] (Giant Refresh) [BLOCKING] 1.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:14] [Server thread/INFO] (Giant Refresh) [BLOCKING] 1.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:17] [Server thread/INFO] (Giant Refresh) [BLOCKING] 2.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:20] [Server thread/INFO] (Giant Refresh) [BLOCKING] 2.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:24] [Server thread/INFO] (Giant Refresh) [BLOCKING] 3.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:27] [Server thread/INFO] (Giant Refresh) [BLOCKING] 3.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:30] [Server thread/INFO] (Giant Refresh) [BLOCKING] 4.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:34] [Server thread/INFO] (Giant Refresh) [BLOCKING] 4.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:37] [Server thread/INFO] (Giant Refresh) [BLOCKING] 5.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-3.00,0.00,8.00;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:40] [Server thread/INFO] (Giant Refresh) [BLOCKING] 5.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-2.56,0.00,7.80;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:44] [Server thread/INFO] (Giant Refresh) [BLOCKING] 6.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-2.06,0.00,7.62;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:47] [Server thread/INFO] (Giant Refresh) [BLOCKING] 6.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-1.55,0.00,7.43;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:50] [Server thread/INFO] (Giant Refresh) [BLOCKING] 7.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-1.05,0.00,7.25;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:54] [Server thread/INFO] (Giant Refresh) [BLOCKING] 7.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-0.54,0.00,7.06;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:49:57] [Server thread/INFO] (Giant Refresh) [BLOCKING] 8.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-0.04,0.00,6.88;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:00] [Server thread/INFO] (Giant Refresh) [BLOCKING] 8.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(0.47,0.00,6.69;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:04] [Server thread/INFO] (Giant Refresh) [BLOCKING] 9.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(0.97,0.00,6.50;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:07] [Server thread/INFO] (Giant Refresh) [BLOCKING] 9.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:10] [Server thread/INFO] (Giant Refresh) [BLOCKING] 10.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:14] [Server thread/INFO] (Giant Refresh) [BLOCKING] 10.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:17] [Server thread/INFO] (Giant Refresh) [BLOCKING] 11.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:20] [Server thread/INFO] (Giant Refresh) [BLOCKING] 11.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:24] [Server thread/INFO] (Giant Refresh) [BLOCKING] 12.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:27] [Server thread/INFO] (Giant Refresh) [BLOCKING] 12.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:30] [Server thread/INFO] (Giant Refresh) [BLOCKING] 13.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:34] [Server thread/INFO] (Giant Refresh) [BLOCKING] 13.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-3.30,0.00,9.30;417;false)
+[12:50:37] [Server thread/INFO] (Giant Refresh) [BLOCKING] 14.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(-2.53,0.00,8.96;417;false)
+[12:50:40] [Server thread/INFO] (Giant Refresh) [BLOCKING] 14.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(0.02,0.00,7.96;417;false)
+[12:50:44] [Server thread/INFO] (Giant Refresh) [BLOCKING] 15.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(2.53,0.00,7.00;417;false)
+[12:50:47] [Server thread/INFO] (Giant Refresh) [BLOCKING] 15.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(3.94,0.00,6.46;417;false)
+[12:50:50] [Server thread/INFO] (Giant Refresh) [BLOCKING] 16.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(4.04,0.00,6.42;417;false)
+[12:50:54] [Server thread/INFO] (Giant Refresh) [BLOCKING] 16.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(4.04,0.00,6.42;417;false)
+[12:50:57] [Server thread/INFO] (Giant Refresh) [BLOCKING] 17.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.04,0.00,6.48;416;false) Mannequin(4.05,0.00,6.46;417;false)
+[12:51:00] [Server thread/INFO] (Giant Refresh) [BLOCKING] 17.5  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(1.00,0.00,6.36;416;false) Mannequin(4.32,0.00,7.42;417;false)
+[12:51:04] [Server thread/INFO] (Giant Refresh) [BLOCKING] 18.0  GiantEntity(0.00,0.00,0.00;415;false) Mannequin(-0.63,0.00,6.77;416;false) Mannequin(4.60,0.00,8.41;417;false)
+[12:51:07] [Server thread/INFO] (Giant Refresh) [BLOCKING] 18.5  GiantEntity(0.00,0.00,0.34;415;false) Mannequin(-2.84,0.00,8.35;416;false) Mannequin(5.36,0.00,8.34;417;false)
+[12:51:10] [Server thread/INFO] (Giant Refresh) [BLOCKING] 19.0  GiantEntity(0.00,0.00,1.22;415;false) Mannequin(-4.83,0.00,9.86;416;false) Mannequin(7.19,0.00,9.97;417;false)
+[12:51:14] [Server thread/INFO] (Giant Refresh) [BLOCKING] 19.5  GiantEntity(0.00,0.00,2.10;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.95,0.00,10.94;417;false)
+[12:51:17] [Server thread/INFO] (Giant Refresh) [BLOCKING] 20.0  GiantEntity(0.00,0.00,2.98;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:20] [Server thread/INFO] (Giant Refresh) [BLOCKING] 20.5  GiantEntity(0.00,0.00,3.86;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:24] [Server thread/INFO] (Giant Refresh) [BLOCKING] 21.0  GiantEntity(0.00,0.00,4.40;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:27] [Server thread/INFO] (Giant Refresh) [BLOCKING] 21.5  GiantEntity(0.00,0.00,4.40;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:30] [Server thread/INFO] (Giant Refresh) [BLOCKING] 22.0  GiantEntity(0.00,0.00,4.40;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:34] [Server thread/INFO] (Giant Refresh) [BLOCKING] 22.5  GiantEntity(0.00,0.00,4.40;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:37] [Server thread/INFO] (Giant Refresh) [BLOCKING] 23.0  GiantEntity(0.00,0.00,4.40;415;false) Mannequin(-5.75,0.00,10.56;416;false) Mannequin(7.96,0.00,10.94;417;false)
+[12:51:41] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:41] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:42] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:42] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:43] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:43] [Render thread/INFO] (Giant Refresh) [CINEMA] done

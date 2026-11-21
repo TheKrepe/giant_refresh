@@ -1,11 +1,56 @@
-[11:38:27] [Server thread/INFO] (Giant Refresh) [CINEMA] shot 'short5' at -130 -190
-[11:38:49] [Server thread/INFO] (Giant Refresh) [CINEMA] template minecraft:village/plains/houses/plains_small_house_3 rot NONE at BlockPos{x=-131, y=68, z=-230} size Vec3i{x=7, y=7, z=7} box BoundingBox{minX=-131, minY=68, minZ=-230, maxX=-125, maxY=74, maxZ=-224} doors [1,1,3/east]
-[11:38:49] [Server thread/INFO] (Giant Refresh) [CINEMA] built, origin BlockPos{x=-130, y=68, z=-190}
-[11:39:01] [Server thread/INFO] (Giant Refresh) [CINEMA] recording from game time 968
-[11:41:34] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:34] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:35] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:35] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:36] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:36] [Render thread/INFO] (Giant Refresh) [CINEMA] done
-[11:41:36] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:48:12] [Server thread/INFO] (Giant Refresh) [CINEMA] shot 'short5' at -130 -190
+[12:48:32] [Server thread/INFO] (Giant Refresh) [CINEMA] template minecraft:village/plains/houses/plains_small_house_3 rot NONE at BlockPos{x=-131, y=68, z=-230} size Vec3i{x=7, y=7, z=7} box BoundingBox{minX=-131, minY=68, minZ=-230, maxX=-125, maxY=74, maxZ=-224} doors [1,1,3/east]
+[12:48:32] [Server thread/INFO] (Giant Refresh) [CINEMA] built, origin BlockPos{x=-130, y=68, z=-190}
+[12:48:44] [Server thread/INFO] (Giant Refresh) [CINEMA] recording from game time 1033
+[12:48:47] [Server thread/INFO] (Giant Refresh) [BLOCKING] 0.0  Villager(-1.38,0.00,2.75;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:48:50] [Server thread/INFO] (Giant Refresh) [BLOCKING] 0.5  Villager(-1.17,0.00,2.74;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:48:53] [Server thread/INFO] (Giant Refresh) [BLOCKING] 1.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:48:57] [Server thread/INFO] (Giant Refresh) [BLOCKING] 1.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:00] [Server thread/INFO] (Giant Refresh) [BLOCKING] 2.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:04] [Server thread/INFO] (Giant Refresh) [BLOCKING] 2.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:07] [Server thread/INFO] (Giant Refresh) [BLOCKING] 3.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.00,0.00,3.04;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:10] [Server thread/INFO] (Giant Refresh) [BLOCKING] 3.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.07,0.00,3.11;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:13] [Server thread/INFO] (Giant Refresh) [BLOCKING] 4.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:17] [Server thread/INFO] (Giant Refresh) [BLOCKING] 4.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-11.00,0.00,-2.40;463;false)
+[12:49:20] [Server thread/INFO] (Giant Refresh) [BLOCKING] 5.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-10.00,0.00,-2.26;463;false)
+[12:49:24] [Server thread/INFO] (Giant Refresh) [BLOCKING] 5.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-8.93,0.00,-2.26;463;false)
+[12:49:27] [Server thread/INFO] (Giant Refresh) [BLOCKING] 6.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-7.84,0.00,-2.26;463;false)
+[12:49:30] [Server thread/INFO] (Giant Refresh) [BLOCKING] 6.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-6.75,0.00,-2.26;463;false)
+[12:49:33] [Server thread/INFO] (Giant Refresh) [BLOCKING] 7.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-5.66,0.00,-2.26;463;false)
+[12:49:37] [Server thread/INFO] (Giant Refresh) [BLOCKING] 7.5  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.34,0.00,3.35;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-4.57,0.00,-2.26;463;false)
+[12:49:40] [Server thread/INFO] (Giant Refresh) [BLOCKING] 8.0  Villager(-0.74,0.00,2.32;460;false) Mannequin(1.78,0.00,3.77;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-3.48,0.00,-2.26;463;false)
+[12:49:44] [Server thread/INFO] (Giant Refresh) [BLOCKING] 8.5  Villager(-0.81,0.00,2.27;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-2.38,0.00,-2.26;463;false)
+[12:49:47] [Server thread/INFO] (Giant Refresh) [BLOCKING] 9.0  Villager(-1.72,0.00,3.02;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-1.29,0.00,-2.26;463;false)
+[12:49:50] [Server thread/INFO] (Giant Refresh) [BLOCKING] 9.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(-0.20,0.00,-2.26;463;false)
+[12:49:54] [Server thread/INFO] (Giant Refresh) [BLOCKING] 10.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(0.89,0.00,-2.26;463;false)
+[12:49:57] [Server thread/INFO] (Giant Refresh) [BLOCKING] 10.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(1.98,0.00,-2.26;463;false)
+[12:50:00] [Server thread/INFO] (Giant Refresh) [BLOCKING] 11.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(3.07,0.00,-2.26;463;false)
+[12:50:03] [Server thread/INFO] (Giant Refresh) [BLOCKING] 11.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(4.16,0.00,-2.26;463;false)
+[12:50:07] [Server thread/INFO] (Giant Refresh) [BLOCKING] 12.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(5.25,0.00,-2.26;463;false)
+[12:50:10] [Server thread/INFO] (Giant Refresh) [BLOCKING] 12.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(6.34,0.00,-2.26;463;false)
+[12:50:13] [Server thread/INFO] (Giant Refresh) [BLOCKING] 13.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(7.44,0.00,-2.26;463;false)
+[12:50:17] [Server thread/INFO] (Giant Refresh) [BLOCKING] 13.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(8.53,0.00,-2.26;463;false)
+[12:50:20] [Server thread/INFO] (Giant Refresh) [BLOCKING] 14.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(9.62,0.00,-2.26;463;false)
+[12:50:24] [Server thread/INFO] (Giant Refresh) [BLOCKING] 14.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(10.71,0.00,-2.26;463;false)
+[12:50:27] [Server thread/INFO] (Giant Refresh) [BLOCKING] 15.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(11.80,0.00,-2.26;463;false)
+[12:50:30] [Server thread/INFO] (Giant Refresh) [BLOCKING] 15.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(12.89,0.00,-2.26;463;false)
+[12:50:34] [Server thread/INFO] (Giant Refresh) [BLOCKING] 16.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(2.00,0.90,2.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:37] [Server thread/INFO] (Giant Refresh) [BLOCKING] 16.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(1.93,0.97,1.97;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:40] [Server thread/INFO] (Giant Refresh) [BLOCKING] 17.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.54,0.66,1.27;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:43] [Server thread/INFO] (Giant Refresh) [BLOCKING] 17.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:47] [Server thread/INFO] (Giant Refresh) [BLOCKING] 18.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:50] [Server thread/INFO] (Giant Refresh) [BLOCKING] 18.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:53] [Server thread/INFO] (Giant Refresh) [BLOCKING] 19.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:50:57] [Server thread/INFO] (Giant Refresh) [BLOCKING] 19.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:51:00] [Server thread/INFO] (Giant Refresh) [BLOCKING] 20.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:51:04] [Server thread/INFO] (Giant Refresh) [BLOCKING] 20.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:51:07] [Server thread/INFO] (Giant Refresh) [BLOCKING] 21.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:51:10] [Server thread/INFO] (Giant Refresh) [BLOCKING] 21.5  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:51:14] [Server thread/INFO] (Giant Refresh) [BLOCKING] 22.0  Villager(-1.97,0.00,3.38;460;false) Mannequin(2.21,0.00,4.19;461;false) Chicken(0.00,0.00,1.00;462;false) GiantEntity(13.01,0.00,-2.26;463;false)
+[12:51:18] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:18] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:18] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:19] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:19] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:20] [Render thread/INFO] (Giant Refresh) [CINEMA] done
+[12:51:20] [Render thread/INFO] (Giant Refresh) [CINEMA] done
