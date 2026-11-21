@@ -92,7 +92,7 @@ public final class Cam {
         }
         Key p0 = keys.get(Math.max(0, i - 1));
         Key p3 = keys.get(Math.min(keys.size() - 1, i + 2));
-        Vec3 pos = catmull(p(p0, t), p(a, t), p(b, t), p(p3, t), e);
+        Vec3 pos = Cinema.SHOT.startsWith("short") ? p(a,t).lerp(p(b,t),e) : catmull(p(p0, t), p(a, t), p(b, t), p(p3, t), e);
         float yawA = yawOf(a, pos, t);
         float yawB = yawOf(b, pos, t);
         float pitA = pitchOf(a, pos, t);
