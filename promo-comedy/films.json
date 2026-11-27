@@ -18,7 +18,7 @@
       "music": "tag",
       "shots": [
         {
-          "source": "shortgate",
+          "source": "shortgate-pickup",
           "seek": 0,
           "length": 2.73333,
           "duration": 2.73333,

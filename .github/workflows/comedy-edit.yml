@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        story: [gate, hatch]
+        story: [gate]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -38,7 +38,16 @@ jobs:
           name: take-short${{ matrix.story }}
           run-id: 45996927789
           github-token: ${{ github.token }}
+          path: pickup
+      - name: Retrieve the take with the real fence break
+        uses: actions/download-artifact@v4
+        with:
+          name: take-shortgate
+          run-id: 45995679881
+          github-token: ${{ github.token }}
           path: footage
+      - name: Match the two angles at the cut
+        run: cp pickup/shortgate.mp4 footage/shortgate-pickup.mp4
       - name: Encode and check both language cuts
         run: |
           /usr/bin/python3 promo-comedy/edit.py --project promo-comedy/films.json --raw footage --assets promo-comedy/assets --out film --film '${{ matrix.story }}' --lang both
