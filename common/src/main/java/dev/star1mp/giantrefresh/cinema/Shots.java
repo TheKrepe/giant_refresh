@@ -11,6 +11,7 @@ public final class Shots {
 
     public static Shot create(String name) {
         Supplier<Shot> s = switch (name) {
+            case "shortgate", "shorthatch", "shortbell" -> () -> new Comedy(name.substring(5));
             case "short1", "short2", "short3", "short4", "short5" -> () -> new Shorts(Integer.parseInt(name.substring(5)));
             case "test" -> Test::new;
             case "scout" -> Scout::new;

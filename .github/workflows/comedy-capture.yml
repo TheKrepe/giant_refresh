@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shot: ['s15_grab']
+        shot: ['shortgate', 'shorthatch', 'shortbell']
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
