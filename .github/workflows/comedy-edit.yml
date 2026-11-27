@@ -1,0 +1,82 @@
+name: Giant Refresh localized comedy edit
+on:
+  push:
+    branches: [media/giant-comedy]
+    paths: ['promo-comedy/films.json', '.github/workflows/comedy-edit.yml']
+permissions:
+  actions: read
+  contents: read
+jobs:
+  edit:
+    strategy:
+      fail-fast: false
+      matrix:
+        story: [gate, hatch, bell]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install the editorial tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg python3-pil python3-numpy >/dev/null
+      - name: Wait for camera takes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 35); do
+            state=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/45995679881" --jq .status)
+            if [[ "$state" == completed ]]; then
+              test "$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/45995679881" --jq .conclusion)" = success
+              exit
+            fi
+            sleep 12
+          done
+          exit 1
+      - name: Retrieve the authorized camera take
+        uses: actions/download-artifact@v4
+        with:
+          name: take-short${{ matrix.story }}
+          run-id: 45995679881
+          github-token: ${{ github.token }}
+          path: footage
+      - name: Encode and check both language cuts
+        run: |
+          /usr/bin/python3 promo-comedy/edit.py --project promo-comedy/films.json --raw footage --assets promo-comedy/assets --out film --film '${{ matrix.story }}' --lang both
+          /usr/bin/python3 promo-comedy/verify.py film --bilingual | tee film/verification.txt
+          /usr/bin/python3 promo-comedy/look.py '${{ matrix.story }}' film film/contact.jpg
+          cat footage/short${{ matrix.story }}.log > film/game-log.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: edit-${{ matrix.story }}
+          path: |
+            film/*.mp4
+            film/*.txt
+            film/*.jpg
+          retention-days: 30
+  store:
+    needs: edit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: edit-*
+          path: edits
+      - name: Store the six finished films for review
+        run: |
+          mkdir -p comedy-media/RU comedy-media/EN
+          for mp4 in edits/*/*.mp4; do
+            name="${mp4##*/}"
+            lang="${name%.mp4}"
+            lang="${lang: -2}"
+            cp "$mp4" "comedy-media/$lang/$name"
+          done
+          cp promo-comedy/storyboards.md promo-comedy/posts.md comedy-media/
+          test "$(find comedy-media -name '*.mp4' | wc -l)" -eq 6
+          git config user.name 'Giant Refresh media'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -f comedy-media
+          git commit -m 'Store the six localized Giant Refresh comedy shorts'
+          git push origin HEAD:refs/heads/media/giant-comedy

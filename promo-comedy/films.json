@@ -1,0 +1,382 @@
+{
+  "brand": "GIANT REFRESH",
+  "platforms": [
+    "Modrinth",
+    "CurseForge"
+  ],
+  "films": {
+    "gate": {
+      "name": "Giant_Refresh_06_Use_The_Gate",
+      "title": {
+        "en": "USE THE GATE",
+        "ru": "ЧЕРЕЗ КАЛИТКУ"
+      },
+      "feature": {
+        "en": "GIANTS BREAK FENCES",
+        "ru": "ГИГАНТЫ ЛОМАЮТ ЗАБОРЫ"
+      },
+      "music": "tag",
+      "shots": [
+        {
+          "source": "shortgate",
+          "seek": 0,
+          "length": 2.73333,
+          "duration": 2.73333,
+          "dialogue": [
+            {
+              "start": 0.82,
+              "end": 2.6,
+              "x": 0.4,
+              "y": 0.42,
+              "text": {
+                "en": "ALL SECURE.",
+                "ru": "ТЕПЕРЬ НАДЁЖНО."
+              }
+            }
+          ]
+        },
+        {
+          "source": "shortgate",
+          "seek": 2.733333,
+          "length": 6.16667,
+          "duration": 6.16667,
+          "dialogue": []
+        },
+        {
+          "source": "shortgate",
+          "seek": 8.9,
+          "length": 2.3,
+          "duration": 2.3,
+          "dialogue": [
+            {
+              "start": 0.09,
+              "end": 1.83,
+              "x": 0.69,
+              "y": 0.39,
+              "text": {
+                "en": "THE GATE STILL WORKS.",
+                "ru": "КАЛИТКА-ТО РАБОТАЕТ."
+              }
+            }
+          ]
+        },
+        {
+          "source": "shortgate",
+          "seek": 11.2,
+          "length": 4.2,
+          "duration": 4.2,
+          "dialogue": []
+        }
+      ],
+      "effects": [
+        [
+          0.3,
+          "plank",
+          0.78,
+          -2
+        ],
+        [
+          4.15,
+          "thud",
+          0.73,
+          -3
+        ],
+        [
+          5.4,
+          "thud",
+          0.81,
+          -3
+        ],
+        [
+          6.55,
+          "thud",
+          0.95,
+          -3
+        ],
+        [
+          7.48,
+          "fence",
+          0.93,
+          -3
+        ],
+        [
+          8.12,
+          "fence",
+          0.92,
+          -6
+        ],
+        [
+          12.25,
+          "gate",
+          0.95,
+          0
+        ],
+        [
+          12.6,
+          "stepgrass",
+          0.5,
+          1
+        ],
+        [
+          13.0,
+          "stepgrass",
+          0.46,
+          -1
+        ]
+      ]
+    },
+    "hatch": {
+      "name": "Giant_Refresh_07_Chicken_Entrance",
+      "title": {
+        "en": "CHICKEN ENTRANCE",
+        "ru": "КУРИНЫЙ ВХОД"
+      },
+      "feature": {
+        "en": "POTION OF SHRINKING",
+        "ru": "ЗЕЛЬЕ УМЕНЬШЕНИЯ"
+      },
+      "music": "snow",
+      "shots": [
+        {
+          "source": "shorthatch",
+          "seek": 0,
+          "length": 5.1,
+          "duration": 5.1,
+          "dialogue": [
+            {
+              "start": 0.96,
+              "end": 2.68,
+              "x": 0.4,
+              "y": 0.38,
+              "text": {
+                "en": "I CAN FIT.",
+                "ru": "Я ПРОЛЕЗУ."
+              }
+            }
+          ]
+        },
+        {
+          "source": "shorthatch",
+          "seek": 5.1,
+          "length": 2.9,
+          "duration": 2.9,
+          "dialogue": []
+        },
+        {
+          "source": "shorthatch",
+          "seek": 8.0,
+          "length": 2.56667,
+          "duration": 2.56667,
+          "dialogue": []
+        },
+        {
+          "source": "shorthatch",
+          "seek": 10.566667,
+          "length": 4.83333,
+          "duration": 4.83333,
+          "dialogue": [
+            {
+              "start": 1.95,
+              "end": 4.38,
+              "x": 0.71,
+              "y": 0.37,
+              "text": {
+                "en": "THE DOOR WAS RIGHT HERE.",
+                "ru": "ТУТ ЖЕ ЕСТЬ ДВЕРЬ."
+              }
+            }
+          ]
+        }
+      ],
+      "effects": [
+        [
+          0.53,
+          "chicken",
+          0.42,
+          3
+        ],
+        [
+          1.78,
+          "drink",
+          0.82,
+          0
+        ],
+        [
+          3.35,
+          "pling",
+          0.48,
+          4
+        ],
+        [
+          3.57,
+          "pling",
+          0.45,
+          -2
+        ],
+        [
+          3.82,
+          "pling",
+          0.44,
+          -7
+        ],
+        [
+          5.28,
+          "plank",
+          0.32,
+          -2
+        ],
+        [
+          6.48,
+          "plank",
+          0.31,
+          6
+        ],
+        [
+          7.02,
+          "plank",
+          0.35,
+          6
+        ],
+        [
+          8.53,
+          "chicken",
+          0.58,
+          0
+        ],
+        [
+          11.02,
+          "door",
+          0.91,
+          -1
+        ],
+        [
+          11.8,
+          "plank",
+          0.48,
+          0
+        ]
+      ]
+    },
+    "bell": {
+      "name": "Giant_Refresh_08_The_Alarm_Clock",
+      "title": {
+        "en": "THE ALARM CLOCK",
+        "ru": "БУДИЛЬНИК"
+      },
+      "feature": {
+        "en": "GIANTS STARTLE CREEPERS",
+        "ru": "ГИГАНТЫ ПУГАЮТ КРИПЕРОВ"
+      },
+      "music": "trial",
+      "shots": [
+        {
+          "source": "shortbell",
+          "seek": 0,
+          "length": 3.2,
+          "duration": 3.2,
+          "dialogue": []
+        },
+        {
+          "source": "shortbell",
+          "seek": 3.2,
+          "length": 3.06667,
+          "duration": 3.06667,
+          "dialogue": [
+            {
+              "start": 1.48,
+              "end": 2.95,
+              "x": 0.38,
+              "y": 0.45,
+              "text": {
+                "en": "LOUDER?",
+                "ru": "ПОГРОМЧЕ?"
+              }
+            }
+          ]
+        },
+        {
+          "source": "shortbell",
+          "seek": 6.266667,
+          "length": 2.9,
+          "duration": 2.9,
+          "dialogue": []
+        },
+        {
+          "source": "shortbell",
+          "seek": 9.166667,
+          "length": 2.16667,
+          "duration": 2.16667,
+          "dialogue": []
+        },
+        {
+          "source": "shortbell",
+          "seek": 11.333333,
+          "length": 4.06667,
+          "duration": 4.06667,
+          "dialogue": [
+            {
+              "start": 1.8,
+              "end": 3.84,
+              "x": 0.41,
+              "y": 0.44,
+              "text": {
+                "en": "THAT WORKED.",
+                "ru": "СРАБОТАЛО."
+              }
+            }
+          ]
+        }
+      ],
+      "effects": [
+        [
+          0.42,
+          "pling",
+          0.67,
+          -3
+        ],
+        [
+          3.55,
+          "pling",
+          0.73,
+          -3
+        ],
+        [
+          6.4,
+          "stepgrass",
+          0.51,
+          0
+        ],
+        [
+          6.75,
+          "stepgrass",
+          0.56,
+          -1
+        ],
+        [
+          8.62,
+          "thud",
+          0.9,
+          -4
+        ],
+        [
+          9.52,
+          "fuse",
+          0.91,
+          -3
+        ],
+        [
+          11.0,
+          "boom",
+          1.0,
+          -2
+        ],
+        [
+          12.78,
+          "chicken",
+          0.3,
+          -6
+        ]
+      ]
+    }
+  }
+}
