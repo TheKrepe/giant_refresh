@@ -2,7 +2,7 @@ name: Giant Refresh comedy capture
 on:
   push:
     branches: [media/giant-comedy]
-    paths: ['.github/workflows/comedy-capture.yml', 'common/src/main/java/**', 'promo-comedy/**']
+    paths: ['.github/workflows/comedy-capture.yml', 'common/src/main/java/**']
 permissions:
   contents: read
 jobs:
@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shot: ['shortgate', 'shorthatch', 'shortbell']
+        shot: ['shortgate', 'shorthatch']
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:

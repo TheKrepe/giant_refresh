@@ -126,11 +126,11 @@ final class Comedy extends Trailer.T {
             alex.lookAt(steve.e, 1.14);
             alex.crouch(true);
         });
-        frame(0, 2.72, point(5.62, 1.96, 7.72), point(3.07, 1.04, 5.22), 63);
+        frame(0, 2.72, point(1.22, 1.89, 8.83), point(3.12, 1.04, 5.25), 57);
         frame(2.72, 8.9, point(5.75, 3.65, 13.85), point(.75, 3.70, 3.6), 66);
         frame(8.9, 11.18, point(6.25, 1.50, 8.7), point(3.75, 1.24, 5.63), 64);
-        frame(11.18, 15.4, point(7.6, 3.6, 8.8), point(1.4, 1.05, 4.6), 69);
-        frame(15.4, 18.05, point(8.2, 3.8, 12.3), point(.95, 2.2, 5.05), 64);
+        frame(11.18, 15.4, point(6.52, 3.0, 10.8), point(3.55, 1.06, 4.55), 62);
+        frame(15.4, 18.05, point(7.04, 3.22, 11.6), point(3.3, 1.35, 4.45), 65);
     }
 
     private void hatch() {
@@ -197,15 +197,16 @@ final class Comedy extends Trailer.T {
             steve.lookAt(alex.e, 1.1);
             hen.lookAt(alex.e, 1.35);
         });
-        on(13.12, () -> steve.crouch(true));
+        on(12.55, () -> steve.walkTo(point(-1.55, 0, -2.03), .46));
+        on(13.35, () -> steve.crouch(true));
         on(14.50, () -> {
             mark("hatch passed: " + (steve.e.getZ() < door.z) + "; door used: " + (alex.e.getZ() < door.z));
         });
         frame(0, 5.10, point(-4.08, 2.1, 4.0), point(-.82, 1.03, 1.3), 62);
         frame(5.10, 8.0, point(-2.75, 1.35, 3.32), point(-.99, .57, .73), 59);
         frame(8.0, 10.56, point(-4.45, 1.28, -2.85), point(-.72, .54, -1.1), 58);
-        frame(10.56, 15.4, point(-1.2, 1.97, -4.45), point(.65, 1.20, -.97), 65);
-        frame(15.4, 18.05, point(-1.32, 2.04, -4.65), point(.6, 1.31, -1.1), 65);
+        frame(10.56, 15.4, point(.40, 2.64, -5.95), point(.40, .96, -1.40), 71);
+        frame(15.4, 18.05, point(.40, 2.64, -5.95), point(.40, .96, -1.40), 71);
     }
 
     private void bell() {
