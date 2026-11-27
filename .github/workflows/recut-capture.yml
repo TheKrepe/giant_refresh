@@ -1,0 +1,82 @@
+name: Giant Refresh recut capture
+on:
+  push:
+    branches: [media/giant-shorts-recut]
+    paths: ['.github/workflows/recut-capture.yml', 'common/src/main/java/**']
+permissions:
+  contents: read
+jobs:
+  shot:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        shot: ['short1']
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TARGET: '26.2'
+      SHOT: ${{ matrix.shot }}
+      RES: '720x1280'
+      FPS: '30'
+      RATE: '3'
+      WARMUP: '12'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: |
+            21
+            25
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.8.2'
+      - name: World
+        working-directory: fabric
+        env:
+          JAVA_TOOL_OPTIONS: -Dgiantrefresh.smoketest=true
+        run: |
+          mkdir -p run; echo "eula=true" > run/eula.txt
+          printf "level-seed=giantrefresh\nview-distance=8\nsimulation-distance=6\nspawn-protection=0\nonline-mode=false\nsync-chunk-writes=false\n" > run/server.properties
+          timeout 1200 gradle runServer --no-daemon -Pgr_target=$TARGET > server.log 2>&1 || true
+          grep -E "SMOKETEST.*(PASS|FAIL)" server.log || { tail -60 server.log; exit 1; }
+      - name: Record
+        working-directory: fabric
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq xvfb mesa-vulkan-drivers libgl1-mesa-dri ffmpeg python3-pil python3-numpy >/dev/null
+          W=${RES%x*}; H=${RES#*x}
+          mkdir -p run/saves; rm -rf run/saves/cine; cp -r run/world run/saves/cine; rm -f run/saves/cine/session.lock
+          rm -rf run/screenshots; rm -f run/cine_*
+          printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:9\nsimulationDistance:8\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\nguiScale:2\nentityShadows:true\ngraphicsMode:1\nparticles:0\nbobView:false\nshowSubtitles:false\nreducedDebugInfo:true\n" > run/options.txt
+          export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.recut.preview=true -Dgiantrefresh.cinema=$SHOT -Dgiantrefresh.cinema.fps=$FPS -Dgiantrefresh.cinema.rate=${RATE:-1} -Dgiantrefresh.cinema.warmup=${WARMUP:-30}"
+          start=$(date +%s)
+          timeout 1600 xvfb-run -a -s "-screen 0 ${W}x${H}x24 +extension GLX +render -noreset" gradle runClient --no-daemon -Pgr_target=$TARGET \
+            --args="--width $W --height $H --quickPlaySingleplayer cine" > client.log 2>&1 || true
+          echo "client took $(( $(date +%s) - start )) s"
+          grep -E "CINEMA|Exception|Caused by|ERROR" client.log | grep -v JAVA_TOOL_OPTIONS | cut -c1-300 | head -80 || true
+          test -s run/cine_frames.txt || { tail -100 client.log; exit 1; }
+      - name: Encode
+        working-directory: fabric/run
+        run: |
+          mkdir -p seq out
+          # cine_frames.txt: "<frame> <file> <t>" - frames that were skipped reuse the previous picture
+          while read -r n f t; do
+            src=$(printf "screenshots/cine_%05d.png" "$f"); [ -f "$src" ] || continue
+            ln -f "$src" "$(printf "seq/%05d.png" "$n")"
+          done < cine_frames.txt
+          ffmpeg -y -loglevel error -framerate "$FPS" -i seq/%05d.png -c:v libx264 -crf 16 -preset fast -pix_fmt yuv420p out/$SHOT.mp4
+          cp cine_frames.txt out/$SHOT.frames.txt
+          cp cine_sounds.jsonl out/$SHOT.sounds.jsonl 2>/dev/null || true
+          grep -E "CINEMA|BLOCKING" ../client.log | cut -c1-300 > out/$SHOT.log || true
+          test "$(awk '{print $2}' cine_frames.txt | sort -u | wc -l)" -gt 12
+          ls -lh out
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: take-${{ matrix.shot }}
+          path: fabric/run/out/
+          retention-days: 14

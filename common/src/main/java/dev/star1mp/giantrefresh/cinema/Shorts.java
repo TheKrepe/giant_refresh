@@ -29,7 +29,7 @@ final class Shorts extends Trailer.T {
     private static final long[] SUN = {2750, 1800, 12450, 4100, 10500};
 
     Shorts(int number) {
-        super(LENGTH[number - 1], SUN[number - 1]);
+        super(Boolean.getBoolean("giantrefresh.recut.preview") ? 4.4 : LENGTH[number - 1], SUN[number - 1]);
         this.number = number;
     }
 
@@ -80,8 +80,6 @@ final class Shorts extends Trailer.T {
         for(int i=0;i<initial;i++)place(foot.add(0,i,0),Blocks.DIRT.defaultBlockState());
         Actor steve=steve(foot.add(0,initial,0),180);
         hand(steve,new ItemStack(Items.DIRT));
-        steve.e.setInvisible(true);
-        hand(steve,ItemStack.EMPTY);
         steve.lookAt(foot.add(.3,-1,.1));
         Actor zombie=summon("minecraft:zombie",foot.add(-2.5,0,-1.8),-30,"NoAI:1b,Invulnerable:1b");
         zombie.living().setItemSlot(EquipmentSlot.HEAD,new ItemStack(Items.LEATHER_HELMET));
@@ -99,7 +97,7 @@ final class Shorts extends Trailer.T {
             });
         }
         Vec3 perch=foot.add(0,top,0);
-        on(3.44,()->{steve.e.setInvisible(false);hand(steve,new ItemStack(Items.DIRT));steve.lookAt(perch.add(1.2,1.6,-3.55));});
+        on(3.44,()->{steve.lookAt(zombie.e,1.4);hand(steve,ItemStack.EMPTY);});
         on(3.65,()->steve.crouch(true).lookAt(zombie.e,1.1));
         on(4.7,()->steve.crouch(false).lookAt(perch.add(1,1.45,-3.6)));
         on(5.65,()->hand(steve,new ItemStack(Items.BREAD)));
@@ -114,15 +112,14 @@ final class Shorts extends Trailer.T {
         on(12.48,()->{steve.crouch(true);steve.lookAt(g,9);});
         on(13.22,()->steve.crouch(false));
         on(13.65,()->{steve.lookAt(foot.add(-5,1,-9));steve.sprint(true).walkTo(foot.add(-5,0,-9),1.08);});
-        DoubleFunction<Vec3> pov=t->foot.add(.12,initial+2.08+Math.min(6,Math.floor(t/.61))+Math.sin(Math.PI*Math.min(1,(t%.61)/.61))*.72+(t%.61)/.61*(t<3.65?1:0),-.22);
-        cam.follow(0,pov,fixed(foot.add(-.35,0,-.6))).fov(77);
-        cam.follow(3.45,pov,fixed(foot.add(-.35,0,-.6))).fov(77);
-        pair(3.452,6.38,perch.add(1.20,1.74,-3.10),track(steve,1.37),41);
-        cam.at(6.38,perch.add(.66,1.83,-4.45),track(steve,1.2)).fov(54);
-        cam.at(9.50,perch.add(6,1.85,-11),perch.add(-.85,.95,1.5)).fov(57);
-        cam.at(9.748,perch.add(6,1.85,-11),perch.add(-.85,.95,1.5)).fov(57);
-        pair(9.75,12.54,perch.add(6.5,2.0,-8.2),track(steve,.8),53);
-        pair(12.54,15.5,foot.add(4.2,1.45,-10.6),track(steve,1.05),58);
+        DoubleFunction<Vec3> build = track(steve, 0);
+        cam.follow(0,plus(build,3.40,1.42,-1.20),plus(build,0,.65,0)).fov(60);
+        cam.follow(3.45,plus(build,3.14,1.43,-1.34),plus(build,0,.81,0)).fov(59);
+        pair(3.452,6.34,perch.add(2.45,1.55,-3.85),track(steve,1.23),49);
+        cam.at(6.34,perch.add(2.4,1.60,-4.10),track(steve,1.18)).fov(54);
+        cam.at(9.748,perch.add(5.6,1.96,-9.9),perch.add(-.92,1.1,1.1)).fov(58);
+        pair(9.75,12.46,perch.add(5.7,2.15,-8.8),track(steve,.8),57);
+        pair(12.46,15.5,foot.add(4.65,1.56,-11.1),track(steve,1.02),62);
         pair(15.50,18.05,giant.e.position().add(-8,2,-15),track(giant,6.3),59);
     }
 
@@ -160,17 +157,18 @@ final class Shorts extends Trailer.T {
         on(18.02,()->{steve.stop().lookAt(edge.add(8,1,4));steve.sprint(true).walkTo(edge.add(8,0,4),1.02);});
         on(18.25,()->giant.lookAt(steve.e,1.5).walkTo(center.add(0,0,4.75),1));
         thump(19.43,center,1.4,center.add(.75,0,1.8),16);
-        pair(0,2.32,trace.add(1.25,4.0,2.1),trace.add(.3,.12,.20),50);
+        cam.at(0,trace.add(2.70,2.48,3.10),trace.add(.82,.27,.35)).fov(63);
+        cam.at(2.318,trace.add(2.60,2.23,2.95),trace.add(.92,.39,.39)).fov(63);
         Vec3 ruins=edge.add(-3.1,0,1.05);
         cam.at(2.32,ruins.add(2.45,1.48,4.1),ruins.add(.2,1.15,.1)).fov(58);
         cam.at(4.995,ruins.add(1.85,1.64,3.85),ruins.add(.2,1.24,.1)).fov(56);
         cam.at(5.0,center.add(-3.5,1.55,16),center.add(-1.25,3.38,3.8)).fov(58);
         cam.at(10.38,center.add(-1.6,1.80,15.4),center.add(-.4,3.40,3.8)).fov(58);
-        pair(10.39,13.63,edge.add(-.20,1.50,7.8),edge.add(-.17,1.08,.12),58);
-        cam.at(13.65,edge.add(-2.9,1.25,5.8),track(steve,1.02)).fov(64);
+        pair(10.39,13.63,edge.add(.18,1.42,6.25),edge.add(-.13,1.11,.33),62);
+        cam.at(13.65,edge.add(-2.5,1.33,5.8),track(steve,1.07)).fov(64);
         cam.at(15.948,edge.add(2.35,1.40,6.6),track(steve,1.12)).fov(63);
         cam.at(15.95,edge.add(2.70,1.2,6.5),center.add(.5,3.20,1.25)).fov(61);
-        cam.at(20.44,edge.add(3.75,1.70,7.8),center.add(.7,5.3,1.1)).fov(65);
+        cam.at(20.44,edge.add(3.33,1.84,8.9),center.add(.60,4.9,1.30)).fov(70);
         pair(20.45,23.05,center.add(-8,4.0,14),track(giant,6),60);
     }
 
@@ -223,15 +221,15 @@ final class Shorts extends Trailer.T {
             spider.e.setPos(p.x,p.y,p.z);
         });
         DoubleFunction<Vec3> gp=track(giant,0);
-        cam.follow(0,plus(gp,.55,13.44,5),plus(gp,0,12.63,0)).fov(53);
-        cam.follow(3.45,plus(gp,.82,13.46,4.75),plus(gp,0,12.68,0)).fov(51);
+        cam.follow(0,plus(gp,1.36,13.34,5.65),plus(gp,-.15,12.37,.12)).fov(57);
+        cam.follow(3.45,plus(gp,1.08,13.36,5.10),plus(gp,0,12.44,0)).fov(54);
         cam.follow(3.452,plus(gp,1.89,12.13,5.8),track(spider,.38)).fov(49);
         cam.follow(6.6,plus(gp,2.10,12.55,5.9),track(spider,.38)).fov(48);
         cam.follow(6.602,plus(gp,1.5,13.42,5.4),plus(gp,0,12.35,.25)).fov(53);
         cam.follow(9.50,plus(gp,6.15,6.3,16.6),plus(gp,0,6.4,.4)).fov(58);
-        pair(9.502,12.04,steve.e.position().add(1.85,.98,-3.1),track(steve,1.05),49);
+        pair(9.502,12.04,steve.e.position().add(2.05,1.29,-3.50),track(steve,1.11),51);
         pair(12.05,13.63,atMark(4.8,2.6,12.1),track(zombie,.79),68);
-        pair(13.64,15.72,atMark(4.3,1.21,8.4),atMark(.60,1.1,8.0),70);
+        pair(13.64,15.72,atMark(4.95,1.52,8.65),atMark(.57,1.12,8.6),68);
         pair(15.73,16.85,atMark(2.9,11.15,7.0),track(spider,.42),59);
         pair(16.86,18.5,lens,track(spider,.42),71);
         pair(18.5,21.05,atMark(-8,3.4,16),track(giant,6.2),61);
@@ -292,15 +290,20 @@ final class Shorts extends Trailer.T {
         on(17.64,()->steve.walkTo(d.add(out.scale(1.35)),.28));on(19.05,()->{steve.stop().lookAt(alex.e,1.55);alex.lookAt(steve.e,4);});
         on(19.84,()->steve.crouch(false).backUp(.36f));on(20.38,()->steve.stop().lookAt(alex.e,1.5));
         on(20.97,()->{hand(alex,ItemStack.EMPTY);level.setBlock(dp,down,2);level.setBlock(dp.above(),up,3);alex.living().swing(InteractionHand.MAIN_HAND);});
+        on(21.20,()->{steve.lookAt(d.add(0,1.0,0));alex.lookAt(steve.e,3.7);});
+        on(21.7,()->{steve.lookAt(alex.e,1.1);steve.living().swing(InteractionHand.MAIN_HAND);});
         pair(0,3.22,d.add(out.scale(6.7)).add(right.scale(-1.65)).add(0,1.72,0),front.add(right.scale(-.35)).add(0,1.13,0),60);
-        pair(3.22,6.35,floor.add(out.scale(2.45)).add(right.scale(1.70)).add(0,1.30,0),floor.add(right.scale(-.52)).add(0,.83,0),53);
+        cam.at(3.22,floor.add(out.scale(3.15)).add(right.scale(1.65)).add(0,1.48,0),floor.add(right.scale(-.58)).add(0,1.10,0)).fov(53);
+        cam.at(6.348,floor.add(out.scale(2.25)).add(right.scale(1.35)).add(0,1.28,0),floor.add(right.scale(-.54)).add(0,.92,0)).fov(50);
         pair(6.35,8.46,front.add(out.scale(3.2)).add(right.scale(.9)).add(0,1.66,0),track(steve,1.28),46);
-        Vec3 wide=d.add(out.scale(9.35)).add(right.scale(-3.5)).add(0,2.10,0);
+        Vec3 wide=d.add(out.scale(8.75)).add(right.scale(-3.02)).add(0,2.26,0);
         pair(8.46,14.18,wide,d.add(out.scale(.77)).add(0,2.22,0),54);
-        pair(14.18,17.14,d.add(out.scale(5.7)).add(right.scale(-2.45)).add(0,1.71,0),d.add(right.scale(-.48)).add(0,1.27,0),60);
+        pair(14.18,17.14,d.add(out.scale(4.50)).add(right.scale(-2.72)).add(0,1.61,0),d.add(right.scale(-.58)).add(0,1.08,0),59);
         pair(17.14,22.50,wide,d.add(out.scale(.9)).add(0,2.22,0),54);
         pair(22.50,25.05,wide.add(right.scale(.8)),d.add(0,2.6,0),58);
     }
+
+    private void holdSeeds(Actor a) { hand(a,new ItemStack(Items.WHEAT_SEEDS)); }
 
     private void farm() {
         Sets.template(level,"minecraft:village/plains/houses/plains_small_house_3",cell(atMark(-8,0,-8)),Rotation.NONE);
@@ -332,14 +335,19 @@ final class Shorts extends Trailer.T {
         on(14.84,()->bird.lookAt(atMark(0,0,1)));on(15.53,()->bird.lookAt(atMark(2.9,1.45,1.4)));on(16.13,()->bird.lookAt(atMark(0,0,1)));
         during(16.40,17.31,t->{double k=u(t,16.4,17.31);Vec3 p=atMark(2*(1-k),.94*(1-k)+.55*Math.sin(Math.PI*k),2-k);bird.e.setPos(p.x,p.y,p.z);});
         on(17.35,()->{bird.e.setNoGravity(false);farmer.lookAt(bird.e,.4);});
-        on(17.71,()->steve.lookAt(bird.e,.38));on(18.63,()->farmer.lookAt(steve.e,1.54));on(19.05,()->steve.crouch(true));
-        pair(0,2.25,atMark(.55,2.67,3.06),atMark(0,.15,1),47);
+        on(17.71,()->steve.lookAt(bird.e,.38));
+        on(18.63,()->farmer.lookAt(steve.e,1.54));
+        on(19.05,()->{steve.crouch(true);holdSeeds(steve);});
+        on(19.23,()->bird.lookAt(steve.e,.47));
+        cam.at(0,atMark(1.30,2.24,4.8),atMark(-.06,.24,1.2)).fov(59);
+        cam.at(2.248,atMark(1.04,1.92,4.50),atMark(-.28,.43,1.44)).fov(56);
         pair(2.25,6.20,atMark(-.12,1.67,8.6),atMark(-.06,1.33,2.59),58);
         pair(6.2,10.2,atMark(-.85,1.10,7.30),atMark(-.60,2.55,-.9),65);
         cam.at(10.2,atMark(4.25,2.75,13.7),atMark(.3,4.5,-1.4)).fov(62);
         cam.at(14.70,atMark(5.60,2.68,12.2),atMark(4.2,4.2,-1.25)).fov(62);
         pair(14.71,17.85,atMark(-1.4,1.63,5.55),atMark(1.08,.78,1.65),50);
-        pair(17.85,19.5,atMark(.9,1.70,8.55),atMark(-.3,.95,2.93),64);
-        pair(19.5,22.05,atMark(4.70,2.95,10.4),atMark(-.9,1.95,-1.5),61);
+        pair(17.85,19.5,atMark(.75,1.66,8.9),atMark(.35,.82,2.48),70);
+        pair(19.5,22.05,atMark(.75,1.66,8.9),atMark(.35,.77,2.36),70);
     }
 }
+
