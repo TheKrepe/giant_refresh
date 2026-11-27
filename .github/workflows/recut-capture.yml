@@ -11,13 +11,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shot: ['short1']
+        shot: ['short1', 'short2', 'short3', 'short4', 'short5']
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
       TARGET: '26.2'
       SHOT: ${{ matrix.shot }}
-      RES: '720x1280'
+      RES: '1080x1920'
       FPS: '30'
       RATE: '3'
       WARMUP: '12'
@@ -39,8 +39,13 @@ jobs:
         run: |
           mkdir -p run; echo "eula=true" > run/eula.txt
           printf "level-seed=giantrefresh\nview-distance=8\nsimulation-distance=6\nspawn-protection=0\nonline-mode=false\nsync-chunk-writes=false\n" > run/server.properties
-          timeout 1200 gradle runServer --no-daemon -Pgr_target=$TARGET > server.log 2>&1 || true
-          grep -E "SMOKETEST.*(PASS|FAIL)" server.log || { tail -60 server.log; exit 1; }
+          for attempt in 1 2 3; do
+            timeout 360 gradle runServer --no-daemon -Pgr_target=$TARGET > server.log 2>&1 || true
+            if grep -E "SMOKETEST.*PASS" server.log; then exit 0; fi
+            sleep 7
+          done
+          tail -70 server.log
+          exit 1
       - name: Record
         working-directory: fabric
         env:
@@ -52,7 +57,7 @@ jobs:
           mkdir -p run/saves; rm -rf run/saves/cine; cp -r run/world run/saves/cine; rm -f run/saves/cine/session.lock
           rm -rf run/screenshots; rm -f run/cine_*
           printf "onboardAccessibility:false\nskipMultiplayerWarning:true\ntutorialStep:none\njoinedFirstServer:true\nrenderDistance:9\nsimulationDistance:8\npauseOnLostFocus:false\nnarrator:0\nsoundCategory_master:0.0\nguiScale:2\nentityShadows:true\ngraphicsMode:1\nparticles:0\nbobView:false\nshowSubtitles:false\nreducedDebugInfo:true\n" > run/options.txt
-          export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.recut.preview=true -Dgiantrefresh.cinema=$SHOT -Dgiantrefresh.cinema.fps=$FPS -Dgiantrefresh.cinema.rate=${RATE:-1} -Dgiantrefresh.cinema.warmup=${WARMUP:-30}"
+          export JAVA_TOOL_OPTIONS="-Xmx6G -Dgiantrefresh.cinema=$SHOT -Dgiantrefresh.cinema.fps=$FPS -Dgiantrefresh.cinema.rate=${RATE:-1} -Dgiantrefresh.cinema.warmup=${WARMUP:-30}"
           start=$(date +%s)
           timeout 1600 xvfb-run -a -s "-screen 0 ${W}x${H}x24 +extension GLX +render -noreset" gradle runClient --no-daemon -Pgr_target=$TARGET \
             --args="--width $W --height $H --quickPlaySingleplayer cine" > client.log 2>&1 || true
@@ -75,8 +80,52 @@ jobs:
           test "$(awk '{print $2}' cine_frames.txt | sort -u | wc -l)" -gt 12
           ls -lh out
 
+      - name: Finish and verify both localized edits
+        working-directory: fabric/run
+        run: |
+          /usr/bin/python3 "${GITHUB_WORKSPACE}/promo-recut/edit.py" --project "${GITHUB_WORKSPACE}/promo-recut/films.json" --raw out --assets "${GITHUB_WORKSPACE}/promo-comedy/assets" --out release --film "${SHOT#short}" --lang both
+          /usr/bin/python3 "${GITHUB_WORKSPACE}/promo-recut/verify.py" release --bilingual | tee release/verification.txt
+          /usr/bin/python3 "${GITHUB_WORKSPACE}/promo-recut/look.py" "${SHOT#short}" release release/contact.jpg
+          cp out/short*.log out/short*.frames.txt release/
+          cp out/short*.sounds.jsonl release/ 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         with:
           name: take-${{ matrix.shot }}
           path: fabric/run/out/
           retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: edit-${{ matrix.shot }}
+          path: |
+            fabric/run/release/*.mp4
+            fabric/run/release/*.txt
+            fabric/run/release/*.jpg
+            fabric/run/release/*.log
+            fabric/run/release/*.jsonl
+          retention-days: 30
+  store:
+    needs: shot
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: edit-*
+          path: edits
+      - name: Prepare the ten masters for review
+        run: |
+          mkdir -p recut-media/RU recut-media/EN
+          for mp4 in edits/*/*.mp4; do
+            name="${mp4##*/}"
+            stem="${name%.mp4}"
+            cp "$mp4" "recut-media/${stem: -2}/$name"
+          done
+          cp promo-recut/production.md recut-media/
+          test "$(find recut-media -name '*.mp4' | wc -l)" -eq 10
+          git config user.name 'Giant Refresh media'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -f recut-media
+          git commit -m 'Store the ten reviewed footage masters'
+          git push origin HEAD:refs/heads/media/giant-shorts-recut

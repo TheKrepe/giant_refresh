@@ -1,0 +1,761 @@
+{
+  "brand": "GIANT REFRESH",
+  "platforms": [
+    "Modrinth",
+    "CurseForge"
+  ],
+  "films": {
+    "1": {
+      "name": "Giant_Refresh_01_The_Last_Block",
+      "title": {
+        "en": "THE LAST BLOCK",
+        "ru": "ПОСЛЕДНИЙ БЛОК"
+      },
+      "feature": {
+        "en": "LOOK OUT ABOVE",
+        "ru": "ГИГАНТ ХВАТАЕТ С ВЫСОТЫ"
+      },
+      "music": "pillar",
+      "shots": [
+        {
+          "source": "short1",
+          "seek": 0,
+          "length": 3.467,
+          "duration": 2.8,
+          "dialogue": []
+        },
+        {
+          "source": "short1",
+          "seek": 3.467,
+          "length": 2.866,
+          "duration": 2.3,
+          "dialogue": [
+            {
+              "start": 0.4,
+              "end": 2.05,
+              "x": 0.48,
+              "y": 0.39,
+              "text": {
+                "en": "SAFE UP HERE.",
+                "ru": "ТУТ БЕЗОПАСНО."
+              }
+            }
+          ]
+        },
+        {
+          "source": "short1",
+          "seek": 6.333,
+          "length": 3.434,
+          "duration": 2.7333,
+          "dialogue": []
+        },
+        {
+          "source": "short1",
+          "seek": 9.767,
+          "length": 2.7,
+          "duration": 2.7,
+          "dialogue": []
+        },
+        {
+          "source": "short1",
+          "seek": 12.467,
+          "length": 3.0,
+          "duration": 3.0,
+          "dialogue": []
+        }
+      ],
+      "effects": [
+        [
+          0.2423,
+          "dig",
+          0.67,
+          -1
+        ],
+        [
+          0.7269,
+          "dig",
+          0.67,
+          -1
+        ],
+        [
+          1.2195,
+          "dig",
+          0.67,
+          -1
+        ],
+        [
+          1.696,
+          "dig",
+          0.67,
+          -1
+        ],
+        [
+          2.1967,
+          "dig",
+          0.67,
+          -1
+        ],
+        [
+          2.6813,
+          "dig",
+          0.67,
+          -1
+        ],
+        [
+          5.4956,
+          "bite",
+          0.56,
+          0
+        ],
+        [
+          5.8538,
+          "bite",
+          0.5,
+          1
+        ],
+        [
+          7.8663,
+          "swish",
+          0.81,
+          -8
+        ],
+        [
+          8.6463,
+          "grip",
+          0.97,
+          -6
+        ],
+        [
+          9.6963,
+          "swish",
+          0.82,
+          -5
+        ],
+        [
+          10.3763,
+          "thud",
+          0.91,
+          -2
+        ],
+        [
+          12.0163,
+          "stepgrass",
+          0.48,
+          0
+        ],
+        [
+          12.3363,
+          "stepgrass",
+          0.53,
+          1
+        ],
+        [
+          12.6663,
+          "stepgrass",
+          0.42,
+          0
+        ]
+      ]
+    },
+    "2": {
+      "name": "Giant_Refresh_02_On_Tiptoe",
+      "title": {
+        "en": "ON TIPTOE",
+        "ru": "НА ЦЫПОЧКАХ"
+      },
+      "feature": {
+        "en": "SNEAK PAST SLEEPING GIANTS",
+        "ru": "КРАДИСЬ МИМО СПЯЩИХ ГИГАНТОВ"
+      },
+      "music": "tiptoe",
+      "shots": [
+        {
+          "source": "short2",
+          "seek": 0,
+          "length": 2.333,
+          "duration": 1.6,
+          "dialogue": []
+        },
+        {
+          "source": "short2",
+          "seek": 2.333,
+          "length": 2.667,
+          "duration": 1.9333,
+          "dialogue": []
+        },
+        {
+          "source": "short2",
+          "seek": 5.0,
+          "length": 5.4,
+          "duration": 2.8333,
+          "dialogue": []
+        },
+        {
+          "source": "short2",
+          "seek": 10.4,
+          "length": 3.267,
+          "duration": 2.7667,
+          "dialogue": [
+            {
+              "start": 0.06,
+              "end": 1.16,
+              "x": 0.7,
+              "y": 0.42,
+              "text": {
+                "en": "QUIET.",
+                "ru": "ТИШЕ."
+              }
+            },
+            {
+              "start": 1.22,
+              "end": 2.64,
+              "x": 0.27,
+              "y": 0.43,
+              "text": {
+                "en": "I GOT THIS.",
+                "ru": "ДА Я ТИХО."
+              }
+            }
+          ]
+        },
+        {
+          "source": "short2",
+          "seek": 13.667,
+          "length": 2.3,
+          "duration": 2.3,
+          "dialogue": []
+        },
+        {
+          "source": "short2",
+          "seek": 15.967,
+          "length": 4.466,
+          "duration": 4.4667,
+          "dialogue": []
+        }
+      ],
+      "effects": [
+        [
+          0.7887,
+          "stepgrass",
+          0.36,
+          1
+        ],
+        [
+          2.6634,
+          "snore",
+          0.62,
+          0
+        ],
+        [
+          4.1735,
+          "stepgrass",
+          0.33,
+          1
+        ],
+        [
+          5.1599,
+          "stepgrass",
+          0.32,
+          3
+        ],
+        [
+          9.4663,
+          "stepgrass",
+          0.67,
+          0
+        ],
+        [
+          9.7463,
+          "stepgrass",
+          0.64,
+          -2
+        ],
+        [
+          10.0363,
+          "stepgrass",
+          0.68,
+          0
+        ],
+        [
+          10.3863,
+          "stepgrass",
+          0.67,
+          2
+        ],
+        [
+          11.4863,
+          "thud",
+          0.73,
+          -4
+        ],
+        [
+          12.9066,
+          "stepgrass",
+          0.48,
+          1
+        ],
+        [
+          13.6667,
+          "stepgrass",
+          0.57,
+          -1
+        ],
+        [
+          14.8668,
+          "thud",
+          0.97,
+          -1
+        ]
+      ]
+    },
+    "3": {
+      "name": "Giant_Refresh_03_Room_for_One_More",
+      "title": {
+        "en": "ROOM FOR ONE MORE?",
+        "ru": "МЕСТА ЕЩЁ ЕСТЬ?"
+      },
+      "feature": {
+        "en": "MOBS RIDE GIANTS",
+        "ru": "МОБЫ ЕЗДЯТ НА ГИГАНТАХ"
+      },
+      "music": "crew",
+      "shots": [
+        {
+          "source": "short3",
+          "seek": 0,
+          "length": 3.467,
+          "duration": 1.8333,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 3.467,
+          "length": 3.133,
+          "duration": 2.7333,
+          "dialogue": [
+            {
+              "start": 0.44,
+              "end": 2.43,
+              "x": 0.49,
+              "y": 0.39,
+              "text": {
+                "en": "GOT ROOM FOR ONE?",
+                "ru": "А МНЕ МЕСТО ЕСТЬ?"
+              }
+            }
+          ]
+        },
+        {
+          "source": "short3",
+          "seek": 6.6,
+          "length": 2.9,
+          "duration": 2.2667,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 9.5,
+          "length": 2.567,
+          "duration": 2.5667,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 12.067,
+          "length": 1.6,
+          "duration": 1.6,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 13.667,
+          "length": 2.066,
+          "duration": 1.8,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 15.733,
+          "length": 1.134,
+          "duration": 1.1,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 16.867,
+          "length": 1.666,
+          "duration": 1.6667,
+          "dialogue": []
+        },
+        {
+          "source": "short3",
+          "seek": 18.533,
+          "length": 0.797,
+          "duration": 0.8,
+          "dialogue": []
+        }
+      ],
+      "effects": [
+        [
+          0.3596,
+          "thud",
+          0.6,
+          -4
+        ],
+        [
+          2.2547,
+          "spider",
+          0.59,
+          2
+        ],
+        [
+          3.0486,
+          "spider",
+          0.5,
+          3
+        ],
+        [
+          4.8246,
+          "pop",
+          0.55,
+          -4
+        ],
+        [
+          6.294,
+          "swish",
+          0.41,
+          5
+        ],
+        [
+          8.0332,
+          "bow",
+          0.84,
+          0
+        ],
+        [
+          8.4131,
+          "shield",
+          0.95,
+          0
+        ],
+        [
+          9.553,
+          "swish",
+          0.67,
+          -2
+        ],
+        [
+          10.803,
+          "thud",
+          0.73,
+          5
+        ],
+        [
+          11.3337,
+          "stepgrass",
+          0.52,
+          1
+        ],
+        [
+          13.983,
+          "spider",
+          0.54,
+          1
+        ],
+        [
+          14.8534,
+          "swish",
+          0.87,
+          -6
+        ],
+        [
+          15.4836,
+          "thud",
+          0.81,
+          1
+        ]
+      ]
+    },
+    "4": {
+      "name": "Giant_Refresh_04_Standard_Door",
+      "title": {
+        "en": "STANDARD DOOR",
+        "ru": "ДВЕРЬ СТАНДАРТНАЯ"
+      },
+      "feature": {
+        "en": "BREW A POTION OF GROWTH",
+        "ru": "ЗЕЛЬЕ УВЕЛИЧЕНИЯ"
+      },
+      "music": "brew",
+      "shots": [
+        {
+          "source": "short4",
+          "seek": 2.733,
+          "length": 0.5,
+          "duration": 0.9333,
+          "dialogue": []
+        },
+        {
+          "source": "short4",
+          "seek": 3.233,
+          "length": 3.134,
+          "duration": 2.4333,
+          "dialogue": []
+        },
+        {
+          "source": "short4",
+          "seek": 6.367,
+          "length": 2.1,
+          "duration": 2.1,
+          "dialogue": []
+        },
+        {
+          "source": "short4",
+          "seek": 8.467,
+          "length": 5.733,
+          "duration": 3.9333,
+          "dialogue": [
+            {
+              "start": 2.3,
+              "end": 3.77,
+              "x": 0.52,
+              "y": 0.36,
+              "text": {
+                "en": "I CAN FIT.",
+                "ru": "Я ПРОЛЕЗУ."
+              }
+            }
+          ]
+        },
+        {
+          "source": "short4",
+          "seek": 14.2,
+          "length": 2.967,
+          "duration": 2.9667,
+          "dialogue": []
+        },
+        {
+          "source": "short4",
+          "seek": 17.167,
+          "length": 5.3,
+          "duration": 4.7667,
+          "dialogue": [
+            {
+              "start": 2.77,
+              "end": 4.55,
+              "x": 0.56,
+              "y": 0.42,
+              "text": {
+                "en": "SAME PROBLEM.",
+                "ru": "ВСЁ ТА ЖЕ ПРОБЛЕМА."
+              }
+            }
+          ]
+        }
+      ],
+      "effects": [
+        [
+          0.0877,
+          "plank",
+          0.57,
+          0
+        ],
+        [
+          1.2571,
+          "pop",
+          0.74,
+          3
+        ],
+        [
+          2.5227,
+          "brew",
+          0.7,
+          1
+        ],
+        [
+          4.3997,
+          "drink",
+          0.82,
+          0
+        ],
+        [
+          5.5168,
+          "pling",
+          0.76,
+          2
+        ],
+        [
+          5.8804,
+          "pling",
+          0.7,
+          5
+        ],
+        [
+          6.1754,
+          "pling",
+          0.7,
+          9
+        ],
+        [
+          7.3692,
+          "thud",
+          0.67,
+          1
+        ],
+        [
+          11.9697,
+          "fence",
+          0.89,
+          0
+        ],
+        [
+          13.0709,
+          "plank",
+          0.58,
+          0
+        ],
+        [
+          15.787,
+          "door",
+          0.86,
+          -2
+        ]
+      ]
+    },
+    "5": {
+      "name": "Giant_Refresh_05_Who_Trampled_the_Crops",
+      "title": {
+        "en": "WHO TRAMPLED THE CROPS?",
+        "ru": "КТО СЛОМАЛ ГРЯДКУ?"
+      },
+      "feature": {
+        "en": "GIANTS TRAMPLE CROPS",
+        "ru": "ГИГАНТЫ ТОПЧУТ ГРЯДКИ"
+      },
+      "music": "farm",
+      "shots": [
+        {
+          "source": "short5",
+          "seek": 0,
+          "length": 2.267,
+          "duration": 1.5667,
+          "dialogue": []
+        },
+        {
+          "source": "short5",
+          "seek": 2.267,
+          "length": 3.933,
+          "duration": 2.9333,
+          "dialogue": [
+            {
+              "start": 0.78,
+              "end": 2.6,
+              "x": 0.74,
+              "y": 0.4,
+              "text": {
+                "en": "WASN’T ME.",
+                "ru": "ЭТО НЕ Я."
+              }
+            }
+          ]
+        },
+        {
+          "source": "short5",
+          "seek": 6.2,
+          "length": 4.0,
+          "duration": 3.1,
+          "dialogue": []
+        },
+        {
+          "source": "short5",
+          "seek": 10.2,
+          "length": 4.533,
+          "duration": 2.2667,
+          "dialogue": []
+        },
+        {
+          "source": "short5",
+          "seek": 14.733,
+          "length": 3.134,
+          "duration": 2.8,
+          "dialogue": []
+        },
+        {
+          "source": "short5",
+          "seek": 17.867,
+          "length": 3.1,
+          "duration": 2.7,
+          "dialogue": []
+        }
+      ],
+      "effects": [
+        [
+          0.2557,
+          "dig",
+          0.38,
+          3
+        ],
+        [
+          2.7995,
+          "swish",
+          0.4,
+          5
+        ],
+        [
+          4.8255,
+          "thud",
+          0.76,
+          -3
+        ],
+        [
+          5.523,
+          "thud",
+          0.91,
+          0
+        ],
+        [
+          6.7475,
+          "fence",
+          0.75,
+          0
+        ],
+        [
+          7.75,
+          "thud",
+          0.8,
+          -2
+        ],
+        [
+          8.3101,
+          "thud",
+          0.74,
+          -3
+        ],
+        [
+          9.0551,
+          "thud",
+          0.68,
+          -4
+        ],
+        [
+          11.4275,
+          "chicken",
+          0.54,
+          2
+        ],
+        [
+          12.1422,
+          "dig",
+          0.57,
+          5
+        ],
+        [
+          13.8277,
+          "chicken",
+          0.7,
+          -1
+        ]
+      ]
+    }
+  }
+}
