@@ -197,7 +197,14 @@ final class Shorts extends Trailer.T {
         });
         on(6.9,()->spider.e.startRiding(giant.e,true,true));
         on(9.74,()->steve.living().startUsingItem(InteractionHand.MAIN_HAND));
-        on(10.7,()->{bones.living().stopUsingItem();bones.living().swing(InteractionHand.MAIN_HAND);spawnArrow(bones.e.getEyePosition(),steve.e.position().add(0,1.12,0),1.66);});
+        on(9.68,()->steve.e.setInvulnerable(false));
+        on(10.7,()->{
+            bones.living().stopUsingItem();
+            bones.living().swing(InteractionHand.MAIN_HAND);
+            Vec3 clearOfHarness = bones.e.getEyePosition().add(0, -.45, 3.45);
+            spawnArrow(clearOfHarness, steve.e.position().add(0, 2.08, 0), 2.0);
+        });
+        on(11.28,()->steve.e.setInvulnerable(true));
         on(11.4,()->{steve.crouch(true);steve.lookAt(bones.e,1.0);});
         on(11.82,()->steve.crouch(false).lookAt(zombie.e,1.25));
         Vec3 landing=atMark(.1,0,6.25);
@@ -232,7 +239,7 @@ final class Shorts extends Trailer.T {
         pair(13.64,15.72,atMark(4.95,1.52,8.65),atMark(.57,1.12,8.6),68);
         pair(15.73,16.85,atMark(2.9,11.15,7.0),track(spider,.42),59);
         pair(16.86,18.5,lens,track(spider,.42),71);
-        pair(18.5,21.05,atMark(-8,3.4,16),track(giant,6.2),61);
+        pair(18.5,21.05,atMark(2.9,2.1,11.6),track(giant,6.10),70);
     }
 
     private void potionDoor() {
