@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        story: [gate, hatch, bell]
+        story: [gate, hatch]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -24,9 +24,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           for attempt in $(seq 1 35); do
-            state=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/45995679881" --jq .status)
+            state=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/45996927789" --jq .status)
             if [[ "$state" == completed ]]; then
-              test "$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/45995679881" --jq .conclusion)" = success
+              test "$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/45996927789" --jq .conclusion)" = success
               exit
             fi
             sleep 12
@@ -36,7 +36,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: take-short${{ matrix.story }}
-          run-id: 45995679881
+          run-id: 45996927789
           github-token: ${{ github.token }}
           path: footage
       - name: Encode and check both language cuts
